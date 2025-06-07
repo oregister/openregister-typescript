@@ -9,7 +9,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 Because it's not published yet, clone the repo and build it:
 
 ```sh
-git clone git@github.com:stainless-sdks/openregister-typescript.git
+git clone git@github.com:oregister/openregister-typescript.git
 cd openregister-typescript
 ./scripts/bootstrap
 ./scripts/build
