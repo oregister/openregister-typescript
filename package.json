@@ -2,7 +2,7 @@
   "name": "openregister",
   "version": "0.0.1-alpha.0",
   "description": "The official TypeScript library for the Openregister API",
-  "author": "Openregister <>",
+  "author": "Openregister <founders@openregister.de>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
