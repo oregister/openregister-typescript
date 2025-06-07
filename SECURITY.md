@@ -18,6 +18,10 @@ before making any information public.
 If you encounter security issues that are not directly related to SDKs but pertain to the services
 or products provided by Openregister, please follow the respective company's security reporting guidelines.
 
+### Openregister Terms and Policies
+
+Please contact founders@openregister.de for any questions or concerns regarding the security of our services.
+
 ---
 
 Thank you for helping us keep the SDKs and systems they interact with secure.
