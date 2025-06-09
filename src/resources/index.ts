@@ -13,7 +13,7 @@ export {
   type CompanyRetrieveContactResponse,
   type CompanyRetrieveParams,
 } from './company';
-export { Document } from './document';
+export { Document, type DocumentRetrieveResponse } from './document';
 export {
   Search,
   type CompanyLegalForm,
