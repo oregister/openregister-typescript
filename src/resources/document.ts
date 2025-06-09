@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -11,6 +12,17 @@ export class Document extends APIResource {
    */
   retrieve(documentID: string, options?: RequestOptions): APIPromise<DocumentRetrieveResponse> {
     return this._client.get(path`/v0/document/${documentID}`, options);
+  }
+
+  /**
+   * Download document
+   */
+  download(documentID: string, options?: RequestOptions): APIPromise<Response> {
+    return this._client.get(path`/v0/document/${documentID}/download`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'application/pdf' }, options?.headers]),
+      __binaryResponse: true,
+    });
   }
 }
 
