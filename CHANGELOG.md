@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0 (2025-06-09)
+
+Full Changelog: [v1.2.0...v1.3.0](https://github.com/oregister/openregister-typescript/compare/v1.2.0...v1.3.0)
+
+### Features
+
+* **api:** update via SDK Studio ([cf90037](https://github.com/oregister/openregister-typescript/commit/cf90037eecca0f00b233eb85009eca13dee6db8e))
+* **api:** update via SDK Studio ([a631078](https://github.com/oregister/openregister-typescript/commit/a631078e76132069b46cba7cc629d87e2d564fd2))
+* **api:** update via SDK Studio ([58c38ad](https://github.com/oregister/openregister-typescript/commit/58c38ad5132cd37d99aae06659f8f5168b75788c))
+
 ## 1.2.0 (2025-06-09)
 
 Full Changelog: [v1.1.0...v1.2.0](https://github.com/oregister/openregister-typescript/compare/v1.1.0...v1.2.0)
