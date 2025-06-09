@@ -26,8 +26,21 @@ export const tool: Tool = {
         description:
           'Filter for active or inactive companies.\nSet to true for active companies only, false for inactive only.\n',
       },
+      incorporation_date: {
+        type: 'string',
+        description:
+          'Date of incorporation of the company.\nFormat: ISO 8601 (YYYY-MM-DD)\nExample: "2022-01-01"\n',
+      },
       legal_form: {
         $ref: '#/$defs/company_legal_form',
+      },
+      page: {
+        type: 'integer',
+        description: 'Page number for pagination.',
+      },
+      per_page: {
+        type: 'integer',
+        description: 'Number of results per page (max 50).',
       },
       query: {
         type: 'string',

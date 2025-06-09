@@ -27,7 +27,10 @@ describe('resource search', () => {
       client.search.findCompanies(
         {
           active: true,
+          incorporation_date: 'incorporation_date',
           legal_form: 'ag',
+          page: 0,
+          per_page: 0,
           query: 'query',
           register_court: 'register_court',
           register_number: 'register_number',

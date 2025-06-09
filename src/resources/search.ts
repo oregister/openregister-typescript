@@ -68,14 +68,37 @@ export type CompanyLegalForm =
 export type CompanyRegisterType = 'HRB' | 'HRA' | 'PR' | 'GnR' | 'VR';
 
 export interface SearchFindCompaniesResponse {
+  pagination: SearchFindCompaniesResponse.Pagination;
+
   /**
-   * List of companies matching the search criteria. Limited to a maximum of 10
-   * results per query.
+   * List of companies matching the search criteria.
    */
   results: Array<SearchFindCompaniesResponse.Result>;
 }
 
 export namespace SearchFindCompaniesResponse {
+  export interface Pagination {
+    /**
+     * Current page number.
+     */
+    page: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page: number;
+
+    /**
+     * Total number of pages.
+     */
+    total_pages: number;
+
+    /**
+     * Total number of results.
+     */
+    total_results: number;
+  }
+
   export interface Result {
     /**
      * Company status - true if active, false if inactive.
@@ -151,10 +174,26 @@ export interface SearchFindCompaniesParams {
   active?: boolean;
 
   /**
+   * Date of incorporation of the company. Format: ISO 8601 (YYYY-MM-DD) Example:
+   * "2022-01-01"
+   */
+  incorporation_date?: string;
+
+  /**
    * Legal form of the company. Example: "gmbh" for "Gesellschaft mit beschränkter
    * Haftung"
    */
   legal_form?: CompanyLegalForm;
+
+  /**
+   * Page number for pagination.
+   */
+  page?: number;
+
+  /**
+   * Number of results per page (max 50).
+   */
+  per_page?: number;
 
   /**
    * Text search query to find companies by name. Example: "Descartes Technologies
