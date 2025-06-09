@@ -179,3 +179,4 @@ The following tools are available in this MCP server.
 ### Resource `document`:
 
 - `retrieve_document` (`read`): Get document information
+- `download_document` (`read`): Download document

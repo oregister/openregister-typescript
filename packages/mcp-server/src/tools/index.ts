@@ -10,6 +10,7 @@ import retrieve_company from './company/retrieve-company';
 import list_shareholders_company from './company/list-shareholders-company';
 import retrieve_contact_company from './company/retrieve-contact-company';
 import retrieve_document from './document/retrieve-document';
+import download_document from './document/download-document';
 
 export const endpoints: Endpoint[] = [];
 
@@ -23,6 +24,7 @@ addEndpoint(retrieve_company);
 addEndpoint(list_shareholders_company);
 addEndpoint(retrieve_contact_company);
 addEndpoint(retrieve_document);
+addEndpoint(download_document);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';

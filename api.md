@@ -41,3 +41,4 @@ Types:
 Methods:
 
 - <code title="get /v0/document/{document_id}">client.document.<a href="./src/resources/document.ts">retrieve</a>(documentID) -> DocumentRetrieveResponse</code>
+- <code title="get /v0/document/{document_id}/download">client.document.<a href="./src/resources/document.ts">download</a>(documentID) -> Response</code>
