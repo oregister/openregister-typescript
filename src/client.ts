@@ -33,7 +33,7 @@ import {
   CompanyRetrieveResponse,
   EntityType,
 } from './resources/company';
-import { Document, DocumentRetrieveResponse } from './resources/document';
+import { Document } from './resources/document';
 import {
   CompanyLegalForm,
   CompanyRegisterType,
@@ -749,5 +749,5 @@ export declare namespace Openregister {
     type CompanyRetrieveParams as CompanyRetrieveParams,
   };
 
-  export { Document as Document, type DocumentRetrieveResponse as DocumentRetrieveResponse };
+  export { Document as Document };
 }

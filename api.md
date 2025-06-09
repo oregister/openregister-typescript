@@ -34,10 +34,6 @@ Methods:
 
 # Document
 
-Types:
-
-- <code><a href="./src/resources/document.ts">DocumentRetrieveResponse</a></code>
-
 Methods:
 
-- <code title="get /v0/document/{document_id}">client.document.<a href="./src/resources/document.ts">retrieve</a>(documentID) -> DocumentRetrieveResponse</code>
+- <code title="get /v0/document/{document_id}">client.document.<a href="./src/resources/document.ts">retrieve</a>(documentID) -> Response</code>
