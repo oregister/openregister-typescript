@@ -2,7 +2,7 @@
 
 import type { Openregister } from '../client';
 
-export class APIResource {
+export abstract class APIResource {
   protected _client: Openregister;
 
   constructor(client: Openregister) {

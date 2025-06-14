@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.4.0 (2025-06-14)
+
+Full Changelog: [v1.3.0...v1.4.0](https://github.com/oregister/openregister-typescript/compare/v1.3.0...v1.4.0)
+
+### Features
+
+* **mcp:** set X-Stainless-MCP header ([cdbd6e9](https://github.com/oregister/openregister-typescript/commit/cdbd6e9861550daa773bd60cf28b2dc2179eabb4))
+
+
+### Bug Fixes
+
+* publish script — handle NPM errors correctly ([06ae629](https://github.com/oregister/openregister-typescript/commit/06ae629f0513cc7e703e7b30fd81690bfacc309e))
+
+
+### Chores
+
+* **internal:** add pure annotations, make base APIResource abstract ([08648d0](https://github.com/oregister/openregister-typescript/commit/08648d025d850a373159c09eaa95f81a346917bf))
+* **mcp:** provides high-level initMcpServer function and exports known clients ([99c8045](https://github.com/oregister/openregister-typescript/commit/99c8045c4704f24fdf2a7b6c66a21494fccb284a))
+
 ## 1.3.0 (2025-06-09)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/oregister/openregister-typescript/compare/v1.2.0...v1.3.0)
