@@ -20,7 +20,7 @@ export class Document extends APIResource {
   download(documentID: string, options?: RequestOptions): APIPromise<Response> {
     return this._client.get(path`/v0/document/${documentID}/download`, {
       ...options,
-      headers: buildHeaders([{ Accept: 'application/pdf' }, options?.headers]),
+      headers: buildHeaders([{ Accept: 'application/octet-stream' }, options?.headers]),
       __binaryResponse: true,
     });
   }
