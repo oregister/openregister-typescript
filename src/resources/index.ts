@@ -14,6 +14,7 @@ export {
   type CompanyRetrieveParams,
 } from './company';
 export { Document, type DocumentRetrieveResponse } from './document';
+export { Jobs } from './jobs/jobs';
 export {
   Search,
   type CompanyLegalForm,

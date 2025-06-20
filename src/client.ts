@@ -39,6 +39,7 @@ import {
   SearchLookupCompanyByURLParams,
   SearchLookupCompanyByURLResponse,
 } from './resources/search';
+import { Jobs } from './resources/jobs/jobs';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -735,10 +736,12 @@ export class Openregister {
   search: API.Search = new API.Search(this);
   company: API.Company = new API.Company(this);
   document: API.Document = new API.Document(this);
+  jobs: API.Jobs = new API.Jobs(this);
 }
 Openregister.Search = Search;
 Openregister.Company = Company;
 Openregister.Document = Document;
+Openregister.Jobs = Jobs;
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
 
@@ -767,4 +770,6 @@ export declare namespace Openregister {
   };
 
   export { Document as Document, type DocumentRetrieveResponse as DocumentRetrieveResponse };
+
+  export { Jobs as Jobs };
 }
