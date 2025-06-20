@@ -11,8 +11,8 @@ describe('resource document', () => {
   // skipped: tests are disabled for the time being
   test.skip('create: only required params', async () => {
     const responsePromise = client.jobs.document.create({
+      company_id: 'company_id',
       document_category: 'current_printout',
-      register_id: 'register_id',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -26,8 +26,8 @@ describe('resource document', () => {
   // skipped: tests are disabled for the time being
   test.skip('create: required and optional params', async () => {
     const response = await client.jobs.document.create({
+      company_id: 'company_id',
       document_category: 'current_printout',
-      register_id: 'register_id',
     });
   });
 
