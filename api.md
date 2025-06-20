@@ -42,3 +42,17 @@ Methods:
 
 - <code title="get /v0/document/{document_id}">client.document.<a href="./src/resources/document.ts">retrieve</a>(documentID) -> DocumentRetrieveResponse</code>
 - <code title="get /v0/document/{document_id}/download">client.document.<a href="./src/resources/document.ts">download</a>(documentID) -> Response</code>
+
+# Jobs
+
+## Document
+
+Types:
+
+- <code><a href="./src/resources/jobs/document.ts">DocumentCreateResponse</a></code>
+- <code><a href="./src/resources/jobs/document.ts">DocumentRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="post /v0/jobs/document">client.jobs.document.<a href="./src/resources/jobs/document.ts">create</a>({ ...params }) -> DocumentCreateResponse</code>
+- <code title="get /v0/jobs/document/{id}">client.jobs.document.<a href="./src/resources/jobs/document.ts">retrieve</a>(id) -> DocumentRetrieveResponse</code>

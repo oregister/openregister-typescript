@@ -180,3 +180,8 @@ The following tools are available in this MCP server.
 
 - `retrieve_document` (`read`): Get document information
 - `download_document` (`read`): Download document
+
+### Resource `jobs.document`:
+
+- `create_jobs_document` (`write`): Create a document job
+- `retrieve_jobs_document` (`read`): Get document job status
