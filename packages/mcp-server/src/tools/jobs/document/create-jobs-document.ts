@@ -21,6 +21,10 @@ export const tool: Tool = {
   inputSchema: {
     type: 'object',
     properties: {
+      company_id: {
+        type: 'string',
+        description: 'Unique company identifier.\nExample: DE-HRB-F1103-267645\n',
+      },
       document_category: {
         type: 'string',
         enum: [
@@ -31,9 +35,6 @@ export const tool: Tool = {
           'shareholder_list',
           'articles_of_association',
         ],
-      },
-      register_id: {
-        type: 'string',
       },
     },
   },

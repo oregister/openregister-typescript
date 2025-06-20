@@ -22,6 +22,9 @@ export class Document extends APIResource {
 }
 
 export interface DocumentCreateResponse {
+  /**
+   * Unique job identifier. Example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+   */
   id: string;
 }
 
@@ -32,6 +35,11 @@ export interface DocumentRetrieveResponse {
 }
 
 export interface DocumentCreateParams {
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id: string;
+
   document_category:
     | 'current_printout'
     | 'chronological_printout'
@@ -39,8 +47,6 @@ export interface DocumentCreateParams {
     | 'structured_information'
     | 'shareholder_list'
     | 'articles_of_association';
-
-  register_id: string;
 }
 
 export declare namespace Document {
