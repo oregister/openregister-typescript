@@ -315,10 +315,29 @@ export namespace CompanyRetrieveResponse {
     id?: string;
 
     /**
+     * Date of birth of the representative. Only provided for type=natural_person. May
+     * still be null for natural persons if it is not available. Format: ISO 8601
+     * (YYYY-MM-DD) Example: "1990-01-01"
+     */
+    date_of_birth?: string;
+
+    /**
      * Date when this representative role ended (if applicable). Format: ISO 8601
      * (YYYY-MM-DD) Example: "2022-01-01"
      */
     end_date?: string;
+
+    /**
+     * First name of the representative. Only provided for type=natural_person.
+     * Example: "Max"
+     */
+    first_name?: string;
+
+    /**
+     * Last name of the representative. Only provided for type=natural_person. Example:
+     * "Mustermann"
+     */
+    last_name?: string;
   }
 
   export interface Document {

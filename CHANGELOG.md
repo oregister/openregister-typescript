@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.6.0 (2025-06-24)
+
+Full Changelog: [v1.5.0...v1.6.0](https://github.com/oregister/openregister-typescript/compare/v1.5.0...v1.6.0)
+
+### Features
+
+* **api:** update via SDK Studio ([f63dbdd](https://github.com/oregister/openregister-typescript/commit/f63dbdd92394ea08c6a59e97d44d207b13199d97))
+* **api:** update via SDK Studio ([1c3e15a](https://github.com/oregister/openregister-typescript/commit/1c3e15a54f3d8f459a8c19685fa888740778aab2))
+* **api:** update via SDK Studio ([47326b2](https://github.com/oregister/openregister-typescript/commit/47326b2ba3391a2ddb11c9ddc4cffcd2f4f14db3))
+
+
+### Bug Fixes
+
+* **client:** explicitly copy fetch in withOptions ([781f4d9](https://github.com/oregister/openregister-typescript/commit/781f4d9fad178eb6123150610ba35fdf25112c8e))
+
 ## 1.5.0 (2025-06-20)
 
 Full Changelog: [v1.4.0...v1.5.0](https://github.com/oregister/openregister-typescript/compare/v1.4.0...v1.5.0)
