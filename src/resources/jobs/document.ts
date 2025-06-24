@@ -31,6 +31,12 @@ export interface DocumentCreateResponse {
 export interface DocumentRetrieveResponse {
   status: 'pending' | 'completed' | 'failed';
 
+  /**
+   * Date when the job was created. Format: ISO 8601 (YYYY-MM-DD) Example:
+   * "2022-01-01"
+   */
+  date?: string;
+
   url?: string;
 }
 
