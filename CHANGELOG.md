@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.8.0 (2025-06-27)
+
+Full Changelog: [v1.7.0...v1.8.0](https://github.com/oregister/openregister-typescript/compare/v1.7.0...v1.8.0)
+
+### Features
+
+* **api:** update via SDK Studio ([e1e62d0](https://github.com/oregister/openregister-typescript/commit/e1e62d063a217ee3c82920f2bb39a1c45c252d32))
+
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([fb86de8](https://github.com/oregister/openregister-typescript/commit/fb86de85cb9d52d48c95381e8878f74d3ef5c07d))
+* **client:** get fetchOptions type more reliably ([9c5dc3f](https://github.com/oregister/openregister-typescript/commit/9c5dc3f6f901fc6f3b8ac5b1344827812da1cd5d))
+
 ## 1.7.0 (2025-06-24)
 
 Full Changelog: [v1.6.0...v1.7.0](https://github.com/oregister/openregister-typescript/compare/v1.6.0...v1.7.0)
