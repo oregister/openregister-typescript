@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.1 (2025-06-28)
+
+Full Changelog: [v1.8.0...v1.8.1](https://github.com/oregister/openregister-typescript/compare/v1.8.0...v1.8.1)
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([ab5fd77](https://github.com/oregister/openregister-typescript/commit/ab5fd772aa6dcdb830cceb3a29fcd811fb3f0484))
+
 ## 1.8.0 (2025-06-27)
 
 Full Changelog: [v1.7.0...v1.8.0](https://github.com/oregister/openregister-typescript/compare/v1.7.0...v1.8.0)
