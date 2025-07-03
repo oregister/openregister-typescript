@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.8.1 (2025-07-03)
+
+Full Changelog: [v1.8.0...v1.8.1](https://github.com/oregister/openregister-typescript/compare/v1.8.0...v1.8.1)
+
+### Bug Fixes
+
+* **mcp:** define `.well-known/oauth-protected-resource` ([4b77e10](https://github.com/oregister/openregister-typescript/commit/4b77e10c89f8ac59302868d4c37240b81f9b11cd))
+
+
+### Chores
+
+* add docs to RequestOptions type ([52c30c2](https://github.com/oregister/openregister-typescript/commit/52c30c26a15ed3a215a4e0bbd3c881c1f73ac0c9))
+* **ci:** only run for pushes and fork pull requests ([ab5fd77](https://github.com/oregister/openregister-typescript/commit/ab5fd772aa6dcdb830cceb3a29fcd811fb3f0484))
+* **client:** improve path param validation ([9e2ca93](https://github.com/oregister/openregister-typescript/commit/9e2ca93e79055e79402c7730c58ba5f94b07d1be))
+
 ## 1.8.0 (2025-06-27)
 
 Full Changelog: [v1.7.0...v1.8.0](https://github.com/oregister/openregister-typescript/compare/v1.7.0...v1.8.0)
