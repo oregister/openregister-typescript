@@ -1,10 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { maybeFilter } from 'openregister-mcp/filtering';
-import { asTextContentResult } from 'openregister-mcp/tools/types';
+import { Metadata, asTextContentResult } from 'openregister-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import type { Metadata } from '../';
 import Openregister from 'openregister';
 
 export const metadata: Metadata = {
