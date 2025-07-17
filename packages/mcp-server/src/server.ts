@@ -28,11 +28,7 @@ export const server = new McpServer(
     name: 'openregister_api',
     version: '1.8.0',
   },
-  {
-    capabilities: {
-      tools: {},
-    },
-  },
+  { capabilities: { tools: {} } },
 );
 
 /**
