@@ -40,6 +40,7 @@ export const tool: Tool = {
           'Include historical company data when set to true.\nThis returns past names, addresses, and other changed information.\n',
       },
     },
+    required: ['company_id'],
   },
 };
 
