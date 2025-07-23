@@ -4,12 +4,14 @@ Types:
 
 - <code><a href="./src/resources/search.ts">CompanyLegalForm</a></code>
 - <code><a href="./src/resources/search.ts">CompanyRegisterType</a></code>
-- <code><a href="./src/resources/search.ts">SearchFindCompaniesResponse</a></code>
+- <code><a href="./src/resources/search.ts">SearchFindCompaniesV0Response</a></code>
+- <code><a href="./src/resources/search.ts">SearchFindCompaniesV1Response</a></code>
 - <code><a href="./src/resources/search.ts">SearchLookupCompanyByURLResponse</a></code>
 
 Methods:
 
-- <code title="get /v0/search/company">client.search.<a href="./src/resources/search.ts">findCompanies</a>({ ...params }) -> SearchFindCompaniesResponse</code>
+- <code title="get /v0/search/company">client.search.<a href="./src/resources/search.ts">findCompaniesV0</a>({ ...params }) -> SearchFindCompaniesV0Response</code>
+- <code title="post /v1/search/company">client.search.<a href="./src/resources/search.ts">findCompaniesV1</a>({ ...params }) -> SearchFindCompaniesV1Response</code>
 - <code title="get /v0/search/lookup">client.search.<a href="./src/resources/search.ts">lookupCompanyByURL</a>({ ...params }) -> SearchLookupCompanyByURLResponse</code>
 
 # Company

@@ -4,7 +4,8 @@ import { Metadata, Endpoint, HandlerFunction } from './types';
 
 export { Metadata, Endpoint, HandlerFunction };
 
-import find_companies_search from './search/find-companies-search';
+import find_companies_v0_search from './search/find-companies-v0-search';
+import find_companies_v1_search from './search/find-companies-v1-search';
 import lookup_company_by_url_search from './search/lookup-company-by-url-search';
 import retrieve_company from './company/retrieve-company';
 import list_shareholders_company from './company/list-shareholders-company';
@@ -20,7 +21,8 @@ function addEndpoint(endpoint: Endpoint) {
   endpoints.push(endpoint);
 }
 
-addEndpoint(find_companies_search);
+addEndpoint(find_companies_v0_search);
+addEndpoint(find_companies_v1_search);
 addEndpoint(lookup_company_by_url_search);
 addEndpoint(retrieve_company);
 addEndpoint(list_shareholders_company);
