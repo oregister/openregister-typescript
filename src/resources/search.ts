@@ -327,6 +327,10 @@ export interface SearchFindCompaniesV1Params {
 }
 
 export namespace SearchFindCompaniesV1Params {
+  /**
+   * Filter by field. The properties values, value, keywords and min/max are mutually
+   * exclusive. Dates must be in the format YYYY-MM-DD.
+   */
   export interface Filter {
     /**
      * Field to filter on.

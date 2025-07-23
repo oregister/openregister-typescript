@@ -27,6 +27,8 @@ export const tool: Tool = {
         description: 'Filters to filter companies.\n',
         items: {
           type: 'object',
+          description:
+            'Filter by field. The properties values, value, keywords and min/max are mutually exclusive.\nDates must be in the format YYYY-MM-DD.\n',
           properties: {
             field: {
               type: 'string',
