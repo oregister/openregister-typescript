@@ -9,11 +9,21 @@ export class Search extends APIResource {
   /**
    * Search for companies
    */
-  findCompanies(
-    query: SearchFindCompaniesParams | null | undefined = {},
+  findCompaniesV0(
+    query: SearchFindCompaniesV0Params | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<SearchFindCompaniesResponse> {
+  ): APIPromise<SearchFindCompaniesV0Response> {
     return this._client.get('/v0/search/company', { query, ...options });
+  }
+
+  /**
+   * Search for companies
+   */
+  findCompaniesV1(
+    body: SearchFindCompaniesV1Params,
+    options?: RequestOptions,
+  ): APIPromise<SearchFindCompaniesV1Response> {
+    return this._client.post('/v1/search/company', { body, ...options });
   }
 
   /**
@@ -67,16 +77,93 @@ export type CompanyLegalForm =
  */
 export type CompanyRegisterType = 'HRB' | 'HRA' | 'PR' | 'GnR' | 'VR';
 
-export interface SearchFindCompaniesResponse {
-  pagination: SearchFindCompaniesResponse.Pagination;
+export interface SearchFindCompaniesV0Response {
+  pagination: SearchFindCompaniesV0Response.Pagination;
 
   /**
    * List of companies matching the search criteria.
    */
-  results: Array<SearchFindCompaniesResponse.Result>;
+  results: Array<SearchFindCompaniesV0Response.Result>;
 }
 
-export namespace SearchFindCompaniesResponse {
+export namespace SearchFindCompaniesV0Response {
+  export interface Pagination {
+    /**
+     * Current page number.
+     */
+    page: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page: number;
+
+    /**
+     * Total number of pages.
+     */
+    total_pages: number;
+
+    /**
+     * Total number of results.
+     */
+    total_results: number;
+  }
+
+  export interface Result {
+    /**
+     * Company status - true if active, false if inactive.
+     */
+    active: boolean;
+
+    /**
+     * Unique company identifier. Example: DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
+     * Haftung
+     */
+    legal_form: SearchAPI.CompanyLegalForm;
+
+    /**
+     * Official registered company name. Example: "Max Mustermann GmbH"
+     */
+    name: string;
+
+    /**
+     * Court where the company is registered. Example: "Berlin (Charlottenburg)"
+     */
+    register_court: string;
+
+    /**
+     * Registration number in the company register. Example: "230633"
+     */
+    register_number: string;
+
+    /**
+     * Type of company register. Example: "HRB" for Commercial Register B
+     */
+    register_type: SearchAPI.CompanyRegisterType;
+
+    /**
+     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
+     * "DE" for Germany
+     */
+    country?: string;
+  }
+}
+
+export interface SearchFindCompaniesV1Response {
+  pagination: SearchFindCompaniesV1Response.Pagination;
+
+  /**
+   * List of companies matching the search criteria.
+   */
+  results: Array<SearchFindCompaniesV1Response.Result>;
+}
+
+export namespace SearchFindCompaniesV1Response {
   export interface Pagination {
     /**
      * Current page number.
@@ -166,7 +253,7 @@ export interface SearchLookupCompanyByURLResponse {
   vat_id?: string;
 }
 
-export interface SearchFindCompaniesParams {
+export interface SearchFindCompaniesV0Params {
   /**
    * Filter for active or inactive companies. Set to true for active companies only,
    * false for inactive only.
@@ -217,6 +304,133 @@ export interface SearchFindCompaniesParams {
   register_type?: CompanyRegisterType;
 }
 
+export interface SearchFindCompaniesV1Params {
+  /**
+   * Filters to filter companies.
+   */
+  filters?: Array<SearchFindCompaniesV1Params.Filter>;
+
+  /**
+   * Location to filter companies.
+   */
+  location?: SearchFindCompaniesV1Params.Location;
+
+  /**
+   * Pagination parameters.
+   */
+  pagination?: SearchFindCompaniesV1Params.Pagination;
+
+  /**
+   * Search query to filter companies.
+   */
+  query?: SearchFindCompaniesV1Params.Query;
+}
+
+export namespace SearchFindCompaniesV1Params {
+  export interface Filter {
+    /**
+     * Field to filter on.
+     */
+    field?:
+      | 'status'
+      | 'legal_form'
+      | 'register_number'
+      | 'register_court'
+      | 'register_type'
+      | 'city'
+      | 'active'
+      | 'incorporated_at'
+      | 'zip'
+      | 'address'
+      | 'balance_sheet_total'
+      | 'revenue'
+      | 'cash'
+      | 'employees'
+      | 'equity'
+      | 'real_estate'
+      | 'materials'
+      | 'pension_provisions'
+      | 'salaries'
+      | 'taxes'
+      | 'liabilities'
+      | 'capital_reserves'
+      | 'net_income'
+      | 'industry_codes'
+      | 'capital_amount'
+      | 'capital_currency';
+
+    /**
+     * Keywords to filter on.
+     */
+    keywords?: Array<string>;
+
+    /**
+     * Maximum value to filter on.
+     */
+    max?: string;
+
+    /**
+     * Minimum value to filter on.
+     */
+    min?: string;
+
+    /**
+     * Value to filter on.
+     */
+    value?: string;
+
+    /**
+     * Values to filter on.
+     */
+    values?: Array<string>;
+  }
+
+  /**
+   * Location to filter companies.
+   */
+  export interface Location {
+    /**
+     * Latitude to filter on.
+     */
+    latitude: number;
+
+    /**
+     * Longitude to filter on.
+     */
+    longitude: number;
+
+    /**
+     * Radius in kilometers to filter on. Example: 10
+     */
+    radius?: number;
+  }
+
+  /**
+   * Pagination parameters.
+   */
+  export interface Pagination {
+    /**
+     * Page number to return.
+     */
+    page?: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page?: number;
+  }
+
+  /**
+   * Search query to filter companies.
+   */
+  export interface Query {
+    /**
+     * Search query to filter companies.
+     */
+    value: string;
+  }
+}
+
 export interface SearchLookupCompanyByURLParams {
   /**
    * Website URL to search for. Example: "https://openregister.de"
@@ -228,9 +442,11 @@ export declare namespace Search {
   export {
     type CompanyLegalForm as CompanyLegalForm,
     type CompanyRegisterType as CompanyRegisterType,
-    type SearchFindCompaniesResponse as SearchFindCompaniesResponse,
+    type SearchFindCompaniesV0Response as SearchFindCompaniesV0Response,
+    type SearchFindCompaniesV1Response as SearchFindCompaniesV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
-    type SearchFindCompaniesParams as SearchFindCompaniesParams,
+    type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
+    type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 }
