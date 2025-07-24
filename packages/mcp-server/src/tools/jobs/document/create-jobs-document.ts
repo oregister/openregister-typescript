@@ -46,6 +46,7 @@ export const tool: Tool = {
     },
     required: ['company_id', 'document_category'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
