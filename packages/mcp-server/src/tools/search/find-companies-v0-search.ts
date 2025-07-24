@@ -99,6 +99,9 @@ export const tool: Tool = {
       },
     },
   },
+  annotations: {
+    readOnlyHint: true,
+  },
 };
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {

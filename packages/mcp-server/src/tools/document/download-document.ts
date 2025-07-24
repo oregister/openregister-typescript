@@ -33,6 +33,9 @@ export const tool: Tool = {
     },
     required: ['document_id'],
   },
+  annotations: {
+    readOnlyHint: true,
+  },
 };
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
