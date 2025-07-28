@@ -39,7 +39,6 @@ import {
   CompanySearch,
   Search,
   SearchFindCompaniesV0Params,
-  SearchFindCompaniesV1Params,
   SearchLookupCompanyByURLParams,
   SearchLookupCompanyByURLResponse,
 } from './resources/search';
@@ -762,7 +761,6 @@ export declare namespace Openregister {
     type CompanySearch as CompanySearch,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
-    type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 
