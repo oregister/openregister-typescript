@@ -170,8 +170,6 @@ export interface CompanyRegister {
   start_date?: string;
 }
 
-export type CompanyRelationType = 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
-
 export type EntityType = 'natural_person' | 'legal_person';
 
 export interface CompanyRetrieveResponse {
@@ -493,7 +491,7 @@ export namespace CompanyGetHoldingsResponse {
     /**
      * Type of relationship between the entity and the company.
      */
-    relation_type: CompanyAPI.CompanyRelationType;
+    relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
 
     /**
      * Date when the ownership ended. Format: ISO 8601 (YYYY-MM-DD) Example:
@@ -538,7 +536,7 @@ export namespace CompanyGetOwnersResponse {
     /**
      * Type of relationship between the entity and the company.
      */
-    relation_type: CompanyAPI.CompanyRelationType;
+    relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
 
     /**
      * The type of shareholder.
@@ -712,7 +710,6 @@ export declare namespace Company {
     type CompanyName as CompanyName,
     type CompanyPurpose as CompanyPurpose,
     type CompanyRegister as CompanyRegister,
-    type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
     type CompanyRetrieveResponse as CompanyRetrieveResponse,
     type CompanyGetHoldingsResponse as CompanyGetHoldingsResponse,
