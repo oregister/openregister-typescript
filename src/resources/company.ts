@@ -20,6 +20,20 @@ export class Company extends APIResource {
   }
 
   /**
+   * Get company holdings
+   */
+  getHoldings(companyID: string, options?: RequestOptions): APIPromise<CompanyGetHoldingsResponse> {
+    return this._client.get(path`/v1/company/${companyID}/holdings`, options);
+  }
+
+  /**
+   * Get company owners
+   */
+  getOwners(companyID: string, options?: RequestOptions): APIPromise<CompanyGetOwnersResponse> {
+    return this._client.get(path`/v1/company/${companyID}/owners`, options);
+  }
+
+  /**
    * Get company shareholders
    */
   listShareholders(companyID: string, options?: RequestOptions): APIPromise<CompanyListShareholdersResponse> {
@@ -273,12 +287,6 @@ export namespace CompanyRetrieveResponse {
     city: string;
 
     /**
-     * Country where the representative is located, in ISO 3166-1 alpha-2 format.
-     * Example: "DE" for Germany
-     */
-    country: string;
-
-    /**
      * The name of the representative. E.g. "Max Mustermann" or "Max Mustermann GmbH"
      */
     name: string;
@@ -313,6 +321,12 @@ export namespace CompanyRetrieveResponse {
      * May be null for certain representatives.
      */
     id?: string;
+
+    /**
+     * Country where the representative is located, in ISO 3166-1 alpha-2 format.
+     * Example: "DE" for Germany
+     */
+    country?: string;
 
     /**
      * Date of birth of the representative. Only provided for type=natural_person. May
@@ -445,6 +459,154 @@ export namespace CompanyRetrieveResponse {
   }
 }
 
+/**
+ * Companies this entity owns or has invested in.
+ */
+export interface CompanyGetHoldingsResponse {
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id: string;
+
+  holdings: Array<CompanyGetHoldingsResponse.Holding>;
+}
+
+export namespace CompanyGetHoldingsResponse {
+  export interface Holding {
+    /**
+     * Unique company identifier. Example: DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Name of the company.
+     */
+    name: string;
+
+    /**
+     * Amount of shares or capital in the company. Example: 100
+     */
+    nominal_share: number;
+
+    /**
+     * Type of relationship between the entity and the company.
+     */
+    relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
+
+    /**
+     * Date when the ownership ended. Format: ISO 8601 (YYYY-MM-DD) Example:
+     * "2022-01-01"
+     */
+    end?: string;
+
+    /**
+     * Share of the company. Example: 0.5 represents 50% ownership
+     */
+    percentage_share?: number;
+
+    /**
+     * Date when the ownership started. Format: ISO 8601 (YYYY-MM-DD) Example:
+     * "2022-01-01"
+     */
+    start?: string;
+  }
+}
+
+export interface CompanyGetOwnersResponse {
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id: string;
+
+  owners: Array<CompanyGetOwnersResponse.Owner>;
+}
+
+export namespace CompanyGetOwnersResponse {
+  export interface Owner {
+    /**
+     * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
+     */
+    name: string;
+
+    /**
+     * Nominal value of shares in Euro. Example: 100
+     */
+    nominal_share: number;
+
+    /**
+     * Type of relationship between the entity and the company.
+     */
+    relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
+
+    /**
+     * The type of shareholder.
+     */
+    type: CompanyAPI.EntityType;
+
+    /**
+     * Unique identifier for the shareholder. For companies: Format matches company_id
+     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
+     * for certain shareholders.
+     */
+    id?: string;
+
+    /**
+     * Details about the legal person.
+     */
+    legal_person?: Owner.LegalPerson;
+
+    /**
+     * Details about the natural person.
+     */
+    natural_person?: Owner.NaturalPerson;
+
+    /**
+     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
+     */
+    percentage_share?: number;
+
+    /**
+     * Date when the relation started. Only available for some types of owners. Format:
+     * ISO 8601 (YYYY-MM-DD) Example: "2022-01-01"
+     */
+    start?: string;
+  }
+
+  export namespace Owner {
+    /**
+     * Details about the legal person.
+     */
+    export interface LegalPerson {
+      /**
+       * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
+       * for Germany
+       */
+      country: string;
+
+      name: string;
+
+      city?: string;
+    }
+
+    /**
+     * Details about the natural person.
+     */
+    export interface NaturalPerson {
+      city: string;
+
+      country: string;
+
+      first_name: string;
+
+      full_name: string;
+
+      last_name: string;
+
+      date_of_birth?: string;
+    }
+  }
+}
+
 export interface CompanyListShareholdersResponse {
   /**
    * Date when this shareholder information became effective. Format: ISO 8601
@@ -550,6 +712,8 @@ export declare namespace Company {
     type CompanyRegister as CompanyRegister,
     type EntityType as EntityType,
     type CompanyRetrieveResponse as CompanyRetrieveResponse,
+    type CompanyGetHoldingsResponse as CompanyGetHoldingsResponse,
+    type CompanyGetOwnersResponse as CompanyGetOwnersResponse,
     type CompanyListShareholdersResponse as CompanyListShareholdersResponse,
     type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
     type CompanyRetrieveParams as CompanyRetrieveParams,

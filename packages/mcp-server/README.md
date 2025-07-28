@@ -174,6 +174,8 @@ The following tools are available in this MCP server.
 ### Resource `company`:
 
 - `retrieve_company` (`read`): Get detailed company information
+- `get_holdings_company` (`read`): Get company holdings
+- `get_owners_company` (`read`): Get company owners
 - `list_shareholders_company` (`read`): Get company shareholders
 - `retrieve_contact_company` (`read`): Get company contact information
 
