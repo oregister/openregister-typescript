@@ -17,6 +17,13 @@ export class Search extends APIResource {
   }
 
   /**
+   * Search for companies
+   */
+  findCompaniesV1(body: SearchFindCompaniesV1Params, options?: RequestOptions): APIPromise<CompanySearch> {
+    return this._client.post('/v1/search/company', { body, ...options });
+  }
+
+  /**
    * Find company by website URL
    */
   lookupCompanyByURL(
@@ -217,6 +224,137 @@ export interface SearchFindCompaniesV0Params {
   register_type?: CompanyRegisterType;
 }
 
+export interface SearchFindCompaniesV1Params {
+  /**
+   * Filters to filter companies.
+   */
+  filters?: Array<SearchFindCompaniesV1Params.Filter>;
+
+  /**
+   * Location to filter companies.
+   */
+  location?: SearchFindCompaniesV1Params.Location;
+
+  /**
+   * Pagination parameters.
+   */
+  pagination?: SearchFindCompaniesV1Params.Pagination;
+
+  /**
+   * Search query to filter companies.
+   */
+  query?: SearchFindCompaniesV1Params.Query;
+}
+
+export namespace SearchFindCompaniesV1Params {
+  /**
+   * Filter by field. The properties values, value, keywords and min/max are mutually
+   * exclusive. Dates must be in the format YYYY-MM-DD.
+   */
+  export interface Filter {
+    /**
+     * Field to filter on.
+     */
+    field?:
+      | 'status'
+      | 'legal_form'
+      | 'register_number'
+      | 'register_court'
+      | 'register_type'
+      | 'city'
+      | 'active'
+      | 'incorporated_at'
+      | 'zip'
+      | 'address'
+      | 'balance_sheet_total'
+      | 'revenue'
+      | 'cash'
+      | 'employees'
+      | 'equity'
+      | 'real_estate'
+      | 'materials'
+      | 'pension_provisions'
+      | 'salaries'
+      | 'taxes'
+      | 'liabilities'
+      | 'capital_reserves'
+      | 'net_income'
+      | 'industry_codes'
+      | 'capital_amount'
+      | 'capital_currency';
+
+    /**
+     * Keywords to filter on.
+     */
+    keywords?: Array<string>;
+
+    /**
+     * Maximum value to filter on.
+     */
+    max?: string;
+
+    /**
+     * Minimum value to filter on.
+     */
+    min?: string;
+
+    /**
+     * Value to filter on.
+     */
+    value?: string;
+
+    /**
+     * Values to filter on.
+     */
+    values?: Array<string>;
+  }
+
+  /**
+   * Location to filter companies.
+   */
+  export interface Location {
+    /**
+     * Latitude to filter on.
+     */
+    latitude: number;
+
+    /**
+     * Longitude to filter on.
+     */
+    longitude: number;
+
+    /**
+     * Radius in kilometers to filter on. Example: 10
+     */
+    radius?: number;
+  }
+
+  /**
+   * Pagination parameters.
+   */
+  export interface Pagination {
+    /**
+     * Page number to return.
+     */
+    page?: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page?: number;
+  }
+
+  /**
+   * Search query to filter companies.
+   */
+  export interface Query {
+    /**
+     * Search query to filter companies.
+     */
+    value: string;
+  }
+}
+
 export interface SearchLookupCompanyByURLParams {
   /**
    * Website URL to search for. Example: "https://openregister.de"
@@ -231,6 +369,7 @@ export declare namespace Search {
     type CompanySearch as CompanySearch,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
+    type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 }

@@ -25,5 +25,6 @@ export {
   type CompanySearch,
   type SearchLookupCompanyByURLResponse,
   type SearchFindCompaniesV0Params,
+  type SearchFindCompaniesV1Params,
   type SearchLookupCompanyByURLParams,
 } from './search';

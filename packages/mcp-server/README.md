@@ -168,6 +168,7 @@ The following tools are available in this MCP server.
 ### Resource `search`:
 
 - `find_companies_v0_search` (`read`): Search for companies
+- `find_companies_v1_search` (`write`): Search for companies
 - `lookup_company_by_url_search` (`read`): Find company by website URL
 
 ### Resource `company`:
