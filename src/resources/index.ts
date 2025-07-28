@@ -9,6 +9,8 @@ export {
   type CompanyRegister,
   type EntityType,
   type CompanyRetrieveResponse,
+  type CompanyGetHoldingsResponse,
+  type CompanyGetOwnersResponse,
   type CompanyListShareholdersResponse,
   type CompanyRetrieveContactResponse,
   type CompanyRetrieveParams,
