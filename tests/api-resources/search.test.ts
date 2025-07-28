@@ -54,23 +54,6 @@ describe('resource search', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('lookupCompanyByName: only required params', async () => {
-    const responsePromise = client.search.lookupCompanyByName({ query: 'query' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // skipped: tests are disabled for the time being
-  test.skip('lookupCompanyByName: required and optional params', async () => {
-    const response = await client.search.lookupCompanyByName({ query: 'query' });
-  });
-
-  // skipped: tests are disabled for the time being
   test.skip('lookupCompanyByURL: only required params', async () => {
     const responsePromise = client.search.lookupCompanyByURL({ url: 'https://example.com' });
     const rawResponse = await responsePromise.asResponse();
