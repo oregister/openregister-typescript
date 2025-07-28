@@ -23,10 +23,8 @@ export {
   type CompanyLegalForm,
   type CompanyRegisterType,
   type CompanySearch,
-  type SearchLookupCompanyByNameResponse,
   type SearchLookupCompanyByURLResponse,
   type SearchFindCompaniesV0Params,
   type SearchFindCompaniesV1Params,
-  type SearchLookupCompanyByNameParams,
   type SearchLookupCompanyByURLParams,
 } from './search';

@@ -24,13 +24,6 @@ export class Search extends APIResource {
   }
 
   /**
-   * Autocomplete company search
-   */
-  lookupCompanyByName(query: SearchLookupCompanyByNameParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.get('/v1/autocomplete/company', { query, ...options });
-  }
-
-  /**
    * Find company by website URL
    */
   lookupCompanyByURL(
@@ -157,8 +150,6 @@ export namespace CompanySearch {
     country?: string;
   }
 }
-
-export type SearchLookupCompanyByNameResponse = unknown;
 
 export interface SearchLookupCompanyByURLResponse {
   /**
@@ -364,14 +355,6 @@ export namespace SearchFindCompaniesV1Params {
   }
 }
 
-export interface SearchLookupCompanyByNameParams {
-  /**
-   * Text search query to find companies by name. Example: "Descartes Technologies
-   * UG"
-   */
-  query: string;
-}
-
 export interface SearchLookupCompanyByURLParams {
   /**
    * Website URL to search for. Example: "https://openregister.de"
@@ -384,11 +367,9 @@ export declare namespace Search {
     type CompanyLegalForm as CompanyLegalForm,
     type CompanyRegisterType as CompanyRegisterType,
     type CompanySearch as CompanySearch,
-    type SearchLookupCompanyByNameResponse as SearchLookupCompanyByNameResponse,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
-    type SearchLookupCompanyByNameParams as SearchLookupCompanyByNameParams,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 }
