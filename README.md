@@ -26,9 +26,9 @@ const client = new Openregister({
   apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted
 });
 
-const companySearch = await client.search.findCompaniesV0();
+const company = await client.company.retrieve('company_id');
 
-console.log(companySearch.pagination);
+console.log(company.id);
 ```
 
 ### Request & Response types
@@ -43,7 +43,7 @@ const client = new Openregister({
   apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted
 });
 
-const companySearch: Openregister.CompanySearch = await client.search.findCompaniesV0();
+const company: Openregister.CompanyRetrieveResponse = await client.company.retrieve('company_id');
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -56,7 +56,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const companySearch = await client.search.findCompaniesV0().catch(async (err) => {
+const company = await client.company.retrieve('company_id').catch(async (err) => {
   if (err instanceof Openregister.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -96,7 +96,7 @@ const client = new Openregister({
 });
 
 // Or, configure per-request:
-await client.search.findCompaniesV0({
+await client.company.retrieve('company_id', {
   maxRetries: 5,
 });
 ```
@@ -113,7 +113,7 @@ const client = new Openregister({
 });
 
 // Override per-request:
-await client.search.findCompaniesV0({
+await client.company.retrieve('company_id', {
   timeout: 5 * 1000,
 });
 ```
@@ -136,13 +136,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Openregister();
 
-const response = await client.search.findCompaniesV0().asResponse();
+const response = await client.company.retrieve('company_id').asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: companySearch, response: raw } = await client.search.findCompaniesV0().withResponse();
+const { data: company, response: raw } = await client.company.retrieve('company_id').withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(companySearch.pagination);
+console.log(company.id);
 ```
 
 ### Logging
@@ -222,7 +222,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.search.findCompaniesV0({
+client.company.retrieve({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
