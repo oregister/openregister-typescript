@@ -12,15 +12,25 @@ export class Search extends APIResource {
   findCompaniesV0(
     query: SearchFindCompaniesV0Params | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CompanySearch> {
+  ): APIPromise<SearchFindCompaniesV0Response> {
     return this._client.get('/v0/search/company', { query, ...options });
   }
 
   /**
    * Search for companies
    */
-  findCompaniesV1(body: SearchFindCompaniesV1Params, options?: RequestOptions): APIPromise<CompanySearch> {
+  findCompaniesV1(
+    body: SearchFindCompaniesV1Params,
+    options?: RequestOptions,
+  ): APIPromise<SearchFindCompaniesV1Response> {
     return this._client.post('/v1/search/company', { body, ...options });
+  }
+
+  /**
+   * Autocomplete company search
+   */
+  lookupCompanyByName(query: SearchLookupCompanyByNameParams, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.get('/v1/autocomplete/company', { query, ...options });
   }
 
   /**
@@ -74,16 +84,16 @@ export type CompanyLegalForm =
  */
 export type CompanyRegisterType = 'HRB' | 'HRA' | 'PR' | 'GnR' | 'VR';
 
-export interface CompanySearch {
-  pagination: CompanySearch.Pagination;
+export interface SearchFindCompaniesV0Response {
+  pagination: SearchFindCompaniesV0Response.Pagination;
 
   /**
    * List of companies matching the search criteria.
    */
-  results: Array<CompanySearch.Result>;
+  results: Array<SearchFindCompaniesV0Response.Result>;
 }
 
-export namespace CompanySearch {
+export namespace SearchFindCompaniesV0Response {
   export interface Pagination {
     /**
      * Current page number.
@@ -150,6 +160,85 @@ export namespace CompanySearch {
     country?: string;
   }
 }
+
+export interface SearchFindCompaniesV1Response {
+  pagination: SearchFindCompaniesV1Response.Pagination;
+
+  /**
+   * List of companies matching the search criteria.
+   */
+  results: Array<SearchFindCompaniesV1Response.Result>;
+}
+
+export namespace SearchFindCompaniesV1Response {
+  export interface Pagination {
+    /**
+     * Current page number.
+     */
+    page: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page: number;
+
+    /**
+     * Total number of pages.
+     */
+    total_pages: number;
+
+    /**
+     * Total number of results.
+     */
+    total_results: number;
+  }
+
+  export interface Result {
+    /**
+     * Company status - true if active, false if inactive.
+     */
+    active: boolean;
+
+    /**
+     * Unique company identifier. Example: DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
+     * Haftung
+     */
+    legal_form: SearchAPI.CompanyLegalForm;
+
+    /**
+     * Official registered company name. Example: "Max Mustermann GmbH"
+     */
+    name: string;
+
+    /**
+     * Court where the company is registered. Example: "Berlin (Charlottenburg)"
+     */
+    register_court: string;
+
+    /**
+     * Registration number in the company register. Example: "230633"
+     */
+    register_number: string;
+
+    /**
+     * Type of company register. Example: "HRB" for Commercial Register B
+     */
+    register_type: SearchAPI.CompanyRegisterType;
+
+    /**
+     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
+     * "DE" for Germany
+     */
+    country?: string;
+  }
+}
+
+export type SearchLookupCompanyByNameResponse = unknown;
 
 export interface SearchLookupCompanyByURLResponse {
   /**
@@ -355,6 +444,14 @@ export namespace SearchFindCompaniesV1Params {
   }
 }
 
+export interface SearchLookupCompanyByNameParams {
+  /**
+   * Text search query to find companies by name. Example: "Descartes Technologies
+   * UG"
+   */
+  query: string;
+}
+
 export interface SearchLookupCompanyByURLParams {
   /**
    * Website URL to search for. Example: "https://openregister.de"
@@ -366,10 +463,13 @@ export declare namespace Search {
   export {
     type CompanyLegalForm as CompanyLegalForm,
     type CompanyRegisterType as CompanyRegisterType,
-    type CompanySearch as CompanySearch,
+    type SearchFindCompaniesV0Response as SearchFindCompaniesV0Response,
+    type SearchFindCompaniesV1Response as SearchFindCompaniesV1Response,
+    type SearchLookupCompanyByNameResponse as SearchLookupCompanyByNameResponse,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
+    type SearchLookupCompanyByNameParams as SearchLookupCompanyByNameParams,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 }
