@@ -5,10 +5,12 @@ Types:
 - <code><a href="./src/resources/search.ts">CompanyLegalForm</a></code>
 - <code><a href="./src/resources/search.ts">CompanyRegisterType</a></code>
 - <code><a href="./src/resources/search.ts">CompanySearch</a></code>
+- <code><a href="./src/resources/search.ts">SearchAutocompleteCompaniesV1Response</a></code>
 - <code><a href="./src/resources/search.ts">SearchLookupCompanyByURLResponse</a></code>
 
 Methods:
 
+- <code title="get /v1/autocomplete/company">client.search.<a href="./src/resources/search.ts">autocompleteCompaniesV1</a>({ ...params }) -> SearchAutocompleteCompaniesV1Response</code>
 - <code title="get /v0/search/company">client.search.<a href="./src/resources/search.ts">findCompaniesV0</a>({ ...params }) -> CompanySearch</code>
 - <code title="post /v1/search/company">client.search.<a href="./src/resources/search.ts">findCompaniesV1</a>({ ...params }) -> CompanySearch</code>
 - <code title="get /v0/search/lookup">client.search.<a href="./src/resources/search.ts">lookupCompanyByURL</a>({ ...params }) -> SearchLookupCompanyByURLResponse</code>
@@ -62,13 +64,3 @@ Methods:
 
 - <code title="post /v0/jobs/document">client.jobs.document.<a href="./src/resources/jobs/document.ts">create</a>({ ...params }) -> DocumentCreateResponse</code>
 - <code title="get /v0/jobs/document/{id}">client.jobs.document.<a href="./src/resources/jobs/document.ts">retrieve</a>(id) -> DocumentRetrieveResponse</code>
-
-# Autocomplete
-
-Types:
-
-- <code><a href="./src/resources/autocomplete.ts">AutocompleteAutocompleteCompaniesV1Response</a></code>
-
-Methods:
-
-- <code title="get /v1/autocomplete/company">client.autocomplete.<a href="./src/resources/autocomplete.ts">autocompleteCompaniesV1</a>({ ...params }) -> AutocompleteAutocompleteCompaniesV1Response</code>

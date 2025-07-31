@@ -7,6 +7,16 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Search extends APIResource {
   /**
+   * Autocomplete company search
+   */
+  autocompleteCompaniesV1(
+    query: SearchAutocompleteCompaniesV1Params,
+    options?: RequestOptions,
+  ): APIPromise<SearchAutocompleteCompaniesV1Response> {
+    return this._client.get('/v1/autocomplete/company', { query, ...options });
+  }
+
+  /**
    * Search for companies
    */
   findCompaniesV0(
@@ -151,6 +161,59 @@ export namespace CompanySearch {
   }
 }
 
+export interface SearchAutocompleteCompaniesV1Response {
+  /**
+   * List of companies matching the search criteria.
+   */
+  results?: Array<SearchAutocompleteCompaniesV1Response.Result>;
+}
+
+export namespace SearchAutocompleteCompaniesV1Response {
+  export interface Result {
+    /**
+     * Company status - true if active, false if inactive.
+     */
+    active: boolean;
+
+    /**
+     * Unique company identifier. Example: DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
+     * Haftung
+     */
+    legal_form: SearchAPI.CompanyLegalForm;
+
+    /**
+     * Official registered company name. Example: "Max Mustermann GmbH"
+     */
+    name: string;
+
+    /**
+     * Court where the company is registered. Example: "Berlin (Charlottenburg)"
+     */
+    register_court: string;
+
+    /**
+     * Registration number in the company register. Example: "230633"
+     */
+    register_number: string;
+
+    /**
+     * Type of company register. Example: "HRB" for Commercial Register B
+     */
+    register_type: SearchAPI.CompanyRegisterType;
+
+    /**
+     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
+     * "DE" for Germany
+     */
+    country?: string;
+  }
+}
+
 export interface SearchLookupCompanyByURLResponse {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
@@ -171,6 +234,14 @@ export interface SearchLookupCompanyByURLResponse {
    * Value Added Tax identification number. Example: "DE123456789"
    */
   vat_id?: string;
+}
+
+export interface SearchAutocompleteCompaniesV1Params {
+  /**
+   * Text search query to find companies by name. Example: "Descartes Technologies
+   * UG"
+   */
+  query: string;
 }
 
 export interface SearchFindCompaniesV0Params {
@@ -367,7 +438,9 @@ export declare namespace Search {
     type CompanyLegalForm as CompanyLegalForm,
     type CompanyRegisterType as CompanyRegisterType,
     type CompanySearch as CompanySearch,
+    type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
+    type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,

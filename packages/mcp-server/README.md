@@ -133,7 +133,7 @@ over time, you can manually enable or disable certain capabilities:
 import { server, endpoints, init } from "openregister-mcp/server";
 
 // import a specific tool
-import findCompaniesV0Search from "openregister-mcp/tools/search/find-companies-v0-search";
+import autocompleteCompaniesV1Search from "openregister-mcp/tools/search/autocomplete-companies-v1-search";
 
 // initialize the server and all endpoints
 init({ server, endpoints });
@@ -158,7 +158,7 @@ const myCustomEndpoint = {
 };
 
 // initialize the server with your custom endpoints
-init({ server: myServer, endpoints: [findCompaniesV0Search, myCustomEndpoint] });
+init({ server: myServer, endpoints: [autocompleteCompaniesV1Search, myCustomEndpoint] });
 ```
 
 ## Available Tools
@@ -167,6 +167,7 @@ The following tools are available in this MCP server.
 
 ### Resource `search`:
 
+- `autocomplete_companies_v1_search` (`read`): Autocomplete company search
 - `find_companies_v0_search` (`read`): Search for companies
 - `find_companies_v1_search` (`write`): Search for companies
 - `lookup_company_by_url_search` (`read`): Find company by website URL
@@ -188,7 +189,3 @@ The following tools are available in this MCP server.
 
 - `create_jobs_document` (`write`): Create a document job
 - `retrieve_jobs_document` (`read`): Get document job status
-
-### Resource `autocomplete`:
-
-- `autocomplete_companies_v1_autocomplete` (`read`): Autocomplete company search
