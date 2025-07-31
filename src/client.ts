@@ -17,6 +17,11 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  Autocomplete,
+  AutocompleteAutocompleteCompaniesV1Params,
+  AutocompleteAutocompleteCompaniesV1Response,
+} from './resources/autocomplete';
+import {
   Company,
   CompanyAddress,
   CompanyCapital,
@@ -747,11 +752,13 @@ export class Openregister {
   company: API.Company = new API.Company(this);
   document: API.Document = new API.Document(this);
   jobs: API.Jobs = new API.Jobs(this);
+  autocomplete: API.Autocomplete = new API.Autocomplete(this);
 }
 Openregister.Search = Search;
 Openregister.Company = Company;
 Openregister.Document = Document;
 Openregister.Jobs = Jobs;
+Openregister.Autocomplete = Autocomplete;
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
 
@@ -786,4 +793,10 @@ export declare namespace Openregister {
   export { Document as Document, type DocumentRetrieveResponse as DocumentRetrieveResponse };
 
   export { Jobs as Jobs };
+
+  export {
+    Autocomplete as Autocomplete,
+    type AutocompleteAutocompleteCompaniesV1Response as AutocompleteAutocompleteCompaniesV1Response,
+    type AutocompleteAutocompleteCompaniesV1Params as AutocompleteAutocompleteCompaniesV1Params,
+  };
 }

@@ -188,3 +188,7 @@ The following tools are available in this MCP server.
 
 - `create_jobs_document` (`write`): Create a document job
 - `retrieve_jobs_document` (`read`): Get document job status
+
+### Resource `autocomplete`:
+
+- `autocomplete_companies_v1_autocomplete` (`read`): Autocomplete company search

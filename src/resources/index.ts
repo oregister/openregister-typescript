@@ -1,6 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
+  Autocomplete,
+  type AutocompleteAutocompleteCompaniesV1Response,
+  type AutocompleteAutocompleteCompaniesV1Params,
+} from './autocomplete';
+export {
   Company,
   type CompanyAddress,
   type CompanyCapital,
