@@ -16,6 +16,7 @@ import retrieve_document from './document/retrieve-document';
 import download_document from './document/download-document';
 import create_jobs_document from './jobs/document/create-jobs-document';
 import retrieve_jobs_document from './jobs/document/retrieve-jobs-document';
+import autocomplete_companies_v1_autocomplete from './autocomplete/autocomplete-companies-v1-autocomplete';
 
 export const endpoints: Endpoint[] = [];
 
@@ -35,6 +36,7 @@ addEndpoint(retrieve_document);
 addEndpoint(download_document);
 addEndpoint(create_jobs_document);
 addEndpoint(retrieve_jobs_document);
+addEndpoint(autocomplete_companies_v1_autocomplete);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';

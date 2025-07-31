@@ -62,3 +62,13 @@ Methods:
 
 - <code title="post /v0/jobs/document">client.jobs.document.<a href="./src/resources/jobs/document.ts">create</a>({ ...params }) -> DocumentCreateResponse</code>
 - <code title="get /v0/jobs/document/{id}">client.jobs.document.<a href="./src/resources/jobs/document.ts">retrieve</a>(id) -> DocumentRetrieveResponse</code>
+
+# Autocomplete
+
+Types:
+
+- <code><a href="./src/resources/autocomplete.ts">AutocompleteAutocompleteCompaniesV1Response</a></code>
+
+Methods:
+
+- <code title="get /v1/autocomplete/company">client.autocomplete.<a href="./src/resources/autocomplete.ts">autocompleteCompaniesV1</a>({ ...params }) -> AutocompleteAutocompleteCompaniesV1Response</code>
