@@ -33,8 +33,8 @@ describe('resource company', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('getHoldings', async () => {
-    const responsePromise = client.company.getHoldings('company_id');
+  test.skip('getHoldingsV1', async () => {
+    const responsePromise = client.company.getHoldingsV1('company_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -45,8 +45,8 @@ describe('resource company', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('getOwners', async () => {
-    const responsePromise = client.company.getOwners('company_id');
+  test.skip('getOwnersV1', async () => {
+    const responsePromise = client.company.getOwnersV1('company_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

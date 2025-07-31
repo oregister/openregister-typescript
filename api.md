@@ -25,16 +25,16 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyRelationType</a></code>
 - <code><a href="./src/resources/company.ts">EntityType</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRetrieveResponse</a></code>
-- <code><a href="./src/resources/company.ts">CompanyGetHoldingsResponse</a></code>
-- <code><a href="./src/resources/company.ts">CompanyGetOwnersResponse</a></code>
+- <code><a href="./src/resources/company.ts">CompanyGetHoldingsV1Response</a></code>
+- <code><a href="./src/resources/company.ts">CompanyGetOwnersV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyListShareholdersResponse</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRetrieveContactResponse</a></code>
 
 Methods:
 
 - <code title="get /v0/company/{company_id}">client.company.<a href="./src/resources/company.ts">retrieve</a>(companyID, { ...params }) -> CompanyRetrieveResponse</code>
-- <code title="get /v1/company/{company_id}/holdings">client.company.<a href="./src/resources/company.ts">getHoldings</a>(companyID) -> CompanyGetHoldingsResponse</code>
-- <code title="get /v1/company/{company_id}/owners">client.company.<a href="./src/resources/company.ts">getOwners</a>(companyID) -> CompanyGetOwnersResponse</code>
+- <code title="get /v1/company/{company_id}/holdings">client.company.<a href="./src/resources/company.ts">getHoldingsV1</a>(companyID) -> CompanyGetHoldingsV1Response</code>
+- <code title="get /v1/company/{company_id}/owners">client.company.<a href="./src/resources/company.ts">getOwnersV1</a>(companyID) -> CompanyGetOwnersV1Response</code>
 - <code title="get /v0/company/{company_id}/shareholders">client.company.<a href="./src/resources/company.ts">listShareholders</a>(companyID) -> CompanyListShareholdersResponse</code>
 - <code title="get /v0/company/{company_id}/contact">client.company.<a href="./src/resources/company.ts">retrieveContact</a>(companyID) -> CompanyRetrieveContactResponse</code>
 
