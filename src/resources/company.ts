@@ -289,6 +289,12 @@ export namespace CompanyRetrieveResponse {
     city: string;
 
     /**
+     * Country where the representative is located, in ISO 3166-1 alpha-2 format.
+     * Example: "DE" for Germany
+     */
+    country: string;
+
+    /**
      * The name of the representative. E.g. "Max Mustermann" or "Max Mustermann GmbH"
      */
     name: string;
@@ -323,12 +329,6 @@ export namespace CompanyRetrieveResponse {
      * May be null for certain representatives.
      */
     id?: string;
-
-    /**
-     * Country where the representative is located, in ISO 3166-1 alpha-2 format.
-     * Example: "DE" for Germany
-     */
-    country?: string;
 
     /**
      * Date of birth of the representative. Only provided for type=natural_person. May
