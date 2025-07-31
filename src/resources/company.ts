@@ -22,14 +22,14 @@ export class Company extends APIResource {
   /**
    * Get company holdings
    */
-  getHoldings(companyID: string, options?: RequestOptions): APIPromise<CompanyGetHoldingsResponse> {
+  getHoldingsV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetHoldingsV1Response> {
     return this._client.get(path`/v1/company/${companyID}/holdings`, options);
   }
 
   /**
    * Get company owners
    */
-  getOwners(companyID: string, options?: RequestOptions): APIPromise<CompanyGetOwnersResponse> {
+  getOwnersV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetOwnersV1Response> {
     return this._client.get(path`/v1/company/${companyID}/owners`, options);
   }
 
@@ -464,16 +464,16 @@ export namespace CompanyRetrieveResponse {
 /**
  * Companies this entity owns or has invested in.
  */
-export interface CompanyGetHoldingsResponse {
+export interface CompanyGetHoldingsV1Response {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
    */
   company_id: string;
 
-  holdings: Array<CompanyGetHoldingsResponse.Holding>;
+  holdings: Array<CompanyGetHoldingsV1Response.Holding>;
 }
 
-export namespace CompanyGetHoldingsResponse {
+export namespace CompanyGetHoldingsV1Response {
   export interface Holding {
     /**
      * Unique company identifier. Example: DE-HRB-F1103-267645
@@ -514,16 +514,16 @@ export namespace CompanyGetHoldingsResponse {
   }
 }
 
-export interface CompanyGetOwnersResponse {
+export interface CompanyGetOwnersV1Response {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
    */
   company_id: string;
 
-  owners: Array<CompanyGetOwnersResponse.Owner>;
+  owners: Array<CompanyGetOwnersV1Response.Owner>;
 }
 
-export namespace CompanyGetOwnersResponse {
+export namespace CompanyGetOwnersV1Response {
   export interface Owner {
     /**
      * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
@@ -715,8 +715,8 @@ export declare namespace Company {
     type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
     type CompanyRetrieveResponse as CompanyRetrieveResponse,
-    type CompanyGetHoldingsResponse as CompanyGetHoldingsResponse,
-    type CompanyGetOwnersResponse as CompanyGetOwnersResponse,
+    type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
+    type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyListShareholdersResponse as CompanyListShareholdersResponse,
     type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
     type CompanyRetrieveParams as CompanyRetrieveParams,
