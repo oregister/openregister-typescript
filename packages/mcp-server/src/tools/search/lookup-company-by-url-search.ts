@@ -41,8 +41,8 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
-  const body = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.search.lookupCompanyByURL(body)));
+  const { jq_filter, ...body } = args as any;
+  return asTextContentResult(await maybeFilter(jq_filter, await client.search.lookupCompanyByURL(body)));
 };
 
 export default { metadata, tool, handler };
