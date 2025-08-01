@@ -40,8 +40,8 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
-  const { company_id, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.company.getHoldingsV1(company_id)));
+  const { company_id, jq_filter, ...body } = args as any;
+  return asTextContentResult(await maybeFilter(jq_filter, await client.company.getHoldingsV1(company_id)));
 };
 
 export default { metadata, tool, handler };
