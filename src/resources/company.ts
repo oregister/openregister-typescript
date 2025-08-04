@@ -46,6 +46,16 @@ export class Company extends APIResource {
   retrieveContact(companyID: string, options?: RequestOptions): APIPromise<CompanyRetrieveContactResponse> {
     return this._client.get(path`/v0/company/${companyID}/contact`, options);
   }
+
+  /**
+   * Get financial reports
+   */
+  retrieveFinancials(
+    companyID: string,
+    options?: RequestOptions,
+  ): APIPromise<CompanyRetrieveFinancialsResponse> {
+    return this._client.get(path`/v1/company/${companyID}/financials`, options);
+  }
 }
 
 export interface CompanyAddress {
@@ -685,6 +695,84 @@ export interface CompanyRetrieveContactResponse {
   vat_id?: string;
 }
 
+export interface CompanyRetrieveFinancialsResponse {
+  reports: Array<CompanyRetrieveFinancialsResponse.Report>;
+}
+
+export namespace CompanyRetrieveFinancialsResponse {
+  export interface Report {
+    aktiva: Report.Aktiva;
+
+    consolidated: boolean;
+
+    passiva: Report.Passiva;
+
+    report_end_date: string;
+
+    report_id: string;
+
+    guv?: Report.Guv;
+
+    report_start_date?: string;
+  }
+
+  export namespace Report {
+    export interface Aktiva {
+      rows: Array<Aktiva.Row>;
+    }
+
+    export namespace Aktiva {
+      export interface Row {
+        children: Array<unknown>;
+
+        formatted_name: string;
+
+        name: string;
+
+        current_value?: number;
+
+        previous_value?: number;
+      }
+    }
+
+    export interface Passiva {
+      rows: Array<Passiva.Row>;
+    }
+
+    export namespace Passiva {
+      export interface Row {
+        children: Array<unknown>;
+
+        formatted_name: string;
+
+        name: string;
+
+        current_value?: number;
+
+        previous_value?: number;
+      }
+    }
+
+    export interface Guv {
+      rows: Array<Guv.Row>;
+    }
+
+    export namespace Guv {
+      export interface Row {
+        children: Array<unknown>;
+
+        formatted_name: string;
+
+        name: string;
+
+        current_value?: number;
+
+        previous_value?: number;
+      }
+    }
+  }
+}
+
 export interface CompanyRetrieveParams {
   /**
    * Include document metadata when set to true. Lists available official documents
@@ -719,6 +807,7 @@ export declare namespace Company {
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyListShareholdersResponse as CompanyListShareholdersResponse,
     type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
+    type CompanyRetrieveFinancialsResponse as CompanyRetrieveFinancialsResponse,
     type CompanyRetrieveParams as CompanyRetrieveParams,
   };
 }

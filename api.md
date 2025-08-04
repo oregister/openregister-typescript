@@ -6,6 +6,7 @@ Types:
 - <code><a href="./src/resources/search.ts">CompanyRegisterType</a></code>
 - <code><a href="./src/resources/search.ts">CompanySearch</a></code>
 - <code><a href="./src/resources/search.ts">SearchAutocompleteCompaniesV1Response</a></code>
+- <code><a href="./src/resources/search.ts">SearchFindPersonResponse</a></code>
 - <code><a href="./src/resources/search.ts">SearchLookupCompanyByURLResponse</a></code>
 
 Methods:
@@ -13,6 +14,7 @@ Methods:
 - <code title="get /v1/autocomplete/company">client.search.<a href="./src/resources/search.ts">autocompleteCompaniesV1</a>({ ...params }) -> SearchAutocompleteCompaniesV1Response</code>
 - <code title="get /v0/search/company">client.search.<a href="./src/resources/search.ts">findCompaniesV0</a>({ ...params }) -> CompanySearch</code>
 - <code title="post /v1/search/company">client.search.<a href="./src/resources/search.ts">findCompaniesV1</a>({ ...params }) -> CompanySearch</code>
+- <code title="post /v1/search/person">client.search.<a href="./src/resources/search.ts">findPerson</a>({ ...params }) -> SearchFindPersonResponse</code>
 - <code title="get /v0/search/lookup">client.search.<a href="./src/resources/search.ts">lookupCompanyByURL</a>({ ...params }) -> SearchLookupCompanyByURLResponse</code>
 
 # Company
@@ -31,6 +33,7 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyGetOwnersV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyListShareholdersResponse</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRetrieveContactResponse</a></code>
+- <code><a href="./src/resources/company.ts">CompanyRetrieveFinancialsResponse</a></code>
 
 Methods:
 
@@ -39,6 +42,7 @@ Methods:
 - <code title="get /v1/company/{company_id}/owners">client.company.<a href="./src/resources/company.ts">getOwnersV1</a>(companyID) -> CompanyGetOwnersV1Response</code>
 - <code title="get /v0/company/{company_id}/shareholders">client.company.<a href="./src/resources/company.ts">listShareholders</a>(companyID) -> CompanyListShareholdersResponse</code>
 - <code title="get /v0/company/{company_id}/contact">client.company.<a href="./src/resources/company.ts">retrieveContact</a>(companyID) -> CompanyRetrieveContactResponse</code>
+- <code title="get /v1/company/{company_id}/financials">client.company.<a href="./src/resources/company.ts">retrieveFinancials</a>(companyID) -> CompanyRetrieveFinancialsResponse</code>
 
 # Document
 

@@ -34,6 +34,13 @@ export class Search extends APIResource {
   }
 
   /**
+   * Search for people
+   */
+  findPerson(body: SearchFindPersonParams, options?: RequestOptions): APIPromise<SearchFindPersonResponse> {
+    return this._client.post('/v1/search/person', { body, ...options });
+  }
+
+  /**
    * Find company by website URL
    */
   lookupCompanyByURL(
@@ -211,6 +218,66 @@ export namespace SearchAutocompleteCompaniesV1Response {
      * "DE" for Germany
      */
     country?: string;
+  }
+}
+
+export interface SearchFindPersonResponse {
+  pagination: SearchFindPersonResponse.Pagination;
+
+  /**
+   * List of people matching the search criteria.
+   */
+  results: Array<SearchFindPersonResponse.Result>;
+}
+
+export namespace SearchFindPersonResponse {
+  export interface Pagination {
+    /**
+     * Current page number.
+     */
+    page: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page: number;
+
+    /**
+     * Total number of pages.
+     */
+    total_pages: number;
+
+    /**
+     * Total number of results.
+     */
+    total_results: number;
+  }
+
+  export interface Result {
+    /**
+     * Unique person identifier. Example: 1234-5678-9012-345678901234
+     */
+    id: string;
+
+    /**
+     * Person status - true if active, false if inactive.
+     */
+    active: boolean;
+
+    /**
+     * Date of birth of the person. Format: ISO 8601 (YYYY-MM-DD) Example: "1990-01-01"
+     */
+    date_of_birth: string;
+
+    /**
+     * Name of the person. Example: "Max Mustermann"
+     */
+    name: string;
+
+    /**
+     * City of the person. Example: "Berlin"
+     */
+    city?: string;
   }
 }
 
@@ -424,6 +491,110 @@ export namespace SearchFindCompaniesV1Params {
   }
 }
 
+export interface SearchFindPersonParams {
+  /**
+   * Filters to filter people.
+   */
+  filters?: Array<SearchFindPersonParams.Filter>;
+
+  /**
+   * Pagination parameters.
+   */
+  pagination?: SearchFindPersonParams.Pagination;
+
+  /**
+   * Search query to filter people.
+   */
+  query?: SearchFindPersonParams.Query;
+}
+
+export namespace SearchFindPersonParams {
+  /**
+   * Filter by field. The properties values, value, keywords and min/max are mutually
+   * exclusive. Dates must be in the format YYYY-MM-DD.
+   */
+  export interface Filter {
+    field?:
+      | 'date_of_birth'
+      | 'city'
+      | 'active'
+      | 'status'
+      | 'legal_form'
+      | 'register_number'
+      | 'register_court'
+      | 'register_type'
+      | 'incorporated_at'
+      | 'zip'
+      | 'address'
+      | 'balance_sheet_total'
+      | 'revenue'
+      | 'cash'
+      | 'employees'
+      | 'equity'
+      | 'real_estate'
+      | 'materials'
+      | 'pension_provisions'
+      | 'salaries'
+      | 'taxes'
+      | 'liabilities'
+      | 'capital_reserves'
+      | 'net_income'
+      | 'industry_codes'
+      | 'capital_amount'
+      | 'capital_currency';
+
+    /**
+     * Keywords to filter on.
+     */
+    keywords?: Array<string>;
+
+    /**
+     * Maximum value to filter on.
+     */
+    max?: string;
+
+    /**
+     * Minimum value to filter on.
+     */
+    min?: string;
+
+    /**
+     * Value to filter on.
+     */
+    value?: string;
+
+    /**
+     * Values to filter on.
+     */
+    values?: Array<string>;
+  }
+
+  /**
+   * Pagination parameters.
+   */
+  export interface Pagination {
+    /**
+     * Page number to return.
+     */
+    page?: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page?: number;
+  }
+
+  /**
+   * Search query to filter people.
+   */
+  export interface Query {
+    /**
+     * Search query to filter people.
+     */
+    value: string;
+  }
+}
+
 export interface SearchLookupCompanyByURLParams {
   /**
    * Website URL to search for. Example: "https://openregister.de"
@@ -437,10 +608,12 @@ export declare namespace Search {
     type CompanyRegisterType as CompanyRegisterType,
     type CompanySearch as CompanySearch,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
+    type SearchFindPersonResponse as SearchFindPersonResponse,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
+    type SearchFindPersonParams as SearchFindPersonParams,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 }
