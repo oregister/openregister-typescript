@@ -9,6 +9,7 @@ export {
   type CompanyRegister,
   type CompanyRelationType,
   type EntityType,
+  type ReportRow,
   type CompanyRetrieveResponse,
   type CompanyGetHoldingsV1Response,
   type CompanyGetOwnersV1Response,

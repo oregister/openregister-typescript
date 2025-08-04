@@ -184,6 +184,18 @@ export type CompanyRelationType = 'shareholder' | 'stockholder' | 'limited_partn
 
 export type EntityType = 'natural_person' | 'legal_person';
 
+export interface ReportRow {
+  children: Array<ReportRow>;
+
+  formatted_name: string;
+
+  name: string;
+
+  current_value?: number;
+
+  previous_value?: number;
+}
+
 export interface CompanyRetrieveResponse {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
@@ -718,57 +730,15 @@ export namespace CompanyRetrieveFinancialsResponse {
 
   export namespace Report {
     export interface Aktiva {
-      rows: Array<Aktiva.Row>;
-    }
-
-    export namespace Aktiva {
-      export interface Row {
-        children: Array<unknown>;
-
-        formatted_name: string;
-
-        name: string;
-
-        current_value?: number;
-
-        previous_value?: number;
-      }
+      rows: Array<CompanyAPI.ReportRow>;
     }
 
     export interface Passiva {
-      rows: Array<Passiva.Row>;
-    }
-
-    export namespace Passiva {
-      export interface Row {
-        children: Array<unknown>;
-
-        formatted_name: string;
-
-        name: string;
-
-        current_value?: number;
-
-        previous_value?: number;
-      }
+      rows: Array<CompanyAPI.ReportRow>;
     }
 
     export interface Guv {
-      rows: Array<Guv.Row>;
-    }
-
-    export namespace Guv {
-      export interface Row {
-        children: Array<unknown>;
-
-        formatted_name: string;
-
-        name: string;
-
-        current_value?: number;
-
-        previous_value?: number;
-      }
+      rows: Array<CompanyAPI.ReportRow>;
     }
   }
 }
@@ -802,6 +772,7 @@ export declare namespace Company {
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
+    type ReportRow as ReportRow,
     type CompanyRetrieveResponse as CompanyRetrieveResponse,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,

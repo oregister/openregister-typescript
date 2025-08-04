@@ -32,6 +32,7 @@ import {
   CompanyRetrieveParams,
   CompanyRetrieveResponse,
   EntityType,
+  ReportRow,
 } from './resources/company';
 import { Document, DocumentRetrieveResponse } from './resources/document';
 import {
@@ -784,6 +785,7 @@ export declare namespace Openregister {
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
+    type ReportRow as ReportRow,
     type CompanyRetrieveResponse as CompanyRetrieveResponse,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
