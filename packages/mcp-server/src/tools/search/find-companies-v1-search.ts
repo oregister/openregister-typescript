@@ -32,15 +32,15 @@ export const tool: Tool = {
           properties: {
             field: {
               type: 'string',
-              description: 'Field to filter on.',
               enum: [
+                'date_of_birth',
+                'city',
+                'active',
                 'status',
                 'legal_form',
                 'register_number',
                 'register_court',
                 'register_type',
-                'city',
-                'active',
                 'incorporated_at',
                 'zip',
                 'address',
