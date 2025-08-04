@@ -28,6 +28,7 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyRegister</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRelationType</a></code>
 - <code><a href="./src/resources/company.ts">EntityType</a></code>
+- <code><a href="./src/resources/company.ts">ReportRow</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRetrieveResponse</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetHoldingsV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetOwnersV1Response</a></code>
