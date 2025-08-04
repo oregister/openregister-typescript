@@ -323,17 +323,15 @@ export namespace SearchFindCompaniesV1Params {
    * exclusive. Dates must be in the format YYYY-MM-DD.
    */
   export interface Filter {
-    /**
-     * Field to filter on.
-     */
     field?:
+      | 'date_of_birth'
+      | 'city'
+      | 'active'
       | 'status'
       | 'legal_form'
       | 'register_number'
       | 'register_court'
       | 'register_type'
-      | 'city'
-      | 'active'
       | 'incorporated_at'
       | 'zip'
       | 'address'
