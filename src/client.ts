@@ -28,6 +28,7 @@ import {
   CompanyRegister,
   CompanyRelationType,
   CompanyRetrieveContactResponse,
+  CompanyRetrieveFinancialsResponse,
   CompanyRetrieveParams,
   CompanyRetrieveResponse,
   EntityType,
@@ -42,6 +43,8 @@ import {
   SearchAutocompleteCompaniesV1Response,
   SearchFindCompaniesV0Params,
   SearchFindCompaniesV1Params,
+  SearchFindPersonParams,
+  SearchFindPersonResponse,
   SearchLookupCompanyByURLParams,
   SearchLookupCompanyByURLResponse,
 } from './resources/search';
@@ -763,10 +766,12 @@ export declare namespace Openregister {
     type CompanyRegisterType as CompanyRegisterType,
     type CompanySearch as CompanySearch,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
+    type SearchFindPersonResponse as SearchFindPersonResponse,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
+    type SearchFindPersonParams as SearchFindPersonParams,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 
@@ -784,6 +789,7 @@ export declare namespace Openregister {
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyListShareholdersResponse as CompanyListShareholdersResponse,
     type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
+    type CompanyRetrieveFinancialsResponse as CompanyRetrieveFinancialsResponse,
     type CompanyRetrieveParams as CompanyRetrieveParams,
   };
 

@@ -170,6 +170,7 @@ The following tools are available in this MCP server.
 - `autocomplete_companies_v1_search` (`read`): Autocomplete company search
 - `find_companies_v0_search` (`read`): Search for companies
 - `find_companies_v1_search` (`write`): Search for companies
+- `find_person_search` (`write`): Search for people
 - `lookup_company_by_url_search` (`read`): Find company by website URL
 
 ### Resource `company`:
@@ -179,6 +180,7 @@ The following tools are available in this MCP server.
 - `get_owners_v1_company` (`read`): Get company owners
 - `list_shareholders_company` (`read`): Get company shareholders
 - `retrieve_contact_company` (`read`): Get company contact information
+- `retrieve_financials_company` (`read`): Get financial reports
 
 ### Resource `document`:
 

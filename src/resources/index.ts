@@ -14,6 +14,7 @@ export {
   type CompanyGetOwnersV1Response,
   type CompanyListShareholdersResponse,
   type CompanyRetrieveContactResponse,
+  type CompanyRetrieveFinancialsResponse,
   type CompanyRetrieveParams,
 } from './company';
 export { Document, type DocumentRetrieveResponse } from './document';
@@ -24,9 +25,11 @@ export {
   type CompanyRegisterType,
   type CompanySearch,
   type SearchAutocompleteCompaniesV1Response,
+  type SearchFindPersonResponse,
   type SearchLookupCompanyByURLResponse,
   type SearchAutocompleteCompaniesV1Params,
   type SearchFindCompaniesV0Params,
   type SearchFindCompaniesV1Params,
+  type SearchFindPersonParams,
   type SearchLookupCompanyByURLParams,
 } from './search';
