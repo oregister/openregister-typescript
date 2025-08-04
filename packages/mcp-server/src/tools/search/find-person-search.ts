@@ -27,68 +27,34 @@ export const tool: Tool = {
         description: 'Filters to filter people.\n',
         items: {
           type: 'object',
-          description:
-            'Filter by field. The properties values, value, keywords and min/max are mutually exclusive.\nDates must be in the format YYYY-MM-DD.\n',
           properties: {
             field: {
               type: 'string',
-              enum: [
-                'date_of_birth',
-                'city',
-                'active',
-                'status',
-                'legal_form',
-                'register_number',
-                'register_court',
-                'register_type',
-                'incorporated_at',
-                'zip',
-                'address',
-                'balance_sheet_total',
-                'revenue',
-                'cash',
-                'employees',
-                'equity',
-                'real_estate',
-                'materials',
-                'pension_provisions',
-                'salaries',
-                'taxes',
-                'liabilities',
-                'capital_reserves',
-                'net_income',
-                'industry_codes',
-                'capital_amount',
-                'capital_currency',
-              ],
+              enum: ['date_of_birth', 'city', 'active'],
             },
             keywords: {
               type: 'array',
-              description: 'Keywords to filter on.\n',
               items: {
                 type: 'string',
               },
             },
             max: {
               type: 'string',
-              description: 'Maximum value to filter on.\n',
             },
             min: {
               type: 'string',
-              description: 'Minimum value to filter on.\n',
             },
             value: {
               type: 'string',
-              description: 'Value to filter on.\n',
             },
             values: {
               type: 'array',
-              description: 'Values to filter on.\n',
               items: {
                 type: 'string',
               },
             },
           },
+          required: ['field'],
         },
       },
       pagination: {
