@@ -385,20 +385,15 @@ export interface SearchFindCompaniesV1Params {
 }
 
 export namespace SearchFindCompaniesV1Params {
-  /**
-   * Filter by field. The properties values, value, keywords and min/max are mutually
-   * exclusive. Dates must be in the format YYYY-MM-DD.
-   */
   export interface Filter {
-    field?:
-      | 'date_of_birth'
-      | 'city'
-      | 'active'
+    field:
       | 'status'
       | 'legal_form'
       | 'register_number'
       | 'register_court'
       | 'register_type'
+      | 'city'
+      | 'active'
       | 'incorporated_at'
       | 'zip'
       | 'address'
@@ -419,29 +414,14 @@ export namespace SearchFindCompaniesV1Params {
       | 'capital_amount'
       | 'capital_currency';
 
-    /**
-     * Keywords to filter on.
-     */
     keywords?: Array<string>;
 
-    /**
-     * Maximum value to filter on.
-     */
     max?: string;
 
-    /**
-     * Minimum value to filter on.
-     */
     min?: string;
 
-    /**
-     * Value to filter on.
-     */
     value?: string;
 
-    /**
-     * Values to filter on.
-     */
     values?: Array<string>;
   }
 
@@ -509,63 +489,17 @@ export interface SearchFindPersonParams {
 }
 
 export namespace SearchFindPersonParams {
-  /**
-   * Filter by field. The properties values, value, keywords and min/max are mutually
-   * exclusive. Dates must be in the format YYYY-MM-DD.
-   */
   export interface Filter {
-    field?:
-      | 'date_of_birth'
-      | 'city'
-      | 'active'
-      | 'status'
-      | 'legal_form'
-      | 'register_number'
-      | 'register_court'
-      | 'register_type'
-      | 'incorporated_at'
-      | 'zip'
-      | 'address'
-      | 'balance_sheet_total'
-      | 'revenue'
-      | 'cash'
-      | 'employees'
-      | 'equity'
-      | 'real_estate'
-      | 'materials'
-      | 'pension_provisions'
-      | 'salaries'
-      | 'taxes'
-      | 'liabilities'
-      | 'capital_reserves'
-      | 'net_income'
-      | 'industry_codes'
-      | 'capital_amount'
-      | 'capital_currency';
+    field: 'date_of_birth' | 'city' | 'active';
 
-    /**
-     * Keywords to filter on.
-     */
     keywords?: Array<string>;
 
-    /**
-     * Maximum value to filter on.
-     */
     max?: string;
 
-    /**
-     * Minimum value to filter on.
-     */
     min?: string;
 
-    /**
-     * Value to filter on.
-     */
     value?: string;
 
-    /**
-     * Values to filter on.
-     */
     values?: Array<string>;
   }
 
