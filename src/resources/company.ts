@@ -20,6 +20,20 @@ export class Company extends APIResource {
   }
 
   /**
+   * Get company holdings
+   */
+  getHoldingsV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetHoldingsV1Response> {
+    return this._client.get(path`/v1/company/${companyID}/holdings`, options);
+  }
+
+  /**
+   * Get company owners
+   */
+  getOwnersV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetOwnersV1Response> {
+    return this._client.get(path`/v1/company/${companyID}/owners`, options);
+  }
+
+  /**
    * Get company shareholders
    */
   listShareholders(companyID: string, options?: RequestOptions): APIPromise<CompanyListShareholdersResponse> {
@@ -31,6 +45,16 @@ export class Company extends APIResource {
    */
   retrieveContact(companyID: string, options?: RequestOptions): APIPromise<CompanyRetrieveContactResponse> {
     return this._client.get(path`/v0/company/${companyID}/contact`, options);
+  }
+
+  /**
+   * Get financial reports
+   */
+  retrieveFinancials(
+    companyID: string,
+    options?: RequestOptions,
+  ): APIPromise<CompanyRetrieveFinancialsResponse> {
+    return this._client.get(path`/v1/company/${companyID}/financials`, options);
   }
 }
 
@@ -156,7 +180,21 @@ export interface CompanyRegister {
   start_date?: string;
 }
 
+export type CompanyRelationType = 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
+
 export type EntityType = 'natural_person' | 'legal_person';
+
+export interface ReportRow {
+  children: Array<ReportRow>;
+
+  formatted_name: string;
+
+  name: string;
+
+  current_value?: number;
+
+  previous_value?: number;
+}
 
 export interface CompanyRetrieveResponse {
   /**
@@ -445,6 +483,154 @@ export namespace CompanyRetrieveResponse {
   }
 }
 
+/**
+ * Companies this entity owns or has invested in.
+ */
+export interface CompanyGetHoldingsV1Response {
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id: string;
+
+  holdings: Array<CompanyGetHoldingsV1Response.Holding>;
+}
+
+export namespace CompanyGetHoldingsV1Response {
+  export interface Holding {
+    /**
+     * Unique company identifier. Example: DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Name of the company.
+     */
+    name: string;
+
+    /**
+     * Amount of shares or capital in the company. Example: 100
+     */
+    nominal_share: number;
+
+    /**
+     * Type of relationship between the entity and the company.
+     */
+    relation_type: CompanyAPI.CompanyRelationType;
+
+    /**
+     * Date when the ownership ended. Format: ISO 8601 (YYYY-MM-DD) Example:
+     * "2022-01-01"
+     */
+    end?: string;
+
+    /**
+     * Share of the company. Example: 0.5 represents 50% ownership
+     */
+    percentage_share?: number;
+
+    /**
+     * Date when the ownership started. Format: ISO 8601 (YYYY-MM-DD) Example:
+     * "2022-01-01"
+     */
+    start?: string;
+  }
+}
+
+export interface CompanyGetOwnersV1Response {
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id: string;
+
+  owners: Array<CompanyGetOwnersV1Response.Owner>;
+}
+
+export namespace CompanyGetOwnersV1Response {
+  export interface Owner {
+    /**
+     * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
+     */
+    name: string;
+
+    /**
+     * Nominal value of shares in Euro. Example: 100
+     */
+    nominal_share: number;
+
+    /**
+     * Type of relationship between the entity and the company.
+     */
+    relation_type: CompanyAPI.CompanyRelationType;
+
+    /**
+     * The type of shareholder.
+     */
+    type: CompanyAPI.EntityType;
+
+    /**
+     * Unique identifier for the shareholder. For companies: Format matches company_id
+     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
+     * for certain shareholders.
+     */
+    id?: string;
+
+    /**
+     * Details about the legal person.
+     */
+    legal_person?: Owner.LegalPerson;
+
+    /**
+     * Details about the natural person.
+     */
+    natural_person?: Owner.NaturalPerson;
+
+    /**
+     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
+     */
+    percentage_share?: number;
+
+    /**
+     * Date when the relation started. Only available for some types of owners. Format:
+     * ISO 8601 (YYYY-MM-DD) Example: "2022-01-01"
+     */
+    start?: string;
+  }
+
+  export namespace Owner {
+    /**
+     * Details about the legal person.
+     */
+    export interface LegalPerson {
+      /**
+       * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
+       * for Germany
+       */
+      country: string;
+
+      name: string;
+
+      city?: string;
+    }
+
+    /**
+     * Details about the natural person.
+     */
+    export interface NaturalPerson {
+      city: string;
+
+      country: string;
+
+      first_name: string;
+
+      full_name: string;
+
+      last_name: string;
+
+      date_of_birth?: string;
+    }
+  }
+}
+
 export interface CompanyListShareholdersResponse {
   /**
    * Date when this shareholder information became effective. Format: ISO 8601
@@ -521,6 +707,42 @@ export interface CompanyRetrieveContactResponse {
   vat_id?: string;
 }
 
+export interface CompanyRetrieveFinancialsResponse {
+  reports: Array<CompanyRetrieveFinancialsResponse.Report>;
+}
+
+export namespace CompanyRetrieveFinancialsResponse {
+  export interface Report {
+    aktiva: Report.Aktiva;
+
+    consolidated: boolean;
+
+    passiva: Report.Passiva;
+
+    report_end_date: string;
+
+    report_id: string;
+
+    guv?: Report.Guv;
+
+    report_start_date?: string;
+  }
+
+  export namespace Report {
+    export interface Aktiva {
+      rows: Array<CompanyAPI.ReportRow>;
+    }
+
+    export interface Passiva {
+      rows: Array<CompanyAPI.ReportRow>;
+    }
+
+    export interface Guv {
+      rows: Array<CompanyAPI.ReportRow>;
+    }
+  }
+}
+
 export interface CompanyRetrieveParams {
   /**
    * Include document metadata when set to true. Lists available official documents
@@ -548,10 +770,15 @@ export declare namespace Company {
     type CompanyName as CompanyName,
     type CompanyPurpose as CompanyPurpose,
     type CompanyRegister as CompanyRegister,
+    type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
+    type ReportRow as ReportRow,
     type CompanyRetrieveResponse as CompanyRetrieveResponse,
+    type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
+    type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyListShareholdersResponse as CompanyListShareholdersResponse,
     type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
+    type CompanyRetrieveFinancialsResponse as CompanyRetrieveFinancialsResponse,
     type CompanyRetrieveParams as CompanyRetrieveParams,
   };
 }

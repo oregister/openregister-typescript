@@ -1,9 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { asBinaryContentResult } from 'openregister-mcp/tools/types';
+import { Metadata, asBinaryContentResult } from 'openregister-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import type { Metadata } from '../';
 import Openregister from 'openregister';
 
 export const metadata: Metadata = {
@@ -25,6 +24,10 @@ export const tool: Tool = {
         type: 'string',
       },
     },
+    required: ['document_id'],
+  },
+  annotations: {
+    readOnlyHint: true,
   },
 };
 

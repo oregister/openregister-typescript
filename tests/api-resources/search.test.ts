@@ -9,8 +9,8 @@ const client = new Openregister({
 
 describe('resource search', () => {
   // skipped: tests are disabled for the time being
-  test.skip('findCompanies', async () => {
-    const responsePromise = client.search.findCompanies();
+  test.skip('autocompleteCompaniesV1: only required params', async () => {
+    const responsePromise = client.search.autocompleteCompaniesV1({ query: 'query' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +21,27 @@ describe('resource search', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('findCompanies: request options and params are passed correctly', async () => {
+  test.skip('autocompleteCompaniesV1: required and optional params', async () => {
+    const response = await client.search.autocompleteCompaniesV1({ query: 'query' });
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('findCompaniesV0', async () => {
+    const responsePromise = client.search.findCompaniesV0();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('findCompaniesV0: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.search.findCompanies(
+      client.search.findCompaniesV0(
         {
           active: true,
           incorporation_date: 'incorporation_date',
@@ -39,6 +56,30 @@ describe('resource search', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Openregister.NotFoundError);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('findCompaniesV1', async () => {
+    const responsePromise = client.search.findCompaniesV1({});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('findPerson', async () => {
+    const responsePromise = client.search.findPerson({});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 
   // skipped: tests are disabled for the time being

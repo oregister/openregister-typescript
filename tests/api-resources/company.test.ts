@@ -33,6 +33,30 @@ describe('resource company', () => {
   });
 
   // skipped: tests are disabled for the time being
+  test.skip('getHoldingsV1', async () => {
+    const responsePromise = client.company.getHoldingsV1('company_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('getOwnersV1', async () => {
+    const responsePromise = client.company.getOwnersV1('company_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
   test.skip('listShareholders', async () => {
     const responsePromise = client.company.listShareholders('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -47,6 +71,18 @@ describe('resource company', () => {
   // skipped: tests are disabled for the time being
   test.skip('retrieveContact', async () => {
     const responsePromise = client.company.retrieveContact('company_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('retrieveFinancials', async () => {
+    const responsePromise = client.company.retrieveFinancials('company_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

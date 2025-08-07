@@ -133,7 +133,7 @@ over time, you can manually enable or disable certain capabilities:
 import { server, endpoints, init } from "openregister-mcp/server";
 
 // import a specific tool
-import findCompaniesSearch from "openregister-mcp/tools/search/find-companies-search";
+import autocompleteCompaniesV1Search from "openregister-mcp/tools/search/autocomplete-companies-v1-search";
 
 // initialize the server and all endpoints
 init({ server, endpoints });
@@ -158,7 +158,7 @@ const myCustomEndpoint = {
 };
 
 // initialize the server with your custom endpoints
-init({ server: myServer, endpoints: [findCompaniesSearch, myCustomEndpoint] });
+init({ server: myServer, endpoints: [autocompleteCompaniesV1Search, myCustomEndpoint] });
 ```
 
 ## Available Tools
@@ -167,14 +167,20 @@ The following tools are available in this MCP server.
 
 ### Resource `search`:
 
-- `find_companies_search` (`read`): Search for companies
+- `autocomplete_companies_v1_search` (`read`): Autocomplete company search
+- `find_companies_v0_search` (`read`): Search for companies
+- `find_companies_v1_search` (`write`): Search for companies
+- `find_person_search` (`write`): Search for people
 - `lookup_company_by_url_search` (`read`): Find company by website URL
 
 ### Resource `company`:
 
 - `retrieve_company` (`read`): Get detailed company information
+- `get_holdings_v1_company` (`read`): Get company holdings
+- `get_owners_v1_company` (`read`): Get company owners
 - `list_shareholders_company` (`read`): Get company shareholders
 - `retrieve_contact_company` (`read`): Get company contact information
+- `retrieve_financials_company` (`read`): Get financial reports
 
 ### Resource `document`:
 

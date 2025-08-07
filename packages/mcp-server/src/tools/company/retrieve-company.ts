@@ -1,9 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { asTextContentResult } from 'openregister-mcp/tools/types';
+import { Metadata, asTextContentResult } from 'openregister-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import type { Metadata } from '../';
 import Openregister from 'openregister';
 
 export const metadata: Metadata = {
@@ -40,6 +39,10 @@ export const tool: Tool = {
           'Include historical company data when set to true.\nThis returns past names, addresses, and other changed information.\n',
       },
     },
+    required: ['company_id'],
+  },
+  annotations: {
+    readOnlyHint: true,
   },
 };
 

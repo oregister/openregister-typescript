@@ -7,13 +7,37 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Search extends APIResource {
   /**
+   * Autocomplete company search
+   */
+  autocompleteCompaniesV1(
+    query: SearchAutocompleteCompaniesV1Params,
+    options?: RequestOptions,
+  ): APIPromise<SearchAutocompleteCompaniesV1Response> {
+    return this._client.get('/v1/autocomplete/company', { query, ...options });
+  }
+
+  /**
    * Search for companies
    */
-  findCompanies(
-    query: SearchFindCompaniesParams | null | undefined = {},
+  findCompaniesV0(
+    query: SearchFindCompaniesV0Params | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<SearchFindCompaniesResponse> {
+  ): APIPromise<CompanySearch> {
     return this._client.get('/v0/search/company', { query, ...options });
+  }
+
+  /**
+   * Search for companies
+   */
+  findCompaniesV1(body: SearchFindCompaniesV1Params, options?: RequestOptions): APIPromise<CompanySearch> {
+    return this._client.post('/v1/search/company', { body, ...options });
+  }
+
+  /**
+   * Search for people
+   */
+  findPerson(body: SearchFindPersonParams, options?: RequestOptions): APIPromise<SearchFindPersonResponse> {
+    return this._client.post('/v1/search/person', { body, ...options });
   }
 
   /**
@@ -67,16 +91,16 @@ export type CompanyLegalForm =
  */
 export type CompanyRegisterType = 'HRB' | 'HRA' | 'PR' | 'GnR' | 'VR';
 
-export interface SearchFindCompaniesResponse {
-  pagination: SearchFindCompaniesResponse.Pagination;
+export interface CompanySearch {
+  pagination: CompanySearch.Pagination;
 
   /**
    * List of companies matching the search criteria.
    */
-  results: Array<SearchFindCompaniesResponse.Result>;
+  results: Array<CompanySearch.Result>;
 }
 
-export namespace SearchFindCompaniesResponse {
+export namespace CompanySearch {
   export interface Pagination {
     /**
      * Current page number.
@@ -144,6 +168,119 @@ export namespace SearchFindCompaniesResponse {
   }
 }
 
+export interface SearchAutocompleteCompaniesV1Response {
+  /**
+   * List of companies matching the search criteria.
+   */
+  results?: Array<SearchAutocompleteCompaniesV1Response.Result>;
+}
+
+export namespace SearchAutocompleteCompaniesV1Response {
+  export interface Result {
+    /**
+     * Company status - true if active, false if inactive.
+     */
+    active: boolean;
+
+    /**
+     * Unique company identifier. Example: DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
+     * Haftung
+     */
+    legal_form: SearchAPI.CompanyLegalForm;
+
+    /**
+     * Official registered company name. Example: "Max Mustermann GmbH"
+     */
+    name: string;
+
+    /**
+     * Court where the company is registered. Example: "Berlin (Charlottenburg)"
+     */
+    register_court: string;
+
+    /**
+     * Registration number in the company register. Example: "230633"
+     */
+    register_number: string;
+
+    /**
+     * Type of company register. Example: "HRB" for Commercial Register B
+     */
+    register_type: SearchAPI.CompanyRegisterType;
+
+    /**
+     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
+     * "DE" for Germany
+     */
+    country?: string;
+  }
+}
+
+export interface SearchFindPersonResponse {
+  pagination: SearchFindPersonResponse.Pagination;
+
+  /**
+   * List of people matching the search criteria.
+   */
+  results: Array<SearchFindPersonResponse.Result>;
+}
+
+export namespace SearchFindPersonResponse {
+  export interface Pagination {
+    /**
+     * Current page number.
+     */
+    page: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page: number;
+
+    /**
+     * Total number of pages.
+     */
+    total_pages: number;
+
+    /**
+     * Total number of results.
+     */
+    total_results: number;
+  }
+
+  export interface Result {
+    /**
+     * Unique person identifier. Example: 1234-5678-9012-345678901234
+     */
+    id: string;
+
+    /**
+     * Person status - true if active, false if inactive.
+     */
+    active: boolean;
+
+    /**
+     * Date of birth of the person. Format: ISO 8601 (YYYY-MM-DD) Example: "1990-01-01"
+     */
+    date_of_birth: string;
+
+    /**
+     * Name of the person. Example: "Max Mustermann"
+     */
+    name: string;
+
+    /**
+     * City of the person. Example: "Berlin"
+     */
+    city?: string;
+  }
+}
+
 export interface SearchLookupCompanyByURLResponse {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
@@ -166,7 +303,15 @@ export interface SearchLookupCompanyByURLResponse {
   vat_id?: string;
 }
 
-export interface SearchFindCompaniesParams {
+export interface SearchAutocompleteCompaniesV1Params {
+  /**
+   * Text search query to find companies by name. Example: "Descartes Technologies
+   * UG"
+   */
+  query: string;
+}
+
+export interface SearchFindCompaniesV0Params {
   /**
    * Filter for active or inactive companies. Set to true for active companies only,
    * false for inactive only.
@@ -217,6 +362,173 @@ export interface SearchFindCompaniesParams {
   register_type?: CompanyRegisterType;
 }
 
+export interface SearchFindCompaniesV1Params {
+  /**
+   * Filters to filter companies.
+   */
+  filters?: Array<SearchFindCompaniesV1Params.Filter>;
+
+  /**
+   * Location to filter companies.
+   */
+  location?: SearchFindCompaniesV1Params.Location;
+
+  /**
+   * Pagination parameters.
+   */
+  pagination?: SearchFindCompaniesV1Params.Pagination;
+
+  /**
+   * Search query to filter companies.
+   */
+  query?: SearchFindCompaniesV1Params.Query;
+}
+
+export namespace SearchFindCompaniesV1Params {
+  export interface Filter {
+    field:
+      | 'status'
+      | 'legal_form'
+      | 'register_number'
+      | 'register_court'
+      | 'register_type'
+      | 'city'
+      | 'active'
+      | 'incorporated_at'
+      | 'zip'
+      | 'address'
+      | 'balance_sheet_total'
+      | 'revenue'
+      | 'cash'
+      | 'employees'
+      | 'equity'
+      | 'real_estate'
+      | 'materials'
+      | 'pension_provisions'
+      | 'salaries'
+      | 'taxes'
+      | 'liabilities'
+      | 'capital_reserves'
+      | 'net_income'
+      | 'industry_codes'
+      | 'capital_amount'
+      | 'capital_currency';
+
+    keywords?: Array<string>;
+
+    max?: string;
+
+    min?: string;
+
+    value?: string;
+
+    values?: Array<string>;
+  }
+
+  /**
+   * Location to filter companies.
+   */
+  export interface Location {
+    /**
+     * Latitude to filter on.
+     */
+    latitude: number;
+
+    /**
+     * Longitude to filter on.
+     */
+    longitude: number;
+
+    /**
+     * Radius in kilometers to filter on. Example: 10
+     */
+    radius?: number;
+  }
+
+  /**
+   * Pagination parameters.
+   */
+  export interface Pagination {
+    /**
+     * Page number to return.
+     */
+    page?: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page?: number;
+  }
+
+  /**
+   * Search query to filter companies.
+   */
+  export interface Query {
+    /**
+     * Search query to filter companies.
+     */
+    value: string;
+  }
+}
+
+export interface SearchFindPersonParams {
+  /**
+   * Filters to filter people.
+   */
+  filters?: Array<SearchFindPersonParams.Filter>;
+
+  /**
+   * Pagination parameters.
+   */
+  pagination?: SearchFindPersonParams.Pagination;
+
+  /**
+   * Search query to filter people.
+   */
+  query?: SearchFindPersonParams.Query;
+}
+
+export namespace SearchFindPersonParams {
+  export interface Filter {
+    field: 'date_of_birth' | 'city' | 'active';
+
+    keywords?: Array<string>;
+
+    max?: string;
+
+    min?: string;
+
+    value?: string;
+
+    values?: Array<string>;
+  }
+
+  /**
+   * Pagination parameters.
+   */
+  export interface Pagination {
+    /**
+     * Page number to return.
+     */
+    page?: number;
+
+    /**
+     * Number of results per page.
+     */
+    per_page?: number;
+  }
+
+  /**
+   * Search query to filter people.
+   */
+  export interface Query {
+    /**
+     * Search query to filter people.
+     */
+    value: string;
+  }
+}
+
 export interface SearchLookupCompanyByURLParams {
   /**
    * Website URL to search for. Example: "https://openregister.de"
@@ -228,9 +540,14 @@ export declare namespace Search {
   export {
     type CompanyLegalForm as CompanyLegalForm,
     type CompanyRegisterType as CompanyRegisterType,
-    type SearchFindCompaniesResponse as SearchFindCompaniesResponse,
+    type CompanySearch as CompanySearch,
+    type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
+    type SearchFindPersonResponse as SearchFindPersonResponse,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
-    type SearchFindCompaniesParams as SearchFindCompaniesParams,
+    type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
+    type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
+    type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
+    type SearchFindPersonParams as SearchFindPersonParams,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 }

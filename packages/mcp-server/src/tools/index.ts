@@ -4,11 +4,17 @@ import { Metadata, Endpoint, HandlerFunction } from './types';
 
 export { Metadata, Endpoint, HandlerFunction };
 
-import find_companies_search from './search/find-companies-search';
+import autocomplete_companies_v1_search from './search/autocomplete-companies-v1-search';
+import find_companies_v0_search from './search/find-companies-v0-search';
+import find_companies_v1_search from './search/find-companies-v1-search';
+import find_person_search from './search/find-person-search';
 import lookup_company_by_url_search from './search/lookup-company-by-url-search';
 import retrieve_company from './company/retrieve-company';
+import get_holdings_v1_company from './company/get-holdings-v1-company';
+import get_owners_v1_company from './company/get-owners-v1-company';
 import list_shareholders_company from './company/list-shareholders-company';
 import retrieve_contact_company from './company/retrieve-contact-company';
+import retrieve_financials_company from './company/retrieve-financials-company';
 import retrieve_document from './document/retrieve-document';
 import download_document from './document/download-document';
 import create_jobs_document from './jobs/document/create-jobs-document';
@@ -20,11 +26,17 @@ function addEndpoint(endpoint: Endpoint) {
   endpoints.push(endpoint);
 }
 
-addEndpoint(find_companies_search);
+addEndpoint(autocomplete_companies_v1_search);
+addEndpoint(find_companies_v0_search);
+addEndpoint(find_companies_v1_search);
+addEndpoint(find_person_search);
 addEndpoint(lookup_company_by_url_search);
 addEndpoint(retrieve_company);
+addEndpoint(get_holdings_v1_company);
+addEndpoint(get_owners_v1_company);
 addEndpoint(list_shareholders_company);
 addEndpoint(retrieve_contact_company);
+addEndpoint(retrieve_financials_company);
 addEndpoint(retrieve_document);
 addEndpoint(download_document);
 addEndpoint(create_jobs_document);
