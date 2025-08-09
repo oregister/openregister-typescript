@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.9.1 (2025-08-09)
+
+Full Changelog: [v1.9.0...v1.9.1](https://github.com/oregister/openregister-typescript/compare/v1.9.0...v1.9.1)
+
+### Chores
+
+* **internal:** update comment in script ([38234da](https://github.com/oregister/openregister-typescript/commit/38234da488664bcbbd6f27d054d69fd5bb9bde8f))
+* update @stainless-api/prism-cli to v5.15.0 ([382b6f5](https://github.com/oregister/openregister-typescript/commit/382b6f5d760c69a2339328fbe6e39826e1dfbe03))
+
 ## 1.9.0 (2025-08-07)
 
 Full Changelog: [v1.8.0...v1.9.0](https://github.com/oregister/openregister-typescript/compare/v1.8.0...v1.9.0)
