@@ -8,7 +8,7 @@ const client = new Openregister({
 });
 
 describe('resource document', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.document.retrieve('document_id');
     const rawResponse = await responsePromise.asResponse();
