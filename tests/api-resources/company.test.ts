@@ -8,7 +8,7 @@ const client = new Openregister({
 });
 
 describe('resource company', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.company.retrieve('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -32,7 +32,7 @@ describe('resource company', () => {
     ).rejects.toThrow(Openregister.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('getHoldingsV1', async () => {
     const responsePromise = client.company.getHoldingsV1('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('getOwnersV1', async () => {
     const responsePromise = client.company.getOwnersV1('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listShareholders', async () => {
     const responsePromise = client.company.listShareholders('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -68,7 +68,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveContact', async () => {
     const responsePromise = client.company.retrieveContact('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -80,7 +80,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveFinancials', async () => {
     const responsePromise = client.company.retrieveFinancials('company_id');
     const rawResponse = await responsePromise.asResponse();

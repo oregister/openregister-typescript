@@ -8,7 +8,7 @@ const client = new Openregister({
 });
 
 describe('resource search', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('autocompleteCompaniesV1: only required params', async () => {
     const responsePromise = client.search.autocompleteCompaniesV1({ query: 'query' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('autocompleteCompaniesV1: required and optional params', async () => {
     const response = await client.search.autocompleteCompaniesV1({ query: 'query' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('findCompaniesV0', async () => {
     const responsePromise = client.search.findCompaniesV0();
     const rawResponse = await responsePromise.asResponse();
@@ -37,7 +37,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('findCompaniesV0: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -58,7 +58,7 @@ describe('resource search', () => {
     ).rejects.toThrow(Openregister.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('findCompaniesV1', async () => {
     const responsePromise = client.search.findCompaniesV1({});
     const rawResponse = await responsePromise.asResponse();
@@ -70,7 +70,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('findPerson', async () => {
     const responsePromise = client.search.findPerson({});
     const rawResponse = await responsePromise.asResponse();
@@ -82,7 +82,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('lookupCompanyByURL: only required params', async () => {
     const responsePromise = client.search.lookupCompanyByURL({ url: 'https://example.com' });
     const rawResponse = await responsePromise.asResponse();
@@ -94,7 +94,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('lookupCompanyByURL: required and optional params', async () => {
     const response = await client.search.lookupCompanyByURL({ url: 'https://example.com' });
   });
