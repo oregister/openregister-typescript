@@ -754,10 +754,12 @@ export class Openregister {
   document: API.Document = new API.Document(this);
   jobs: API.Jobs = new API.Jobs(this);
 }
+
 Openregister.Search = Search;
 Openregister.Company = Company;
 Openregister.Document = Document;
 Openregister.Jobs = Jobs;
+
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
 
