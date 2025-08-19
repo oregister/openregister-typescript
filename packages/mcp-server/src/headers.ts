@@ -17,7 +17,7 @@ export const parseAuthHeaders = (req: IncomingMessage): Partial<ClientOptions> =
   }
 
   const apiKey =
-    req.headers['x-openregister-api-key'] instanceof Array ?
+    Array.isArray(req.headers['x-openregister-api-key']) ?
       req.headers['x-openregister-api-key'][0]
     : req.headers['x-openregister-api-key'];
   return { apiKey };
