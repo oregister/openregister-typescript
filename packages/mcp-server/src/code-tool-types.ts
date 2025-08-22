@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type ClientOptions } from 'openregister/client';
+import { ClientOptions } from 'openregister';
 
 export type WorkerInput = {
   opts: ClientOptions;
