@@ -71,8 +71,8 @@ describe('resource search', () => {
   });
 
   // Prism tests are disabled
-  test.skip('findPerson', async () => {
-    const responsePromise = client.search.findPerson({});
+  test.skip('findPersonV1', async () => {
+    const responsePromise = client.search.findPersonV1({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

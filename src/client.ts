@@ -50,8 +50,8 @@ import {
   SearchAutocompleteCompaniesV1Response,
   SearchFindCompaniesV0Params,
   SearchFindCompaniesV1Params,
-  SearchFindPersonParams,
-  SearchFindPersonResponse,
+  SearchFindPersonV1Params,
+  SearchFindPersonV1Response,
   SearchLookupCompanyByURLParams,
   SearchLookupCompanyByURLResponse,
 } from './resources/search';
@@ -777,12 +777,12 @@ export declare namespace Openregister {
     type CompanyRegisterType as CompanyRegisterType,
     type CompanySearch as CompanySearch,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
-    type SearchFindPersonResponse as SearchFindPersonResponse,
+    type SearchFindPersonV1Response as SearchFindPersonV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
-    type SearchFindPersonParams as SearchFindPersonParams,
+    type SearchFindPersonV1Params as SearchFindPersonV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 
