@@ -26,9 +26,9 @@ const client = new Openregister({
   apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted
 });
 
-const company = await client.company.retrieve('company_id');
+const response = await client.search.autocompleteCompaniesV1({ query: 'query' });
 
-console.log(company.id);
+console.log(response.results);
 ```
 
 ### Request & Response types
@@ -43,7 +43,9 @@ const client = new Openregister({
   apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted
 });
 
-const company: Openregister.CompanyRetrieveResponse = await client.company.retrieve('company_id');
+const params: Openregister.SearchAutocompleteCompaniesV1Params = { query: 'query' };
+const response: Openregister.SearchAutocompleteCompaniesV1Response =
+  await client.search.autocompleteCompaniesV1(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -56,7 +58,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const company = await client.company.retrieve('company_id').catch(async (err) => {
+const response = await client.search.autocompleteCompaniesV1({ query: 'query' }).catch(async (err) => {
   if (err instanceof Openregister.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -96,7 +98,7 @@ const client = new Openregister({
 });
 
 // Or, configure per-request:
-await client.company.retrieve('company_id', {
+await client.search.autocompleteCompaniesV1({ query: 'query' }, {
   maxRetries: 5,
 });
 ```
@@ -113,7 +115,7 @@ const client = new Openregister({
 });
 
 // Override per-request:
-await client.company.retrieve('company_id', {
+await client.search.autocompleteCompaniesV1({ query: 'query' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -136,13 +138,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Openregister();
 
-const response = await client.company.retrieve('company_id').asResponse();
+const response = await client.search.autocompleteCompaniesV1({ query: 'query' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: company, response: raw } = await client.company.retrieve('company_id').withResponse();
+const { data: response, response: raw } = await client.search
+  .autocompleteCompaniesV1({ query: 'query' })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(company.id);
+console.log(response.results);
 ```
 
 ### Logging
@@ -222,7 +226,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.company.retrieve({
+client.search.autocompleteCompaniesV1({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

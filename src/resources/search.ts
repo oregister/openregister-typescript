@@ -135,6 +135,12 @@ export namespace CompanySearch {
     company_id: string;
 
     /**
+     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
+     * "DE" for Germany
+     */
+    country: string | null;
+
+    /**
      * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
      * Haftung
      */
@@ -159,12 +165,6 @@ export namespace CompanySearch {
      * Type of company register. Example: "HRB" for Commercial Register B
      */
     register_type: SearchAPI.CompanyRegisterType;
-
-    /**
-     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
-     * "DE" for Germany
-     */
-    country?: string;
   }
 }
 
@@ -172,7 +172,7 @@ export interface SearchAutocompleteCompaniesV1Response {
   /**
    * List of companies matching the search criteria.
    */
-  results?: Array<SearchAutocompleteCompaniesV1Response.Result>;
+  results: Array<SearchAutocompleteCompaniesV1Response.Result>;
 }
 
 export namespace SearchAutocompleteCompaniesV1Response {
@@ -188,6 +188,12 @@ export namespace SearchAutocompleteCompaniesV1Response {
     company_id: string;
 
     /**
+     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
+     * "DE" for Germany
+     */
+    country: string | null;
+
+    /**
      * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
      * Haftung
      */
@@ -212,12 +218,6 @@ export namespace SearchAutocompleteCompaniesV1Response {
      * Type of company register. Example: "HRB" for Commercial Register B
      */
     register_type: SearchAPI.CompanyRegisterType;
-
-    /**
-     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
-     * "DE" for Germany
-     */
-    country?: string;
   }
 }
 
@@ -265,6 +265,11 @@ export namespace SearchFindPersonResponse {
     active: boolean;
 
     /**
+     * City of the person. Example: "Berlin"
+     */
+    city: string | null;
+
+    /**
      * Date of birth of the person. Format: ISO 8601 (YYYY-MM-DD) Example: "1990-01-01"
      */
     date_of_birth: string;
@@ -273,11 +278,6 @@ export namespace SearchFindPersonResponse {
      * Name of the person. Example: "Max Mustermann"
      */
     name: string;
-
-    /**
-     * City of the person. Example: "Berlin"
-     */
-    city?: string;
   }
 }
 

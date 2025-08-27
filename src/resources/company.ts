@@ -16,7 +16,7 @@ export class Company extends APIResource {
     query: CompanyRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<CompanyRetrieveResponse> {
-    return this._client.get(path`/v0/company/${companyID}`, { query, ...options });
+    return this._client.get(path`/v1/company/${companyID}`, { query, ...options });
   }
 
   /**
@@ -29,15 +29,12 @@ export class Company extends APIResource {
   /**
    * Get company owners
    */
-  getOwnersV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetOwnersV1Response> {
-    return this._client.get(path`/v1/company/${companyID}/owners`, options);
-  }
-
-  /**
-   * Get company shareholders
-   */
-  listShareholders(companyID: string, options?: RequestOptions): APIPromise<CompanyListShareholdersResponse> {
-    return this._client.get(path`/v0/company/${companyID}/shareholders`, options);
+  getOwnersV1(
+    companyID: string,
+    query: CompanyGetOwnersV1Params | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CompanyGetOwnersV1Response> {
+    return this._client.get(path`/v1/company/${companyID}/owners`, { query, ...options });
   }
 
   /**
@@ -187,13 +184,13 @@ export type EntityType = 'natural_person' | 'legal_person';
 export interface ReportRow {
   children: Array<ReportRow>;
 
+  current_value: number | null;
+
   formatted_name: string;
 
   name: string;
 
-  current_value?: number;
-
-  previous_value?: number;
+  previous_value: number | null;
 }
 
 export interface CompanyRetrieveResponse {
@@ -208,10 +205,40 @@ export interface CompanyRetrieveResponse {
   address: CompanyAddress;
 
   /**
+   * Historical addresses. Shows how the company address changed over time.
+   */
+  addresses: Array<CompanyAddress>;
+
+  /**
+   * Current registered capital of the company.
+   */
+  capital: CompanyCapital | null;
+
+  /**
+   * Historical capital changes. Shows how the company capital changed over time.
+   */
+  capitals: Array<CompanyCapital | null>;
+
+  /**
+   * Available official documents related to the company.
+   */
+  documents: Array<CompanyRetrieveResponse.Document>;
+
+  /**
    * Date when the company was officially registered. Format: ISO 8601 (YYYY-MM-DD)
    * Example: "2022-01-01"
    */
   incorporated_at: string;
+
+  /**
+   * Key company indicators like net income, employee count, revenue, etc..
+   */
+  indicators: Array<CompanyRetrieveResponse.Indicator>;
+
+  /**
+   * Industry codes of the company.
+   */
+  industry_codes: Array<CompanyRetrieveResponse.IndustryCode>;
 
   /**
    * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
@@ -225,9 +252,30 @@ export interface CompanyRetrieveResponse {
   name: CompanyName;
 
   /**
+   * Historical company names. Shows how the company name changed over time.
+   */
+  names: Array<CompanyName>;
+
+  /**
+   * Current official business purpose of the company.
+   */
+  purpose: CompanyPurpose | null;
+
+  /**
+   * Historical business purposes. Shows how the company purpose changed over time.
+   */
+  purposes: Array<CompanyPurpose | null>;
+
+  /**
    * Current registration information of the company.
    */
   register: CompanyRegister;
+
+  /**
+   * Historical registration changes. Shows how registration details changed over
+   * time.
+   */
+  registers: Array<CompanyRegister>;
 
   /**
    * List of individuals or entities authorized to represent the company. Includes
@@ -245,76 +293,144 @@ export interface CompanyRetrieveResponse {
   status: 'active' | 'inactive' | 'liquidation';
 
   /**
-   * Historical addresses, only included when history=true. Shows how the company
-   * address changed over time.
-   */
-  addresses?: Array<CompanyAddress>;
-
-  /**
-   * Current registered capital of the company.
-   */
-  capital?: CompanyCapital;
-
-  /**
-   * Historical capital changes, only included when history=true. Shows how the
-   * company capital changed over time.
-   */
-  capitals?: Array<CompanyCapital>;
-
-  /**
-   * Available official documents related to the company, only included when
-   * documents=true.
-   */
-  documents?: Array<CompanyRetrieveResponse.Document>;
-
-  /**
-   * Financial reports and key financial indicators, only included when
-   * financials=true.
-   */
-  financials?: CompanyRetrieveResponse.Financials;
-
-  /**
-   * Historical company names, only included when history=true. Shows how the company
-   * name changed over time.
-   */
-  names?: Array<CompanyName>;
-
-  /**
-   * Current official business purpose of the company.
-   */
-  purpose?: CompanyPurpose;
-
-  /**
-   * Historical business purposes, only included when history=true. Shows how the
-   * company purpose changed over time.
-   */
-  purposes?: Array<CompanyPurpose>;
-
-  /**
-   * Historical registration changes, only included when history=true. Shows how
-   * registration details changed over time.
-   */
-  registers?: Array<CompanyRegister>;
-
-  /**
    * Date when the company was officially terminated (if applicable). Format: ISO
    * 8601 (YYYY-MM-DD) Example: "2022-01-01"
    */
-  terminated_at?: string;
+  terminated_at: string | null;
 }
 
 export namespace CompanyRetrieveResponse {
-  export interface Representation {
+  export interface Document {
     /**
-     * City where the representative is located. Example: "Berlin"
+     * Unique identifier for the document. Example:
+     * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
      */
-    city: string;
+    id: string;
 
     /**
-     * Country where the representative is located, in ISO 3166-1 alpha-2 format.
-     * Example: "DE" for Germany
+     * Document publication or filing date. Format: ISO 8601 (YYYY-MM-DD) Example:
+     * "2022-01-01"
      */
-    country: string;
+    date: string;
+
+    /**
+     * Whether this is the latest version of the document_type.
+     */
+    latest: boolean;
+
+    /**
+     * Categorization of the document:
+     *
+     * - articles_of_association: Company statutes/bylaws
+     * - sample_protocol: Standard founding protocol
+     * - shareholder_list: List of company shareholders
+     */
+    type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list';
+  }
+
+  /**
+   * The indicators of the company for a given year. Values of the indicator are
+   * given in the smallest currency unit (cents). Example: 2099 represents €20.99 for
+   * monetary values For non-monetary values (e.g., employees), the actual number.
+   */
+  export interface Indicator {
+    /**
+     * The balance sheet total of that year (in cents).
+     */
+    balance_sheet_total: number | null;
+
+    /**
+     * The capital reserves of that year (in cents).
+     */
+    capital_reserves: number | null;
+
+    /**
+     * The cash of that year (in cents).
+     */
+    cash: number | null;
+
+    /**
+     * Date to which this financial indicators apply. Format: ISO 8601 (YYYY-MM-DD)
+     * Example: "2022-01-01"
+     */
+    date: string;
+
+    /**
+     * The number of employees of that year.
+     */
+    employees: number | null;
+
+    /**
+     * The equity of that year (in cents).
+     */
+    equity: number | null;
+
+    /**
+     * The liabilities of that year (in cents).
+     */
+    liabilities: number | null;
+
+    /**
+     * The materials of that year (in cents).
+     */
+    materials: number | null;
+
+    /**
+     * The net income of that year (in cents).
+     */
+    net_income: number | null;
+
+    /**
+     * The pension provisions of that year (in cents).
+     */
+    pension_provisions: number | null;
+
+    /**
+     * The real estate of that year (in cents).
+     */
+    real_estate: number | null;
+
+    /**
+     * The report id (source) of the indicators.
+     */
+    report_id: string;
+
+    /**
+     * The revenue of that year (in cents).
+     */
+    revenue: number | null;
+
+    /**
+     * The salaries of that year (in cents).
+     */
+    salaries: number | null;
+
+    /**
+     * The taxes of that year (in cents).
+     */
+    taxes: number | null;
+  }
+
+  /**
+   * Industry codes from WZ 2025.
+   */
+  export interface IndustryCode {
+    code: string;
+  }
+
+  export interface Representation {
+    /**
+     * Unique identifier for the representative. For companies: Format matches
+     * company_id pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID
+     * May be null for certain representatives.
+     */
+    id: string | null;
+
+    /**
+     * Date when this representative role ended (if applicable). Format: ISO 8601
+     * (YYYY-MM-DD) Example: "2022-01-01"
+     */
+    end_date: string | null;
 
     /**
      * The name of the representative. E.g. "Max Mustermann" or "Max Mustermann GmbH"
@@ -345,140 +461,45 @@ export namespace CompanyRetrieveResponse {
      */
     type: CompanyAPI.EntityType;
 
-    /**
-     * Unique identifier for the representative. For companies: Format matches
-     * company_id pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID
-     * May be null for certain representatives.
-     */
-    id?: string;
+    legal_person?: Representation.LegalPerson | null;
 
-    /**
-     * Date of birth of the representative. Only provided for type=natural_person. May
-     * still be null for natural persons if it is not available. Format: ISO 8601
-     * (YYYY-MM-DD) Example: "1990-01-01"
-     */
-    date_of_birth?: string;
-
-    /**
-     * Date when this representative role ended (if applicable). Format: ISO 8601
-     * (YYYY-MM-DD) Example: "2022-01-01"
-     */
-    end_date?: string;
-
-    /**
-     * First name of the representative. Only provided for type=natural_person.
-     * Example: "Max"
-     */
-    first_name?: string;
-
-    /**
-     * Last name of the representative. Only provided for type=natural_person. Example:
-     * "Mustermann"
-     */
-    last_name?: string;
+    natural_person?: Representation.NaturalPerson | null;
   }
 
-  export interface Document {
-    /**
-     * Unique identifier for the document. Example:
-     * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-     */
-    id: string;
-
-    /**
-     * Document publication or filing date. Format: ISO 8601 (YYYY-MM-DD) Example:
-     * "2022-01-01"
-     */
-    date: string;
-
-    /**
-     * Whether this is the latest version of the document_type.
-     */
-    latest: boolean;
-
-    /**
-     * Categorization of the document:
-     *
-     * - articles_of_association: Company statutes/bylaws
-     * - sample_protocol: Standard founding protocol
-     * - shareholder_list: List of company shareholders
-     */
-    type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list';
-  }
-
-  /**
-   * Financial reports and key financial indicators, only included when
-   * financials=true.
-   */
-  export interface Financials {
-    /**
-     * Key financial metrics extracted from the reports. Includes balance sheet totals,
-     * revenue, and other important figures.
-     */
-    indicators: Array<Financials.Indicator>;
-
-    /**
-     * The financial reports of the company.
-     */
-    reports: Array<Financials.Report>;
-  }
-
-  export namespace Financials {
-    export interface Indicator {
-      /**
-       * Date to which this financial indicator applies. Format: ISO 8601 (YYYY-MM-DD)
-       * Example: "2022-01-01"
-       */
-      date: string;
+  export namespace Representation {
+    export interface LegalPerson {
+      city: string | null;
 
       /**
-       * The identifier for the financial report this indicator originates from. E.g.
-       * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+       * Country where the representative is located, in ISO 3166-1 alpha-2 format.
+       * Example: "DE" for Germany
        */
-      report_id: string;
+      country: string;
 
-      /**
-       * The type of indicator.
-       */
-      type:
-        | 'balance_sheet_total'
-        | 'net_income'
-        | 'revenue'
-        | 'cash'
-        | 'employees'
-        | 'equity'
-        | 'real_estate'
-        | 'materials'
-        | 'pension_provisions'
-        | 'salaries'
-        | 'taxes'
-        | 'liabilities'
-        | 'capital_reserves';
-
-      /**
-       * Value of the indicator in the smallest currency unit (cents). Example: 2099
-       * represents €20.99 for monetary values For non-monetary values (e.g., employees),
-       * the actual number.
-       */
-      value: number;
+      name: string;
     }
 
-    export interface Report {
+    export interface NaturalPerson {
       /**
-       * The unique identifier for the financial report. E.g.
-       * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+       * City where the representative is located. Example: "Berlin"
        */
-      id: string;
+      city: string | null;
 
       /**
-       * The name of the financial report. E.g. "Jahresabschluss 2022"
+       * Date of birth of the representative. May still be null for natural persons if it
+       * is not available. Format: ISO 8601 (YYYY-MM-DD) Example: "1990-01-01"
        */
-      name: string;
+      date_of_birth: string | null;
 
       /**
-       * The date when the financial report was published. E.g. "2022-01-01"
+       * First name of the representative. Example: "Max"
        */
-      published_at: string;
+      first_name: string | null;
+
+      /**
+       * Last name of the representative. Example: "Mustermann"
+       */
+      last_name: string | null;
     }
   }
 }
@@ -503,6 +524,12 @@ export namespace CompanyGetHoldingsV1Response {
     company_id: string;
 
     /**
+     * Date when the ownership ended. Format: ISO 8601 (YYYY-MM-DD) Example:
+     * "2022-01-01"
+     */
+    end: string | null;
+
+    /**
      * Name of the company.
      */
     name: string;
@@ -513,26 +540,20 @@ export namespace CompanyGetHoldingsV1Response {
     nominal_share: number;
 
     /**
+     * Share of the company. Example: 0.5 represents 50% ownership
+     */
+    percentage_share: number | null;
+
+    /**
      * Type of relationship between the entity and the company.
      */
     relation_type: CompanyAPI.CompanyRelationType;
 
     /**
-     * Date when the ownership ended. Format: ISO 8601 (YYYY-MM-DD) Example:
-     * "2022-01-01"
-     */
-    end?: string;
-
-    /**
-     * Share of the company. Example: 0.5 represents 50% ownership
-     */
-    percentage_share?: number;
-
-    /**
      * Date when the ownership started. Format: ISO 8601 (YYYY-MM-DD) Example:
      * "2022-01-01"
      */
-    start?: string;
+    start: string | null;
   }
 }
 
@@ -548,9 +569,26 @@ export interface CompanyGetOwnersV1Response {
 export namespace CompanyGetOwnersV1Response {
   export interface Owner {
     /**
+     * Unique identifier for the shareholder. For companies: Format matches company_id
+     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
+     * for certain shareholders.
+     */
+    id: string | null;
+
+    /**
+     * Details about the legal person.
+     */
+    legal_person: Owner.LegalPerson | null;
+
+    /**
      * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
      */
     name: string;
+
+    /**
+     * Details about the natural person.
+     */
+    natural_person: Owner.NaturalPerson | null;
 
     /**
      * Nominal value of shares in Euro. Example: 100
@@ -558,42 +596,25 @@ export namespace CompanyGetOwnersV1Response {
     nominal_share: number;
 
     /**
+     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
+     */
+    percentage_share: number | null;
+
+    /**
      * Type of relationship between the entity and the company.
      */
     relation_type: CompanyAPI.CompanyRelationType;
 
     /**
-     * The type of shareholder.
-     */
-    type: CompanyAPI.EntityType;
-
-    /**
-     * Unique identifier for the shareholder. For companies: Format matches company_id
-     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
-     * for certain shareholders.
-     */
-    id?: string;
-
-    /**
-     * Details about the legal person.
-     */
-    legal_person?: Owner.LegalPerson;
-
-    /**
-     * Details about the natural person.
-     */
-    natural_person?: Owner.NaturalPerson;
-
-    /**
-     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
-     */
-    percentage_share?: number;
-
-    /**
      * Date when the relation started. Only available for some types of owners. Format:
      * ISO 8601 (YYYY-MM-DD) Example: "2022-01-01"
      */
-    start?: string;
+    start: string | null;
+
+    /**
+     * The type of shareholder.
+     */
+    type: CompanyAPI.EntityType;
   }
 
   export namespace Owner {
@@ -601,6 +622,8 @@ export namespace CompanyGetOwnersV1Response {
      * Details about the legal person.
      */
     export interface LegalPerson {
+      city: string | null;
+
       /**
        * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
        * for Germany
@@ -608,8 +631,6 @@ export namespace CompanyGetOwnersV1Response {
       country: string;
 
       name: string;
-
-      city?: string;
     }
 
     /**
@@ -620,67 +641,14 @@ export namespace CompanyGetOwnersV1Response {
 
       country: string;
 
+      date_of_birth: string | null;
+
       first_name: string;
 
       full_name: string;
 
       last_name: string;
-
-      date_of_birth?: string;
     }
-  }
-}
-
-export interface CompanyListShareholdersResponse {
-  /**
-   * Date when this shareholder information became effective. Format: ISO 8601
-   * (YYYY-MM-DD) Example: "2022-01-01"
-   */
-  date: string;
-
-  /**
-   * Unique identifier for the document this was taken from. Example:
-   * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-   */
-  document_id: string;
-
-  shareholders: Array<CompanyListShareholdersResponse.Shareholder>;
-}
-
-export namespace CompanyListShareholdersResponse {
-  export interface Shareholder {
-    /**
-     * Country where the shareholder is located, in ISO 3166-1 alpha-2 format. Example:
-     * "DE" for Germany
-     */
-    country: string;
-
-    /**
-     * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
-     */
-    name: string;
-
-    /**
-     * Nominal value of shares in Euro. Example: 100
-     */
-    nominal_share: number;
-
-    /**
-     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
-     */
-    percentage_share: number;
-
-    /**
-     * The type of shareholder.
-     */
-    type: CompanyAPI.EntityType;
-
-    /**
-     * Unique identifier for the shareholder. For companies: Format matches company_id
-     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
-     * for certain shareholders.
-     */
-    id?: string;
   }
 }
 
@@ -715,17 +683,24 @@ export namespace CompanyRetrieveFinancialsResponse {
   export interface Report {
     aktiva: Report.Aktiva;
 
+    /**
+     * Whether the report is a consolidated report or not.
+     */
     consolidated: boolean;
 
     passiva: Report.Passiva;
 
     report_end_date: string;
 
+    /**
+     * Unique identifier for the financial report. Example:
+     * f47ac10b-58cc-4372-a567-0e02b2c3d479
+     */
     report_id: string;
 
-    guv?: Report.Guv;
+    report_start_date: string | null;
 
-    report_start_date?: string;
+    guv?: Report.Guv | null;
   }
 
   export namespace Report {
@@ -745,22 +720,22 @@ export namespace CompanyRetrieveFinancialsResponse {
 
 export interface CompanyRetrieveParams {
   /**
-   * Include document metadata when set to true. Lists available official documents
-   * related to the company.
+   * Get the most up-to-date company information directly from the Handelsregister.
+   * When set to true, we fetch the latest data in real-time from the official German
+   * commercial register, ensuring you receive the most current company details.
+   * Note: Real-time requests take longer but guarantee the freshest data available.
    */
-  documents?: boolean;
+  realtime?: boolean;
+}
 
+export interface CompanyGetOwnersV1Params {
   /**
-   * Include financial data when set to true. Provides access to financial reports
-   * and key financial indicators.
+   * Get the most up-to-date company information directly from the Handelsregister.
+   * When set to true, we fetch the latest data in real-time from the official German
+   * commercial register, ensuring you receive the most current company details.
+   * Note: Real-time requests take longer but guarantee the freshest data available.
    */
-  financials?: boolean;
-
-  /**
-   * Include historical company data when set to true. This returns past names,
-   * addresses, and other changed information.
-   */
-  history?: boolean;
+  realtime?: boolean;
 }
 
 export declare namespace Company {
@@ -776,9 +751,9 @@ export declare namespace Company {
     type CompanyRetrieveResponse as CompanyRetrieveResponse,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
-    type CompanyListShareholdersResponse as CompanyListShareholdersResponse,
     type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
     type CompanyRetrieveFinancialsResponse as CompanyRetrieveFinancialsResponse,
     type CompanyRetrieveParams as CompanyRetrieveParams,
+    type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
   };
 }

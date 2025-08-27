@@ -2,7 +2,6 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
-import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -10,23 +9,19 @@ export class Document extends APIResource {
   /**
    * Get document information
    */
-  retrieve(documentID: string, options?: RequestOptions): APIPromise<DocumentRetrieveResponse> {
-    return this._client.get(path`/v0/document/${documentID}`, options);
+  documentCached(documentID: string, options?: RequestOptions): APIPromise<DocumentDocumentCachedResponse> {
+    return this._client.get(path`/v1/document/${documentID}`, options);
   }
 
   /**
-   * Download document
+   * Fetch a document in realtime.
    */
-  download(documentID: string, options?: RequestOptions): APIPromise<Response> {
-    return this._client.get(path`/v0/document/${documentID}/download`, {
-      ...options,
-      headers: buildHeaders([{ Accept: 'application/octet-stream' }, options?.headers]),
-      __binaryResponse: true,
-    });
+  fetch(query: DocumentFetchParams, options?: RequestOptions): APIPromise<DocumentFetchResponse> {
+    return this._client.get('/v1/document', { query, ...options });
   }
 }
 
-export interface DocumentRetrieveResponse {
+export interface DocumentDocumentCachedResponse {
   /**
    * The unique identifier for the document. E.g.
    * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
@@ -55,6 +50,38 @@ export interface DocumentRetrieveResponse {
   url: string;
 }
 
+export interface DocumentFetchResponse {
+  category:
+    | 'current_printout'
+    | 'chronological_printout'
+    | 'historical_printout'
+    | 'structured_information'
+    | 'shareholder_list'
+    | 'articles_of_association';
+
+  file_date: string | null;
+
+  file_name: string | null;
+
+  url: string;
+}
+
+export interface DocumentFetchParams {
+  company_id: string;
+
+  document_category:
+    | 'current_printout'
+    | 'chronological_printout'
+    | 'historical_printout'
+    | 'structured_information'
+    | 'shareholder_list'
+    | 'articles_of_association';
+}
+
 export declare namespace Document {
-  export { type DocumentRetrieveResponse as DocumentRetrieveResponse };
+  export {
+    type DocumentDocumentCachedResponse as DocumentDocumentCachedResponse,
+    type DocumentFetchResponse as DocumentFetchResponse,
+    type DocumentFetchParams as DocumentFetchParams,
+  };
 }

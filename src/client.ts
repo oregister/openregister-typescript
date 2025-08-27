@@ -21,8 +21,8 @@ import {
   CompanyAddress,
   CompanyCapital,
   CompanyGetHoldingsV1Response,
+  CompanyGetOwnersV1Params,
   CompanyGetOwnersV1Response,
-  CompanyListShareholdersResponse,
   CompanyName,
   CompanyPurpose,
   CompanyRegister,
@@ -34,7 +34,13 @@ import {
   EntityType,
   ReportRow,
 } from './resources/company';
-import { Document, DocumentRetrieveResponse } from './resources/document';
+import {
+  Document,
+  DocumentDocumentCachedResponse,
+  DocumentFetchParams,
+  DocumentFetchResponse,
+} from './resources/document';
+import { Person, PersonListHoldingsV1Response, PersonRetrieveResponse } from './resources/person';
 import {
   CompanyLegalForm,
   CompanyRegisterType,
@@ -753,12 +759,14 @@ export class Openregister {
   company: API.Company = new API.Company(this);
   document: API.Document = new API.Document(this);
   jobs: API.Jobs = new API.Jobs(this);
+  person: API.Person = new API.Person(this);
 }
 
 Openregister.Search = Search;
 Openregister.Company = Company;
 Openregister.Document = Document;
 Openregister.Jobs = Jobs;
+Openregister.Person = Person;
 
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
@@ -791,13 +799,24 @@ export declare namespace Openregister {
     type CompanyRetrieveResponse as CompanyRetrieveResponse,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
-    type CompanyListShareholdersResponse as CompanyListShareholdersResponse,
     type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
     type CompanyRetrieveFinancialsResponse as CompanyRetrieveFinancialsResponse,
     type CompanyRetrieveParams as CompanyRetrieveParams,
+    type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
   };
 
-  export { Document as Document, type DocumentRetrieveResponse as DocumentRetrieveResponse };
+  export {
+    Document as Document,
+    type DocumentDocumentCachedResponse as DocumentDocumentCachedResponse,
+    type DocumentFetchResponse as DocumentFetchResponse,
+    type DocumentFetchParams as DocumentFetchParams,
+  };
 
   export { Jobs as Jobs };
+
+  export {
+    Person as Person,
+    type PersonRetrieveResponse as PersonRetrieveResponse,
+    type PersonListHoldingsV1Response as PersonListHoldingsV1Response,
+  };
 }

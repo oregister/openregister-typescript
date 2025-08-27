@@ -13,13 +13,19 @@ export {
   type CompanyRetrieveResponse,
   type CompanyGetHoldingsV1Response,
   type CompanyGetOwnersV1Response,
-  type CompanyListShareholdersResponse,
   type CompanyRetrieveContactResponse,
   type CompanyRetrieveFinancialsResponse,
   type CompanyRetrieveParams,
+  type CompanyGetOwnersV1Params,
 } from './company';
-export { Document, type DocumentRetrieveResponse } from './document';
+export {
+  Document,
+  type DocumentDocumentCachedResponse,
+  type DocumentFetchResponse,
+  type DocumentFetchParams,
+} from './document';
 export { Jobs } from './jobs/jobs';
+export { Person, type PersonRetrieveResponse, type PersonListHoldingsV1Response } from './person';
 export {
   Search,
   type CompanyLegalForm,

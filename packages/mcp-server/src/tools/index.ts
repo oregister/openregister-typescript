@@ -12,13 +12,14 @@ import lookup_company_by_url_search from './search/lookup-company-by-url-search'
 import retrieve_company from './company/retrieve-company';
 import get_holdings_v1_company from './company/get-holdings-v1-company';
 import get_owners_v1_company from './company/get-owners-v1-company';
-import list_shareholders_company from './company/list-shareholders-company';
 import retrieve_contact_company from './company/retrieve-contact-company';
 import retrieve_financials_company from './company/retrieve-financials-company';
-import retrieve_document from './document/retrieve-document';
-import download_document from './document/download-document';
+import document_cached_document from './document/document-cached-document';
+import fetch_document from './document/fetch-document';
 import create_jobs_document from './jobs/document/create-jobs-document';
 import retrieve_jobs_document from './jobs/document/retrieve-jobs-document';
+import retrieve_person from './person/retrieve-person';
+import list_holdings_v1_person from './person/list-holdings-v1-person';
 
 export const endpoints: Endpoint[] = [];
 
@@ -34,13 +35,14 @@ addEndpoint(lookup_company_by_url_search);
 addEndpoint(retrieve_company);
 addEndpoint(get_holdings_v1_company);
 addEndpoint(get_owners_v1_company);
-addEndpoint(list_shareholders_company);
 addEndpoint(retrieve_contact_company);
 addEndpoint(retrieve_financials_company);
-addEndpoint(retrieve_document);
-addEndpoint(download_document);
+addEndpoint(document_cached_document);
+addEndpoint(fetch_document);
 addEndpoint(create_jobs_document);
 addEndpoint(retrieve_jobs_document);
+addEndpoint(retrieve_person);
+addEndpoint(list_holdings_v1_person);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';
