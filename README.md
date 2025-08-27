@@ -43,7 +43,7 @@ const client = new Openregister({
   apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted
 });
 
-const response: Openregister.CompanyGetDetailsV1Response = await client.company.getDetailsV1('company_id');
+const response: Openregister.CompanyGetDetailsV1Response = await client.company.getDetailsV1('DE-HRB');
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -56,7 +56,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.company.getDetailsV1('company_id').catch(async (err) => {
+const response = await client.company.getDetailsV1('DE-HRB').catch(async (err) => {
   if (err instanceof Openregister.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -96,7 +96,7 @@ const client = new Openregister({
 });
 
 // Or, configure per-request:
-await client.company.getDetailsV1('company_id', {
+await client.company.getDetailsV1('DE-HRB', {
   maxRetries: 5,
 });
 ```
@@ -113,7 +113,7 @@ const client = new Openregister({
 });
 
 // Override per-request:
-await client.company.getDetailsV1('company_id', {
+await client.company.getDetailsV1('DE-HRB', {
   timeout: 5 * 1000,
 });
 ```
@@ -136,11 +136,11 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Openregister();
 
-const response = await client.company.getDetailsV1('company_id').asResponse();
+const response = await client.company.getDetailsV1('DE-HRB').asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.company.getDetailsV1('company_id').withResponse();
+const { data: response, response: raw } = await client.company.getDetailsV1('DE-HRB').withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.id);
 ```
