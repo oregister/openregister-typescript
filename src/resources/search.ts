@@ -36,7 +36,10 @@ export class Search extends APIResource {
   /**
    * Search for people
    */
-  findPerson(body: SearchFindPersonParams, options?: RequestOptions): APIPromise<SearchFindPersonResponse> {
+  findPersonV1(
+    body: SearchFindPersonV1Params,
+    options?: RequestOptions,
+  ): APIPromise<SearchFindPersonV1Response> {
     return this._client.post('/v1/search/person', { body, ...options });
   }
 
@@ -221,16 +224,16 @@ export namespace SearchAutocompleteCompaniesV1Response {
   }
 }
 
-export interface SearchFindPersonResponse {
-  pagination: SearchFindPersonResponse.Pagination;
+export interface SearchFindPersonV1Response {
+  pagination: SearchFindPersonV1Response.Pagination;
 
   /**
    * List of people matching the search criteria.
    */
-  results: Array<SearchFindPersonResponse.Result>;
+  results: Array<SearchFindPersonV1Response.Result>;
 }
 
-export namespace SearchFindPersonResponse {
+export namespace SearchFindPersonV1Response {
   export interface Pagination {
     /**
      * Current page number.
@@ -471,24 +474,24 @@ export namespace SearchFindCompaniesV1Params {
   }
 }
 
-export interface SearchFindPersonParams {
+export interface SearchFindPersonV1Params {
   /**
    * Filters to filter people.
    */
-  filters?: Array<SearchFindPersonParams.Filter>;
+  filters?: Array<SearchFindPersonV1Params.Filter>;
 
   /**
    * Pagination parameters.
    */
-  pagination?: SearchFindPersonParams.Pagination;
+  pagination?: SearchFindPersonV1Params.Pagination;
 
   /**
    * Search query to filter people.
    */
-  query?: SearchFindPersonParams.Query;
+  query?: SearchFindPersonV1Params.Query;
 }
 
-export namespace SearchFindPersonParams {
+export namespace SearchFindPersonV1Params {
   export interface Filter {
     field: 'date_of_birth' | 'city' | 'active';
 
@@ -542,12 +545,12 @@ export declare namespace Search {
     type CompanyRegisterType as CompanyRegisterType,
     type CompanySearch as CompanySearch,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
-    type SearchFindPersonResponse as SearchFindPersonResponse,
+    type SearchFindPersonV1Response as SearchFindPersonV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
-    type SearchFindPersonParams as SearchFindPersonParams,
+    type SearchFindPersonV1Params as SearchFindPersonV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 }

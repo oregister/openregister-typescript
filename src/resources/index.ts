@@ -32,11 +32,11 @@ export {
   type CompanyRegisterType,
   type CompanySearch,
   type SearchAutocompleteCompaniesV1Response,
-  type SearchFindPersonResponse,
+  type SearchFindPersonV1Response,
   type SearchLookupCompanyByURLResponse,
   type SearchAutocompleteCompaniesV1Params,
   type SearchFindCompaniesV0Params,
   type SearchFindCompaniesV1Params,
-  type SearchFindPersonParams,
+  type SearchFindPersonV1Params,
   type SearchLookupCompanyByURLParams,
 } from './search';
