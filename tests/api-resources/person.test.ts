@@ -9,8 +9,8 @@ const client = new Openregister({
 
 describe('resource person', () => {
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.person.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('getDetailsV1', async () => {
+    const responsePromise = client.person.getDetailsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,8 +21,8 @@ describe('resource person', () => {
   });
 
   // Prism tests are disabled
-  test.skip('listHoldingsV1', async () => {
-    const responsePromise = client.person.listHoldingsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('getHoldingsV1', async () => {
+    const responsePromise = client.person.getHoldingsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

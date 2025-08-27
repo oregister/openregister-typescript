@@ -24,7 +24,7 @@ export {
   type DocumentGetRealtimeV1Response,
   type DocumentGetRealtimeV1Params,
 } from './document';
-export { Person, type PersonRetrieveResponse, type PersonListHoldingsV1Response } from './person';
+export { Person, type PersonGetDetailsV1Response, type PersonGetHoldingsV1Response } from './person';
 export {
   Search,
   type CompanyLegalForm,

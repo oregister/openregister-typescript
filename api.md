@@ -59,10 +59,10 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/person.ts">PersonRetrieveResponse</a></code>
-- <code><a href="./src/resources/person.ts">PersonListHoldingsV1Response</a></code>
+- <code><a href="./src/resources/person.ts">PersonGetDetailsV1Response</a></code>
+- <code><a href="./src/resources/person.ts">PersonGetHoldingsV1Response</a></code>
 
 Methods:
 
-- <code title="get /v1/person/{person_id}">client.person.<a href="./src/resources/person.ts">retrieve</a>(personID) -> PersonRetrieveResponse</code>
-- <code title="get /v1/person/{person_id}/holdings">client.person.<a href="./src/resources/person.ts">listHoldingsV1</a>(personID) -> PersonListHoldingsV1Response</code>
+- <code title="get /v1/person/{person_id}">client.person.<a href="./src/resources/person.ts">getDetailsV1</a>(personID) -> PersonGetDetailsV1Response</code>
+- <code title="get /v1/person/{person_id}/holdings">client.person.<a href="./src/resources/person.ts">getHoldingsV1</a>(personID) -> PersonGetHoldingsV1Response</code>

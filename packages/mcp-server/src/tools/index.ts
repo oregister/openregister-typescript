@@ -16,8 +16,8 @@ import get_holdings_v1_company from './company/get-holdings-v1-company';
 import get_owners_v1_company from './company/get-owners-v1-company';
 import get_cached_v1_document from './document/get-cached-v1-document';
 import get_realtime_v1_document from './document/get-realtime-v1-document';
-import retrieve_person from './person/retrieve-person';
-import list_holdings_v1_person from './person/list-holdings-v1-person';
+import get_details_v1_person from './person/get-details-v1-person';
+import get_holdings_v1_person from './person/get-holdings-v1-person';
 
 export const endpoints: Endpoint[] = [];
 
@@ -37,8 +37,8 @@ addEndpoint(get_holdings_v1_company);
 addEndpoint(get_owners_v1_company);
 addEndpoint(get_cached_v1_document);
 addEndpoint(get_realtime_v1_document);
-addEndpoint(retrieve_person);
-addEndpoint(list_holdings_v1_person);
+addEndpoint(get_details_v1_person);
+addEndpoint(get_holdings_v1_person);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';
