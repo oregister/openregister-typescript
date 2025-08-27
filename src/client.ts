@@ -40,7 +40,7 @@ import {
   DocumentGetRealtimeV1Params,
   DocumentGetRealtimeV1Response,
 } from './resources/document';
-import { Person, PersonListHoldingsV1Response, PersonRetrieveResponse } from './resources/person';
+import { Person, PersonGetDetailsV1Response, PersonGetHoldingsV1Response } from './resources/person';
 import {
   CompanyLegalForm,
   CompanyRegisterType,
@@ -811,7 +811,7 @@ export declare namespace Openregister {
 
   export {
     Person as Person,
-    type PersonRetrieveResponse as PersonRetrieveResponse,
-    type PersonListHoldingsV1Response as PersonListHoldingsV1Response,
+    type PersonGetDetailsV1Response as PersonGetDetailsV1Response,
+    type PersonGetHoldingsV1Response as PersonGetHoldingsV1Response,
   };
 }

@@ -10,19 +10,19 @@ export class Person extends APIResource {
   /**
    * Get detailed person information
    */
-  retrieve(personID: string, options?: RequestOptions): APIPromise<PersonRetrieveResponse> {
+  getDetailsV1(personID: string, options?: RequestOptions): APIPromise<PersonGetDetailsV1Response> {
     return this._client.get(path`/v1/person/${personID}`, options);
   }
 
   /**
    * Get person holdings
    */
-  listHoldingsV1(personID: string, options?: RequestOptions): APIPromise<PersonListHoldingsV1Response> {
+  getHoldingsV1(personID: string, options?: RequestOptions): APIPromise<PersonGetHoldingsV1Response> {
     return this._client.get(path`/v1/person/${personID}/holdings`, options);
   }
 }
 
-export interface PersonRetrieveResponse {
+export interface PersonGetDetailsV1Response {
   /**
    * Unique person identifier. Example: cc78ab54-d958-49b8-bae7-2f6c0c308837
    */
@@ -56,10 +56,10 @@ export interface PersonRetrieveResponse {
   /**
    * Management positions of the person.
    */
-  management_positions: Array<PersonRetrieveResponse.ManagementPosition>;
+  management_positions: Array<PersonGetDetailsV1Response.ManagementPosition>;
 }
 
-export namespace PersonRetrieveResponse {
+export namespace PersonGetDetailsV1Response {
   /**
    * All current and past management positions of the person.
    */
@@ -96,11 +96,11 @@ export namespace PersonRetrieveResponse {
 /**
  * Companies this entity owns or has invested in.
  */
-export interface PersonListHoldingsV1Response {
+export interface PersonGetHoldingsV1Response {
   /**
    * Shareholder and limited partner positions of the person.
    */
-  holdings: Array<PersonListHoldingsV1Response.Holding>;
+  holdings: Array<PersonGetHoldingsV1Response.Holding>;
 
   /**
    * Unique person identifier. Example: cc78ab54-d958-49b8-bae7-2f6c0c308837
@@ -108,7 +108,7 @@ export interface PersonListHoldingsV1Response {
   person_id: string;
 }
 
-export namespace PersonListHoldingsV1Response {
+export namespace PersonGetHoldingsV1Response {
   export interface Holding {
     /**
      * Unique company identifier. Example: DE-HRB-F1103-267645
@@ -151,7 +151,7 @@ export namespace PersonListHoldingsV1Response {
 
 export declare namespace Person {
   export {
-    type PersonRetrieveResponse as PersonRetrieveResponse,
-    type PersonListHoldingsV1Response as PersonListHoldingsV1Response,
+    type PersonGetDetailsV1Response as PersonGetDetailsV1Response,
+    type PersonGetHoldingsV1Response as PersonGetHoldingsV1Response,
   };
 }

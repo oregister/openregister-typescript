@@ -227,5 +227,5 @@ The following tools are available in this MCP server.
 
 ### Resource `person`:
 
-- `retrieve_person` (`read`): Get detailed person information
-- `list_holdings_v1_person` (`read`): Get person holdings
+- `get_details_v1_person` (`read`): Get detailed person information
+- `get_holdings_v1_person` (`read`): Get person holdings

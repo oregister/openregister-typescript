@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export const tool: Tool = {
-  name: 'list_holdings_v1_person',
+  name: 'get_holdings_v1_person',
   description:
     "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nGet person holdings\n\n# Response Schema\n```json\n{\n  type: 'object',\n  description: 'Companies this entity owns or has invested in.\\n',\n  properties: {\n    holdings: {\n      type: 'array',\n      description: 'Shareholder and limited partner positions of the person.\\n',\n      items: {\n        type: 'object',\n        properties: {\n          company_id: {\n            type: 'string',\n            description: 'Unique company identifier.\\nExample: DE-HRB-F1103-267645\\n'\n          },\n          end: {\n            type: 'string',\n            description: 'Date when the ownership ended.\\nFormat: ISO 8601 (YYYY-MM-DD)\\nExample: \"2022-01-01\"\\n'\n          },\n          name: {\n            type: 'string',\n            description: 'Name of the company.\\n'\n          },\n          nominal_share: {\n            type: 'number',\n            description: 'Amount of shares or capital in the company.\\nExample: 100\\n'\n          },\n          percentage_share: {\n            type: 'number',\n            description: 'Share of the company.\\nExample: 0.5 represents 50% ownership\\n'\n          },\n          relation_type: {\n            $ref: '#/$defs/company_relation_type'\n          },\n          start: {\n            type: 'string',\n            description: 'Date when the ownership started.\\nFormat: ISO 8601 (YYYY-MM-DD)\\nExample: \"2022-01-01\"\\n'\n          }\n        },\n        required: [          'company_id',\n          'end',\n          'name',\n          'nominal_share',\n          'percentage_share',\n          'relation_type',\n          'start'\n        ]\n      }\n    },\n    person_id: {\n      type: 'string',\n      description: 'Unique person identifier.\\nExample: cc78ab54-d958-49b8-bae7-2f6c0c308837\\n'\n    }\n  },\n  required: [    'holdings',\n    'person_id'\n  ],\n  $defs: {\n    company_relation_type: {\n      type: 'string',\n      enum: [        'shareholder',\n        'stockholder',\n        'limited_partner',\n        'general_partner'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
@@ -41,7 +41,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
   const { person_id, jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.person.listHoldingsV1(person_id)));
+  return asTextContentResult(await maybeFilter(jq_filter, await client.person.getHoldingsV1(person_id)));
 };
 
 export default { metadata, tool, handler };
