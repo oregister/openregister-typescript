@@ -9,19 +9,22 @@ export class Document extends APIResource {
   /**
    * Get document information
    */
-  documentCached(documentID: string, options?: RequestOptions): APIPromise<DocumentDocumentCachedResponse> {
+  getCachedV1(documentID: string, options?: RequestOptions): APIPromise<DocumentGetCachedV1Response> {
     return this._client.get(path`/v1/document/${documentID}`, options);
   }
 
   /**
    * Fetch a document in realtime.
    */
-  fetch(query: DocumentFetchParams, options?: RequestOptions): APIPromise<DocumentFetchResponse> {
+  getRealtimeV1(
+    query: DocumentGetRealtimeV1Params,
+    options?: RequestOptions,
+  ): APIPromise<DocumentGetRealtimeV1Response> {
     return this._client.get('/v1/document', { query, ...options });
   }
 }
 
-export interface DocumentDocumentCachedResponse {
+export interface DocumentGetCachedV1Response {
   /**
    * The unique identifier for the document. E.g.
    * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
@@ -50,7 +53,7 @@ export interface DocumentDocumentCachedResponse {
   url: string;
 }
 
-export interface DocumentFetchResponse {
+export interface DocumentGetRealtimeV1Response {
   category:
     | 'current_printout'
     | 'chronological_printout'
@@ -66,7 +69,7 @@ export interface DocumentFetchResponse {
   url: string;
 }
 
-export interface DocumentFetchParams {
+export interface DocumentGetRealtimeV1Params {
   company_id: string;
 
   document_category:
@@ -80,8 +83,8 @@ export interface DocumentFetchParams {
 
 export declare namespace Document {
   export {
-    type DocumentDocumentCachedResponse as DocumentDocumentCachedResponse,
-    type DocumentFetchResponse as DocumentFetchResponse,
-    type DocumentFetchParams as DocumentFetchParams,
+    type DocumentGetCachedV1Response as DocumentGetCachedV1Response,
+    type DocumentGetRealtimeV1Response as DocumentGetRealtimeV1Response,
+    type DocumentGetRealtimeV1Params as DocumentGetRealtimeV1Params,
   };
 }

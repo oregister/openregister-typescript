@@ -9,8 +9,8 @@ const client = new Openregister({
 
 describe('resource company', () => {
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.company.retrieve('company_id');
+  test.skip('getContactV0', async () => {
+    const responsePromise = client.company.getContactV0('company_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,11 +21,35 @@ describe('resource company', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
+  test.skip('getDetailsV1', async () => {
+    const responsePromise = client.company.getDetailsV1('company_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getDetailsV1: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.company.retrieve('company_id', { realtime: true }, { path: '/_stainless_unknown_path' }),
+      client.company.getDetailsV1('company_id', { realtime: true }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Openregister.NotFoundError);
+  });
+
+  // Prism tests are disabled
+  test.skip('getFinancialsV1', async () => {
+    const responsePromise = client.company.getFinancialsV1('company_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 
   // Prism tests are disabled
@@ -58,29 +82,5 @@ describe('resource company', () => {
     await expect(
       client.company.getOwnersV1('company_id', { realtime: true }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Openregister.NotFoundError);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieveContact', async () => {
-    const responsePromise = client.company.retrieveContact('company_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieveFinancials', async () => {
-    const responsePromise = client.company.retrieveFinancials('company_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });

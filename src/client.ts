@@ -20,6 +20,10 @@ import {
   Company,
   CompanyAddress,
   CompanyCapital,
+  CompanyGetContactV0Response,
+  CompanyGetDetailsV1Params,
+  CompanyGetDetailsV1Response,
+  CompanyGetFinancialsV1Response,
   CompanyGetHoldingsV1Response,
   CompanyGetOwnersV1Params,
   CompanyGetOwnersV1Response,
@@ -27,18 +31,14 @@ import {
   CompanyPurpose,
   CompanyRegister,
   CompanyRelationType,
-  CompanyRetrieveContactResponse,
-  CompanyRetrieveFinancialsResponse,
-  CompanyRetrieveParams,
-  CompanyRetrieveResponse,
   EntityType,
   ReportRow,
 } from './resources/company';
 import {
   Document,
-  DocumentDocumentCachedResponse,
-  DocumentFetchParams,
-  DocumentFetchResponse,
+  DocumentGetCachedV1Response,
+  DocumentGetRealtimeV1Params,
+  DocumentGetRealtimeV1Response,
 } from './resources/document';
 import { Person, PersonListHoldingsV1Response, PersonRetrieveResponse } from './resources/person';
 import {
@@ -55,7 +55,6 @@ import {
   SearchLookupCompanyByURLParams,
   SearchLookupCompanyByURLResponse,
 } from './resources/search';
-import { Jobs } from './resources/jobs/jobs';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -758,14 +757,12 @@ export class Openregister {
   search: API.Search = new API.Search(this);
   company: API.Company = new API.Company(this);
   document: API.Document = new API.Document(this);
-  jobs: API.Jobs = new API.Jobs(this);
   person: API.Person = new API.Person(this);
 }
 
 Openregister.Search = Search;
 Openregister.Company = Company;
 Openregister.Document = Document;
-Openregister.Jobs = Jobs;
 Openregister.Person = Person;
 
 export declare namespace Openregister {
@@ -796,23 +793,21 @@ export declare namespace Openregister {
     type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
     type ReportRow as ReportRow,
-    type CompanyRetrieveResponse as CompanyRetrieveResponse,
+    type CompanyGetContactV0Response as CompanyGetContactV0Response,
+    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
+    type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
-    type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
-    type CompanyRetrieveFinancialsResponse as CompanyRetrieveFinancialsResponse,
-    type CompanyRetrieveParams as CompanyRetrieveParams,
+    type CompanyGetDetailsV1Params as CompanyGetDetailsV1Params,
     type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
   };
 
   export {
     Document as Document,
-    type DocumentDocumentCachedResponse as DocumentDocumentCachedResponse,
-    type DocumentFetchResponse as DocumentFetchResponse,
-    type DocumentFetchParams as DocumentFetchParams,
+    type DocumentGetCachedV1Response as DocumentGetCachedV1Response,
+    type DocumentGetRealtimeV1Response as DocumentGetRealtimeV1Response,
+    type DocumentGetRealtimeV1Params as DocumentGetRealtimeV1Params,
   };
-
-  export { Jobs as Jobs };
 
   export {
     Person as Person,

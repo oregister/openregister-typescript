@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export const tool: Tool = {
-  name: 'fetch_document',
+  name: 'get_realtime_v1_document',
   description:
     "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nFetch a document in realtime.\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    category: {\n      type: 'string',\n      enum: [        'current_printout',\n        'chronological_printout',\n        'historical_printout',\n        'structured_information',\n        'shareholder_list',\n        'articles_of_association'\n      ]\n    },\n    file_date: {\n      type: 'string'\n    },\n    file_name: {\n      type: 'string'\n    },\n    url: {\n      type: 'string'\n    }\n  },\n  required: [    'category',\n    'file_date',\n    'file_name',\n    'url'\n  ]\n}\n```",
   inputSchema: {
@@ -52,7 +52,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.document.fetch(body)));
+  return asTextContentResult(await maybeFilter(jq_filter, await client.document.getRealtimeV1(body)));
 };
 
 export default { metadata, tool, handler };

@@ -10,21 +10,20 @@ export {
   type CompanyRelationType,
   type EntityType,
   type ReportRow,
-  type CompanyRetrieveResponse,
+  type CompanyGetContactV0Response,
+  type CompanyGetDetailsV1Response,
+  type CompanyGetFinancialsV1Response,
   type CompanyGetHoldingsV1Response,
   type CompanyGetOwnersV1Response,
-  type CompanyRetrieveContactResponse,
-  type CompanyRetrieveFinancialsResponse,
-  type CompanyRetrieveParams,
+  type CompanyGetDetailsV1Params,
   type CompanyGetOwnersV1Params,
 } from './company';
 export {
   Document,
-  type DocumentDocumentCachedResponse,
-  type DocumentFetchResponse,
-  type DocumentFetchParams,
+  type DocumentGetCachedV1Response,
+  type DocumentGetRealtimeV1Response,
+  type DocumentGetRealtimeV1Params,
 } from './document';
-export { Jobs } from './jobs/jobs';
 export { Person, type PersonRetrieveResponse, type PersonListHoldingsV1Response } from './person';
 export {
   Search,

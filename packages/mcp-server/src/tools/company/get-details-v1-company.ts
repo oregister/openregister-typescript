@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export const tool: Tool = {
-  name: 'retrieve_company',
+  name: 'get_details_v1_company',
   description: 'Get detailed company information',
   inputSchema: {
     type: 'object',
@@ -38,7 +38,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
   const { company_id, ...body } = args as any;
-  return asTextContentResult(await client.company.retrieve(company_id, body));
+  return asTextContentResult(await client.company.getDetailsV1(company_id, body));
 };
 
 export default { metadata, tool, handler };
