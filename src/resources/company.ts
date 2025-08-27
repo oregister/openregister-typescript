@@ -258,7 +258,7 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Industry codes of the company.
    */
-  industry_codes: Array<CompanyGetDetailsV1Response.IndustryCode>;
+  industry_codes: CompanyGetDetailsV1Response.IndustryCodes;
 
   /**
    * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
@@ -432,10 +432,19 @@ export namespace CompanyGetDetailsV1Response {
   }
 
   /**
-   * Industry codes from WZ 2025.
+   * Industry codes of the company.
    */
-  export interface IndustryCode {
-    code: string;
+  export interface IndustryCodes {
+    WZ2025: Array<IndustryCodes.Wz2025>;
+  }
+
+  export namespace IndustryCodes {
+    /**
+     * Industry codes from WZ 2025.
+     */
+    export interface Wz2025 {
+      code: string;
+    }
   }
 
   export interface Representation {
