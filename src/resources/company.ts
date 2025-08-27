@@ -9,14 +9,28 @@ import { path } from '../internal/utils/path';
 
 export class Company extends APIResource {
   /**
+   * Get company contact information
+   */
+  getContactV0(companyID: string, options?: RequestOptions): APIPromise<CompanyGetContactV0Response> {
+    return this._client.get(path`/v0/company/${companyID}/contact`, options);
+  }
+
+  /**
    * Get detailed company information
    */
-  retrieve(
+  getDetailsV1(
     companyID: string,
-    query: CompanyRetrieveParams | null | undefined = {},
+    query: CompanyGetDetailsV1Params | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CompanyRetrieveResponse> {
+  ): APIPromise<CompanyGetDetailsV1Response> {
     return this._client.get(path`/v1/company/${companyID}`, { query, ...options });
+  }
+
+  /**
+   * Get financial reports
+   */
+  getFinancialsV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetFinancialsV1Response> {
+    return this._client.get(path`/v1/company/${companyID}/financials`, options);
   }
 
   /**
@@ -35,23 +49,6 @@ export class Company extends APIResource {
     options?: RequestOptions,
   ): APIPromise<CompanyGetOwnersV1Response> {
     return this._client.get(path`/v1/company/${companyID}/owners`, { query, ...options });
-  }
-
-  /**
-   * Get company contact information
-   */
-  retrieveContact(companyID: string, options?: RequestOptions): APIPromise<CompanyRetrieveContactResponse> {
-    return this._client.get(path`/v0/company/${companyID}/contact`, options);
-  }
-
-  /**
-   * Get financial reports
-   */
-  retrieveFinancials(
-    companyID: string,
-    options?: RequestOptions,
-  ): APIPromise<CompanyRetrieveFinancialsResponse> {
-    return this._client.get(path`/v1/company/${companyID}/financials`, options);
   }
 }
 
@@ -193,7 +190,30 @@ export interface ReportRow {
   previous_value: number | null;
 }
 
-export interface CompanyRetrieveResponse {
+export interface CompanyGetContactV0Response {
+  /**
+   * Where the contact information was found. Example: "https://openregister.de"
+   */
+  source_url: string;
+
+  /**
+   * Company contact email address. Example: "founders@openregister.de"
+   */
+  email?: string;
+
+  /**
+   * Company phone number. Example: "+49 030 12345678"
+   */
+  phone?: string;
+
+  /**
+   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
+   * Example: "DE370146530"
+   */
+  vat_id?: string;
+}
+
+export interface CompanyGetDetailsV1Response {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
    */
@@ -222,7 +242,7 @@ export interface CompanyRetrieveResponse {
   /**
    * Available official documents related to the company.
    */
-  documents: Array<CompanyRetrieveResponse.Document>;
+  documents: Array<CompanyGetDetailsV1Response.Document>;
 
   /**
    * Date when the company was officially registered. Format: ISO 8601 (YYYY-MM-DD)
@@ -233,12 +253,12 @@ export interface CompanyRetrieveResponse {
   /**
    * Key company indicators like net income, employee count, revenue, etc..
    */
-  indicators: Array<CompanyRetrieveResponse.Indicator>;
+  indicators: Array<CompanyGetDetailsV1Response.Indicator>;
 
   /**
    * Industry codes of the company.
    */
-  industry_codes: Array<CompanyRetrieveResponse.IndustryCode>;
+  industry_codes: Array<CompanyGetDetailsV1Response.IndustryCode>;
 
   /**
    * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
@@ -281,7 +301,7 @@ export interface CompanyRetrieveResponse {
    * List of individuals or entities authorized to represent the company. Includes
    * directors, officers, and authorized signatories.
    */
-  representation: Array<CompanyRetrieveResponse.Representation>;
+  representation: Array<CompanyGetDetailsV1Response.Representation>;
 
   /**
    * Current status of the company:
@@ -299,7 +319,7 @@ export interface CompanyRetrieveResponse {
   terminated_at: string | null;
 }
 
-export namespace CompanyRetrieveResponse {
+export namespace CompanyGetDetailsV1Response {
   export interface Document {
     /**
      * Unique identifier for the document. Example:
@@ -504,6 +524,49 @@ export namespace CompanyRetrieveResponse {
   }
 }
 
+export interface CompanyGetFinancialsV1Response {
+  reports: Array<CompanyGetFinancialsV1Response.Report>;
+}
+
+export namespace CompanyGetFinancialsV1Response {
+  export interface Report {
+    aktiva: Report.Aktiva;
+
+    /**
+     * Whether the report is a consolidated report or not.
+     */
+    consolidated: boolean;
+
+    passiva: Report.Passiva;
+
+    report_end_date: string;
+
+    /**
+     * Unique identifier for the financial report. Example:
+     * f47ac10b-58cc-4372-a567-0e02b2c3d479
+     */
+    report_id: string;
+
+    report_start_date: string | null;
+
+    guv?: Report.Guv | null;
+  }
+
+  export namespace Report {
+    export interface Aktiva {
+      rows: Array<CompanyAPI.ReportRow>;
+    }
+
+    export interface Passiva {
+      rows: Array<CompanyAPI.ReportRow>;
+    }
+
+    export interface Guv {
+      rows: Array<CompanyAPI.ReportRow>;
+    }
+  }
+}
+
 /**
  * Companies this entity owns or has invested in.
  */
@@ -652,73 +715,7 @@ export namespace CompanyGetOwnersV1Response {
   }
 }
 
-export interface CompanyRetrieveContactResponse {
-  /**
-   * Where the contact information was found. Example: "https://openregister.de"
-   */
-  source_url: string;
-
-  /**
-   * Company contact email address. Example: "founders@openregister.de"
-   */
-  email?: string;
-
-  /**
-   * Company phone number. Example: "+49 030 12345678"
-   */
-  phone?: string;
-
-  /**
-   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
-   * Example: "DE370146530"
-   */
-  vat_id?: string;
-}
-
-export interface CompanyRetrieveFinancialsResponse {
-  reports: Array<CompanyRetrieveFinancialsResponse.Report>;
-}
-
-export namespace CompanyRetrieveFinancialsResponse {
-  export interface Report {
-    aktiva: Report.Aktiva;
-
-    /**
-     * Whether the report is a consolidated report or not.
-     */
-    consolidated: boolean;
-
-    passiva: Report.Passiva;
-
-    report_end_date: string;
-
-    /**
-     * Unique identifier for the financial report. Example:
-     * f47ac10b-58cc-4372-a567-0e02b2c3d479
-     */
-    report_id: string;
-
-    report_start_date: string | null;
-
-    guv?: Report.Guv | null;
-  }
-
-  export namespace Report {
-    export interface Aktiva {
-      rows: Array<CompanyAPI.ReportRow>;
-    }
-
-    export interface Passiva {
-      rows: Array<CompanyAPI.ReportRow>;
-    }
-
-    export interface Guv {
-      rows: Array<CompanyAPI.ReportRow>;
-    }
-  }
-}
-
-export interface CompanyRetrieveParams {
+export interface CompanyGetDetailsV1Params {
   /**
    * Get the most up-to-date company information directly from the Handelsregister.
    * When set to true, we fetch the latest data in real-time from the official German
@@ -748,12 +745,12 @@ export declare namespace Company {
     type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
     type ReportRow as ReportRow,
-    type CompanyRetrieveResponse as CompanyRetrieveResponse,
+    type CompanyGetContactV0Response as CompanyGetContactV0Response,
+    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
+    type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
-    type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
-    type CompanyRetrieveFinancialsResponse as CompanyRetrieveFinancialsResponse,
-    type CompanyRetrieveParams as CompanyRetrieveParams,
+    type CompanyGetDetailsV1Params as CompanyGetDetailsV1Params,
     type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
   };
 }

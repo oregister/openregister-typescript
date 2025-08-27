@@ -214,21 +214,16 @@ The following tools are available in this MCP server.
 
 ### Resource `company`:
 
-- `retrieve_company` (`read`): Get detailed company information
+- `get_contact_v0_company` (`read`): Get company contact information
+- `get_details_v1_company` (`read`): Get detailed company information
+- `get_financials_v1_company` (`read`): Get financial reports
 - `get_holdings_v1_company` (`read`): Get company holdings
 - `get_owners_v1_company` (`read`): Get company owners
-- `retrieve_contact_company` (`read`): Get company contact information
-- `retrieve_financials_company` (`read`): Get financial reports
 
 ### Resource `document`:
 
-- `document_cached_document` (`read`): Get document information
-- `fetch_document` (`read`): Fetch a document in realtime.
-
-### Resource `jobs.document`:
-
-- `create_jobs_document` (`write`): Create a document job
-- `retrieve_jobs_document` (`read`): Get document job status
+- `get_cached_v1_document` (`read`): Get document information
+- `get_realtime_v1_document` (`read`): Fetch a document in realtime.
 
 ### Resource `person`:
 
