@@ -1,5 +1,45 @@
 # Changelog
 
+## 2.0.0 (2025-08-27)
+
+Full Changelog: [v1.9.0...v2.0.0](https://github.com/oregister/openregister-typescript/compare/v1.9.0...v2.0.0)
+
+### Features
+
+* **api:** update via SDK Studio ([ee991a2](https://github.com/oregister/openregister-typescript/commit/ee991a2ddf5f6132b3735f41010feeb93b34fe71))
+* **api:** update via SDK Studio ([f9faede](https://github.com/oregister/openregister-typescript/commit/f9faede00549d9a2ef2e072d33624f44f59a3318))
+* **api:** update via SDK Studio ([1a6ceee](https://github.com/oregister/openregister-typescript/commit/1a6ceeeaf367a4d5c07dab5151293ff58905aa7f))
+* **api:** update via SDK Studio ([5cdfc27](https://github.com/oregister/openregister-typescript/commit/5cdfc278a0a0ccb850ed8bfa9166dcca31b34e70))
+* **api:** update via SDK Studio ([99676a1](https://github.com/oregister/openregister-typescript/commit/99676a17379b91c1f8080cbb22a76734d33023f3))
+* **api:** update via SDK Studio ([04da899](https://github.com/oregister/openregister-typescript/commit/04da899c1617c6be3583eb75833de33d727402b1))
+* **api:** update via SDK Studio ([6b67168](https://github.com/oregister/openregister-typescript/commit/6b67168cd215e6b6ab4a6e33104e44749c04683c))
+* **mcp:** add client infer to cloudflare oauth screen ([fb2a011](https://github.com/oregister/openregister-typescript/commit/fb2a011d5603135a39924d265b1f0eeb7e8cf564))
+* **mcp:** add code execution tool ([2db007e](https://github.com/oregister/openregister-typescript/commit/2db007e2ffcb865e30d764043191e90f5a48abc6))
+* **mcp:** add option to infer mcp client ([b80633f](https://github.com/oregister/openregister-typescript/commit/b80633ff49d040c09fe419bbf55f466087b799b9))
+* **mcp:** parse query string as mcp client options in mcp server ([a3d8f87](https://github.com/oregister/openregister-typescript/commit/a3d8f870c793eb16d2db78be6e17744d7fca89a1))
+
+
+### Chores
+
+* add package to package.json ([c369003](https://github.com/oregister/openregister-typescript/commit/c369003518dd04fb4122509bf7dca4d405ebdacf))
+* **client:** qualify global Blob ([56c1027](https://github.com/oregister/openregister-typescript/commit/56c1027c2149c62d3d04607547d76d0e709eb0f4))
+* **deps:** update dependency @types/node to v20.17.58 ([95eab2e](https://github.com/oregister/openregister-typescript/commit/95eab2e8806534e33a0f43d2cf66afc5dabbd364))
+* **internal:** codegen related update ([82df2b9](https://github.com/oregister/openregister-typescript/commit/82df2b93967fb7681bb75ec84a3c7dfca00906b9))
+* **internal:** codegen related update ([5b1baa2](https://github.com/oregister/openregister-typescript/commit/5b1baa2061ee3b6edfa580b038d1179254610f0a))
+* **internal:** codegen related update ([efaea89](https://github.com/oregister/openregister-typescript/commit/efaea894ace2e21f380d3c2b140b015531128d20))
+* **internal:** formatting change ([2894108](https://github.com/oregister/openregister-typescript/commit/289410845d32e6e42d4339482e1e93bed71cd0d6))
+* **internal:** make mcp-server publishing public by defaut ([54c2c42](https://github.com/oregister/openregister-typescript/commit/54c2c420b451f9572e5c823945e099846a4825fc))
+* **internal:** refactor array check ([c4e32cb](https://github.com/oregister/openregister-typescript/commit/c4e32cbbead86dfae78b6dbf7fcd36c4e572f01a))
+* **internal:** update comment in script ([38234da](https://github.com/oregister/openregister-typescript/commit/38234da488664bcbbd6f27d054d69fd5bb9bde8f))
+* **mcp:** add cors to oauth metadata route ([535619a](https://github.com/oregister/openregister-typescript/commit/535619a8704fa21f565c7c5d1de297052dcc841e))
+* **mcp:** document remote server in README.md ([9484ef4](https://github.com/oregister/openregister-typescript/commit/9484ef4e4c1335c3713bb6e860e8436669f19d73))
+* **mcp:** minor cleanup of types and package.json ([eb819b4](https://github.com/oregister/openregister-typescript/commit/eb819b4f2f696d93636660f6f9587b29298ad19e))
+* **mcp:** update package.json ([0bde86b](https://github.com/oregister/openregister-typescript/commit/0bde86bc3af21ebb85638b43ad5e2a6b43b78b82))
+* **mcp:** update README ([c251cce](https://github.com/oregister/openregister-typescript/commit/c251cce574b7d65545a54cfe0e8a5380c34b3f3e))
+* **mcp:** update types ([47100a3](https://github.com/oregister/openregister-typescript/commit/47100a3479cd4e698d71e7d597933271c8bf7511))
+* update @stainless-api/prism-cli to v5.15.0 ([382b6f5](https://github.com/oregister/openregister-typescript/commit/382b6f5d760c69a2339328fbe6e39826e1dfbe03))
+* update CI script ([857cbc7](https://github.com/oregister/openregister-typescript/commit/857cbc75bdc4af72877262191b402bbd0f1f8f05))
+
 ## 1.9.0 (2025-08-07)
 
 Full Changelog: [v1.8.0...v1.9.0](https://github.com/oregister/openregister-typescript/compare/v1.8.0...v1.9.0)
