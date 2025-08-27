@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   operation: 'read',
   tags: [],
   httpMethod: 'get',
-  httpPath: '/v0/company/{company_id}',
-  operationId: 'getCompany',
+  httpPath: '/v1/company/{company_id}',
+  operationId: 'getCompanyV1',
 };
 
 export const tool: Tool = {
@@ -23,20 +23,10 @@ export const tool: Tool = {
       company_id: {
         type: 'string',
       },
-      documents: {
+      realtime: {
         type: 'boolean',
         description:
-          'Include document metadata when set to true.\nLists available official documents related to the company.\n',
-      },
-      financials: {
-        type: 'boolean',
-        description:
-          'Include financial data when set to true.\nProvides access to financial reports and key financial indicators.\n',
-      },
-      history: {
-        type: 'boolean',
-        description:
-          'Include historical company data when set to true.\nThis returns past names, addresses, and other changed information.\n',
+          'Get the most up-to-date company information directly from the Handelsregister.\nWhen set to true, we fetch the latest data in real-time from the official German commercial register,\nensuring you receive the most current company details.\nNote: Real-time requests take longer but guarantee the freshest data available.\n',
       },
     },
     required: ['company_id'],

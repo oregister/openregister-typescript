@@ -32,16 +32,14 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyRetrieveResponse</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetHoldingsV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetOwnersV1Response</a></code>
-- <code><a href="./src/resources/company.ts">CompanyListShareholdersResponse</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRetrieveContactResponse</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRetrieveFinancialsResponse</a></code>
 
 Methods:
 
-- <code title="get /v0/company/{company_id}">client.company.<a href="./src/resources/company.ts">retrieve</a>(companyID, { ...params }) -> CompanyRetrieveResponse</code>
+- <code title="get /v1/company/{company_id}">client.company.<a href="./src/resources/company.ts">retrieve</a>(companyID, { ...params }) -> CompanyRetrieveResponse</code>
 - <code title="get /v1/company/{company_id}/holdings">client.company.<a href="./src/resources/company.ts">getHoldingsV1</a>(companyID) -> CompanyGetHoldingsV1Response</code>
-- <code title="get /v1/company/{company_id}/owners">client.company.<a href="./src/resources/company.ts">getOwnersV1</a>(companyID) -> CompanyGetOwnersV1Response</code>
-- <code title="get /v0/company/{company_id}/shareholders">client.company.<a href="./src/resources/company.ts">listShareholders</a>(companyID) -> CompanyListShareholdersResponse</code>
+- <code title="get /v1/company/{company_id}/owners">client.company.<a href="./src/resources/company.ts">getOwnersV1</a>(companyID, { ...params }) -> CompanyGetOwnersV1Response</code>
 - <code title="get /v0/company/{company_id}/contact">client.company.<a href="./src/resources/company.ts">retrieveContact</a>(companyID) -> CompanyRetrieveContactResponse</code>
 - <code title="get /v1/company/{company_id}/financials">client.company.<a href="./src/resources/company.ts">retrieveFinancials</a>(companyID) -> CompanyRetrieveFinancialsResponse</code>
 
@@ -49,12 +47,13 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/document.ts">DocumentRetrieveResponse</a></code>
+- <code><a href="./src/resources/document.ts">DocumentDocumentCachedResponse</a></code>
+- <code><a href="./src/resources/document.ts">DocumentFetchResponse</a></code>
 
 Methods:
 
-- <code title="get /v0/document/{document_id}">client.document.<a href="./src/resources/document.ts">retrieve</a>(documentID) -> DocumentRetrieveResponse</code>
-- <code title="get /v0/document/{document_id}/download">client.document.<a href="./src/resources/document.ts">download</a>(documentID) -> Response</code>
+- <code title="get /v1/document/{document_id}">client.document.<a href="./src/resources/document.ts">documentCached</a>(documentID) -> DocumentDocumentCachedResponse</code>
+- <code title="get /v1/document">client.document.<a href="./src/resources/document.ts">fetch</a>({ ...params }) -> DocumentFetchResponse</code>
 
 # Jobs
 
@@ -69,3 +68,15 @@ Methods:
 
 - <code title="post /v0/jobs/document">client.jobs.document.<a href="./src/resources/jobs/document.ts">create</a>({ ...params }) -> DocumentCreateResponse</code>
 - <code title="get /v0/jobs/document/{id}">client.jobs.document.<a href="./src/resources/jobs/document.ts">retrieve</a>(id) -> DocumentRetrieveResponse</code>
+
+# Person
+
+Types:
+
+- <code><a href="./src/resources/person.ts">PersonRetrieveResponse</a></code>
+- <code><a href="./src/resources/person.ts">PersonListHoldingsV1Response</a></code>
+
+Methods:
+
+- <code title="get /v1/person/{person_id}">client.person.<a href="./src/resources/person.ts">retrieve</a>(personID) -> PersonRetrieveResponse</code>
+- <code title="get /v1/person/{person_id}/holdings">client.person.<a href="./src/resources/person.ts">listHoldingsV1</a>(personID) -> PersonListHoldingsV1Response</code>

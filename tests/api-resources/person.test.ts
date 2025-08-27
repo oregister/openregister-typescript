@@ -7,10 +7,10 @@ const client = new Openregister({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource document', () => {
+describe('resource person', () => {
   // Prism tests are disabled
-  test.skip('documentCached', async () => {
-    const responsePromise = client.document.documentCached('document_id');
+  test.skip('retrieve', async () => {
+    const responsePromise = client.person.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,11 +21,8 @@ describe('resource document', () => {
   });
 
   // Prism tests are disabled
-  test.skip('fetch: only required params', async () => {
-    const responsePromise = client.document.fetch({
-      company_id: 'company_id',
-      document_category: 'current_printout',
-    });
+  test.skip('listHoldingsV1', async () => {
+    const responsePromise = client.person.listHoldingsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -33,13 +30,5 @@ describe('resource document', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('fetch: required and optional params', async () => {
-    const response = await client.document.fetch({
-      company_id: 'company_id',
-      document_category: 'current_printout',
-    });
   });
 });

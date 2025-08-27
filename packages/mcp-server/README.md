@@ -217,16 +217,20 @@ The following tools are available in this MCP server.
 - `retrieve_company` (`read`): Get detailed company information
 - `get_holdings_v1_company` (`read`): Get company holdings
 - `get_owners_v1_company` (`read`): Get company owners
-- `list_shareholders_company` (`read`): Get company shareholders
 - `retrieve_contact_company` (`read`): Get company contact information
 - `retrieve_financials_company` (`read`): Get financial reports
 
 ### Resource `document`:
 
-- `retrieve_document` (`read`): Get document information
-- `download_document` (`read`): Download document
+- `document_cached_document` (`read`): Get document information
+- `fetch_document` (`read`): Fetch a document in realtime.
 
 ### Resource `jobs.document`:
 
 - `create_jobs_document` (`write`): Create a document job
 - `retrieve_jobs_document` (`read`): Get document job status
+
+### Resource `person`:
+
+- `retrieve_person` (`read`): Get detailed person information
+- `list_holdings_v1_person` (`read`): Get person holdings
