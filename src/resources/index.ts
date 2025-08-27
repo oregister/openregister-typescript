@@ -10,27 +10,32 @@ export {
   type CompanyRelationType,
   type EntityType,
   type ReportRow,
-  type CompanyRetrieveResponse,
+  type CompanyGetContactV0Response,
+  type CompanyGetDetailsV1Response,
+  type CompanyGetFinancialsV1Response,
   type CompanyGetHoldingsV1Response,
   type CompanyGetOwnersV1Response,
-  type CompanyListShareholdersResponse,
-  type CompanyRetrieveContactResponse,
-  type CompanyRetrieveFinancialsResponse,
-  type CompanyRetrieveParams,
+  type CompanyGetDetailsV1Params,
+  type CompanyGetOwnersV1Params,
 } from './company';
-export { Document, type DocumentRetrieveResponse } from './document';
-export { Jobs } from './jobs/jobs';
+export {
+  Document,
+  type DocumentGetCachedV1Response,
+  type DocumentGetRealtimeV1Response,
+  type DocumentGetRealtimeV1Params,
+} from './document';
+export { Person, type PersonGetDetailsV1Response, type PersonGetHoldingsV1Response } from './person';
 export {
   Search,
   type CompanyLegalForm,
   type CompanyRegisterType,
   type CompanySearch,
   type SearchAutocompleteCompaniesV1Response,
-  type SearchFindPersonResponse,
+  type SearchFindPersonV1Response,
   type SearchLookupCompanyByURLResponse,
   type SearchAutocompleteCompaniesV1Params,
   type SearchFindCompaniesV0Params,
   type SearchFindCompaniesV1Params,
-  type SearchFindPersonParams,
+  type SearchFindPersonV1Params,
   type SearchLookupCompanyByURLParams,
 } from './search';

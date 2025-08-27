@@ -7,24 +7,23 @@ import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import Openregister from 'openregister';
 
 export const metadata: Metadata = {
-  resource: 'jobs.document',
-  operation: 'write',
+  resource: 'document',
+  operation: 'read',
   tags: [],
-  httpMethod: 'post',
-  httpPath: '/v0/jobs/document',
-  operationId: 'createDocumentJob',
+  httpMethod: 'get',
+  httpPath: '/v1/document',
+  operationId: 'getRealtimeDocument',
 };
 
 export const tool: Tool = {
-  name: 'create_jobs_document',
+  name: 'get_realtime_v1_document',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nCreate a document job\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    id: {\n      type: 'string',\n      description: 'Unique job identifier.\\nExample: f47ac10b-58cc-4372-a567-0e02b2c3d479\\n'\n    }\n  },\n  required: [    'id'\n  ]\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nFetch a document in realtime.\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    category: {\n      type: 'string',\n      enum: [        'current_printout',\n        'chronological_printout',\n        'historical_printout',\n        'structured_information',\n        'shareholder_list',\n        'articles_of_association'\n      ]\n    },\n    file_date: {\n      type: 'string'\n    },\n    file_name: {\n      type: 'string'\n    },\n    url: {\n      type: 'string'\n    }\n  },\n  required: [    'category',\n    'file_date',\n    'file_name',\n    'url'\n  ]\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
       company_id: {
         type: 'string',
-        description: 'Unique company identifier.\nExample: DE-HRB-F1103-267645\n',
       },
       document_category: {
         type: 'string',
@@ -46,12 +45,14 @@ export const tool: Tool = {
     },
     required: ['company_id', 'document_category'],
   },
-  annotations: {},
+  annotations: {
+    readOnlyHint: true,
+  },
 };
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.jobs.document.create(body)));
+  return asTextContentResult(await maybeFilter(jq_filter, await client.document.getRealtimeV1(body)));
 };
 
 export default { metadata, tool, handler };

@@ -20,21 +20,27 @@ import {
   Company,
   CompanyAddress,
   CompanyCapital,
+  CompanyGetContactV0Response,
+  CompanyGetDetailsV1Params,
+  CompanyGetDetailsV1Response,
+  CompanyGetFinancialsV1Response,
   CompanyGetHoldingsV1Response,
+  CompanyGetOwnersV1Params,
   CompanyGetOwnersV1Response,
-  CompanyListShareholdersResponse,
   CompanyName,
   CompanyPurpose,
   CompanyRegister,
   CompanyRelationType,
-  CompanyRetrieveContactResponse,
-  CompanyRetrieveFinancialsResponse,
-  CompanyRetrieveParams,
-  CompanyRetrieveResponse,
   EntityType,
   ReportRow,
 } from './resources/company';
-import { Document, DocumentRetrieveResponse } from './resources/document';
+import {
+  Document,
+  DocumentGetCachedV1Response,
+  DocumentGetRealtimeV1Params,
+  DocumentGetRealtimeV1Response,
+} from './resources/document';
+import { Person, PersonGetDetailsV1Response, PersonGetHoldingsV1Response } from './resources/person';
 import {
   CompanyLegalForm,
   CompanyRegisterType,
@@ -44,12 +50,11 @@ import {
   SearchAutocompleteCompaniesV1Response,
   SearchFindCompaniesV0Params,
   SearchFindCompaniesV1Params,
-  SearchFindPersonParams,
-  SearchFindPersonResponse,
+  SearchFindPersonV1Params,
+  SearchFindPersonV1Response,
   SearchLookupCompanyByURLParams,
   SearchLookupCompanyByURLResponse,
 } from './resources/search';
-import { Jobs } from './resources/jobs/jobs';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -710,7 +715,7 @@ export class Openregister {
         // Preserve legacy string encoding behavior for now
         headers.values.has('content-type')) ||
       // `Blob` is superset of `File`
-      body instanceof Blob ||
+      ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
       body instanceof FormData ||
       // `URLSearchParams` -> `application/x-www-form-urlencoded`
@@ -752,12 +757,14 @@ export class Openregister {
   search: API.Search = new API.Search(this);
   company: API.Company = new API.Company(this);
   document: API.Document = new API.Document(this);
-  jobs: API.Jobs = new API.Jobs(this);
+  person: API.Person = new API.Person(this);
 }
+
 Openregister.Search = Search;
 Openregister.Company = Company;
 Openregister.Document = Document;
-Openregister.Jobs = Jobs;
+Openregister.Person = Person;
+
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
 
@@ -767,12 +774,12 @@ export declare namespace Openregister {
     type CompanyRegisterType as CompanyRegisterType,
     type CompanySearch as CompanySearch,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
-    type SearchFindPersonResponse as SearchFindPersonResponse,
+    type SearchFindPersonV1Response as SearchFindPersonV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
     type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
-    type SearchFindPersonParams as SearchFindPersonParams,
+    type SearchFindPersonV1Params as SearchFindPersonV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
 
@@ -786,16 +793,25 @@ export declare namespace Openregister {
     type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
     type ReportRow as ReportRow,
-    type CompanyRetrieveResponse as CompanyRetrieveResponse,
+    type CompanyGetContactV0Response as CompanyGetContactV0Response,
+    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
+    type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
-    type CompanyListShareholdersResponse as CompanyListShareholdersResponse,
-    type CompanyRetrieveContactResponse as CompanyRetrieveContactResponse,
-    type CompanyRetrieveFinancialsResponse as CompanyRetrieveFinancialsResponse,
-    type CompanyRetrieveParams as CompanyRetrieveParams,
+    type CompanyGetDetailsV1Params as CompanyGetDetailsV1Params,
+    type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
   };
 
-  export { Document as Document, type DocumentRetrieveResponse as DocumentRetrieveResponse };
+  export {
+    Document as Document,
+    type DocumentGetCachedV1Response as DocumentGetCachedV1Response,
+    type DocumentGetRealtimeV1Response as DocumentGetRealtimeV1Response,
+    type DocumentGetRealtimeV1Params as DocumentGetRealtimeV1Params,
+  };
 
-  export { Jobs as Jobs };
+  export {
+    Person as Person,
+    type PersonGetDetailsV1Response as PersonGetDetailsV1Response,
+    type PersonGetHoldingsV1Response as PersonGetHoldingsV1Response,
+  };
 }

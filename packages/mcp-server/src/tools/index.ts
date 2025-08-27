@@ -7,18 +7,17 @@ export { Metadata, Endpoint, HandlerFunction };
 import autocomplete_companies_v1_search from './search/autocomplete-companies-v1-search';
 import find_companies_v0_search from './search/find-companies-v0-search';
 import find_companies_v1_search from './search/find-companies-v1-search';
-import find_person_search from './search/find-person-search';
+import find_person_v1_search from './search/find-person-v1-search';
 import lookup_company_by_url_search from './search/lookup-company-by-url-search';
-import retrieve_company from './company/retrieve-company';
+import get_contact_v0_company from './company/get-contact-v0-company';
+import get_details_v1_company from './company/get-details-v1-company';
+import get_financials_v1_company from './company/get-financials-v1-company';
 import get_holdings_v1_company from './company/get-holdings-v1-company';
 import get_owners_v1_company from './company/get-owners-v1-company';
-import list_shareholders_company from './company/list-shareholders-company';
-import retrieve_contact_company from './company/retrieve-contact-company';
-import retrieve_financials_company from './company/retrieve-financials-company';
-import retrieve_document from './document/retrieve-document';
-import download_document from './document/download-document';
-import create_jobs_document from './jobs/document/create-jobs-document';
-import retrieve_jobs_document from './jobs/document/retrieve-jobs-document';
+import get_cached_v1_document from './document/get-cached-v1-document';
+import get_realtime_v1_document from './document/get-realtime-v1-document';
+import get_details_v1_person from './person/get-details-v1-person';
+import get_holdings_v1_person from './person/get-holdings-v1-person';
 
 export const endpoints: Endpoint[] = [];
 
@@ -29,18 +28,17 @@ function addEndpoint(endpoint: Endpoint) {
 addEndpoint(autocomplete_companies_v1_search);
 addEndpoint(find_companies_v0_search);
 addEndpoint(find_companies_v1_search);
-addEndpoint(find_person_search);
+addEndpoint(find_person_v1_search);
 addEndpoint(lookup_company_by_url_search);
-addEndpoint(retrieve_company);
+addEndpoint(get_contact_v0_company);
+addEndpoint(get_details_v1_company);
+addEndpoint(get_financials_v1_company);
 addEndpoint(get_holdings_v1_company);
 addEndpoint(get_owners_v1_company);
-addEndpoint(list_shareholders_company);
-addEndpoint(retrieve_contact_company);
-addEndpoint(retrieve_financials_company);
-addEndpoint(retrieve_document);
-addEndpoint(download_document);
-addEndpoint(create_jobs_document);
-addEndpoint(retrieve_jobs_document);
+addEndpoint(get_cached_v1_document);
+addEndpoint(get_realtime_v1_document);
+addEndpoint(get_details_v1_person);
+addEndpoint(get_holdings_v1_person);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';

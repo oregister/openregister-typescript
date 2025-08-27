@@ -7,13 +7,10 @@ const client = new Openregister({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource document', () => {
-  // skipped: tests are disabled for the time being
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.jobs.document.create({
-      company_id: 'company_id',
-      document_category: 'current_printout',
-    });
+describe('resource person', () => {
+  // Prism tests are disabled
+  test.skip('getDetailsV1', async () => {
+    const responsePromise = client.person.getDetailsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,17 +20,9 @@ describe('resource document', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('create: required and optional params', async () => {
-    const response = await client.jobs.document.create({
-      company_id: 'company_id',
-      document_category: 'current_printout',
-    });
-  });
-
-  // skipped: tests are disabled for the time being
-  test.skip('retrieve', async () => {
-    const responsePromise = client.jobs.document.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  // Prism tests are disabled
+  test.skip('getHoldingsV1', async () => {
+    const responsePromise = client.person.getHoldingsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

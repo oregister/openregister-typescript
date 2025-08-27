@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export const tool: Tool = {
-  name: 'retrieve_contact_company',
+  name: 'get_contact_v0_company',
   description:
     "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nGet company contact information\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    source_url: {\n      type: 'string',\n      description: 'Where the contact information was found.\\nExample: \"https://openregister.de\"\\n'\n    },\n    email: {\n      type: 'string',\n      description: 'Company contact email address.\\nExample: \"founders@openregister.de\"\\n'\n    },\n    phone: {\n      type: 'string',\n      description: 'Company phone number.\\nExample: \"+49 030 12345678\"\\n'\n    },\n    vat_id: {\n      type: 'string',\n      description: 'Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)\\nExample: \"DE370146530\"\\n'\n    }\n  },\n  required: [    'source_url'\n  ]\n}\n```",
   inputSchema: {
@@ -41,7 +41,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
   const { company_id, jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.company.retrieveContact(company_id)));
+  return asTextContentResult(await maybeFilter(jq_filter, await client.company.getContactV0(company_id)));
 };
 
 export default { metadata, tool, handler };

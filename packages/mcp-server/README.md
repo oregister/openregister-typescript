@@ -126,6 +126,45 @@ over time, you can manually enable or disable certain capabilities:
 --resource=cards,accounts --operation=read --tag=kyc --no-tool=create_cards
 ```
 
+## Running remotely
+
+Launching the client with `--transport=http` launches the server as a remote server using Streamable HTTP transport. The `--port` setting can choose the port it will run on, and the `--socket` setting allows it to run on a Unix socket.
+
+Authorization can be provided via the `Authorization` header using the Bearer scheme.
+
+Additionally, authorization can be provided via the following headers:
+| Header | Equivalent client option | Security scheme |
+| ------------------------ | ------------------------ | --------------- |
+| `x-openregister-api-key` | `apiKey` | BearerAuth |
+
+A configuration JSON for this server might look like this, assuming the server is hosted at `http://localhost:3000`:
+
+```json
+{
+  "mcpServers": {
+    "openregister_api": {
+      "url": "http://localhost:3000",
+      "headers": {
+        "Authorization": "Bearer <auth value>"
+      }
+    }
+  }
+}
+```
+
+The command-line arguments for filtering tools and specifying clients can also be used as query parameters in the URL.
+For example, to exclude specific tools while including others, use the URL:
+
+```
+http://localhost:3000?resource=cards&resource=accounts&no_tool=create_cards
+```
+
+Or, to configure for the Cursor client, with a custom max tool name length, use the URL:
+
+```
+http://localhost:3000?client=cursor&capability=tool-name-length%3D40
+```
+
 ## Importing the tools and server individually
 
 ```js
@@ -170,24 +209,23 @@ The following tools are available in this MCP server.
 - `autocomplete_companies_v1_search` (`read`): Autocomplete company search
 - `find_companies_v0_search` (`read`): Search for companies
 - `find_companies_v1_search` (`write`): Search for companies
-- `find_person_search` (`write`): Search for people
+- `find_person_v1_search` (`write`): Search for people
 - `lookup_company_by_url_search` (`read`): Find company by website URL
 
 ### Resource `company`:
 
-- `retrieve_company` (`read`): Get detailed company information
+- `get_contact_v0_company` (`read`): Get company contact information
+- `get_details_v1_company` (`read`): Get detailed company information
+- `get_financials_v1_company` (`read`): Get financial reports
 - `get_holdings_v1_company` (`read`): Get company holdings
 - `get_owners_v1_company` (`read`): Get company owners
-- `list_shareholders_company` (`read`): Get company shareholders
-- `retrieve_contact_company` (`read`): Get company contact information
-- `retrieve_financials_company` (`read`): Get financial reports
 
 ### Resource `document`:
 
-- `retrieve_document` (`read`): Get document information
-- `download_document` (`read`): Download document
+- `get_cached_v1_document` (`read`): Get document information
+- `get_realtime_v1_document` (`read`): Fetch a document in realtime.
 
-### Resource `jobs.document`:
+### Resource `person`:
 
-- `create_jobs_document` (`write`): Create a document job
-- `retrieve_jobs_document` (`read`): Get document job status
+- `get_details_v1_person` (`read`): Get detailed person information
+- `get_holdings_v1_person` (`read`): Get person holdings
