@@ -26,7 +26,7 @@ export const tool: Tool = {
       realtime: {
         type: 'boolean',
         description:
-          'Get the most up-to-date company information directly from the Handelsregister.\nWhen set to true, we fetch the latest data in real-time from the official German commercial register,\nensuring you receive the most current company details.\nNote: Real-time requests take longer but guarantee the freshest data available.\n',
+          'Get the most up-to-date company information directly from the Handelsregister.\nWhen set to true, we fetch the latest data in real-time from the official German commercial register, ensuring you receive the most current company details.\nNote: Real-time requests take longer but guarantee the freshest data available.\n',
       },
     },
     required: ['company_id'],
