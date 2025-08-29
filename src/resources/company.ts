@@ -304,6 +304,11 @@ export interface CompanyGetDetailsV1Response {
   representation: Array<CompanyGetDetailsV1Response.Representation>;
 
   /**
+   * Sources of the company data.
+   */
+  sources: Array<CompanyGetDetailsV1Response.Source>;
+
+  /**
    * Current status of the company:
    *
    * - active: Operating normally
@@ -531,6 +536,14 @@ export namespace CompanyGetDetailsV1Response {
       last_name: string | null;
     }
   }
+
+  export interface Source {
+    /**
+     * Url of the source document. In the form of a presigned url accessible for 30
+     * minutes.
+     */
+    document_url: string;
+  }
 }
 
 export interface CompanyGetFinancialsV1Response {
@@ -636,6 +649,11 @@ export interface CompanyGetOwnersV1Response {
   company_id: string;
 
   owners: Array<CompanyGetOwnersV1Response.Owner>;
+
+  /**
+   * Sources of the company owners data.
+   */
+  sources: Array<CompanyGetOwnersV1Response.Source>;
 }
 
 export namespace CompanyGetOwnersV1Response {
@@ -721,6 +739,14 @@ export namespace CompanyGetOwnersV1Response {
 
       last_name: string;
     }
+  }
+
+  export interface Source {
+    /**
+     * Url of the source document. In the form of a presigned url accessible for 30
+     * minutes.
+     */
+    document_url: string;
   }
 }
 
