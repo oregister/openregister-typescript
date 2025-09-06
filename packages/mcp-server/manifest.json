@@ -1,0 +1,42 @@
+{
+  "dxt_version": "0.1",
+  "name": "openregister-mcp",
+  "version": "2.0.2",
+  "description": "The official MCP Server for the Openregister API",
+  "author": {
+    "name": "Openregister",
+    "email": "founders@openregister.de"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oregister/openregister-typescript.git"
+  },
+  "homepage": "https://github.com/oregister/openregister-typescript/tree/main/packages/mcp-server#readme",
+  "documentation": "docs.openregister.de",
+  "server": {
+    "type": "node",
+    "entry_point": "${__dirname}/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/index.js"],
+      "env": {
+        "OPENREGISTER_API_KEY": "${user_config.OPENREGISTER_API_KEY}"
+      }
+    }
+  },
+  "user_config": {
+    "OPENREGISTER_API_KEY": {
+      "title": "api_key",
+      "description": "API Key Authentication\nProvide your API key as a Bearer token in the Authorization header.\n",
+      "required": true,
+      "type": "string"
+    }
+  },
+  "tools_generated": true,
+  "compatibility": {
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  },
+  "keywords": ["api"]
+}
