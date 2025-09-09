@@ -12,7 +12,6 @@
     "url": "git+https://github.com/oregister/openregister-typescript.git"
   },
   "homepage": "https://github.com/oregister/openregister-typescript/tree/main/packages/mcp-server#readme",
-  "documentation": "docs.openregister.de",
   "server": {
     "type": "node",
     "entry_point": "${__dirname}/index.js",
