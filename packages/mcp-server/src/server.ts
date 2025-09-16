@@ -33,7 +33,7 @@ export const newMcpServer = () =>
   new McpServer(
     {
       name: 'openregister_api',
-      version: '2.0.2',
+      version: '2.0.3',
     },
     { capabilities: { tools: {}, logging: {} } },
   );

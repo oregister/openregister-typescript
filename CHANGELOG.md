@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.0.3 (2025-09-16)
+
+Full Changelog: [v2.0.2...v2.0.3](https://github.com/oregister/openregister-typescript/compare/v2.0.2...v2.0.3)
+
+### Features
+
+* **mcp:** allow setting logging level ([be014b8](https://github.com/oregister/openregister-typescript/commit/be014b8af37aaa67542ca826feb8460a2e3cfc64))
+* **mcp:** expose client options in `streamableHTTPApp` ([1c537a0](https://github.com/oregister/openregister-typescript/commit/1c537a079cb27697c1d44478935bf5365e38f229))
+
+
+### Bug Fixes
+
+* coerce nullable values to undefined ([0a367fd](https://github.com/oregister/openregister-typescript/commit/0a367fd92cf7427fcf67b2cd79e14f4bf3212f9a))
+* **mcp:** fix query options parsing ([e81dc13](https://github.com/oregister/openregister-typescript/commit/e81dc13097cc45bad0e3ef7ee2850b674b9cd5ac))
+* **mcp:** fix uploading dxt release assets ([24b0463](https://github.com/oregister/openregister-typescript/commit/24b0463847a39035ff2bfbd15d50f3d9bb4480cb))
+
+
+### Chores
+
+* ci build action ([acbe229](https://github.com/oregister/openregister-typescript/commit/acbe2292b4b10bbbfcb400815a86c07a0a0cfd6f))
+* **internal:** codegen related update ([977902c](https://github.com/oregister/openregister-typescript/commit/977902ce76a9b522a30f2596e9fbf30163e1173a))
+* **internal:** codegen related update ([501ed74](https://github.com/oregister/openregister-typescript/commit/501ed7439d19717c5afb62bf4d3a67938ac05354))
+* **internal:** codegen related update ([746601f](https://github.com/oregister/openregister-typescript/commit/746601f641a2c8d065ce5d410fc103913557422d))
+* **mcp:** upload dxt as release asset ([9325300](https://github.com/oregister/openregister-typescript/commit/93253008539c29f3eba02b331f862378a9f89841))
+
 ## 2.0.2 (2025-08-29)
 
 Full Changelog: [v2.0.1...v2.0.2](https://github.com/oregister/openregister-typescript/compare/v2.0.1...v2.0.2)
