@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "openregister/*": ["src/*"],
-      "openregister": ["src/index.ts"]
+      "openregister/*": ["./src/*"],
+      "openregister": ["./src/index.ts"]
     },
     "noEmit": true,
 
