@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "openregister-mcp/*": ["src/*"],
-      "openregister-mcp": ["src/index.ts"]
+      "openregister-mcp/*": ["./src/*"],
+      "openregister-mcp": ["./src/index.ts"]
     },
     "noEmit": true,
 
