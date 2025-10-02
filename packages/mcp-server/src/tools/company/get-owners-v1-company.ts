@@ -25,6 +25,11 @@ export const tool: Tool = {
       company_id: {
         type: 'string',
       },
+      export: {
+        type: 'boolean',
+        description:
+          "Setting this to true will return the owners of the company if they exist\nbut will skip processing the documents in case they weren't processed yet.\n",
+      },
       realtime: {
         type: 'boolean',
         description:

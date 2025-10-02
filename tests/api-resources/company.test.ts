@@ -36,7 +36,11 @@ describe('resource company', () => {
   test.skip('getDetailsV1: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.company.getDetailsV1('company_id', { realtime: true }, { path: '/_stainless_unknown_path' }),
+      client.company.getDetailsV1(
+        'company_id',
+        { export: true, realtime: true },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Openregister.NotFoundError);
   });
 
@@ -80,7 +84,11 @@ describe('resource company', () => {
   test.skip('getOwnersV1: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.company.getOwnersV1('company_id', { realtime: true }, { path: '/_stainless_unknown_path' }),
+      client.company.getOwnersV1(
+        'company_id',
+        { export: true, realtime: true },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Openregister.NotFoundError);
   });
 });

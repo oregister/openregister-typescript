@@ -240,6 +240,11 @@ export interface CompanyGetDetailsV1Response {
   capitals: Array<CompanyCapital | null>;
 
   /**
+   * Contact information of the company.
+   */
+  contact: CompanyGetDetailsV1Response.Contact | null;
+
+  /**
    * Available official documents related to the company.
    */
   documents: Array<CompanyGetDetailsV1Response.Document>;
@@ -325,6 +330,41 @@ export interface CompanyGetDetailsV1Response {
 }
 
 export namespace CompanyGetDetailsV1Response {
+  /**
+   * Contact information of the company.
+   */
+  export interface Contact {
+    social_media: Contact.SocialMedia;
+
+    website_url: string;
+
+    email?: string;
+
+    phone?: string;
+
+    vat_id?: string;
+  }
+
+  export namespace Contact {
+    export interface SocialMedia {
+      facebook?: string;
+
+      github?: string;
+
+      instagram?: string;
+
+      linkedin?: string;
+
+      tiktok?: string;
+
+      twitter?: string;
+
+      xing?: string;
+
+      youtube?: string;
+    }
+  }
+
   export interface Document {
     /**
      * Unique identifier for the document. Example:
@@ -547,10 +587,112 @@ export namespace CompanyGetDetailsV1Response {
 }
 
 export interface CompanyGetFinancialsV1Response {
+  /**
+   * All report periods merged into a single view
+   */
+  merged: CompanyGetFinancialsV1Response.Merged | null;
+
   reports: Array<CompanyGetFinancialsV1Response.Report>;
 }
 
 export namespace CompanyGetFinancialsV1Response {
+  /**
+   * All report periods merged into a single view
+   */
+  export interface Merged {
+    /**
+     * Report table with data merged across multiple report periods
+     */
+    aktiva: Merged.Aktiva;
+
+    /**
+     * Report table with data merged across multiple report periods
+     */
+    passiva: Merged.Passiva;
+
+    /**
+     * Report table with data merged across multiple report periods
+     */
+    guv?: Merged.Guv;
+  }
+
+  export namespace Merged {
+    /**
+     * Report table with data merged across multiple report periods
+     */
+    export interface Aktiva {
+      rows: Array<Aktiva.Row>;
+    }
+
+    export namespace Aktiva {
+      /**
+       * Report row with values from multiple report periods
+       */
+      export interface Row {
+        children: Array<unknown>;
+
+        formatted_name: string;
+
+        name: string;
+
+        /**
+         * Report end date to value mapping (ISO date string as key)
+         */
+        values: { [key: string]: number };
+      }
+    }
+
+    /**
+     * Report table with data merged across multiple report periods
+     */
+    export interface Passiva {
+      rows: Array<Passiva.Row>;
+    }
+
+    export namespace Passiva {
+      /**
+       * Report row with values from multiple report periods
+       */
+      export interface Row {
+        children: Array<unknown>;
+
+        formatted_name: string;
+
+        name: string;
+
+        /**
+         * Report end date to value mapping (ISO date string as key)
+         */
+        values: { [key: string]: number };
+      }
+    }
+
+    /**
+     * Report table with data merged across multiple report periods
+     */
+    export interface Guv {
+      rows: Array<Guv.Row>;
+    }
+
+    export namespace Guv {
+      /**
+       * Report row with values from multiple report periods
+       */
+      export interface Row {
+        children: Array<unknown>;
+
+        formatted_name: string;
+
+        name: string;
+
+        /**
+         * Report end date to value mapping (ISO date string as key)
+         */
+        values: { [key: string]: number };
+      }
+    }
+  }
+
   export interface Report {
     aktiva: Report.Aktiva;
 
@@ -752,6 +894,11 @@ export namespace CompanyGetOwnersV1Response {
 
 export interface CompanyGetDetailsV1Params {
   /**
+   * Setting this to true will return the company without sources.
+   */
+  export?: boolean;
+
+  /**
    * Get the most up-to-date company information directly from the Handelsregister.
    * When set to true, we fetch the latest data in real-time from the official German
    * commercial register, ensuring you receive the most current company details.
@@ -761,6 +908,12 @@ export interface CompanyGetDetailsV1Params {
 }
 
 export interface CompanyGetOwnersV1Params {
+  /**
+   * Setting this to true will return the owners of the company if they exist but
+   * will skip processing the documents in case they weren't processed yet.
+   */
+  export?: boolean;
+
   /**
    * Get the most up-to-date company information directly from the Handelsregister.
    * When set to true, we fetch the latest data in real-time from the official German
