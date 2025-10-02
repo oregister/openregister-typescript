@@ -32,7 +32,10 @@ import {
   CompanyRegister,
   CompanyRelationType,
   EntityType,
+  MergedReportRow,
+  MergedReportTable,
   ReportRow,
+  ReportTable,
 } from './resources/company';
 import {
   Document,
@@ -792,7 +795,10 @@ export declare namespace Openregister {
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
+    type MergedReportRow as MergedReportRow,
+    type MergedReportTable as MergedReportTable,
     type ReportRow as ReportRow,
+    type ReportTable as ReportTable,
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
     type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,

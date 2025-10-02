@@ -178,6 +178,29 @@ export type CompanyRelationType = 'shareholder' | 'stockholder' | 'limited_partn
 
 export type EntityType = 'natural_person' | 'legal_person';
 
+/**
+ * Report row with values from multiple report periods
+ */
+export interface MergedReportRow {
+  children: Array<MergedReportRow>;
+
+  formatted_name: string;
+
+  name: string;
+
+  /**
+   * Report end date to value mapping (ISO date string as key)
+   */
+  values: { [key: string]: number };
+}
+
+/**
+ * Report table with data merged across multiple report periods
+ */
+export interface MergedReportTable {
+  rows: Array<MergedReportRow>;
+}
+
 export interface ReportRow {
   children: Array<ReportRow>;
 
@@ -188,6 +211,10 @@ export interface ReportRow {
   name: string;
 
   previous_value: number | null;
+}
+
+export interface ReportTable {
+  rows: Array<ReportRow>;
 }
 
 export interface CompanyGetContactV0Response {
@@ -603,105 +630,28 @@ export namespace CompanyGetFinancialsV1Response {
     /**
      * Report table with data merged across multiple report periods
      */
-    aktiva: Merged.Aktiva;
+    aktiva: CompanyAPI.MergedReportTable;
 
     /**
      * Report table with data merged across multiple report periods
      */
-    passiva: Merged.Passiva;
+    passiva: CompanyAPI.MergedReportTable;
 
     /**
      * Report table with data merged across multiple report periods
      */
-    guv?: Merged.Guv;
-  }
-
-  export namespace Merged {
-    /**
-     * Report table with data merged across multiple report periods
-     */
-    export interface Aktiva {
-      rows: Array<Aktiva.Row>;
-    }
-
-    export namespace Aktiva {
-      /**
-       * Report row with values from multiple report periods
-       */
-      export interface Row {
-        children: Array<unknown>;
-
-        formatted_name: string;
-
-        name: string;
-
-        /**
-         * Report end date to value mapping (ISO date string as key)
-         */
-        values: { [key: string]: number };
-      }
-    }
-
-    /**
-     * Report table with data merged across multiple report periods
-     */
-    export interface Passiva {
-      rows: Array<Passiva.Row>;
-    }
-
-    export namespace Passiva {
-      /**
-       * Report row with values from multiple report periods
-       */
-      export interface Row {
-        children: Array<unknown>;
-
-        formatted_name: string;
-
-        name: string;
-
-        /**
-         * Report end date to value mapping (ISO date string as key)
-         */
-        values: { [key: string]: number };
-      }
-    }
-
-    /**
-     * Report table with data merged across multiple report periods
-     */
-    export interface Guv {
-      rows: Array<Guv.Row>;
-    }
-
-    export namespace Guv {
-      /**
-       * Report row with values from multiple report periods
-       */
-      export interface Row {
-        children: Array<unknown>;
-
-        formatted_name: string;
-
-        name: string;
-
-        /**
-         * Report end date to value mapping (ISO date string as key)
-         */
-        values: { [key: string]: number };
-      }
-    }
+    guv?: CompanyAPI.MergedReportTable;
   }
 
   export interface Report {
-    aktiva: Report.Aktiva;
+    aktiva: CompanyAPI.ReportTable;
 
     /**
      * Whether the report is a consolidated report or not.
      */
     consolidated: boolean;
 
-    passiva: Report.Passiva;
+    passiva: CompanyAPI.ReportTable;
 
     report_end_date: string;
 
@@ -713,21 +663,7 @@ export namespace CompanyGetFinancialsV1Response {
 
     report_start_date: string | null;
 
-    guv?: Report.Guv | null;
-  }
-
-  export namespace Report {
-    export interface Aktiva {
-      rows: Array<CompanyAPI.ReportRow>;
-    }
-
-    export interface Passiva {
-      rows: Array<CompanyAPI.ReportRow>;
-    }
-
-    export interface Guv {
-      rows: Array<CompanyAPI.ReportRow>;
-    }
+    guv?: CompanyAPI.ReportTable | null;
   }
 }
 
@@ -932,7 +868,10 @@ export declare namespace Company {
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
     type EntityType as EntityType,
+    type MergedReportRow as MergedReportRow,
+    type MergedReportTable as MergedReportTable,
     type ReportRow as ReportRow,
+    type ReportTable as ReportTable,
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
     type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
