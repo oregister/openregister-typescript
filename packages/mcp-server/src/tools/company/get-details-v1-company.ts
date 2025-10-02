@@ -23,6 +23,10 @@ export const tool: Tool = {
       company_id: {
         type: 'string',
       },
+      export: {
+        type: 'boolean',
+        description: 'Setting this to true will return the company without sources.\n',
+      },
       realtime: {
         type: 'boolean',
         description:

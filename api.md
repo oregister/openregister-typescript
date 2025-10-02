@@ -28,7 +28,10 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyRegister</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRelationType</a></code>
 - <code><a href="./src/resources/company.ts">EntityType</a></code>
+- <code><a href="./src/resources/company.ts">MergedReportRow</a></code>
+- <code><a href="./src/resources/company.ts">MergedReportTable</a></code>
 - <code><a href="./src/resources/company.ts">ReportRow</a></code>
+- <code><a href="./src/resources/company.ts">ReportTable</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetContactV0Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetDetailsV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetFinancialsV1Response</a></code>

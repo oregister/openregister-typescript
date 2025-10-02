@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "openregister-mcp/*": ["dist/src/*"],
-      "openregister-mcp": ["dist/src/index.ts"]
+      "openregister-mcp/*": ["./dist/src/*"],
+      "openregister-mcp": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

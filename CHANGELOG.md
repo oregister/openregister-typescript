@@ -1,5 +1,44 @@
 # Changelog
 
+## 2.1.0 (2025-10-02)
+
+Full Changelog: [v2.0.3...v2.1.0](https://github.com/oregister/openregister-typescript/compare/v2.0.3...v2.1.0)
+
+### Features
+
+* **api:** add contact information ([7ac0cda](https://github.com/oregister/openregister-typescript/commit/7ac0cda5eb17e57ba3411002911e64aec322f6ea))
+* **mcp:** add docs search tool ([90500c7](https://github.com/oregister/openregister-typescript/commit/90500c7e030c25f52c2c21148fffd5ca2e6d9aa3))
+* **mcp:** add option for including docs tools ([e757f00](https://github.com/oregister/openregister-typescript/commit/e757f009fd2dff01f2d0d8f2bd98872d14d18ad4))
+* **mcp:** enable experimental docs search tool ([30eb841](https://github.com/oregister/openregister-typescript/commit/30eb8415a13f7452f27a20366a074cbe2ee30746))
+
+
+### Bug Fixes
+
+* **api:** merged reports ([41f77a3](https://github.com/oregister/openregister-typescript/commit/41f77a37380effe6e802ff52f013a4e2808f4a42))
+* **ci:** set permissions for DXT publish action ([74e2e61](https://github.com/oregister/openregister-typescript/commit/74e2e6194e1cfba96bd2a2aa56bae4263ccb2dc9))
+* **mcp:** fix cli argument parsing logic ([3d58949](https://github.com/oregister/openregister-typescript/commit/3d589499429e110203e748358ea29d12963af257))
+* **mcp:** resolve a linting issue in server code ([92db3ab](https://github.com/oregister/openregister-typescript/commit/92db3ab49b2b80228c1ae67091b099c39ad3b895))
+
+
+### Performance Improvements
+
+* faster formatting ([8a10f3b](https://github.com/oregister/openregister-typescript/commit/8a10f3b5c53bcc51f8d923be91503143b21f1013))
+
+
+### Chores
+
+* **codegen:** internal codegen update ([06e7d9f](https://github.com/oregister/openregister-typescript/commit/06e7d9f5cc7ead87802ff5850760b7e578109a2a))
+* do not install brew dependencies in ./scripts/bootstrap by default ([f5df0b6](https://github.com/oregister/openregister-typescript/commit/f5df0b6fdf0d30b3ce23c36935a53fe5a544eae6))
+* **internal:** codegen related update ([3bff97f](https://github.com/oregister/openregister-typescript/commit/3bff97fa43c9f9854e1be72a25cd04dec39efa08))
+* **internal:** fix incremental formatting in some cases ([446fe71](https://github.com/oregister/openregister-typescript/commit/446fe719ec6fb8a02555dcbc671b6d134a2f3ab7))
+* **internal:** gitignore .mcpb files ([dd2ceef](https://github.com/oregister/openregister-typescript/commit/dd2ceef3fb5bfeb13f7fe8ec3341b2487c6a0418))
+* **internal:** ignore .eslintcache ([480d0a6](https://github.com/oregister/openregister-typescript/commit/480d0a6678ef26549b6dbbbb3ae2d90b5a55088b))
+* **internal:** remove .eslintcache ([82174d6](https://github.com/oregister/openregister-typescript/commit/82174d6d76cd705c1a41fc7ca20a89b7fbd6aeba))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([d731547](https://github.com/oregister/openregister-typescript/commit/d7315477f9f402f477ab74c3849d86f913a4e537))
+* **mcp:** allow pointing `docs_search` tool at other URLs ([42a5191](https://github.com/oregister/openregister-typescript/commit/42a5191966d815d595714fdddd413062c0e196bf))
+* **mcp:** rename dxt to mcpb ([4305112](https://github.com/oregister/openregister-typescript/commit/43051128ead28faf9428885b8d9db3a93a2c9856))
+* update lockfile ([5562e83](https://github.com/oregister/openregister-typescript/commit/5562e83b8c5e657859f8aa3b19cbc97fc417569a))
+
 ## 2.0.3 (2025-09-16)
 
 Full Changelog: [v2.0.2...v2.0.3](https://github.com/oregister/openregister-typescript/compare/v2.0.2...v2.0.3)
