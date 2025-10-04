@@ -1,6 +1,6 @@
 {
   "name": "openregister",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "The official TypeScript library for the Openregister API",
   "author": "Openregister <founders@openregister.de>",
   "types": "dist/index.d.ts",
