@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.1 (2025-10-04)
+
+Full Changelog: [v2.1.0...v2.1.1](https://github.com/oregister/openregister-typescript/compare/v2.1.0...v2.1.1)
+
+### Chores
+
+* **jsdoc:** fix [@link](https://github.com/link) annotations to refer only to parts of the package‘s public interface ([0ea8fe5](https://github.com/oregister/openregister-typescript/commit/0ea8fe5cdda98f53f927f0eeb334505a6dc5a9a5))
+
 ## 2.1.0 (2025-10-02)
 
 Full Changelog: [v2.0.3...v2.1.0](https://github.com/oregister/openregister-typescript/compare/v2.0.3...v2.1.0)
