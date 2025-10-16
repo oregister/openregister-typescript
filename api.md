@@ -36,6 +36,7 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyGetFinancialsV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetHoldingsV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetOwnersV1Response</a></code>
+- <code><a href="./src/resources/company.ts">CompanyGetUbosV1Response</a></code>
 
 Methods:
 
@@ -44,6 +45,7 @@ Methods:
 - <code title="get /v1/company/{company_id}/financials">client.company.<a href="./src/resources/company.ts">getFinancialsV1</a>(companyID) -> CompanyGetFinancialsV1Response</code>
 - <code title="get /v1/company/{company_id}/holdings">client.company.<a href="./src/resources/company.ts">getHoldingsV1</a>(companyID) -> CompanyGetHoldingsV1Response</code>
 - <code title="get /v1/company/{company_id}/owners">client.company.<a href="./src/resources/company.ts">getOwnersV1</a>(companyID, { ...params }) -> CompanyGetOwnersV1Response</code>
+- <code title="get /v1/company/{company_id}/ubo">client.company.<a href="./src/resources/company.ts">getUbosV1</a>(companyID) -> CompanyGetUbosV1Response</code>
 
 # Document
 

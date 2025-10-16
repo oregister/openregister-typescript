@@ -27,6 +27,7 @@ import {
   CompanyGetHoldingsV1Response,
   CompanyGetOwnersV1Params,
   CompanyGetOwnersV1Response,
+  CompanyGetUbosV1Response,
   CompanyName,
   CompanyPurpose,
   CompanyRegister,
@@ -802,6 +803,7 @@ export declare namespace Openregister {
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
+    type CompanyGetUbosV1Response as CompanyGetUbosV1Response,
     type CompanyGetDetailsV1Params as CompanyGetDetailsV1Params,
     type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
   };
