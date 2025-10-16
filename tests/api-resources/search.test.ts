@@ -26,39 +26,6 @@ describe('resource search', () => {
   });
 
   // Prism tests are disabled
-  test.skip('findCompaniesV0', async () => {
-    const responsePromise = client.search.findCompaniesV0();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('findCompaniesV0: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.search.findCompaniesV0(
-        {
-          active: true,
-          incorporation_date: 'incorporation_date',
-          legal_form: 'ag',
-          page: 0,
-          per_page: 0,
-          query: 'query',
-          register_court: 'register_court',
-          register_number: 'register_number',
-          register_type: 'HRB',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Openregister.NotFoundError);
-  });
-
-  // Prism tests are disabled
   test.skip('findCompaniesV1', async () => {
     const responsePromise = client.search.findCompaniesV1({});
     const rawResponse = await responsePromise.asResponse();

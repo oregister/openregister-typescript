@@ -37,7 +37,6 @@ export {
   type SearchFindPersonV1Response,
   type SearchLookupCompanyByURLResponse,
   type SearchAutocompleteCompaniesV1Params,
-  type SearchFindCompaniesV0Params,
   type SearchFindCompaniesV1Params,
   type SearchFindPersonV1Params,
   type SearchLookupCompanyByURLParams,
