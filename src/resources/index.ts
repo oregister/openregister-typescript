@@ -18,6 +18,7 @@ export {
   type CompanyGetFinancialsV1Response,
   type CompanyGetHoldingsV1Response,
   type CompanyGetOwnersV1Response,
+  type CompanyGetUbosV1Response,
   type CompanyGetDetailsV1Params,
   type CompanyGetOwnersV1Params,
 } from './company';

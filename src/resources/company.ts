@@ -50,6 +50,13 @@ export class Company extends APIResource {
   ): APIPromise<CompanyGetOwnersV1Response> {
     return this._client.get(path`/v1/company/${companyID}/owners`, { query, ...options });
   }
+
+  /**
+   * Get company end owners
+   */
+  getUbosV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetUbosV1Response> {
+    return this._client.get(path`/v1/company/${companyID}/ubo`, options);
+  }
 }
 
 export interface CompanyAddress {
@@ -828,6 +835,80 @@ export namespace CompanyGetOwnersV1Response {
   }
 }
 
+export interface CompanyGetUbosV1Response {
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id: string;
+
+  ubos: Array<CompanyGetUbosV1Response.Ubo>;
+}
+
+export namespace CompanyGetUbosV1Response {
+  export interface Ubo {
+    /**
+     * Unique identifier for the shareholder. For individuals: UUID For companies:
+     * Format matches company_id pattern Example: "DE-HRB-F1103-267645" or UUID May be
+     * null for certain shareholders.
+     */
+    id: string | null;
+
+    legal_person: Ubo.LegalPerson | null;
+
+    /**
+     * Maximum percentage of company ownership. Example: 5.36 represents maximum of
+     * 5.36% ownership There is no exact percentage share for owners that hold a stake
+     * as or through a limited partner. For these owners, we can only show the maximum
+     * percentage share they could have based on their deposit as a limited partner. Is
+     * null for all owners that have an exact percentage share or owners that hold a
+     * stake as or through a personal liable director.
+     */
+    max_percentage_share: number | null;
+
+    /**
+     * The name of the shareholder. E.g. "Max Mustermann"
+     */
+    name: string;
+
+    natural_person: Ubo.NaturalPerson | null;
+
+    /**
+     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership Is
+     * null for all owners that hold a stake as or through a personal liable directors
+     * or limited partner.
+     */
+    percentage_share: number | null;
+  }
+
+  export namespace Ubo {
+    export interface LegalPerson {
+      city: string | null;
+
+      /**
+       * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
+       * for Germany
+       */
+      country: string;
+
+      name: string;
+    }
+
+    export interface NaturalPerson {
+      city: string;
+
+      country: string;
+
+      date_of_birth: string | null;
+
+      first_name: string;
+
+      full_name: string;
+
+      last_name: string;
+    }
+  }
+}
+
 export interface CompanyGetDetailsV1Params {
   /**
    * Setting this to true will return the company without sources.
@@ -877,6 +958,7 @@ export declare namespace Company {
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
+    type CompanyGetUbosV1Response as CompanyGetUbosV1Response,
     type CompanyGetDetailsV1Params as CompanyGetDetailsV1Params,
     type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
   };

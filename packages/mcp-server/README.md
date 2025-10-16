@@ -218,6 +218,7 @@ The following tools are available in this MCP server.
 - `get_financials_v1_company` (`read`): Get financial reports
 - `get_holdings_v1_company` (`read`): Get company holdings
 - `get_owners_v1_company` (`read`): Get company owners
+- `get_ubos_v1_company` (`read`): Get company end owners
 
 ### Resource `document`:
 
