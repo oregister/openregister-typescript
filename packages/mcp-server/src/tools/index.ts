@@ -5,7 +5,6 @@ import { Metadata, Endpoint, HandlerFunction } from './types';
 export { Metadata, Endpoint, HandlerFunction };
 
 import autocomplete_companies_v1_search from './search/autocomplete-companies-v1-search';
-import find_companies_v0_search from './search/find-companies-v0-search';
 import find_companies_v1_search from './search/find-companies-v1-search';
 import find_person_v1_search from './search/find-person-v1-search';
 import lookup_company_by_url_search from './search/lookup-company-by-url-search';
@@ -26,7 +25,6 @@ function addEndpoint(endpoint: Endpoint) {
 }
 
 addEndpoint(autocomplete_companies_v1_search);
-addEndpoint(find_companies_v0_search);
 addEndpoint(find_companies_v1_search);
 addEndpoint(find_person_v1_search);
 addEndpoint(lookup_company_by_url_search);

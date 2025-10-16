@@ -19,16 +19,6 @@ export class Search extends APIResource {
   /**
    * Search for companies
    */
-  findCompaniesV0(
-    query: SearchFindCompaniesV0Params | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<CompanySearch> {
-    return this._client.get('/v0/search/company', { query, ...options });
-  }
-
-  /**
-   * Search for companies
-   */
   findCompaniesV1(body: SearchFindCompaniesV1Params, options?: RequestOptions): APIPromise<CompanySearch> {
     return this._client.post('/v1/search/company', { body, ...options });
   }
@@ -314,57 +304,6 @@ export interface SearchAutocompleteCompaniesV1Params {
   query: string;
 }
 
-export interface SearchFindCompaniesV0Params {
-  /**
-   * Filter for active or inactive companies. Set to true for active companies only,
-   * false for inactive only.
-   */
-  active?: boolean;
-
-  /**
-   * Date of incorporation of the company. Format: ISO 8601 (YYYY-MM-DD) Example:
-   * "2022-01-01"
-   */
-  incorporation_date?: string;
-
-  /**
-   * Legal form of the company. Example: "gmbh" for "Gesellschaft mit beschränkter
-   * Haftung"
-   */
-  legal_form?: CompanyLegalForm;
-
-  /**
-   * Page number for pagination.
-   */
-  page?: number;
-
-  /**
-   * Number of results per page (max 50).
-   */
-  per_page?: number;
-
-  /**
-   * Text search query to find companies by name. Example: "Descartes Technologies
-   * UG"
-   */
-  query?: string;
-
-  /**
-   * Court where the company is registered. Example: "Berlin (Charlottenburg)"
-   */
-  register_court?: string;
-
-  /**
-   * Company register number for exact matching. Example: "230633"
-   */
-  register_number?: string;
-
-  /**
-   * Type of register to filter results. Example: "HRB" (Commercial Register B)
-   */
-  register_type?: CompanyRegisterType;
-}
-
 export interface SearchFindCompaniesV1Params {
   /**
    * Filters to filter companies.
@@ -548,7 +487,6 @@ export declare namespace Search {
     type SearchFindPersonV1Response as SearchFindPersonV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
-    type SearchFindCompaniesV0Params as SearchFindCompaniesV0Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
     type SearchFindPersonV1Params as SearchFindPersonV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
