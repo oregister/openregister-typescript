@@ -18,6 +18,7 @@ export {
   type CompanyGetFinancialsV1Response,
   type CompanyGetHoldingsV1Response,
   type CompanyGetOwnersV1Response,
+  type CompanyGetUbosV1Response,
   type CompanyGetDetailsV1Params,
   type CompanyGetOwnersV1Params,
 } from './company';
@@ -37,7 +38,6 @@ export {
   type SearchFindPersonV1Response,
   type SearchLookupCompanyByURLResponse,
   type SearchAutocompleteCompaniesV1Params,
-  type SearchFindCompaniesV0Params,
   type SearchFindCompaniesV1Params,
   type SearchFindPersonV1Params,
   type SearchLookupCompanyByURLParams,

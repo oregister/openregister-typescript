@@ -1,5 +1,43 @@
 # Changelog
 
+## 2.2.0 (2025-11-13)
+
+Full Changelog: [v2.1.1...v2.2.0](https://github.com/oregister/openregister-typescript/compare/v2.1.1...v2.2.0)
+
+### Features
+
+* **api:** manual updates ([0198594](https://github.com/oregister/openregister-typescript/commit/0198594bfca95f8b94a161052f7fb3fa9590fb23))
+* **api:** manual updates ([a0cd98a](https://github.com/oregister/openregister-typescript/commit/a0cd98a47ff023d689408522ef40e9f8d62fad8d))
+* **mcp:** enable optional code execution tool on http mcp servers ([b86f593](https://github.com/oregister/openregister-typescript/commit/b86f5938a4ad8c0b1eb5f68b2a9445b7149abbd7))
+
+
+### Bug Fixes
+
+* **mcpb:** pin @anthropic-ai/mcpb version ([5abf65d](https://github.com/oregister/openregister-typescript/commit/5abf65dc9d4c4ac8f9fa58b0f6b3299a6273f54d))
+* **mcp:** return tool execution error on jq failure ([309f1f9](https://github.com/oregister/openregister-typescript/commit/309f1f9854a8acf1f5324ca6bc608edb6b9acd3d))
+
+
+### Chores
+
+* extract some types in mcp docs ([adc4bec](https://github.com/oregister/openregister-typescript/commit/adc4bec96aaad5917fcf9af46cd96faeb9e2d3d8))
+* **internal:** codegen related update ([02bd315](https://github.com/oregister/openregister-typescript/commit/02bd3158be74768cafecb2078bf009197f3b9efb))
+* **internal:** codegen related update ([e5f793a](https://github.com/oregister/openregister-typescript/commit/e5f793a8cbecc267f43de3e2c9c205b16a00b74d))
+* **internal:** grammar fix (it's -&gt; its) ([9c9fd17](https://github.com/oregister/openregister-typescript/commit/9c9fd17a3a134be71591db383d136b490930485d))
+* **internal:** use npm pack for build uploads ([1c0873b](https://github.com/oregister/openregister-typescript/commit/1c0873b828aa234fc77689b15da2b795d1e31773))
+* mcp code tool explicit error message when missing a run function ([82b8c9a](https://github.com/oregister/openregister-typescript/commit/82b8c9af6b74a7c2729400021fd106c96436d9e8))
+* **mcp-server:** update kv namespace ([e69972c](https://github.com/oregister/openregister-typescript/commit/e69972cf54e06439cee23db481f8a8f722dae2a2))
+* **mcp:** add friendlier MCP code tool errors on incorrect method invocations ([3e7912f](https://github.com/oregister/openregister-typescript/commit/3e7912fdeb8f5cca4fa29196392edf8be9b8145e))
+* **mcp:** add line numbers to code tool errors ([a06c6cf](https://github.com/oregister/openregister-typescript/commit/a06c6cfe4744f0d74b30912f60ddc04cdf28f51b))
+* **mcp:** clarify http auth error ([77b1f1c](https://github.com/oregister/openregister-typescript/commit/77b1f1c2399b39c50abf5bb15f701fba405bf0c8))
+* **mcp:** upgrade jq-web ([05b4683](https://github.com/oregister/openregister-typescript/commit/05b4683d7e31c31f6a9bef149086f07bb0200dc4))
+* use structured error when code execution tool errors ([ce5f024](https://github.com/oregister/openregister-typescript/commit/ce5f024b6795ca476146c5238f0e12f4dff3e30f))
+
+
+### Documentation
+
+* **mcp:** add a README button for one-click add to Cursor ([1bedd1c](https://github.com/oregister/openregister-typescript/commit/1bedd1c288564b4ff6ff836024f3191cbe3fedb4))
+* **mcp:** add a README link to add server to VS Code or Claude Code ([42455e1](https://github.com/oregister/openregister-typescript/commit/42455e1ef3d247961ad6ce6a33128278dca8569d))
+
 ## 2.1.1 (2025-10-04)
 
 Full Changelog: [v2.1.0...v2.1.1](https://github.com/oregister/openregister-typescript/compare/v2.1.0...v2.1.1)

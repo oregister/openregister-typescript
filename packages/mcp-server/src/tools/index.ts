@@ -5,7 +5,6 @@ import { Metadata, Endpoint, HandlerFunction } from './types';
 export { Metadata, Endpoint, HandlerFunction };
 
 import autocomplete_companies_v1_search from './search/autocomplete-companies-v1-search';
-import find_companies_v0_search from './search/find-companies-v0-search';
 import find_companies_v1_search from './search/find-companies-v1-search';
 import find_person_v1_search from './search/find-person-v1-search';
 import lookup_company_by_url_search from './search/lookup-company-by-url-search';
@@ -14,6 +13,7 @@ import get_details_v1_company from './company/get-details-v1-company';
 import get_financials_v1_company from './company/get-financials-v1-company';
 import get_holdings_v1_company from './company/get-holdings-v1-company';
 import get_owners_v1_company from './company/get-owners-v1-company';
+import get_ubos_v1_company from './company/get-ubos-v1-company';
 import get_cached_v1_document from './document/get-cached-v1-document';
 import get_realtime_v1_document from './document/get-realtime-v1-document';
 import get_details_v1_person from './person/get-details-v1-person';
@@ -26,7 +26,6 @@ function addEndpoint(endpoint: Endpoint) {
 }
 
 addEndpoint(autocomplete_companies_v1_search);
-addEndpoint(find_companies_v0_search);
 addEndpoint(find_companies_v1_search);
 addEndpoint(find_person_v1_search);
 addEndpoint(lookup_company_by_url_search);
@@ -35,6 +34,7 @@ addEndpoint(get_details_v1_company);
 addEndpoint(get_financials_v1_company);
 addEndpoint(get_holdings_v1_company);
 addEndpoint(get_owners_v1_company);
+addEndpoint(get_ubos_v1_company);
 addEndpoint(get_cached_v1_document);
 addEndpoint(get_realtime_v1_document);
 addEndpoint(get_details_v1_person);

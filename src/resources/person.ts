@@ -80,16 +80,16 @@ export namespace PersonGetDetailsV1Response {
     role: string;
 
     /**
+     * Date when the person started the management position. Format: ISO 8601
+     * (YYYY-MM-DD) Example: "2022-01-01"
+     */
+    start_date: string;
+
+    /**
      * Date when the person ended the management position. Format: ISO 8601
      * (YYYY-MM-DD) Example: "2023-01-01"
      */
     end_date?: string;
-
-    /**
-     * Date when the person started the management position. Format: ISO 8601
-     * (YYYY-MM-DD) Example: "2022-01-01"
-     */
-    start_date?: string;
   }
 }
 

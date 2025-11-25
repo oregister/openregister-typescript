@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'openregister-mcp/filtering';
-import { Metadata, asTextContentResult } from 'openregister-mcp/tools/types';
+import { isJqError, maybeFilter } from 'openregister-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'openregister-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import Openregister from 'openregister';
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'lookup_company_by_url_search',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nFind company by website URL\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    company_id: {\n      type: 'string',\n      description: 'Unique company identifier.\\nExample: DE-HRB-F1103-267645\\n'\n    },\n    email: {\n      type: 'string',\n      description: 'Email address of the company.\\nExample: \"info@maxmustermann.de\"\\n'\n    },\n    phone: {\n      type: 'string',\n      description: 'Phone number of the company.\\nExample: \"+49 123 456 789\"\\n'\n    },\n    vat_id: {\n      type: 'string',\n      description: 'Value Added Tax identification number.\\nExample: \"DE123456789\"\\n'\n    }\n  },\n  required: [    'company_id'\n  ]\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nFind company by website URL\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/search_lookup_company_by_url_response',\n  $defs: {\n    search_lookup_company_by_url_response: {\n      type: 'object',\n      properties: {\n        company_id: {\n          type: 'string',\n          description: 'Unique company identifier.\\nExample: DE-HRB-F1103-267645\\n'\n        },\n        email: {\n          type: 'string',\n          description: 'Email address of the company.\\nExample: \"info@maxmustermann.de\"\\n'\n        },\n        phone: {\n          type: 'string',\n          description: 'Phone number of the company.\\nExample: \"+49 123 456 789\"\\n'\n        },\n        vat_id: {\n          type: 'string',\n          description: 'Value Added Tax identification number.\\nExample: \"DE123456789\"\\n'\n        }\n      },\n      required: [        'company_id'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -42,7 +42,14 @@ export const tool: Tool = {
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.search.lookupCompanyByURL(body)));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.search.lookupCompanyByURL(body)));
+  } catch (error) {
+    if (isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };

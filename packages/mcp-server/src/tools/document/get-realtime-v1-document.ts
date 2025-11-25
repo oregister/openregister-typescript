@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'openregister-mcp/filtering';
-import { Metadata, asTextContentResult } from 'openregister-mcp/tools/types';
+import { isJqError, maybeFilter } from 'openregister-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'openregister-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import Openregister from 'openregister';
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'get_realtime_v1_document',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nFetch a document in realtime.\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    category: {\n      type: 'string',\n      enum: [        'current_printout',\n        'chronological_printout',\n        'historical_printout',\n        'structured_information',\n        'shareholder_list',\n        'articles_of_association'\n      ]\n    },\n    file_date: {\n      type: 'string'\n    },\n    file_name: {\n      type: 'string'\n    },\n    url: {\n      type: 'string'\n    }\n  },\n  required: [    'category',\n    'file_date',\n    'file_name',\n    'url'\n  ]\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nFetch a document in realtime.\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/document_get_realtime_v1_response',\n  $defs: {\n    document_get_realtime_v1_response: {\n      type: 'object',\n      properties: {\n        category: {\n          type: 'string',\n          enum: [            'current_printout',\n            'chronological_printout',\n            'historical_printout',\n            'structured_information',\n            'shareholder_list',\n            'articles_of_association'\n          ]\n        },\n        file_date: {\n          type: 'string'\n        },\n        file_name: {\n          type: 'string'\n        },\n        url: {\n          type: 'string'\n        }\n      },\n      required: [        'category',\n        'file_date',\n        'file_name',\n        'url'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -52,7 +52,14 @@ export const tool: Tool = {
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.document.getRealtimeV1(body)));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.document.getRealtimeV1(body)));
+  } catch (error) {
+    if (isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
