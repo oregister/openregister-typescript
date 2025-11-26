@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0 (2025-11-26)
+
+Full Changelog: [v2.2.0...v2.3.0](https://github.com/oregister/openregister-typescript/compare/v2.2.0...v2.3.0)
+
+### Features
+
+* **mcp:** add detail field to docs search tool ([b7390aa](https://github.com/oregister/openregister-typescript/commit/b7390aabe7daf56e51ed60de0ba6fcba2cedc40d))
+
 ## 2.2.0 (2025-11-13)
 
 Full Changelog: [v2.1.1...v2.2.0](https://github.com/oregister/openregister-typescript/compare/v2.1.1...v2.2.0)
