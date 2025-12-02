@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Metadata, asTextContentResult } from 'openregister-mcp/tools/types';
+import { Metadata, asErrorResult, asTextContentResult } from 'openregister-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import Openregister from 'openregister';
@@ -42,7 +42,14 @@ export const tool: Tool = {
 
 export const handler = async (client: Openregister, args: Record<string, unknown> | undefined) => {
   const { company_id, ...body } = args as any;
-  return asTextContentResult(await client.company.getDetailsV1(company_id, body));
+  try {
+    return asTextContentResult(await client.company.getDetailsV1(company_id, body));
+  } catch (error) {
+    if (error instanceof Openregister.APIError) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
