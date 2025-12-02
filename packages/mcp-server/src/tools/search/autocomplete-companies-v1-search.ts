@@ -47,7 +47,7 @@ export const handler = async (client: Openregister, args: Record<string, unknown
       await maybeFilter(jq_filter, await client.search.autocompleteCompaniesV1(body)),
     );
   } catch (error) {
-    if (isJqError(error)) {
+    if (error instanceof Openregister.APIError || isJqError(error)) {
       return asErrorResult(error.message);
     }
     throw error;

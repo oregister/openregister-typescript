@@ -145,7 +145,7 @@ export const handler = async (client: Openregister, args: Record<string, unknown
   try {
     return asTextContentResult(await maybeFilter(jq_filter, await client.search.findCompaniesV1(body)));
   } catch (error) {
-    if (isJqError(error)) {
+    if (error instanceof Openregister.APIError || isJqError(error)) {
       return asErrorResult(error.message);
     }
     throw error;
