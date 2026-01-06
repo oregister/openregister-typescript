@@ -54,7 +54,7 @@ If you use Claude Code, you can install the MCP server by running the command be
 environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
 
 ```
-claude mcp add --transport stdio openregister_api --env OPENREGISTER_API_KEY="Your OPENREGISTER_API_KEY here." -- npx -y openregister-mcp
+claude mcp add openregister_mcp_api --env OPENREGISTER_API_KEY="Your OPENREGISTER_API_KEY here." -- npx -y openregister-mcp
 ```
 
 ## Code Mode
