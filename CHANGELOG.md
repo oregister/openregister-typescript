@@ -1,5 +1,65 @@
 # Changelog
 
+## 3.0.0 (2026-01-24)
+
+Full Changelog: [v2.2.0...v3.0.0](https://github.com/oregister/openregister-typescript/compare/v2.2.0...v3.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **mcp:** remove deprecated tool schemes
+* **mcp:** **Migration:** To migrate, simply modify the command used to invoke the MCP server. Currently, the only supported tool scheme is code mode. Now, starting the server with just `node /path/to/mcp/server` or `npx package-name` will invoke code tools: changing your command to one of these is likely all you will need to do.
+
+### Features
+
+* **mcp:** add detail field to docs search tool ([b7390aa](https://github.com/oregister/openregister-typescript/commit/b7390aabe7daf56e51ed60de0ba6fcba2cedc40d))
+* **mcp:** add typescript check to code execution tool ([ac3f765](https://github.com/oregister/openregister-typescript/commit/ac3f7652cffc0b6df1e8f2190a9b2d7348843627))
+* **mcp:** handle code mode calls in the Stainless API ([1a7190f](https://github.com/oregister/openregister-typescript/commit/1a7190fa63e4884d2de47c3356df994854d26fa1))
+* **mcp:** return logs on code tool errors ([0291031](https://github.com/oregister/openregister-typescript/commit/0291031ecfb999a9c600fe8900fa567f1189f1e1))
+
+
+### Bug Fixes
+
+* **mcp:** add client instantiation options to code tool ([dff3923](https://github.com/oregister/openregister-typescript/commit/dff3923eee1ec291d6dfd29c2ccb478aad4b1e4a))
+* **mcp:** correct code tool API endpoint ([28fbda5](https://github.com/oregister/openregister-typescript/commit/28fbda5ac89064f84376a5b4b489789069c14e5a))
+* **mcp:** correct code tool api output types ([86159b9](https://github.com/oregister/openregister-typescript/commit/86159b9a41367ce37a91a5e902bdd46e386bc47b))
+* **mcp:** fix env parsing ([ff6994b](https://github.com/oregister/openregister-typescript/commit/ff6994b9ab1bea6e0b61e2e3f15129034dde6757))
+* **mcp:** fix options parsing ([89d8593](https://github.com/oregister/openregister-typescript/commit/89d8593743ae4f03d642953a259e8b32c5f4ab0d))
+* **mcp:** pass base url to code tool ([a3989be](https://github.com/oregister/openregister-typescript/commit/a3989be06af3689310f42377fb3becefd7c996ab))
+* **mcp:** return correct lines on typescript errors ([54fb881](https://github.com/oregister/openregister-typescript/commit/54fb8814310304697e5ba3f98884dc662bb15c51))
+* **mcp:** return tool execution error on api error ([c6a5263](https://github.com/oregister/openregister-typescript/commit/c6a5263935fb796bc7b3534225996feba487126e))
+* **mcp:** update cloudflare worker host page ([5576bde](https://github.com/oregister/openregister-typescript/commit/5576bdef8c3fcf5916ce90f4c10326750a5dd41f))
+* **mcp:** update code tool prompt ([2b66b34](https://github.com/oregister/openregister-typescript/commit/2b66b34378782d9a9b9c55bac1c869778718c294))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([57a7e41](https://github.com/oregister/openregister-typescript/commit/57a7e4122026dbf3001302918247f9cc4a57963f))
+* **ci:** upgrade `actions/github-script` ([cf2f6bb](https://github.com/oregister/openregister-typescript/commit/cf2f6bbbb6df0f061a031a9602cf720695d2e7ec))
+* **client:** fix logger property type ([4d5f23f](https://github.com/oregister/openregister-typescript/commit/4d5f23f2a3ddda8184820b1bf697c8bdb1cbea0b))
+* **internal:** bump MCP dependencies ([b005da3](https://github.com/oregister/openregister-typescript/commit/b005da3b49cc165a6f469a6489d44573108d9182))
+* **internal:** codegen related update ([fa7700f](https://github.com/oregister/openregister-typescript/commit/fa7700f6a51af3470f60626be9ecc59cfec19441))
+* **internal:** codegen related update ([00078f3](https://github.com/oregister/openregister-typescript/commit/00078f3197ea88f92b3cc9e7238824d5fd9fdc0e))
+* **internal:** codegen related update ([3acb71d](https://github.com/oregister/openregister-typescript/commit/3acb71d82c195a2a13e295ea3be1e429bd0c5623))
+* **internal:** codegen related update ([2a2a754](https://github.com/oregister/openregister-typescript/commit/2a2a754b955e55ec0fccd4f40628353e20298aa8))
+* **internal:** codegen related update ([d4c96ea](https://github.com/oregister/openregister-typescript/commit/d4c96ea02de69053989d4f18448f7a9ac554f16d))
+* **internal:** codegen related update ([5678ed8](https://github.com/oregister/openregister-typescript/commit/5678ed8cc4279620a29cfccf1a4af32a6235d0d6))
+* **internal:** codegen related update ([24742ee](https://github.com/oregister/openregister-typescript/commit/24742ee22b9227740e8ca3db0de4d87a36927823))
+* **internal:** update `actions/checkout` version ([8e2a32e](https://github.com/oregister/openregister-typescript/commit/8e2a32e64bb8fa622e0b8f65d515d8aba87173fc))
+* **internal:** update lock file ([7444c40](https://github.com/oregister/openregister-typescript/commit/7444c40c67ccafe8ec8f288e03e226e4b311d038))
+* **internal:** upgrade babel, qs, js-yaml ([cd15ba9](https://github.com/oregister/openregister-typescript/commit/cd15ba91ddfb14c650b33255b034feae0ecd732e))
+* **internal:** upgrade eslint ([1c0a487](https://github.com/oregister/openregister-typescript/commit/1c0a487dcb83091950cd6c906b35356dd8a7da67))
+* **mcp:** add intent param to execute tool ([3bfdcbe](https://github.com/oregister/openregister-typescript/commit/3bfdcbec1c8bd10fe43683bdf3e1797167002798))
+* **mcp:** pass intent param to execute handler ([27857d8](https://github.com/oregister/openregister-typescript/commit/27857d8e1736b1a857f014fce9180595f5183b35))
+* **mcp:** remove deprecated tool schemes ([77506d0](https://github.com/oregister/openregister-typescript/commit/77506d0b95c20ca5a9fff708920ad5a0e32e8b52))
+* **mcp:** update lockfile ([cfe6f4c](https://github.com/oregister/openregister-typescript/commit/cfe6f4c2e05e6f3852e2a4d68fb98e817e41d940))
+* **mcp:** upgrade dependencies ([71189be](https://github.com/oregister/openregister-typescript/commit/71189bed43bdfdfbe700e674f9f4bb4cd3e64930))
+* use latest @modelcontextprotocol/sdk ([6c5b483](https://github.com/oregister/openregister-typescript/commit/6c5b48326a6d4ee90df9e3c39031a58046cfdcf9))
+
+
+### Documentation
+
+* prominently feature MCP server setup in root SDK readmes ([a0d8f60](https://github.com/oregister/openregister-typescript/commit/a0d8f6018c91e75aa2b9f381d46746edf405eb2e))
+
 ## 2.2.0 (2025-11-13)
 
 Full Changelog: [v2.1.1...v2.2.0](https://github.com/oregister/openregister-typescript/compare/v2.1.1...v2.2.0)
