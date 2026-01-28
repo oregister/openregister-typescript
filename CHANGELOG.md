@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.1 (2026-01-28)
+
+Full Changelog: [v3.0.0...v3.0.1](https://github.com/oregister/openregister-typescript/compare/v3.0.0...v3.0.1)
+
+### Chores
+
+* update SDK settings ([f056212](https://github.com/oregister/openregister-typescript/commit/f056212ebcd251bdb4a7c5a5b00458971c9689a1))
+
 ## 3.0.0 (2026-01-24)
 
 Full Changelog: [v2.2.0...v3.0.0](https://github.com/oregister/openregister-typescript/compare/v2.2.0...v3.0.0)
