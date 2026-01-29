@@ -39,14 +39,14 @@ For clients with a configuration JSON, it might look something like this:
 If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
 in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
 
-[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=openregister-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIm9wZW5yZWdpc3Rlci1tY3AiXSwiZW52Ijp7Ik9QRU5SRUdJU1RFUl9BUElfS0VZIjoiU2V0IHlvdXIgT1BFTlJFR0lTVEVSX0FQSV9LRVkgaGVyZS4ifX0)
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=openregister-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIm9wZW5yZWdpc3Rlci1tY3AiXSwiZW52Ijp7Ik9QRU5SRUdJU1RFUl9BUElfS0VZIjoiTXkgQVBJIEtleSJ9fQ)
 
 ### VS Code
 
 If you use MCP, you can install the MCP server by clicking the link below. You will need to set your environment variables
 in VS Code's `mcp.json`, which can be found via Command Palette > MCP: Open User Configuration.
 
-[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22openregister-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22openregister-mcp%22%5D%2C%22env%22%3A%7B%22OPENREGISTER_API_KEY%22%3A%22Set%20your%20OPENREGISTER_API_KEY%20here.%22%7D%7D)
+[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22openregister-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22openregister-mcp%22%5D%2C%22env%22%3A%7B%22OPENREGISTER_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)
 
 ### Claude Code
 
@@ -54,7 +54,7 @@ If you use Claude Code, you can install the MCP server by running the command be
 environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
 
 ```
-claude mcp add openregister_mcp_api --env OPENREGISTER_API_KEY="Your OPENREGISTER_API_KEY here." -- npx -y openregister-mcp
+claude mcp add openregister_mcp_api --env OPENREGISTER_API_KEY="My API Key" -- npx -y openregister-mcp
 ```
 
 ## Code Mode

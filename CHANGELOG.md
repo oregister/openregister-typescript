@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.0.2 (2026-01-29)
+
+Full Changelog: [v3.0.1...v3.0.2](https://github.com/oregister/openregister-typescript/compare/v3.0.1...v3.0.2)
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([103c28d](https://github.com/oregister/openregister-typescript/commit/103c28d613a8a69d195f25f582a4db6a373f345c))
+* **mcp:** allow falling back for required env variables ([6eb62fb](https://github.com/oregister/openregister-typescript/commit/6eb62fb4e9dcd33aaf6e572ce88377b93a5c84d1))
+* **publish:** use npm registry directly for trusted publishing support ([6b5eaa8](https://github.com/oregister/openregister-typescript/commit/6b5eaa890cb099ab56108616966b6ad719bf7971))
+
+
+### Chores
+
+* **internal:** codegen related update ([709619b](https://github.com/oregister/openregister-typescript/commit/709619b1d385e6d801e9bf2b7dc74fc2c79b291d))
+* **internal:** codegen related update ([ba545fc](https://github.com/oregister/openregister-typescript/commit/ba545fc41cb3935191afa2b0f5b58b99878a1c10))
+* **internal:** upgrade wrangler version ([5b85e75](https://github.com/oregister/openregister-typescript/commit/5b85e75d176ccf8097319584742d3ae5691bd05a))
+* **mcp:** up tsconfig lib version to es2022 ([3ae0169](https://github.com/oregister/openregister-typescript/commit/3ae016912a8a4b1cb2f6d67c17af62c7581a0bca))
+
 ## 3.0.1 (2026-01-28)
 
 Full Changelog: [v3.0.0...v3.0.1](https://github.com/oregister/openregister-typescript/compare/v3.0.0...v3.0.1)
