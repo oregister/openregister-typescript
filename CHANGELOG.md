@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.1.0 (2026-02-12)
+
+Full Changelog: [v3.0.2...v3.1.0](https://github.com/oregister/openregister-typescript/compare/v3.0.2...v3.1.0)
+
+### Features
+
+* **mcp:** add initial server instructions ([920459d](https://github.com/oregister/openregister-typescript/commit/920459dcd90d951becaa3ba4856f0d61355074e7))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([5ee226b](https://github.com/oregister/openregister-typescript/commit/5ee226bfcfee9cb457db3e67f408dc619f3b22c4))
+* **client:** avoid removing abort listener too early ([0727a19](https://github.com/oregister/openregister-typescript/commit/0727a19a56f5883347a032a9fe430f4249e7508d))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([5d5d442](https://github.com/oregister/openregister-typescript/commit/5d5d4424fecec2b1818620b52c30dc5f7d69f1cf))
+* **client:** restructure abort controller binding ([5bbe3a3](https://github.com/oregister/openregister-typescript/commit/5bbe3a3ba8342ed2df1dc157483c4964ffd8e77f))
+* **internal:** add health check to MCP server when running in HTTP mode ([8f90719](https://github.com/oregister/openregister-typescript/commit/8f90719fcfaa5f5a6c4de5004f2a3158c857b361))
+* **internal:** allow basic filtering of methods allowed for MCP code mode ([28d8bfb](https://github.com/oregister/openregister-typescript/commit/28d8bfb44afec1a4e4487546e773edd81726725d))
+* **internal:** always generate MCP server dockerfiles and upgrade associated dependencies ([cbdb832](https://github.com/oregister/openregister-typescript/commit/cbdb832f260d7a29282423a78044cac14a06731a))
+* **internal:** avoid type checking errors with ts-reset ([bc2d6c0](https://github.com/oregister/openregister-typescript/commit/bc2d6c0e47c0783ad04c27dfcbf9f9f0b7ae9b2e))
+* **internal:** refactor flag parsing for MCP servers and add debug flag ([4ac9e53](https://github.com/oregister/openregister-typescript/commit/4ac9e53195066a5062fa8cb6d6a675f18ddc12cd))
+* **internal:** support oauth authorization code flow for MCP servers ([e9baf4f](https://github.com/oregister/openregister-typescript/commit/e9baf4f40debd4757317e4af8f2175c608a16c45))
+* **internal:** upgrade hono ([30f1d04](https://github.com/oregister/openregister-typescript/commit/30f1d0488cd1c4c03fbeced5208a79b3dc841702))
+
 ## 3.0.2 (2026-01-29)
 
 Full Changelog: [v3.0.1...v3.0.2](https://github.com/oregister/openregister-typescript/compare/v3.0.1...v3.0.2)
