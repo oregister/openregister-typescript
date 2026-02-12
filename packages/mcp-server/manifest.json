@@ -1,7 +1,7 @@
 {
   "dxt_version": "0.2",
   "name": "openregister-mcp",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "The official MCP Server for the Openregister API",
   "author": {
     "name": "Openregister",
