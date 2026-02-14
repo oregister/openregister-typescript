@@ -56,7 +56,7 @@ export const newMcpServer = async () =>
   new McpServer(
     {
       name: 'openregister_api',
-      version: '3.1.0',
+      version: '3.1.1',
     },
     {
       instructions: await getInstructions(),

@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.1.1 (2026-02-14)
+
+Full Changelog: [v3.1.0...v3.1.1](https://github.com/oregister/openregister-typescript/compare/v3.1.0...v3.1.1)
+
+### Chores
+
+* **internal:** improve layout of generated MCP server files ([d3799e8](https://github.com/oregister/openregister-typescript/commit/d3799e8fe11594b36e285bcca87885a44c266602))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([7a02df5](https://github.com/oregister/openregister-typescript/commit/7a02df52db0115adb385df88cb29363b11fc4635))
+
 ## 3.1.0 (2026-02-12)
 
 Full Changelog: [v3.0.2...v3.1.0](https://github.com/oregister/openregister-typescript/compare/v3.0.2...v3.1.0)
