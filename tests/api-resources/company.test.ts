@@ -8,7 +8,7 @@ const client = new Openregister({
 });
 
 describe('resource company', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getContactV0', async () => {
     const responsePromise = client.company.getContactV0('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getDetailsV1', async () => {
     const responsePromise = client.company.getDetailsV1('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getDetailsV1: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -44,7 +44,7 @@ describe('resource company', () => {
     ).rejects.toThrow(Openregister.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getFinancialsV1', async () => {
     const responsePromise = client.company.getFinancialsV1('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getHoldingsV1', async () => {
     const responsePromise = client.company.getHoldingsV1('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -68,7 +68,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getOwnersV1', async () => {
     const responsePromise = client.company.getOwnersV1('company_id');
     const rawResponse = await responsePromise.asResponse();
@@ -80,7 +80,7 @@ describe('resource company', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getOwnersV1: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -92,7 +92,7 @@ describe('resource company', () => {
     ).rejects.toThrow(Openregister.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getUbosV1', async () => {
     const responsePromise = client.company.getUbosV1('company_id');
     const rawResponse = await responsePromise.asResponse();

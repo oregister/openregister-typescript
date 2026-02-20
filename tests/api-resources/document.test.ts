@@ -8,7 +8,7 @@ const client = new Openregister({
 });
 
 describe('resource document', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getCachedV1', async () => {
     const responsePromise = client.document.getCachedV1('document_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource document', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getRealtimeV1: only required params', async () => {
     const responsePromise = client.document.getRealtimeV1({
       company_id: 'company_id',
@@ -35,7 +35,7 @@ describe('resource document', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getRealtimeV1: required and optional params', async () => {
     const response = await client.document.getRealtimeV1({
       company_id: 'company_id',

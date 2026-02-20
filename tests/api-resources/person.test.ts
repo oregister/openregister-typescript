@@ -8,7 +8,7 @@ const client = new Openregister({
 });
 
 describe('resource person', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getDetailsV1', async () => {
     const responsePromise = client.person.getDetailsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource person', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('getHoldingsV1', async () => {
     const responsePromise = client.person.getHoldingsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
