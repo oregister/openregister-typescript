@@ -8,7 +8,7 @@ const client = new Openregister({
 });
 
 describe('resource search', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('autocompleteCompaniesV1: only required params', async () => {
     const responsePromise = client.search.autocompleteCompaniesV1({ query: 'query' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('autocompleteCompaniesV1: required and optional params', async () => {
     const response = await client.search.autocompleteCompaniesV1({ query: 'query' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('findCompaniesV1', async () => {
     const responsePromise = client.search.findCompaniesV1({});
     const rawResponse = await responsePromise.asResponse();
@@ -37,7 +37,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('findPersonV1', async () => {
     const responsePromise = client.search.findPersonV1({});
     const rawResponse = await responsePromise.asResponse();
@@ -49,7 +49,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('lookupCompanyByURL: only required params', async () => {
     const responsePromise = client.search.lookupCompanyByURL({ url: 'https://example.com' });
     const rawResponse = await responsePromise.asResponse();
@@ -61,7 +61,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('lookupCompanyByURL: required and optional params', async () => {
     const response = await client.search.lookupCompanyByURL({ url: 'https://example.com' });
   });
