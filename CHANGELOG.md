@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.1.1 (2026-02-20)
+
+Full Changelog: [v3.1.0...v3.1.1](https://github.com/oregister/openregister-typescript/compare/v3.1.0...v3.1.1)
+
+### Bug Fixes
+
+* **mcp:** initialize SDK lazily to avoid failing the connection on init errors ([741d24e](https://github.com/oregister/openregister-typescript/commit/741d24ec7acf4df7eb563e10121af32b2fa53aa7))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([1a98812](https://github.com/oregister/openregister-typescript/commit/1a98812860bc4dee76ead78a25cf7297025963ad))
+* **internal:** allow setting x-stainless-api-key header on mcp server requests ([94151bb](https://github.com/oregister/openregister-typescript/commit/94151bb2bd3e3688ff9c958d3923c9701912e47b))
+* **internal:** cache fetch instruction calls in MCP server ([5752267](https://github.com/oregister/openregister-typescript/commit/575226733c08cb80deaf4c379e9101ea512006df))
+* **internal:** improve layout of generated MCP server files ([d3799e8](https://github.com/oregister/openregister-typescript/commit/d3799e8fe11594b36e285bcca87885a44c266602))
+* **internal:** remove mock server code ([ce8a955](https://github.com/oregister/openregister-typescript/commit/ce8a955b52a85424293770af20619cbf6cf6e909))
+* **mcp:** correctly update version in sync with sdk ([e98c0ed](https://github.com/oregister/openregister-typescript/commit/e98c0edbf9a375479c4b8df9ea5d107274bd8027))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([7a02df5](https://github.com/oregister/openregister-typescript/commit/7a02df52db0115adb385df88cb29363b11fc4635))
+* update mock server docs ([7a99c06](https://github.com/oregister/openregister-typescript/commit/7a99c06e39bdf07c252218656cf898f496cc05c1))
+
 ## 3.1.0 (2026-02-12)
 
 Full Changelog: [v3.0.2...v3.1.0](https://github.com/oregister/openregister-typescript/compare/v3.0.2...v3.1.0)
