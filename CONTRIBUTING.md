@@ -60,7 +60,7 @@ $ yarn link openregister
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global openregister
+$ pnpm link --global openregister
 ```
 
 ## Running tests
