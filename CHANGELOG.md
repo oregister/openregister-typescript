@@ -1,5 +1,39 @@
 # Changelog
 
+## 3.2.0 (2026-02-27)
+
+Full Changelog: [v3.1.0...v3.2.0](https://github.com/oregister/openregister-typescript/compare/v3.1.0...v3.2.0)
+
+### Features
+
+* **mcp:** add an option to disable code tool ([6a0572e](https://github.com/oregister/openregister-typescript/commit/6a0572eac3f32124a71cc04c171e461c650e64da))
+
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([586b42d](https://github.com/oregister/openregister-typescript/commit/586b42d8e228a21c6ebb8b290b6f6046b47ee871))
+* **mcp:** initialize SDK lazily to avoid failing the connection on init errors ([741d24e](https://github.com/oregister/openregister-typescript/commit/741d24ec7acf4df7eb563e10121af32b2fa53aa7))
+* **mcp:** update prompt ([53cf7b2](https://github.com/oregister/openregister-typescript/commit/53cf7b204615c83775425556059505c8e58074db))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([1a98812](https://github.com/oregister/openregister-typescript/commit/1a98812860bc4dee76ead78a25cf7297025963ad))
+* **internal:** allow setting x-stainless-api-key header on mcp server requests ([94151bb](https://github.com/oregister/openregister-typescript/commit/94151bb2bd3e3688ff9c958d3923c9701912e47b))
+* **internal:** cache fetch instruction calls in MCP server ([5752267](https://github.com/oregister/openregister-typescript/commit/575226733c08cb80deaf4c379e9101ea512006df))
+* **internal:** codegen related update ([8c4b42d](https://github.com/oregister/openregister-typescript/commit/8c4b42d79ccc2207e1fd29b29ce7e8fe3b46b1b8))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([4c73754](https://github.com/oregister/openregister-typescript/commit/4c73754fb834f23842e51abe205b4bbc3e6184ad))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([04d91d5](https://github.com/oregister/openregister-typescript/commit/04d91d542b3395f64f43a01d63a1973e4bed75dc))
+* **internal:** improve layout of generated MCP server files ([d3799e8](https://github.com/oregister/openregister-typescript/commit/d3799e8fe11594b36e285bcca87885a44c266602))
+* **internal:** make MCP code execution location configurable via a flag ([7c3bb4c](https://github.com/oregister/openregister-typescript/commit/7c3bb4c193d3b0e90cfb01a89aeb9991dc3347da))
+* **internal:** move stringifyQuery implementation to internal function ([bd19106](https://github.com/oregister/openregister-typescript/commit/bd19106711ebdefbf3d77b8164b70b55d25eb8d2))
+* **internal:** remove mock server code ([ce8a955](https://github.com/oregister/openregister-typescript/commit/ce8a955b52a85424293770af20619cbf6cf6e909))
+* **internal:** update agents version ([9ed87dd](https://github.com/oregister/openregister-typescript/commit/9ed87dd76f762b7cf11aaf0ed1590e39d973c57a))
+* **internal:** upgrade @modelcontextprotocol/sdk and hono ([1e0d369](https://github.com/oregister/openregister-typescript/commit/1e0d369ae1f3872bc9c2b0b7116c0aa0011b5cad))
+* **mcp:** correctly update version in sync with sdk ([e98c0ed](https://github.com/oregister/openregister-typescript/commit/e98c0edbf9a375479c4b8df9ea5d107274bd8027))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([7a02df5](https://github.com/oregister/openregister-typescript/commit/7a02df52db0115adb385df88cb29363b11fc4635))
+* update mock server docs ([7a99c06](https://github.com/oregister/openregister-typescript/commit/7a99c06e39bdf07c252218656cf898f496cc05c1))
+
 ## 3.1.0 (2026-02-12)
 
 Full Changelog: [v3.0.2...v3.1.0](https://github.com/oregister/openregister-typescript/compare/v3.0.2...v3.1.0)

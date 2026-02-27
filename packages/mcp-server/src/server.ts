@@ -11,57 +11,19 @@ import { ClientOptions } from 'openregister';
 import Openregister from 'openregister';
 import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
+import { getInstructions } from './instructions';
 import { McpOptions } from './options';
 import { blockedMethodsForCodeTool } from './methods';
-import { HandlerFunction, McpTool } from './types';
+import { HandlerFunction, McpRequestContext, ToolCallResult, McpTool } from './types';
 
-export { McpOptions } from './options';
-export { ClientOptions } from 'openregister';
-
-async function getInstructions() {
-  // This API key is optional; providing it allows the server to fetch instructions for unreleased versions.
-  const stainlessAPIKey = readEnv('STAINLESS_API_KEY');
-  const response = await fetch(
-    readEnv('CODE_MODE_INSTRUCTIONS_URL') ?? 'https://api.stainless.com/api/ai/instructions/openregister',
-    {
-      method: 'GET',
-      headers: { ...(stainlessAPIKey && { Authorization: stainlessAPIKey }) },
-    },
-  );
-
-  let instructions: string | undefined;
-  if (!response.ok) {
-    console.warn(
-      'Warning: failed to retrieve MCP server instructions. Proceeding with default instructions...',
-    );
-
-    instructions = `
-      This is the openregister MCP server. You will use Code Mode to help the user perform
-      actions. You can use search_docs tool to learn about how to take action with this server. Then,
-      you will write TypeScript code using the execute tool take action. It is CRITICAL that you be
-      thoughtful and deliberate when executing code. Always try to entirely solve the problem in code
-      block: it can be as long as you need to get the job done!
-    `;
-  }
-
-  instructions ??= ((await response.json()) as { instructions: string }).instructions;
-  instructions = `
-    The current time in Unix timestamps is ${Date.now()}.
-
-    ${instructions}
-  `;
-
-  return instructions;
-}
-
-export const newMcpServer = async () =>
+export const newMcpServer = async (stainlessApiKey: string | undefined) =>
   new McpServer(
     {
       name: 'openregister_api',
-      version: '3.1.0',
+      version: '3.2.0',
     },
     {
-      instructions: await getInstructions(),
+      instructions: await getInstructions(stainlessApiKey),
       capabilities: { tools: {}, logging: {} },
     },
   );
@@ -74,6 +36,7 @@ export async function initMcpServer(params: {
   server: Server | McpServer;
   clientOptions?: ClientOptions;
   mcpOptions?: McpOptions;
+  stainlessApiKey?: string | undefined;
 }) {
   const server = params.server instanceof McpServer ? params.server.server : params.server;
 
@@ -92,14 +55,32 @@ export async function initMcpServer(params: {
     error: logAtLevel('error'),
   };
 
-  let client = new Openregister({
-    logger,
-    ...params.clientOptions,
-    defaultHeaders: {
-      ...params.clientOptions?.defaultHeaders,
-      'X-Stainless-MCP': 'true',
-    },
-  });
+  let _client: Openregister | undefined;
+  let _clientError: Error | undefined;
+  let _logLevel: 'debug' | 'info' | 'warn' | 'error' | 'off' | undefined;
+
+  const getClient = (): Openregister => {
+    if (_clientError) throw _clientError;
+    if (!_client) {
+      try {
+        _client = new Openregister({
+          logger,
+          ...params.clientOptions,
+          defaultHeaders: {
+            ...params.clientOptions?.defaultHeaders,
+            'X-Stainless-MCP': 'true',
+          },
+        });
+        if (_logLevel) {
+          _client = _client.withOptions({ logLevel: _logLevel });
+        }
+      } catch (e) {
+        _clientError = e instanceof Error ? e : new Error(String(e));
+        throw _clientError;
+      }
+    }
+    return _client;
+  };
 
   const providedTools = selectTools(params.mcpOptions);
   const toolMap = Object.fromEntries(providedTools.map((mcpTool) => [mcpTool.tool.name, mcpTool]));
@@ -117,28 +98,55 @@ export async function initMcpServer(params: {
       throw new Error(`Unknown tool: ${name}`);
     }
 
-    return executeHandler(mcpTool.handler, client, args);
+    let client: Openregister;
+    try {
+      client = getClient();
+    } catch (error) {
+      return {
+        content: [
+          {
+            type: 'text' as const,
+            text: `Failed to initialize client: ${error instanceof Error ? error.message : String(error)}`,
+          },
+        ],
+        isError: true,
+      };
+    }
+
+    return executeHandler({
+      handler: mcpTool.handler,
+      reqContext: {
+        client,
+        stainlessApiKey: params.stainlessApiKey ?? params.mcpOptions?.stainlessApiKey,
+      },
+      args,
+    });
   });
 
   server.setRequestHandler(SetLevelRequestSchema, async (request) => {
     const { level } = request.params;
+    let logLevel: 'debug' | 'info' | 'warn' | 'error' | 'off';
     switch (level) {
       case 'debug':
-        client = client.withOptions({ logLevel: 'debug' });
+        logLevel = 'debug';
         break;
       case 'info':
-        client = client.withOptions({ logLevel: 'info' });
+        logLevel = 'info';
         break;
       case 'notice':
       case 'warning':
-        client = client.withOptions({ logLevel: 'warn' });
+        logLevel = 'warn';
         break;
       case 'error':
-        client = client.withOptions({ logLevel: 'error' });
+        logLevel = 'error';
         break;
       default:
-        client = client.withOptions({ logLevel: 'off' });
+        logLevel = 'off';
         break;
+    }
+    _logLevel = logLevel;
+    if (_client) {
+      _client = _client.withOptions({ logLevel });
     }
     return {};
   });
@@ -148,11 +156,16 @@ export async function initMcpServer(params: {
  * Selects the tools to include in the MCP Server based on the provided options.
  */
 export function selectTools(options?: McpOptions): McpTool[] {
-  const includedTools = [
-    codeTool({
-      blockedMethods: blockedMethodsForCodeTool(options),
-    }),
-  ];
+  const includedTools = [];
+
+  if (options?.includeCodeTool ?? true) {
+    includedTools.push(
+      codeTool({
+        blockedMethods: blockedMethodsForCodeTool(options),
+        codeExecutionMode: options?.codeExecutionMode ?? 'stainless-sandbox',
+      }),
+    );
+  }
   if (options?.includeDocsTools ?? true) {
     includedTools.push(docsSearchTool);
   }
@@ -162,34 +175,14 @@ export function selectTools(options?: McpOptions): McpTool[] {
 /**
  * Runs the provided handler with the given client and arguments.
  */
-export async function executeHandler(
-  handler: HandlerFunction,
-  client: Openregister,
-  args: Record<string, unknown> | undefined,
-) {
-  return await handler(client, args || {});
+export async function executeHandler({
+  handler,
+  reqContext,
+  args,
+}: {
+  handler: HandlerFunction;
+  reqContext: McpRequestContext;
+  args: Record<string, unknown> | undefined;
+}): Promise<ToolCallResult> {
+  return await handler({ reqContext, args: args || {} });
 }
-
-export const readEnv = (env: string): string | undefined => {
-  if (typeof (globalThis as any).process !== 'undefined') {
-    return (globalThis as any).process.env?.[env]?.trim();
-  } else if (typeof (globalThis as any).Deno !== 'undefined') {
-    return (globalThis as any).Deno.env?.get?.(env)?.trim();
-  }
-  return;
-};
-
-export const readEnvOrError = (env: string): string => {
-  let envValue = readEnv(env);
-  if (envValue === undefined) {
-    throw new Error(`Environment variable ${env} is not set`);
-  }
-  return envValue;
-};
-
-export const requireValue = <T>(value: T | undefined, description: string): T => {
-  if (value === undefined) {
-    throw new Error(`Missing required value: ${description}`);
-  }
-  return value;
-};
