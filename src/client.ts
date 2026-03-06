@@ -33,6 +33,7 @@ import {
   CompanyPurpose,
   CompanyRegister,
   CompanyRelationType,
+  CompanyRetrieveShareholdersResponse,
   EntityType,
   MergedReportRow,
   MergedReportTable,
@@ -44,6 +45,7 @@ import {
   DocumentGetCachedV1Response,
   DocumentGetRealtimeV1Params,
   DocumentGetRealtimeV1Response,
+  DocumentRetrieveResponse,
 } from './resources/document';
 import { Person, PersonGetDetailsV1Response, PersonGetHoldingsV1Response } from './resources/person';
 import {
@@ -59,6 +61,7 @@ import {
   SearchLookupCompanyByURLParams,
   SearchLookupCompanyByURLResponse,
 } from './resources/search';
+import { Jobs } from './resources/jobs/jobs';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -764,12 +767,14 @@ export class Openregister {
   company: API.Company = new API.Company(this);
   document: API.Document = new API.Document(this);
   person: API.Person = new API.Person(this);
+  jobs: API.Jobs = new API.Jobs(this);
 }
 
 Openregister.Search = Search;
 Openregister.Company = Company;
 Openregister.Document = Document;
 Openregister.Person = Person;
+Openregister.Jobs = Jobs;
 
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
@@ -807,12 +812,14 @@ export declare namespace Openregister {
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyGetUbosV1Response as CompanyGetUbosV1Response,
+    type CompanyRetrieveShareholdersResponse as CompanyRetrieveShareholdersResponse,
     type CompanyGetDetailsV1Params as CompanyGetDetailsV1Params,
     type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
   };
 
   export {
     Document as Document,
+    type DocumentRetrieveResponse as DocumentRetrieveResponse,
     type DocumentGetCachedV1Response as DocumentGetCachedV1Response,
     type DocumentGetRealtimeV1Response as DocumentGetRealtimeV1Response,
     type DocumentGetRealtimeV1Params as DocumentGetRealtimeV1Params,
@@ -823,4 +830,6 @@ export declare namespace Openregister {
     type PersonGetDetailsV1Response as PersonGetDetailsV1Response,
     type PersonGetHoldingsV1Response as PersonGetHoldingsV1Response,
   };
+
+  export { Jobs as Jobs };
 }

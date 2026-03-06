@@ -354,7 +354,13 @@ export namespace SearchFindCompaniesV1Params {
       | 'net_income'
       | 'industry_codes'
       | 'capital_amount'
-      | 'capital_currency';
+      | 'capital_currency'
+      | 'number_of_owners'
+      | 'has_sole_owner'
+      | 'has_representative_owner'
+      | 'is_family_owned'
+      | 'youngest_owner_age'
+      | 'purpose';
 
     keywords?: Array<string>;
 
