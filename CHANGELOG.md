@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.2.1 (2026-03-06)
+
+Full Changelog: [v3.2.0...v3.2.1](https://github.com/oregister/openregister-typescript/compare/v3.2.0...v3.2.1)
+
+### Chores
+
+* **internal:** codegen related update ([8f7d446](https://github.com/oregister/openregister-typescript/commit/8f7d4469171dafbd414df45b462aab0b0237b99d))
+* **internal:** codegen related update ([4895550](https://github.com/oregister/openregister-typescript/commit/48955507c0157c75a78a0178af4adb313d55223d))
+* **internal:** use x-stainless-mcp-client-envs header for MCP remote code tool calls ([e24faac](https://github.com/oregister/openregister-typescript/commit/e24faace4f1991d1bea15527e4da52b09c6c3926))
+* **mcp-server:** return access instructions for 404 without API key ([5a1de55](https://github.com/oregister/openregister-typescript/commit/5a1de55b8ef99d11e3415864e170ffd403138210))
+
 ## 3.2.0 (2026-02-27)
 
 Full Changelog: [v3.1.0...v3.2.0](https://github.com/oregister/openregister-typescript/compare/v3.1.0...v3.2.0)
