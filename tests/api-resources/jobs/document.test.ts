@@ -9,8 +9,31 @@ const client = new Openregister({
 
 describe('resource document', () => {
   // Mock server tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.jobs.document.create({
+      company_id: 'company_id',
+      document_category: 'current_printout',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.jobs.document.create({
+      company_id: 'company_id',
+      document_category: 'current_printout',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.document.retrieve('document_id');
+    const responsePromise = client.jobs.document.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,40 +41,5 @@ describe('resource document', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('getCachedV1', async () => {
-    const responsePromise = client.document.getCachedV1('document_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('getRealtimeV1: only required params', async () => {
-    const responsePromise = client.document.getRealtimeV1({
-      company_id: 'company_id',
-      document_category: 'current_printout',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('getRealtimeV1: required and optional params', async () => {
-    const response = await client.document.getRealtimeV1({
-      company_id: 'company_id',
-      document_category: 'current_printout',
-    });
   });
 });

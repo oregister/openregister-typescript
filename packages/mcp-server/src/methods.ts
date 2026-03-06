@@ -71,6 +71,24 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/company/{company_id}/ubo',
   },
   {
+    clientCallName: 'client.company.retrieveShareholders',
+    fullyQualifiedName: 'company.retrieveShareholders',
+    httpMethod: 'get',
+    httpPath: '/v0/company/{company_id}/shareholders',
+  },
+  {
+    clientCallName: 'client.document.retrieve',
+    fullyQualifiedName: 'document.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v0/document/{document_id}',
+  },
+  {
+    clientCallName: 'client.document.download',
+    fullyQualifiedName: 'document.download',
+    httpMethod: 'get',
+    httpPath: '/v0/document/{document_id}/download',
+  },
+  {
     clientCallName: 'client.document.getCachedV1',
     fullyQualifiedName: 'document.getCachedV1',
     httpMethod: 'get',
@@ -93,6 +111,18 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'person.getHoldingsV1',
     httpMethod: 'get',
     httpPath: '/v1/person/{person_id}/holdings',
+  },
+  {
+    clientCallName: 'client.jobs.document.create',
+    fullyQualifiedName: 'jobs.document.create',
+    httpMethod: 'post',
+    httpPath: '/v0/jobs/document',
+  },
+  {
+    clientCallName: 'client.jobs.document.retrieve',
+    fullyQualifiedName: 'jobs.document.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v0/jobs/document/{id}',
   },
 ];
 
