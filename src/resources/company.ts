@@ -57,16 +57,6 @@ export class Company extends APIResource {
   getUbosV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetUbosV1Response> {
     return this._client.get(path`/v1/company/${companyID}/ubo`, options);
   }
-
-  /**
-   * Get company shareholders
-   */
-  retrieveShareholders(
-    companyID: string,
-    options?: RequestOptions,
-  ): APIPromise<CompanyRetrieveShareholdersResponse> {
-    return this._client.get(path`/v0/company/${companyID}/shareholders`, options);
-  }
 }
 
 export interface CompanyAddress {
@@ -919,59 +909,6 @@ export namespace CompanyGetUbosV1Response {
   }
 }
 
-export interface CompanyRetrieveShareholdersResponse {
-  /**
-   * Date when this shareholder information became effective. Format: ISO 8601
-   * (YYYY-MM-DD) Example: "2022-01-01"
-   */
-  date: string;
-
-  /**
-   * Unique identifier for the document this was taken from. Example:
-   * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-   */
-  document_id: string;
-
-  shareholders: Array<CompanyRetrieveShareholdersResponse.Shareholder>;
-}
-
-export namespace CompanyRetrieveShareholdersResponse {
-  export interface Shareholder {
-    /**
-     * Country where the shareholder is located, in ISO 3166-1 alpha-2 format. Example:
-     * "DE" for Germany
-     */
-    country: string;
-
-    /**
-     * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
-     */
-    name: string;
-
-    /**
-     * Nominal value of shares in Euro. Example: 100
-     */
-    nominal_share: number;
-
-    /**
-     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
-     */
-    percentage_share: number;
-
-    /**
-     * The type of shareholder.
-     */
-    type: CompanyAPI.EntityType;
-
-    /**
-     * Unique identifier for the shareholder. For companies: Format matches company_id
-     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
-     * for certain shareholders.
-     */
-    id?: string;
-  }
-}
-
 export interface CompanyGetDetailsV1Params {
   /**
    * Setting this to true will return the company without sources.
@@ -1022,7 +959,6 @@ export declare namespace Company {
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyGetUbosV1Response as CompanyGetUbosV1Response,
-    type CompanyRetrieveShareholdersResponse as CompanyRetrieveShareholdersResponse,
     type CompanyGetDetailsV1Params as CompanyGetDetailsV1Params,
     type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
   };

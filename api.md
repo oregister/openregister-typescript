@@ -37,7 +37,6 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyGetHoldingsV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetOwnersV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetUbosV1Response</a></code>
-- <code><a href="./src/resources/company.ts">CompanyRetrieveShareholdersResponse</a></code>
 
 Methods:
 
@@ -47,7 +46,6 @@ Methods:
 - <code title="get /v1/company/{company_id}/holdings">client.company.<a href="./src/resources/company.ts">getHoldingsV1</a>(companyID) -> CompanyGetHoldingsV1Response</code>
 - <code title="get /v1/company/{company_id}/owners">client.company.<a href="./src/resources/company.ts">getOwnersV1</a>(companyID, { ...params }) -> CompanyGetOwnersV1Response</code>
 - <code title="get /v1/company/{company_id}/ubo">client.company.<a href="./src/resources/company.ts">getUbosV1</a>(companyID) -> CompanyGetUbosV1Response</code>
-- <code title="get /v0/company/{company_id}/shareholders">client.company.<a href="./src/resources/company.ts">retrieveShareholders</a>(companyID) -> CompanyRetrieveShareholdersResponse</code>
 
 # Document
 
@@ -75,17 +73,3 @@ Methods:
 
 - <code title="get /v1/person/{person_id}">client.person.<a href="./src/resources/person.ts">getDetailsV1</a>(personID) -> PersonGetDetailsV1Response</code>
 - <code title="get /v1/person/{person_id}/holdings">client.person.<a href="./src/resources/person.ts">getHoldingsV1</a>(personID) -> PersonGetHoldingsV1Response</code>
-
-# Jobs
-
-## Document
-
-Types:
-
-- <code><a href="./src/resources/jobs/document.ts">DocumentCreateResponse</a></code>
-- <code><a href="./src/resources/jobs/document.ts">DocumentRetrieveResponse</a></code>
-
-Methods:
-
-- <code title="post /v0/jobs/document">client.jobs.document.<a href="./src/resources/jobs/document.ts">create</a>({ ...params }) -> DocumentCreateResponse</code>
-- <code title="get /v0/jobs/document/{id}">client.jobs.document.<a href="./src/resources/jobs/document.ts">retrieve</a>(id) -> DocumentRetrieveResponse</code>
