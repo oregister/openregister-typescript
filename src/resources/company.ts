@@ -148,6 +148,32 @@ export interface CompanyName {
   start_date: string;
 }
 
+export interface CompanyOwnerLegalPerson {
+  city: string | null;
+
+  /**
+   * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
+   * for Germany
+   */
+  country: string;
+
+  name: string;
+}
+
+export interface CompanyOwnerNaturalPerson {
+  city: string;
+
+  country: string;
+
+  date_of_birth: string | null;
+
+  first_name: string;
+
+  full_name: string;
+
+  last_name: string;
+}
+
 export interface CompanyPurpose {
   /**
    * Official description of the company's business activities and objectives. This
@@ -232,6 +258,14 @@ export interface ReportRow {
 
 export interface ReportTable {
   rows: Array<ReportRow>;
+}
+
+export interface Source {
+  /**
+   * Url of the source document. In the form of a presigned url accessible for 30
+   * minutes.
+   */
+  document_url: string;
 }
 
 export interface CompanyGetContactV0Response {
@@ -355,7 +389,7 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Sources of the company data.
    */
-  sources: Array<CompanyGetDetailsV1Response.Source>;
+  sources: Array<Source>;
 
   /**
    * Current status of the company:
@@ -620,14 +654,6 @@ export namespace CompanyGetDetailsV1Response {
       last_name: string | null;
     }
   }
-
-  export interface Source {
-    /**
-     * Url of the source document. In the form of a presigned url accessible for 30
-     * minutes.
-     */
-    document_url: string;
-  }
 }
 
 export interface CompanyGetFinancialsV1Response {
@@ -831,7 +857,7 @@ export interface CompanyGetOwnersV1Response {
   /**
    * Sources of the company owners data.
    */
-  sources: Array<CompanyGetOwnersV1Response.Source>;
+  sources: Array<Source>;
 }
 
 export namespace CompanyGetOwnersV1Response {
@@ -846,7 +872,7 @@ export namespace CompanyGetOwnersV1Response {
     /**
      * Details about the legal person.
      */
-    legal_person: Owner.LegalPerson | null;
+    legal_person: CompanyAPI.CompanyOwnerLegalPerson | null;
 
     /**
      * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
@@ -856,7 +882,7 @@ export namespace CompanyGetOwnersV1Response {
     /**
      * Details about the natural person.
      */
-    natural_person: Owner.NaturalPerson | null;
+    natural_person: CompanyAPI.CompanyOwnerNaturalPerson | null;
 
     /**
      * Nominal value of shares in Euro. Example: 100
@@ -884,48 +910,6 @@ export namespace CompanyGetOwnersV1Response {
      */
     type: CompanyAPI.EntityType;
   }
-
-  export namespace Owner {
-    /**
-     * Details about the legal person.
-     */
-    export interface LegalPerson {
-      city: string | null;
-
-      /**
-       * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
-       * for Germany
-       */
-      country: string;
-
-      name: string;
-    }
-
-    /**
-     * Details about the natural person.
-     */
-    export interface NaturalPerson {
-      city: string;
-
-      country: string;
-
-      date_of_birth: string | null;
-
-      first_name: string;
-
-      full_name: string;
-
-      last_name: string;
-    }
-  }
-
-  export interface Source {
-    /**
-     * Url of the source document. In the form of a presigned url accessible for 30
-     * minutes.
-     */
-    document_url: string;
-  }
 }
 
 export interface CompanyGetUbosV1Response {
@@ -946,7 +930,7 @@ export namespace CompanyGetUbosV1Response {
      */
     id: string | null;
 
-    legal_person: Ubo.LegalPerson | null;
+    legal_person: CompanyAPI.CompanyOwnerLegalPerson | null;
 
     /**
      * Maximum percentage of company ownership. Example: 5.36 represents maximum of
@@ -963,7 +947,7 @@ export namespace CompanyGetUbosV1Response {
      */
     name: string;
 
-    natural_person: Ubo.NaturalPerson | null;
+    natural_person: CompanyAPI.CompanyOwnerNaturalPerson | null;
 
     /**
      * Percentage of company ownership. Example: 5.36 represents 5.36% ownership Is
@@ -971,34 +955,6 @@ export namespace CompanyGetUbosV1Response {
      * or limited partner.
      */
     percentage_share: number | null;
-  }
-
-  export namespace Ubo {
-    export interface LegalPerson {
-      city: string | null;
-
-      /**
-       * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
-       * for Germany
-       */
-      country: string;
-
-      name: string;
-    }
-
-    export interface NaturalPerson {
-      city: string;
-
-      country: string;
-
-      date_of_birth: string | null;
-
-      first_name: string;
-
-      full_name: string;
-
-      last_name: string;
-    }
   }
 }
 
@@ -1038,6 +994,8 @@ export declare namespace Company {
     type CompanyAddress as CompanyAddress,
     type CompanyCapital as CompanyCapital,
     type CompanyName as CompanyName,
+    type CompanyOwnerLegalPerson as CompanyOwnerLegalPerson,
+    type CompanyOwnerNaturalPerson as CompanyOwnerNaturalPerson,
     type CompanyPurpose as CompanyPurpose,
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
@@ -1046,6 +1004,7 @@ export declare namespace Company {
     type MergedReportTable as MergedReportTable,
     type ReportRow as ReportRow,
     type ReportTable as ReportTable,
+    type Source as Source,
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
     type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
