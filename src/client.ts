@@ -21,9 +21,9 @@ import {
   Company,
   CompanyAddress,
   CompanyCapital,
+  CompanyDocument,
   CompanyGetContactV0Response,
   CompanyGetDetailsV1Params,
-  CompanyGetDetailsV1Response,
   CompanyGetFinancialsV1Response,
   CompanyGetHistoricalOwnersV0Response,
   CompanyGetHoldingsV1Response,
@@ -36,18 +36,20 @@ import {
   CompanyPurpose,
   CompanyRegister,
   CompanyRelationType,
+  CompanyV1,
   EntityType,
   MergedReportRow,
   MergedReportTable,
   ReportRow,
   ReportTable,
+  RepresentationRole,
   Source,
 } from './resources/company';
 import {
   Document,
-  DocumentGetCachedV1Response,
   DocumentGetRealtimeV1Params,
   DocumentGetRealtimeV1Response,
+  DocumentResource,
 } from './resources/document';
 import { Person, PersonGetDetailsV1Response, PersonGetHoldingsV1Response } from './resources/person';
 import {
@@ -59,11 +61,13 @@ import {
   Search,
   SearchAutocompleteCompaniesV1Params,
   SearchAutocompleteCompaniesV1Response,
+  SearchFilterBase,
   SearchFindCompaniesV1Params,
   SearchFindPersonV1Params,
   SearchFindPersonV1Response,
   SearchLookupCompanyByURLParams,
   SearchLookupCompanyByURLResponse,
+  SearchRequestPagination,
 } from './resources/search';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -769,13 +773,13 @@ export class Openregister {
 
   search: API.Search = new API.Search(this);
   company: API.Company = new API.Company(this);
-  document: API.Document = new API.Document(this);
+  document: API.DocumentResource = new API.DocumentResource(this);
   person: API.Person = new API.Person(this);
 }
 
 Openregister.Search = Search;
 Openregister.Company = Company;
-Openregister.Document = Document;
+Openregister.DocumentResource = DocumentResource;
 Openregister.Person = Person;
 
 export declare namespace Openregister {
@@ -788,6 +792,8 @@ export declare namespace Openregister {
     type CompanySearch as CompanySearch,
     type CompanySearchResponseItem as CompanySearchResponseItem,
     type Pagination as Pagination,
+    type SearchFilterBase as SearchFilterBase,
+    type SearchRequestPagination as SearchRequestPagination,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
     type SearchFindPersonV1Response as SearchFindPersonV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
@@ -801,20 +807,22 @@ export declare namespace Openregister {
     Company as Company,
     type CompanyAddress as CompanyAddress,
     type CompanyCapital as CompanyCapital,
+    type CompanyDocument as CompanyDocument,
     type CompanyName as CompanyName,
     type CompanyOwnerLegalPerson as CompanyOwnerLegalPerson,
     type CompanyOwnerNaturalPerson as CompanyOwnerNaturalPerson,
     type CompanyPurpose as CompanyPurpose,
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
+    type CompanyV1 as CompanyV1,
     type EntityType as EntityType,
     type MergedReportRow as MergedReportRow,
     type MergedReportTable as MergedReportTable,
     type ReportRow as ReportRow,
     type ReportTable as ReportTable,
+    type RepresentationRole as RepresentationRole,
     type Source as Source,
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
-    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHistoricalOwnersV0Response as CompanyGetHistoricalOwnersV0Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
@@ -825,8 +833,8 @@ export declare namespace Openregister {
   };
 
   export {
-    Document as Document,
-    type DocumentGetCachedV1Response as DocumentGetCachedV1Response,
+    DocumentResource as DocumentResource,
+    type Document as Document,
     type DocumentGetRealtimeV1Response as DocumentGetRealtimeV1Response,
     type DocumentGetRealtimeV1Params as DocumentGetRealtimeV1Params,
   };

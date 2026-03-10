@@ -5,11 +5,11 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
-export class Document extends APIResource {
+export class DocumentResource extends APIResource {
   /**
    * Get document information
    */
-  getCachedV1(documentID: string, options?: RequestOptions): APIPromise<DocumentGetCachedV1Response> {
+  getCachedV1(documentID: string, options?: RequestOptions): APIPromise<Document> {
     return this._client.get(path`/v1/document/${documentID}`, options);
   }
 
@@ -24,7 +24,7 @@ export class Document extends APIResource {
   }
 }
 
-export interface DocumentGetCachedV1Response {
+export interface Document {
   /**
    * The unique identifier for the document. E.g.
    * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
@@ -81,9 +81,9 @@ export interface DocumentGetRealtimeV1Params {
     | 'articles_of_association';
 }
 
-export declare namespace Document {
+export declare namespace DocumentResource {
   export {
-    type DocumentGetCachedV1Response as DocumentGetCachedV1Response,
+    type Document as Document,
     type DocumentGetRealtimeV1Response as DocumentGetRealtimeV1Response,
     type DocumentGetRealtimeV1Params as DocumentGetRealtimeV1Params,
   };

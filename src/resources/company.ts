@@ -22,7 +22,7 @@ export class Company extends APIResource {
     companyID: string,
     query: CompanyGetDetailsV1Params | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CompanyGetDetailsV1Response> {
+  ): APIPromise<CompanyV1> {
     return this._client.get(path`/v1/company/${companyID}`, { query, ...options });
   }
 
@@ -128,6 +128,34 @@ export interface CompanyCapital {
   start_date: string;
 }
 
+export interface CompanyDocument {
+  /**
+   * Unique identifier for the document. Example:
+   * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+   */
+  id: string;
+
+  /**
+   * Document publication or filing date. Format: ISO 8601 (YYYY-MM-DD) Example:
+   * "2022-01-01"
+   */
+  date: string;
+
+  /**
+   * Whether this is the latest version of the document_type.
+   */
+  latest: boolean;
+
+  /**
+   * Categorization of the document:
+   *
+   * - articles_of_association: Company statutes/bylaws
+   * - sample_protocol: Standard founding protocol
+   * - shareholder_list: List of company shareholders
+   */
+  type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list';
+}
+
 export interface CompanyName {
   /**
    * Legal form of the company at this point in time. Example: "gmbh" for
@@ -219,79 +247,7 @@ export interface CompanyRegister {
 
 export type CompanyRelationType = 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
 
-export type EntityType = 'natural_person' | 'legal_person';
-
-/**
- * Report row with values from multiple report periods
- */
-export interface MergedReportRow {
-  children: Array<MergedReportRow>;
-
-  formatted_name: string;
-
-  name: string;
-
-  /**
-   * Report end date to value mapping (ISO date string as key)
-   */
-  values: { [key: string]: number };
-}
-
-/**
- * Report table with data merged across multiple report periods
- */
-export interface MergedReportTable {
-  rows: Array<MergedReportRow>;
-}
-
-export interface ReportRow {
-  children: Array<ReportRow>;
-
-  current_value: number | null;
-
-  formatted_name: string;
-
-  name: string;
-
-  previous_value: number | null;
-}
-
-export interface ReportTable {
-  rows: Array<ReportRow>;
-}
-
-export interface Source {
-  /**
-   * Url of the source document. In the form of a presigned url accessible for 30
-   * minutes.
-   */
-  document_url: string;
-}
-
-export interface CompanyGetContactV0Response {
-  /**
-   * Where the contact information was found. Example: "https://openregister.de"
-   */
-  source_url: string;
-
-  /**
-   * Company contact email address. Example: "founders@openregister.de"
-   */
-  email?: string;
-
-  /**
-   * Company phone number. Example: "+49 030 12345678"
-   */
-  phone?: string;
-
-  /**
-   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
-   * Example: "DE370146530"
-   */
-  vat_id?: string;
-}
-
-export interface CompanyGetDetailsV1Response {
+export interface CompanyV1 {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
    */
@@ -320,12 +276,12 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Contact information of the company.
    */
-  contact: CompanyGetDetailsV1Response.Contact | null;
+  contact: CompanyV1.Contact | null;
 
   /**
    * Available official documents related to the company.
    */
-  documents: Array<CompanyGetDetailsV1Response.Document>;
+  documents: Array<CompanyDocument>;
 
   /**
    * Date when the company was officially registered. Format: ISO 8601 (YYYY-MM-DD)
@@ -336,12 +292,12 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Key company indicators like net income, employee count, revenue, etc..
    */
-  indicators: Array<CompanyGetDetailsV1Response.Indicator>;
+  indicators: Array<CompanyV1.Indicator>;
 
   /**
    * Industry codes of the company.
    */
-  industry_codes: CompanyGetDetailsV1Response.IndustryCodes;
+  industry_codes: CompanyV1.IndustryCodes;
 
   /**
    * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
@@ -384,7 +340,7 @@ export interface CompanyGetDetailsV1Response {
    * List of individuals or entities authorized to represent the company. Includes
    * directors, officers, and authorized signatories.
    */
-  representation: Array<CompanyGetDetailsV1Response.Representation>;
+  representation: Array<CompanyV1.Representation>;
 
   /**
    * Sources of the company data.
@@ -407,7 +363,7 @@ export interface CompanyGetDetailsV1Response {
   terminated_at: string | null;
 }
 
-export namespace CompanyGetDetailsV1Response {
+export namespace CompanyV1 {
   /**
    * Contact information of the company.
    */
@@ -441,34 +397,6 @@ export namespace CompanyGetDetailsV1Response {
 
       youtube?: string;
     }
-  }
-
-  export interface Document {
-    /**
-     * Unique identifier for the document. Example:
-     * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-     */
-    id: string;
-
-    /**
-     * Document publication or filing date. Format: ISO 8601 (YYYY-MM-DD) Example:
-     * "2022-01-01"
-     */
-    date: string;
-
-    /**
-     * Whether this is the latest version of the document_type.
-     */
-    latest: boolean;
-
-    /**
-     * Categorization of the document:
-     *
-     * - articles_of_association: Company statutes/bylaws
-     * - sample_protocol: Standard founding protocol
-     * - shareholder_list: List of company shareholders
-     */
-    type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list';
   }
 
   /**
@@ -592,15 +520,7 @@ export namespace CompanyGetDetailsV1Response {
     /**
      * The role of the representation. E.g. "DIRECTOR"
      */
-    role:
-      | 'DIRECTOR'
-      | 'PROKURA'
-      | 'SHAREHOLDER'
-      | 'OWNER'
-      | 'PARTNER'
-      | 'PERSONAL_LIABLE_DIRECTOR'
-      | 'LIQUIDATOR'
-      | 'OTHER';
+    role: CompanyAPI.RepresentationRole;
 
     /**
      * Date when this representative role became effective. Format: ISO 8601
@@ -654,6 +574,88 @@ export namespace CompanyGetDetailsV1Response {
       last_name: string | null;
     }
   }
+}
+
+export type EntityType = 'natural_person' | 'legal_person';
+
+/**
+ * Report row with values from multiple report periods
+ */
+export interface MergedReportRow {
+  children: Array<MergedReportRow>;
+
+  formatted_name: string;
+
+  name: string;
+
+  /**
+   * Report end date to value mapping (ISO date string as key)
+   */
+  values: { [key: string]: number };
+}
+
+/**
+ * Report table with data merged across multiple report periods
+ */
+export interface MergedReportTable {
+  rows: Array<MergedReportRow>;
+}
+
+export interface ReportRow {
+  children: Array<ReportRow>;
+
+  current_value: number | null;
+
+  formatted_name: string;
+
+  name: string;
+
+  previous_value: number | null;
+}
+
+export interface ReportTable {
+  rows: Array<ReportRow>;
+}
+
+export type RepresentationRole =
+  | 'DIRECTOR'
+  | 'PROKURA'
+  | 'SHAREHOLDER'
+  | 'OWNER'
+  | 'PARTNER'
+  | 'PERSONAL_LIABLE_DIRECTOR'
+  | 'LIQUIDATOR'
+  | 'OTHER';
+
+export interface Source {
+  /**
+   * Url of the source document. In the form of a presigned url accessible for 30
+   * minutes.
+   */
+  document_url: string;
+}
+
+export interface CompanyGetContactV0Response {
+  /**
+   * Where the contact information was found. Example: "https://openregister.de"
+   */
+  source_url: string;
+
+  /**
+   * Company contact email address. Example: "founders@openregister.de"
+   */
+  email?: string;
+
+  /**
+   * Company phone number. Example: "+49 030 12345678"
+   */
+  phone?: string;
+
+  /**
+   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
+   * Example: "DE370146530"
+   */
+  vat_id?: string;
 }
 
 export interface CompanyGetFinancialsV1Response {
@@ -993,20 +995,22 @@ export declare namespace Company {
   export {
     type CompanyAddress as CompanyAddress,
     type CompanyCapital as CompanyCapital,
+    type CompanyDocument as CompanyDocument,
     type CompanyName as CompanyName,
     type CompanyOwnerLegalPerson as CompanyOwnerLegalPerson,
     type CompanyOwnerNaturalPerson as CompanyOwnerNaturalPerson,
     type CompanyPurpose as CompanyPurpose,
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
+    type CompanyV1 as CompanyV1,
     type EntityType as EntityType,
     type MergedReportRow as MergedReportRow,
     type MergedReportTable as MergedReportTable,
     type ReportRow as ReportRow,
     type ReportTable as ReportTable,
+    type RepresentationRole as RepresentationRole,
     type Source as Source,
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
-    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHistoricalOwnersV0Response as CompanyGetHistoricalOwnersV0Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,

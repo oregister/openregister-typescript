@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -158,6 +159,34 @@ export interface Pagination {
   total_results: number;
 }
 
+/**
+ * Filter by field. The property sets `value`, `values`, `keywords` and `min`/`max`
+ * are mutually exclusive. Dates must be YYYY-MM-DD.
+ */
+export interface SearchFilterBase {
+  keywords?: Array<string>;
+
+  max?: string;
+
+  min?: string;
+
+  value?: string;
+
+  values?: Array<string>;
+}
+
+export interface SearchRequestPagination {
+  /**
+   * Page number to return.
+   */
+  page?: number;
+
+  /**
+   * Number of results per page.
+   */
+  per_page?: number;
+}
+
 export interface SearchAutocompleteCompaniesV1Response {
   /**
    * List of companies matching the search criteria.
@@ -247,7 +276,7 @@ export interface SearchFindCompaniesV1Params {
   /**
    * Pagination parameters.
    */
-  pagination?: SearchFindCompaniesV1Params.Pagination;
+  pagination?: SearchRequestPagination;
 
   /**
    * Search query to filter companies.
@@ -256,7 +285,11 @@ export interface SearchFindCompaniesV1Params {
 }
 
 export namespace SearchFindCompaniesV1Params {
-  export interface Filter {
+  /**
+   * Filter by field. The property sets `value`, `values`, `keywords` and `min`/`max`
+   * are mutually exclusive. Dates must be YYYY-MM-DD.
+   */
+  export interface Filter extends SearchAPI.SearchFilterBase {
     field:
       | 'status'
       | 'legal_form'
@@ -290,16 +323,6 @@ export namespace SearchFindCompaniesV1Params {
       | 'is_family_owned'
       | 'youngest_owner_age'
       | 'purpose';
-
-    keywords?: Array<string>;
-
-    max?: string;
-
-    min?: string;
-
-    value?: string;
-
-    values?: Array<string>;
   }
 
   /**
@@ -323,21 +346,6 @@ export namespace SearchFindCompaniesV1Params {
   }
 
   /**
-   * Pagination parameters.
-   */
-  export interface Pagination {
-    /**
-     * Page number to return.
-     */
-    page?: number;
-
-    /**
-     * Number of results per page.
-     */
-    per_page?: number;
-  }
-
-  /**
    * Search query to filter companies.
    */
   export interface Query {
@@ -357,7 +365,7 @@ export interface SearchFindPersonV1Params {
   /**
    * Pagination parameters.
    */
-  pagination?: SearchFindPersonV1Params.Pagination;
+  pagination?: SearchRequestPagination;
 
   /**
    * Search query to filter people.
@@ -366,33 +374,12 @@ export interface SearchFindPersonV1Params {
 }
 
 export namespace SearchFindPersonV1Params {
-  export interface Filter {
-    field: 'date_of_birth' | 'city' | 'active';
-
-    keywords?: Array<string>;
-
-    max?: string;
-
-    min?: string;
-
-    value?: string;
-
-    values?: Array<string>;
-  }
-
   /**
-   * Pagination parameters.
+   * Filter by field. The property sets `value`, `values`, `keywords` and `min`/`max`
+   * are mutually exclusive. Dates must be YYYY-MM-DD.
    */
-  export interface Pagination {
-    /**
-     * Page number to return.
-     */
-    page?: number;
-
-    /**
-     * Number of results per page.
-     */
-    per_page?: number;
+  export interface Filter extends SearchAPI.SearchFilterBase {
+    field: 'date_of_birth' | 'city' | 'active';
   }
 
   /**
@@ -420,6 +407,8 @@ export declare namespace Search {
     type CompanySearch as CompanySearch,
     type CompanySearchResponseItem as CompanySearchResponseItem,
     type Pagination as Pagination,
+    type SearchFilterBase as SearchFilterBase,
+    type SearchRequestPagination as SearchRequestPagination,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
     type SearchFindPersonV1Response as SearchFindPersonV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
