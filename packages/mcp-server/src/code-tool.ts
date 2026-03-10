@@ -30,9 +30,9 @@ For example:
 
 \`\`\`
 async function run(client) {
-  const companyV1 = await client.company.getDetailsV1('DE-HRB-F1103-267645');
+  const response = await client.company.getDetailsV1('DE-HRB-F1103-267645');
 
-  console.log(companyV1.id);
+  console.log(response.id);
 }
 \`\`\`
 

@@ -22,7 +22,7 @@ export class Company extends APIResource {
     companyID: string,
     query: CompanyGetDetailsV1Params | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CompanyV1> {
+  ): APIPromise<CompanyGetDetailsV1Response> {
     return this._client.get(path`/v1/company/${companyID}`, { query, ...options });
   }
 
@@ -247,7 +247,89 @@ export interface CompanyRegister {
 
 export type CompanyRelationType = 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
 
-export interface CompanyV1 {
+export type EntityType = 'natural_person' | 'legal_person';
+
+/**
+ * Report row with values from multiple report periods
+ */
+export interface MergedReportRow {
+  children: Array<MergedReportRow>;
+
+  formatted_name: string;
+
+  name: string;
+
+  /**
+   * Report end date to value mapping (ISO date string as key)
+   */
+  values: { [key: string]: number };
+}
+
+/**
+ * Report table with data merged across multiple report periods
+ */
+export interface MergedReportTable {
+  rows: Array<MergedReportRow>;
+}
+
+export interface ReportRow {
+  children: Array<ReportRow>;
+
+  current_value: number | null;
+
+  formatted_name: string;
+
+  name: string;
+
+  previous_value: number | null;
+}
+
+export interface ReportTable {
+  rows: Array<ReportRow>;
+}
+
+export type RepresentationRole =
+  | 'DIRECTOR'
+  | 'PROKURA'
+  | 'SHAREHOLDER'
+  | 'OWNER'
+  | 'PARTNER'
+  | 'PERSONAL_LIABLE_DIRECTOR'
+  | 'LIQUIDATOR'
+  | 'OTHER';
+
+export interface Source {
+  /**
+   * Url of the source document. In the form of a presigned url accessible for 30
+   * minutes.
+   */
+  document_url: string;
+}
+
+export interface CompanyGetContactV0Response {
+  /**
+   * Where the contact information was found. Example: "https://openregister.de"
+   */
+  source_url: string;
+
+  /**
+   * Company contact email address. Example: "founders@openregister.de"
+   */
+  email?: string;
+
+  /**
+   * Company phone number. Example: "+49 030 12345678"
+   */
+  phone?: string;
+
+  /**
+   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
+   * Example: "DE370146530"
+   */
+  vat_id?: string;
+}
+
+export interface CompanyGetDetailsV1Response {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
    */
@@ -276,7 +358,7 @@ export interface CompanyV1 {
   /**
    * Contact information of the company.
    */
-  contact: CompanyV1.Contact | null;
+  contact: CompanyGetDetailsV1Response.Contact | null;
 
   /**
    * Available official documents related to the company.
@@ -292,12 +374,12 @@ export interface CompanyV1 {
   /**
    * Key company indicators like net income, employee count, revenue, etc..
    */
-  indicators: Array<CompanyV1.Indicator>;
+  indicators: Array<CompanyGetDetailsV1Response.Indicator>;
 
   /**
    * Industry codes of the company.
    */
-  industry_codes: CompanyV1.IndustryCodes;
+  industry_codes: CompanyGetDetailsV1Response.IndustryCodes;
 
   /**
    * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
@@ -340,7 +422,7 @@ export interface CompanyV1 {
    * List of individuals or entities authorized to represent the company. Includes
    * directors, officers, and authorized signatories.
    */
-  representation: Array<CompanyV1.Representation>;
+  representation: Array<CompanyGetDetailsV1Response.Representation>;
 
   /**
    * Sources of the company data.
@@ -363,7 +445,7 @@ export interface CompanyV1 {
   terminated_at: string | null;
 }
 
-export namespace CompanyV1 {
+export namespace CompanyGetDetailsV1Response {
   /**
    * Contact information of the company.
    */
@@ -574,88 +656,6 @@ export namespace CompanyV1 {
       last_name: string | null;
     }
   }
-}
-
-export type EntityType = 'natural_person' | 'legal_person';
-
-/**
- * Report row with values from multiple report periods
- */
-export interface MergedReportRow {
-  children: Array<MergedReportRow>;
-
-  formatted_name: string;
-
-  name: string;
-
-  /**
-   * Report end date to value mapping (ISO date string as key)
-   */
-  values: { [key: string]: number };
-}
-
-/**
- * Report table with data merged across multiple report periods
- */
-export interface MergedReportTable {
-  rows: Array<MergedReportRow>;
-}
-
-export interface ReportRow {
-  children: Array<ReportRow>;
-
-  current_value: number | null;
-
-  formatted_name: string;
-
-  name: string;
-
-  previous_value: number | null;
-}
-
-export interface ReportTable {
-  rows: Array<ReportRow>;
-}
-
-export type RepresentationRole =
-  | 'DIRECTOR'
-  | 'PROKURA'
-  | 'SHAREHOLDER'
-  | 'OWNER'
-  | 'PARTNER'
-  | 'PERSONAL_LIABLE_DIRECTOR'
-  | 'LIQUIDATOR'
-  | 'OTHER';
-
-export interface Source {
-  /**
-   * Url of the source document. In the form of a presigned url accessible for 30
-   * minutes.
-   */
-  document_url: string;
-}
-
-export interface CompanyGetContactV0Response {
-  /**
-   * Where the contact information was found. Example: "https://openregister.de"
-   */
-  source_url: string;
-
-  /**
-   * Company contact email address. Example: "founders@openregister.de"
-   */
-  email?: string;
-
-  /**
-   * Company phone number. Example: "+49 030 12345678"
-   */
-  phone?: string;
-
-  /**
-   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
-   * Example: "DE370146530"
-   */
-  vat_id?: string;
 }
 
 export interface CompanyGetFinancialsV1Response {
@@ -1002,7 +1002,6 @@ export declare namespace Company {
     type CompanyPurpose as CompanyPurpose,
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
-    type CompanyV1 as CompanyV1,
     type EntityType as EntityType,
     type MergedReportRow as MergedReportRow,
     type MergedReportTable as MergedReportTable,
@@ -1011,6 +1010,7 @@ export declare namespace Company {
     type RepresentationRole as RepresentationRole,
     type Source as Source,
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
+    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHistoricalOwnersV0Response as CompanyGetHistoricalOwnersV0Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
