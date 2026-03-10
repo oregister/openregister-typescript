@@ -5,6 +5,8 @@ Types:
 - <code><a href="./src/resources/search.ts">CompanyLegalForm</a></code>
 - <code><a href="./src/resources/search.ts">CompanyRegisterType</a></code>
 - <code><a href="./src/resources/search.ts">CompanySearch</a></code>
+- <code><a href="./src/resources/search.ts">CompanySearchResponseItem</a></code>
+- <code><a href="./src/resources/search.ts">Pagination</a></code>
 - <code><a href="./src/resources/search.ts">SearchAutocompleteCompaniesV1Response</a></code>
 - <code><a href="./src/resources/search.ts">SearchFindPersonV1Response</a></code>
 - <code><a href="./src/resources/search.ts">SearchLookupCompanyByURLResponse</a></code>
@@ -23,6 +25,8 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyAddress</a></code>
 - <code><a href="./src/resources/company.ts">CompanyCapital</a></code>
 - <code><a href="./src/resources/company.ts">CompanyName</a></code>
+- <code><a href="./src/resources/company.ts">CompanyOwnerLegalPerson</a></code>
+- <code><a href="./src/resources/company.ts">CompanyOwnerNaturalPerson</a></code>
 - <code><a href="./src/resources/company.ts">CompanyPurpose</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRegister</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRelationType</a></code>
@@ -31,6 +35,7 @@ Types:
 - <code><a href="./src/resources/company.ts">MergedReportTable</a></code>
 - <code><a href="./src/resources/company.ts">ReportRow</a></code>
 - <code><a href="./src/resources/company.ts">ReportTable</a></code>
+- <code><a href="./src/resources/company.ts">Source</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetContactV0Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetDetailsV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetFinancialsV1Response</a></code>
