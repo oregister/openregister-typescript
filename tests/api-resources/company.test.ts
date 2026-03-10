@@ -57,6 +57,18 @@ describe('resource company', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('getHistoricalOwnersV0', async () => {
+    const responsePromise = client.company.getHistoricalOwnersV0('company_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('getHoldingsV1', async () => {
     const responsePromise = client.company.getHoldingsV1('company_id');
     const rawResponse = await responsePromise.asResponse();
