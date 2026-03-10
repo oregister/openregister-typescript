@@ -19,7 +19,6 @@ export {
   type CompanyGetHoldingsV1Response,
   type CompanyGetOwnersV1Response,
   type CompanyGetUbosV1Response,
-  type CompanyRetrieveShareholdersResponse,
   type CompanyGetDetailsV1Params,
   type CompanyGetOwnersV1Params,
 } from './company';
@@ -30,7 +29,6 @@ export {
   type DocumentGetRealtimeV1Response,
   type DocumentGetRealtimeV1Params,
 } from './document';
-export { Jobs } from './jobs/jobs';
 export { Person, type PersonGetDetailsV1Response, type PersonGetHoldingsV1Response } from './person';
 export {
   Search,
