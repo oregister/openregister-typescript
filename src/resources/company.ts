@@ -34,6 +34,16 @@ export class Company extends APIResource {
   }
 
   /**
+   * Get historical owner changes
+   */
+  getHistoricalOwnersV0(
+    companyID: string,
+    options?: RequestOptions,
+  ): APIPromise<CompanyGetHistoricalOwnersV0Response> {
+    return this._client.get(path`/v0/company/${companyID}/owners/historical`, options);
+  }
+
+  /**
    * Get company holdings
    */
   getHoldingsV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetHoldingsV1Response> {
@@ -118,6 +128,34 @@ export interface CompanyCapital {
   start_date: string;
 }
 
+export interface CompanyDocument {
+  /**
+   * Unique identifier for the document. Example:
+   * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+   */
+  id: string;
+
+  /**
+   * Document publication or filing date. Format: ISO 8601 (YYYY-MM-DD) Example:
+   * "2022-01-01"
+   */
+  date: string;
+
+  /**
+   * Whether this is the latest version of the document_type.
+   */
+  latest: boolean;
+
+  /**
+   * Categorization of the document:
+   *
+   * - articles_of_association: Company statutes/bylaws
+   * - sample_protocol: Standard founding protocol
+   * - shareholder_list: List of company shareholders
+   */
+  type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list';
+}
+
 export interface CompanyName {
   /**
    * Legal form of the company at this point in time. Example: "gmbh" for
@@ -136,6 +174,32 @@ export interface CompanyName {
    * "2022-01-01"
    */
   start_date: string;
+}
+
+export interface CompanyOwnerLegalPerson {
+  city: string | null;
+
+  /**
+   * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
+   * for Germany
+   */
+  country: string;
+
+  name: string;
+}
+
+export interface CompanyOwnerNaturalPerson {
+  city: string;
+
+  country: string;
+
+  date_of_birth: string | null;
+
+  first_name: string;
+
+  full_name: string;
+
+  last_name: string;
 }
 
 export interface CompanyPurpose {
@@ -224,6 +288,24 @@ export interface ReportTable {
   rows: Array<ReportRow>;
 }
 
+export type RepresentationRole =
+  | 'DIRECTOR'
+  | 'PROKURA'
+  | 'SHAREHOLDER'
+  | 'OWNER'
+  | 'PARTNER'
+  | 'PERSONAL_LIABLE_DIRECTOR'
+  | 'LIQUIDATOR'
+  | 'OTHER';
+
+export interface Source {
+  /**
+   * Url of the source document. In the form of a presigned url accessible for 30
+   * minutes.
+   */
+  document_url: string;
+}
+
 export interface CompanyGetContactV0Response {
   /**
    * Where the contact information was found. Example: "https://openregister.de"
@@ -281,7 +363,7 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Available official documents related to the company.
    */
-  documents: Array<CompanyGetDetailsV1Response.Document>;
+  documents: Array<CompanyDocument>;
 
   /**
    * Date when the company was officially registered. Format: ISO 8601 (YYYY-MM-DD)
@@ -345,7 +427,7 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Sources of the company data.
    */
-  sources: Array<CompanyGetDetailsV1Response.Source>;
+  sources: Array<Source>;
 
   /**
    * Current status of the company:
@@ -397,34 +479,6 @@ export namespace CompanyGetDetailsV1Response {
 
       youtube?: string;
     }
-  }
-
-  export interface Document {
-    /**
-     * Unique identifier for the document. Example:
-     * "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-     */
-    id: string;
-
-    /**
-     * Document publication or filing date. Format: ISO 8601 (YYYY-MM-DD) Example:
-     * "2022-01-01"
-     */
-    date: string;
-
-    /**
-     * Whether this is the latest version of the document_type.
-     */
-    latest: boolean;
-
-    /**
-     * Categorization of the document:
-     *
-     * - articles_of_association: Company statutes/bylaws
-     * - sample_protocol: Standard founding protocol
-     * - shareholder_list: List of company shareholders
-     */
-    type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list';
   }
 
   /**
@@ -548,15 +602,7 @@ export namespace CompanyGetDetailsV1Response {
     /**
      * The role of the representation. E.g. "DIRECTOR"
      */
-    role:
-      | 'DIRECTOR'
-      | 'PROKURA'
-      | 'SHAREHOLDER'
-      | 'OWNER'
-      | 'PARTNER'
-      | 'PERSONAL_LIABLE_DIRECTOR'
-      | 'LIQUIDATOR'
-      | 'OTHER';
+    role: CompanyAPI.RepresentationRole;
 
     /**
      * Date when this representative role became effective. Format: ISO 8601
@@ -609,14 +655,6 @@ export namespace CompanyGetDetailsV1Response {
        */
       last_name: string | null;
     }
-  }
-
-  export interface Source {
-    /**
-     * Url of the source document. In the form of a presigned url accessible for 30
-     * minutes.
-     */
-    document_url: string;
   }
 }
 
@@ -671,6 +709,89 @@ export namespace CompanyGetFinancialsV1Response {
     report_start_date: string | null;
 
     guv?: CompanyAPI.ReportTable | null;
+  }
+}
+
+export interface CompanyGetHistoricalOwnersV0Response {
+  owners: Array<CompanyGetHistoricalOwnersV0Response.Owner>;
+}
+
+export namespace CompanyGetHistoricalOwnersV0Response {
+  export interface Owner {
+    /**
+     * Unique identifier for the owner (generated key)
+     */
+    id: string;
+
+    /**
+     * Type of the owner entity
+     */
+    entity_type:
+      | 'natural_person'
+      | 'german_company'
+      | 'foreign_company'
+      | 'german_government_entity'
+      | 'german_foundation'
+      | 'german_multiple_shareholder';
+
+    /**
+     * Date when this owner first appeared
+     */
+    first_appearance: string;
+
+    /**
+     * Name of the owner
+     */
+    name: string;
+
+    /**
+     * Historical ownership data across all documents
+     */
+    ownership_history: Array<Owner.OwnershipHistory>;
+
+    /**
+     * Current status of the owner
+     */
+    status: 'active' | 'removed';
+
+    /**
+     * Country of the owner
+     */
+    country?: string;
+
+    /**
+     * Date when this owner last appeared (null if still active)
+     */
+    last_appearance?: string;
+
+    /**
+     * Link to the owner
+     */
+    link?: string;
+  }
+
+  export namespace Owner {
+    export interface OwnershipHistory {
+      /**
+       * Date of the document
+       */
+      document_date: string;
+
+      /**
+       * Document where this ownership data was found
+       */
+      document_id: string;
+
+      /**
+       * Nominal value of shares in this document
+       */
+      nominal_shares: number;
+
+      /**
+       * Percentage ownership in this document
+       */
+      percentage_shares: number;
+    }
   }
 }
 
@@ -738,7 +859,7 @@ export interface CompanyGetOwnersV1Response {
   /**
    * Sources of the company owners data.
    */
-  sources: Array<CompanyGetOwnersV1Response.Source>;
+  sources: Array<Source>;
 }
 
 export namespace CompanyGetOwnersV1Response {
@@ -753,7 +874,7 @@ export namespace CompanyGetOwnersV1Response {
     /**
      * Details about the legal person.
      */
-    legal_person: Owner.LegalPerson | null;
+    legal_person: CompanyAPI.CompanyOwnerLegalPerson | null;
 
     /**
      * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
@@ -763,7 +884,7 @@ export namespace CompanyGetOwnersV1Response {
     /**
      * Details about the natural person.
      */
-    natural_person: Owner.NaturalPerson | null;
+    natural_person: CompanyAPI.CompanyOwnerNaturalPerson | null;
 
     /**
      * Nominal value of shares in Euro. Example: 100
@@ -791,48 +912,6 @@ export namespace CompanyGetOwnersV1Response {
      */
     type: CompanyAPI.EntityType;
   }
-
-  export namespace Owner {
-    /**
-     * Details about the legal person.
-     */
-    export interface LegalPerson {
-      city: string | null;
-
-      /**
-       * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
-       * for Germany
-       */
-      country: string;
-
-      name: string;
-    }
-
-    /**
-     * Details about the natural person.
-     */
-    export interface NaturalPerson {
-      city: string;
-
-      country: string;
-
-      date_of_birth: string | null;
-
-      first_name: string;
-
-      full_name: string;
-
-      last_name: string;
-    }
-  }
-
-  export interface Source {
-    /**
-     * Url of the source document. In the form of a presigned url accessible for 30
-     * minutes.
-     */
-    document_url: string;
-  }
 }
 
 export interface CompanyGetUbosV1Response {
@@ -853,7 +932,7 @@ export namespace CompanyGetUbosV1Response {
      */
     id: string | null;
 
-    legal_person: Ubo.LegalPerson | null;
+    legal_person: CompanyAPI.CompanyOwnerLegalPerson | null;
 
     /**
      * Maximum percentage of company ownership. Example: 5.36 represents maximum of
@@ -870,7 +949,7 @@ export namespace CompanyGetUbosV1Response {
      */
     name: string;
 
-    natural_person: Ubo.NaturalPerson | null;
+    natural_person: CompanyAPI.CompanyOwnerNaturalPerson | null;
 
     /**
      * Percentage of company ownership. Example: 5.36 represents 5.36% ownership Is
@@ -878,34 +957,6 @@ export namespace CompanyGetUbosV1Response {
      * or limited partner.
      */
     percentage_share: number | null;
-  }
-
-  export namespace Ubo {
-    export interface LegalPerson {
-      city: string | null;
-
-      /**
-       * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
-       * for Germany
-       */
-      country: string;
-
-      name: string;
-    }
-
-    export interface NaturalPerson {
-      city: string;
-
-      country: string;
-
-      date_of_birth: string | null;
-
-      first_name: string;
-
-      full_name: string;
-
-      last_name: string;
-    }
   }
 }
 
@@ -944,7 +995,10 @@ export declare namespace Company {
   export {
     type CompanyAddress as CompanyAddress,
     type CompanyCapital as CompanyCapital,
+    type CompanyDocument as CompanyDocument,
     type CompanyName as CompanyName,
+    type CompanyOwnerLegalPerson as CompanyOwnerLegalPerson,
+    type CompanyOwnerNaturalPerson as CompanyOwnerNaturalPerson,
     type CompanyPurpose as CompanyPurpose,
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
@@ -953,9 +1007,12 @@ export declare namespace Company {
     type MergedReportTable as MergedReportTable,
     type ReportRow as ReportRow,
     type ReportTable as ReportTable,
+    type RepresentationRole as RepresentationRole,
+    type Source as Source,
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
     type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
+    type CompanyGetHistoricalOwnersV0Response as CompanyGetHistoricalOwnersV0Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyGetUbosV1Response as CompanyGetUbosV1Response,

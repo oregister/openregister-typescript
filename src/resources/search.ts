@@ -85,137 +85,117 @@ export type CompanyLegalForm =
 export type CompanyRegisterType = 'HRB' | 'HRA' | 'PR' | 'GnR' | 'VR';
 
 export interface CompanySearch {
-  pagination: CompanySearch.Pagination;
+  pagination: Pagination;
 
   /**
    * List of companies matching the search criteria.
    */
-  results: Array<CompanySearch.Result>;
+  results: Array<CompanySearchResponseItem>;
 }
 
-export namespace CompanySearch {
-  export interface Pagination {
-    /**
-     * Current page number.
-     */
-    page: number;
+export interface CompanySearchResponseItem {
+  /**
+   * Company status - true if active, false if inactive.
+   */
+  active: boolean;
 
-    /**
-     * Number of results per page.
-     */
-    per_page: number;
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id: string;
 
-    /**
-     * Total number of pages.
-     */
-    total_pages: number;
+  /**
+   * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
+   * "DE" for Germany
+   */
+  country: string | null;
 
-    /**
-     * Total number of results.
-     */
-    total_results: number;
-  }
+  /**
+   * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
+   * Haftung
+   */
+  legal_form: CompanyLegalForm;
 
-  export interface Result {
-    /**
-     * Company status - true if active, false if inactive.
-     */
-    active: boolean;
+  /**
+   * Official registered company name. Example: "Max Mustermann GmbH"
+   */
+  name: string;
 
-    /**
-     * Unique company identifier. Example: DE-HRB-F1103-267645
-     */
-    company_id: string;
+  /**
+   * Court where the company is registered. Example: "Berlin (Charlottenburg)"
+   */
+  register_court: string;
 
-    /**
-     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
-     * "DE" for Germany
-     */
-    country: string | null;
+  /**
+   * Registration number in the company register. Example: "230633"
+   */
+  register_number: string;
 
-    /**
-     * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
-     * Haftung
-     */
-    legal_form: SearchAPI.CompanyLegalForm;
+  /**
+   * Type of company register. Example: "HRB" for Commercial Register B
+   */
+  register_type: CompanyRegisterType;
+}
 
-    /**
-     * Official registered company name. Example: "Max Mustermann GmbH"
-     */
-    name: string;
+export interface Pagination {
+  /**
+   * Current page number.
+   */
+  page: number;
 
-    /**
-     * Court where the company is registered. Example: "Berlin (Charlottenburg)"
-     */
-    register_court: string;
+  /**
+   * Number of results per page.
+   */
+  per_page: number;
 
-    /**
-     * Registration number in the company register. Example: "230633"
-     */
-    register_number: string;
+  /**
+   * Total number of pages.
+   */
+  total_pages: number;
 
-    /**
-     * Type of company register. Example: "HRB" for Commercial Register B
-     */
-    register_type: SearchAPI.CompanyRegisterType;
-  }
+  /**
+   * Total number of results.
+   */
+  total_results: number;
+}
+
+/**
+ * Filter by field. The property sets `value`, `values`, `keywords` and `min`/`max`
+ * are mutually exclusive. Dates must be YYYY-MM-DD.
+ */
+export interface SearchFilterBase {
+  keywords?: Array<string>;
+
+  max?: string;
+
+  min?: string;
+
+  value?: string;
+
+  values?: Array<string>;
+}
+
+export interface SearchRequestPagination {
+  /**
+   * Page number to return.
+   */
+  page?: number;
+
+  /**
+   * Number of results per page.
+   */
+  per_page?: number;
 }
 
 export interface SearchAutocompleteCompaniesV1Response {
   /**
    * List of companies matching the search criteria.
    */
-  results: Array<SearchAutocompleteCompaniesV1Response.Result>;
-}
-
-export namespace SearchAutocompleteCompaniesV1Response {
-  export interface Result {
-    /**
-     * Company status - true if active, false if inactive.
-     */
-    active: boolean;
-
-    /**
-     * Unique company identifier. Example: DE-HRB-F1103-267645
-     */
-    company_id: string;
-
-    /**
-     * Country where the company is registered using ISO 3166-1 alpha-2 code. Example:
-     * "DE" for Germany
-     */
-    country: string | null;
-
-    /**
-     * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
-     * Haftung
-     */
-    legal_form: SearchAPI.CompanyLegalForm;
-
-    /**
-     * Official registered company name. Example: "Max Mustermann GmbH"
-     */
-    name: string;
-
-    /**
-     * Court where the company is registered. Example: "Berlin (Charlottenburg)"
-     */
-    register_court: string;
-
-    /**
-     * Registration number in the company register. Example: "230633"
-     */
-    register_number: string;
-
-    /**
-     * Type of company register. Example: "HRB" for Commercial Register B
-     */
-    register_type: SearchAPI.CompanyRegisterType;
-  }
+  results: Array<CompanySearchResponseItem>;
 }
 
 export interface SearchFindPersonV1Response {
-  pagination: SearchFindPersonV1Response.Pagination;
+  pagination: Pagination;
 
   /**
    * List of people matching the search criteria.
@@ -224,28 +204,6 @@ export interface SearchFindPersonV1Response {
 }
 
 export namespace SearchFindPersonV1Response {
-  export interface Pagination {
-    /**
-     * Current page number.
-     */
-    page: number;
-
-    /**
-     * Number of results per page.
-     */
-    per_page: number;
-
-    /**
-     * Total number of pages.
-     */
-    total_pages: number;
-
-    /**
-     * Total number of results.
-     */
-    total_results: number;
-  }
-
   export interface Result {
     /**
      * Unique person identifier. Example: 1234-5678-9012-345678901234
@@ -318,7 +276,7 @@ export interface SearchFindCompaniesV1Params {
   /**
    * Pagination parameters.
    */
-  pagination?: SearchFindCompaniesV1Params.Pagination;
+  pagination?: SearchRequestPagination;
 
   /**
    * Search query to filter companies.
@@ -327,7 +285,11 @@ export interface SearchFindCompaniesV1Params {
 }
 
 export namespace SearchFindCompaniesV1Params {
-  export interface Filter {
+  /**
+   * Filter by field. The property sets `value`, `values`, `keywords` and `min`/`max`
+   * are mutually exclusive. Dates must be YYYY-MM-DD.
+   */
+  export interface Filter extends SearchAPI.SearchFilterBase {
     field:
       | 'status'
       | 'legal_form'
@@ -354,17 +316,13 @@ export namespace SearchFindCompaniesV1Params {
       | 'net_income'
       | 'industry_codes'
       | 'capital_amount'
-      | 'capital_currency';
-
-    keywords?: Array<string>;
-
-    max?: string;
-
-    min?: string;
-
-    value?: string;
-
-    values?: Array<string>;
+      | 'capital_currency'
+      | 'number_of_owners'
+      | 'has_sole_owner'
+      | 'has_representative_owner'
+      | 'is_family_owned'
+      | 'youngest_owner_age'
+      | 'purpose';
   }
 
   /**
@@ -388,21 +346,6 @@ export namespace SearchFindCompaniesV1Params {
   }
 
   /**
-   * Pagination parameters.
-   */
-  export interface Pagination {
-    /**
-     * Page number to return.
-     */
-    page?: number;
-
-    /**
-     * Number of results per page.
-     */
-    per_page?: number;
-  }
-
-  /**
    * Search query to filter companies.
    */
   export interface Query {
@@ -422,7 +365,7 @@ export interface SearchFindPersonV1Params {
   /**
    * Pagination parameters.
    */
-  pagination?: SearchFindPersonV1Params.Pagination;
+  pagination?: SearchRequestPagination;
 
   /**
    * Search query to filter people.
@@ -431,33 +374,12 @@ export interface SearchFindPersonV1Params {
 }
 
 export namespace SearchFindPersonV1Params {
-  export interface Filter {
-    field: 'date_of_birth' | 'city' | 'active';
-
-    keywords?: Array<string>;
-
-    max?: string;
-
-    min?: string;
-
-    value?: string;
-
-    values?: Array<string>;
-  }
-
   /**
-   * Pagination parameters.
+   * Filter by field. The property sets `value`, `values`, `keywords` and `min`/`max`
+   * are mutually exclusive. Dates must be YYYY-MM-DD.
    */
-  export interface Pagination {
-    /**
-     * Page number to return.
-     */
-    page?: number;
-
-    /**
-     * Number of results per page.
-     */
-    per_page?: number;
+  export interface Filter extends SearchAPI.SearchFilterBase {
+    field: 'date_of_birth' | 'city' | 'active';
   }
 
   /**
@@ -483,6 +405,10 @@ export declare namespace Search {
     type CompanyLegalForm as CompanyLegalForm,
     type CompanyRegisterType as CompanyRegisterType,
     type CompanySearch as CompanySearch,
+    type CompanySearchResponseItem as CompanySearchResponseItem,
+    type Pagination as Pagination,
+    type SearchFilterBase as SearchFilterBase,
+    type SearchRequestPagination as SearchRequestPagination,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
     type SearchFindPersonV1Response as SearchFindPersonV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
