@@ -16,6 +16,7 @@ export {
   type CompanyGetContactV0Response,
   type CompanyGetDetailsV1Response,
   type CompanyGetFinancialsV1Response,
+  type CompanyGetHistoricalOwnersV0Response,
   type CompanyGetHoldingsV1Response,
   type CompanyGetOwnersV1Response,
   type CompanyGetUbosV1Response,
