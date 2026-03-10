@@ -9,18 +9,6 @@ const client = new Openregister({
 
 describe('resource document', () => {
   // Mock server tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.document.retrieve('document_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
   test.skip('getCachedV1', async () => {
     const responsePromise = client.document.getCachedV1('document_id');
     const rawResponse = await responsePromise.asResponse();

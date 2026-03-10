@@ -28,7 +28,6 @@ export {
 } from './company';
 export {
   Document,
-  type DocumentRetrieveResponse,
   type DocumentGetCachedV1Response,
   type DocumentGetRealtimeV1Response,
   type DocumentGetRealtimeV1Params,

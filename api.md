@@ -58,14 +58,11 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/document.ts">DocumentRetrieveResponse</a></code>
 - <code><a href="./src/resources/document.ts">DocumentGetCachedV1Response</a></code>
 - <code><a href="./src/resources/document.ts">DocumentGetRealtimeV1Response</a></code>
 
 Methods:
 
-- <code title="get /v0/document/{document_id}">client.document.<a href="./src/resources/document.ts">retrieve</a>(documentID) -> DocumentRetrieveResponse</code>
-- <code title="get /v0/document/{document_id}/download">client.document.<a href="./src/resources/document.ts">download</a>(documentID) -> Response</code>
 - <code title="get /v1/document/{document_id}">client.document.<a href="./src/resources/document.ts">getCachedV1</a>(documentID) -> DocumentGetCachedV1Response</code>
 - <code title="get /v1/document">client.document.<a href="./src/resources/document.ts">getRealtimeV1</a>({ ...params }) -> DocumentGetRealtimeV1Response</code>
 
