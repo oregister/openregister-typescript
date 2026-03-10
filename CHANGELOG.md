@@ -1,5 +1,39 @@
 # Changelog
 
+## 4.0.0 (2026-03-10)
+
+Full Changelog: [v3.2.0...v4.0.0](https://github.com/oregister/openregister-typescript/compare/v3.2.0...v4.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* deprecate v0 document & shareholder endpoint
+
+### Features
+
+* **api:** additional static models ([8e08a64](https://github.com/oregister/openregister-typescript/commit/8e08a646bba2edc7bc4223c9b15ca2e87084cd58))
+* **company:** enable filtering by business purpose ([6f23f40](https://github.com/oregister/openregister-typescript/commit/6f23f40b3bcd9b109f98fabd2ee0b9d5ee16016a))
+* deprecate v0 document & shareholder endpoint ([a6b2c85](https://github.com/oregister/openregister-typescript/commit/a6b2c85cead10dfa2ac41e73f007f2c816c98bd9))
+* **v0:** add historical owners endpoint ([366d69e](https://github.com/oregister/openregister-typescript/commit/366d69edd18a0fb0b911e7d1d995dfebb4b50a78))
+* **v0:** remove cached document endpoints ([1f3120a](https://github.com/oregister/openregister-typescript/commit/1f3120acd4b24657b4f1ecc61cac7b048086ed05))
+
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([6ebf090](https://github.com/oregister/openregister-typescript/commit/6ebf09015ef7d234494f79c8eb577ffc5f4d6f97))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([e2d4238](https://github.com/oregister/openregister-typescript/commit/e2d4238df49bd67cfdfae60ac74713321a92b54e))
+* **internal:** codegen related update ([8f7d446](https://github.com/oregister/openregister-typescript/commit/8f7d4469171dafbd414df45b462aab0b0237b99d))
+* **internal:** codegen related update ([4895550](https://github.com/oregister/openregister-typescript/commit/48955507c0157c75a78a0178af4adb313d55223d))
+* **internal:** update dependencies to address dependabot vulnerabilities ([0ea1444](https://github.com/oregister/openregister-typescript/commit/0ea1444bd2918e7feeab36b98a5d7860c84bcf1f))
+* **internal:** use x-stainless-mcp-client-envs header for MCP remote code tool calls ([e24faac](https://github.com/oregister/openregister-typescript/commit/e24faace4f1991d1bea15527e4da52b09c6c3926))
+* **mcp-server:** improve instructions ([631cf11](https://github.com/oregister/openregister-typescript/commit/631cf1124616fb2cd34a0c4c18fb908940f7ffe9))
+* **mcp-server:** return access instructions for 404 without API key ([5a1de55](https://github.com/oregister/openregister-typescript/commit/5a1de55b8ef99d11e3415864e170ffd403138210))
+* **python:** shadowing pydantic property ([33a762b](https://github.com/oregister/openregister-typescript/commit/33a762b84a26ad3816ff5410cf88ebb382930bbc))
+* remove breaking company model ([8009eb5](https://github.com/oregister/openregister-typescript/commit/8009eb55d1effe8ae8f513af8110ed4afe599453))
+
 ## 3.2.0 (2026-02-27)
 
 Full Changelog: [v3.1.0...v3.2.0](https://github.com/oregister/openregister-typescript/compare/v3.1.0...v3.2.0)
