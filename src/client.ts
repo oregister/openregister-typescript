@@ -48,7 +48,6 @@ import {
   DocumentGetCachedV1Response,
   DocumentGetRealtimeV1Params,
   DocumentGetRealtimeV1Response,
-  DocumentRetrieveResponse,
 } from './resources/document';
 import { Person, PersonGetDetailsV1Response, PersonGetHoldingsV1Response } from './resources/person';
 import {
@@ -827,7 +826,6 @@ export declare namespace Openregister {
 
   export {
     Document as Document,
-    type DocumentRetrieveResponse as DocumentRetrieveResponse,
     type DocumentGetCachedV1Response as DocumentGetCachedV1Response,
     type DocumentGetRealtimeV1Response as DocumentGetRealtimeV1Response,
     type DocumentGetRealtimeV1Params as DocumentGetRealtimeV1Params,
