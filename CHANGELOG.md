@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.0.1 (2026-03-11)
+
+Full Changelog: [v4.0.0...v4.0.1](https://github.com/oregister/openregister-typescript/compare/v4.0.0...v4.0.1)
+
+### Bug Fixes
+
+* **api:** adjust historical owner ids ([7b4d109](https://github.com/oregister/openregister-typescript/commit/7b4d109a846c4c76d332f5888df97bab722562bd))
+
 ## 4.0.0 (2026-03-10)
 
 Full Changelog: [v3.2.0...v4.0.0](https://github.com/oregister/openregister-typescript/compare/v3.2.0...v4.0.0)
