@@ -719,7 +719,10 @@ export interface CompanyGetHistoricalOwnersV0Response {
 export namespace CompanyGetHistoricalOwnersV0Response {
   export interface Owner {
     /**
-     * Unique identifier for the owner (generated key)
+     * Unique identifier for the owner. For companies, this is the company register ID
+     * (e.g. DE-HRB-F1103-267645) which can be used to look up the company. For natural
+     * persons, this is the entity UUID. For other entity types (foreign companies,
+     * foundations, etc.), this is empty.
      */
     id: string;
 
@@ -763,11 +766,6 @@ export namespace CompanyGetHistoricalOwnersV0Response {
      * Date when this owner last appeared (null if still active)
      */
     last_appearance?: string;
-
-    /**
-     * Link to the owner
-     */
-    link?: string;
   }
 
   export namespace Owner {
