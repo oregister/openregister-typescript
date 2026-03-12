@@ -111,6 +111,7 @@ const fuse = new Fuse(
     'client.company.getContactV0',
     'client.company.getDetailsV1',
     'client.company.getFinancialsV1',
+    'client.company.getHistoricalOwnersV1',
     'client.company.getHoldingsV1',
     'client.company.getOwnersV1',
     'client.company.getUbosV1',
