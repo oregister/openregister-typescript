@@ -34,16 +34,6 @@ export class Company extends APIResource {
   }
 
   /**
-   * Get historical owner changes
-   */
-  getHistoricalOwnersV0(
-    companyID: string,
-    options?: RequestOptions,
-  ): APIPromise<CompanyGetHistoricalOwnersV0Response> {
-    return this._client.get(path`/v0/company/${companyID}/owners/historical`, options);
-  }
-
-  /**
    * Get company holdings
    */
   getHoldingsV1(companyID: string, options?: RequestOptions): APIPromise<CompanyGetHoldingsV1Response> {
@@ -712,87 +702,6 @@ export namespace CompanyGetFinancialsV1Response {
   }
 }
 
-export interface CompanyGetHistoricalOwnersV0Response {
-  owners: Array<CompanyGetHistoricalOwnersV0Response.Owner>;
-}
-
-export namespace CompanyGetHistoricalOwnersV0Response {
-  export interface Owner {
-    /**
-     * Unique identifier for the owner. For companies, this is the company register ID
-     * (e.g. DE-HRB-F1103-267645) which can be used to look up the company. For natural
-     * persons, this is the entity UUID. For other entity types (foreign companies,
-     * foundations, etc.), this is empty.
-     */
-    id: string;
-
-    /**
-     * Type of the owner entity
-     */
-    entity_type:
-      | 'natural_person'
-      | 'german_company'
-      | 'foreign_company'
-      | 'german_government_entity'
-      | 'german_foundation'
-      | 'german_multiple_shareholder';
-
-    /**
-     * Date when this owner first appeared
-     */
-    first_appearance: string;
-
-    /**
-     * Name of the owner
-     */
-    name: string;
-
-    /**
-     * Historical ownership data across all documents
-     */
-    ownership_history: Array<Owner.OwnershipHistory>;
-
-    /**
-     * Current status of the owner
-     */
-    status: 'active' | 'removed';
-
-    /**
-     * Country of the owner
-     */
-    country?: string;
-
-    /**
-     * Date when this owner last appeared (null if still active)
-     */
-    last_appearance?: string;
-  }
-
-  export namespace Owner {
-    export interface OwnershipHistory {
-      /**
-       * Date of the document
-       */
-      document_date: string;
-
-      /**
-       * Document where this ownership data was found
-       */
-      document_id: string;
-
-      /**
-       * Nominal value of shares in this document
-       */
-      nominal_shares: number;
-
-      /**
-       * Percentage ownership in this document
-       */
-      percentage_shares: number;
-    }
-  }
-}
-
 /**
  * Companies this entity owns or has invested in.
  */
@@ -1010,7 +919,6 @@ export declare namespace Company {
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
     type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
-    type CompanyGetHistoricalOwnersV0Response as CompanyGetHistoricalOwnersV0Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyGetUbosV1Response as CompanyGetUbosV1Response,
