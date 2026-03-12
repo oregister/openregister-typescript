@@ -53,10 +53,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/company/{company_id}/financials',
   },
   {
-    clientCallName: 'client.company.getHistoricalOwnersV0',
-    fullyQualifiedName: 'company.getHistoricalOwnersV0',
+    clientCallName: 'client.company.getHistoricalOwnersV1',
+    fullyQualifiedName: 'company.getHistoricalOwnersV1',
     httpMethod: 'get',
-    httpPath: '/v0/company/{company_id}/owners/historical',
+    httpPath: '/v1/company/{company_id}/owners/historical',
   },
   {
     clientCallName: 'client.company.getHoldingsV1',

@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.0.2 (2026-03-12)
+
+Full Changelog: [v4.0.1...v4.0.2](https://github.com/oregister/openregister-typescript/compare/v4.0.1...v4.0.2)
+
+### Bug Fixes
+
+* **api:** historical owners v1 ([2ea03e6](https://github.com/oregister/openregister-typescript/commit/2ea03e63c8d00994582c3faa33e3c22260295724))
+* **api:** owner historical v1 ([16b533d](https://github.com/oregister/openregister-typescript/commit/16b533d722822fe49d48461e52d0706a6a2d9a0c))
+
 ## 4.0.1 (2026-03-11)
 
 Full Changelog: [v4.0.0...v4.0.1](https://github.com/oregister/openregister-typescript/compare/v4.0.0...v4.0.1)

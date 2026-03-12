@@ -57,8 +57,8 @@ describe('resource company', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getHistoricalOwnersV0', async () => {
-    const responsePromise = client.company.getHistoricalOwnersV0('company_id');
+  test.skip('getHistoricalOwnersV1', async () => {
+    const responsePromise = client.company.getHistoricalOwnersV1('company_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

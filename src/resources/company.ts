@@ -36,11 +36,11 @@ export class Company extends APIResource {
   /**
    * Get historical owner changes
    */
-  getHistoricalOwnersV0(
+  getHistoricalOwnersV1(
     companyID: string,
     options?: RequestOptions,
-  ): APIPromise<CompanyGetHistoricalOwnersV0Response> {
-    return this._client.get(path`/v0/company/${companyID}/owners/historical`, options);
+  ): APIPromise<CompanyGetHistoricalOwnersV1Response> {
+    return this._client.get(path`/v1/company/${companyID}/owners/historical`, options);
   }
 
   /**
@@ -712,11 +712,11 @@ export namespace CompanyGetFinancialsV1Response {
   }
 }
 
-export interface CompanyGetHistoricalOwnersV0Response {
-  owners: Array<CompanyGetHistoricalOwnersV0Response.Owner>;
+export interface CompanyGetHistoricalOwnersV1Response {
+  owners: Array<CompanyGetHistoricalOwnersV1Response.Owner>;
 }
 
-export namespace CompanyGetHistoricalOwnersV0Response {
+export namespace CompanyGetHistoricalOwnersV1Response {
   export interface Owner {
     /**
      * Unique identifier for the owner. For companies, this is the company register ID
@@ -1010,7 +1010,7 @@ export declare namespace Company {
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
     type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
-    type CompanyGetHistoricalOwnersV0Response as CompanyGetHistoricalOwnersV0Response,
+    type CompanyGetHistoricalOwnersV1Response as CompanyGetHistoricalOwnersV1Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
     type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyGetUbosV1Response as CompanyGetUbosV1Response,
