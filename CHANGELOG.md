@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.0.3 (2026-03-12)
+
+Full Changelog: [v4.0.2...v4.0.3](https://github.com/oregister/openregister-typescript/compare/v4.0.2...v4.0.3)
+
+### Chores
+
+* **internal:** bump @modelcontextprotocol/sdk, @hono/node-server, and minimatch ([91f6ca9](https://github.com/oregister/openregister-typescript/commit/91f6ca978a02072377ccc05885cec519436f12bd))
+* update SDK settings ([70d0aa2](https://github.com/oregister/openregister-typescript/commit/70d0aa2cb2697c6692dd3068833a123054bd0e3e))
+* update SDK settings ([11b5e2b](https://github.com/oregister/openregister-typescript/commit/11b5e2b63f2e07953171d362f75c290ef0aa8f9c))
+* use proper capitalization for WebSockets ([5806708](https://github.com/oregister/openregister-typescript/commit/58067086638683726f15b002c75514398f5abff5))
+
 ## 4.0.2 (2026-03-12)
 
 Full Changelog: [v4.0.1...v4.0.2](https://github.com/oregister/openregister-typescript/compare/v4.0.1...v4.0.2)
