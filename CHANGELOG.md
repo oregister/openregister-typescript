@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.0.4 (2026-03-15)
+
+Full Changelog: [v4.0.3...v4.0.4](https://github.com/oregister/openregister-typescript/compare/v4.0.3...v4.0.4)
+
+### Chores
+
+* **internal:** make generated MCP servers compatible with Cloudflare worker environments ([4089c83](https://github.com/oregister/openregister-typescript/commit/4089c83682ecb3c9a73b0a5b0c78f981ab0df6c5))
+* **internal:** support x-stainless-mcp-client-envs header in MCP servers ([a30a188](https://github.com/oregister/openregister-typescript/commit/a30a1882fa857a6cdc12a22f779a058d4296e5ae))
+
 ## 4.0.3 (2026-03-12)
 
 Full Changelog: [v4.0.2...v4.0.3](https://github.com/oregister/openregister-typescript/compare/v4.0.2...v4.0.3)
