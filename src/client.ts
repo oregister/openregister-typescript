@@ -51,6 +51,12 @@ import {
   DocumentGetRealtimeV1Response,
   DocumentResource,
 } from './resources/document';
+import {
+  Monitor,
+  MonitorCreateParams,
+  MonitorCreateResponse,
+  MonitorListResponse,
+} from './resources/monitor';
 import { Person, PersonGetDetailsV1Response, PersonGetHoldingsV1Response } from './resources/person';
 import {
   CompanyLegalForm,
@@ -775,12 +781,14 @@ export class Openregister {
   company: API.Company = new API.Company(this);
   document: API.DocumentResource = new API.DocumentResource(this);
   person: API.Person = new API.Person(this);
+  monitor: API.Monitor = new API.Monitor(this);
 }
 
 Openregister.Search = Search;
 Openregister.Company = Company;
 Openregister.DocumentResource = DocumentResource;
 Openregister.Person = Person;
+Openregister.Monitor = Monitor;
 
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
@@ -843,5 +851,12 @@ export declare namespace Openregister {
     Person as Person,
     type PersonGetDetailsV1Response as PersonGetDetailsV1Response,
     type PersonGetHoldingsV1Response as PersonGetHoldingsV1Response,
+  };
+
+  export {
+    Monitor as Monitor,
+    type MonitorCreateResponse as MonitorCreateResponse,
+    type MonitorListResponse as MonitorListResponse,
+    type MonitorCreateParams as MonitorCreateParams,
   };
 }

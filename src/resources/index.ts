@@ -34,6 +34,12 @@ export {
   type DocumentGetRealtimeV1Response,
   type DocumentGetRealtimeV1Params,
 } from './document';
+export {
+  Monitor,
+  type MonitorCreateResponse,
+  type MonitorListResponse,
+  type MonitorCreateParams,
+} from './monitor';
 export { Person, type PersonGetDetailsV1Response, type PersonGetHoldingsV1Response } from './person';
 export {
   Search,

@@ -81,3 +81,16 @@ Methods:
 
 - <code title="get /v1/person/{person_id}">client.person.<a href="./src/resources/person.ts">getDetailsV1</a>(personID) -> PersonGetDetailsV1Response</code>
 - <code title="get /v1/person/{person_id}/holdings">client.person.<a href="./src/resources/person.ts">getHoldingsV1</a>(personID) -> PersonGetHoldingsV1Response</code>
+
+# Monitor
+
+Types:
+
+- <code><a href="./src/resources/monitor.ts">MonitorCreateResponse</a></code>
+- <code><a href="./src/resources/monitor.ts">MonitorListResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/monitor">client.monitor.<a href="./src/resources/monitor.ts">create</a>({ ...params }) -> MonitorCreateResponse</code>
+- <code title="get /v1/monitor">client.monitor.<a href="./src/resources/monitor.ts">list</a>() -> MonitorListResponse</code>
+- <code title="delete /v1/monitor/{entity_id}">client.monitor.<a href="./src/resources/monitor.ts">delete</a>(entityID) -> void</code>

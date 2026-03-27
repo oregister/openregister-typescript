@@ -100,6 +100,24 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'get',
     httpPath: '/v1/person/{person_id}/holdings',
   },
+  {
+    clientCallName: 'client.monitor.create',
+    fullyQualifiedName: 'monitor.create',
+    httpMethod: 'post',
+    httpPath: '/v1/monitor',
+  },
+  {
+    clientCallName: 'client.monitor.list',
+    fullyQualifiedName: 'monitor.list',
+    httpMethod: 'get',
+    httpPath: '/v1/monitor',
+  },
+  {
+    clientCallName: 'client.monitor.delete',
+    fullyQualifiedName: 'monitor.delete',
+    httpMethod: 'delete',
+    httpPath: '/v1/monitor/{entity_id}',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
