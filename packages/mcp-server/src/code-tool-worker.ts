@@ -119,6 +119,9 @@ const fuse = new Fuse(
     'client.document.getRealtimeV1',
     'client.person.getDetailsV1',
     'client.person.getHoldingsV1',
+    'client.monitor.create',
+    'client.monitor.delete',
+    'client.monitor.list',
   ],
   { threshold: 1, shouldSort: true },
 );
