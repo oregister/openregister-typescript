@@ -1,5 +1,33 @@
 # Changelog
 
+## 4.1.0 (2026-03-28)
+
+Full Changelog: [v4.0.3...v4.1.0](https://github.com/oregister/openregister-typescript/compare/v4.0.3...v4.1.0)
+
+### Features
+
+* **api:** monitoring endpoints ([808d8a8](https://github.com/oregister/openregister-typescript/commit/808d8a86331fdbf211033a9144b8ffc49d971f89))
+* **api:** monitoring endpoints ([03da16b](https://github.com/oregister/openregister-typescript/commit/03da16b272f3c5082feb3ad23e26b35f138851b7))
+
+
+### Bug Fixes
+
+* **mcp:** bump agents version in cloudflare worker MCP servers ([82c8b33](https://github.com/oregister/openregister-typescript/commit/82c8b3348bf3f513c4ddb5ce4ac7915121053bbd))
+
+
+### Chores
+
+* **ci:** escape input path in publish-npm workflow ([c0cad96](https://github.com/oregister/openregister-typescript/commit/c0cad9633907ee70377bdffb353c871103c1e896))
+* **ci:** skip lint on metadata-only changes ([aa1c396](https://github.com/oregister/openregister-typescript/commit/aa1c3965013c5247dc74dfcf4e082c5511233aaf))
+* **internal:** fix MCP server TS errors that occur with required client options ([0a05e57](https://github.com/oregister/openregister-typescript/commit/0a05e57c66270a6c990bd4d4a26695ed4f31e379))
+* **internal:** make generated MCP servers compatible with Cloudflare worker environments ([4089c83](https://github.com/oregister/openregister-typescript/commit/4089c83682ecb3c9a73b0a5b0c78f981ab0df6c5))
+* **internal:** support custom-instructions-path flag in MCP servers ([70e80cf](https://github.com/oregister/openregister-typescript/commit/70e80cf1d76e11fd926704a94a5e92d1c440c5aa))
+* **internal:** support local docs search in MCP servers ([ab545f1](https://github.com/oregister/openregister-typescript/commit/ab545f149f18db28ddbb993d47e9a62260eed460))
+* **internal:** support x-stainless-mcp-client-envs header in MCP servers ([a30a188](https://github.com/oregister/openregister-typescript/commit/a30a1882fa857a6cdc12a22f779a058d4296e5ae))
+* **internal:** support x-stainless-mcp-client-permissions headers in MCP servers ([2e1efb5](https://github.com/oregister/openregister-typescript/commit/2e1efb5a2b46e4564beee58c18eead9579c63f23))
+* **internal:** tweak CI branches ([e02bed4](https://github.com/oregister/openregister-typescript/commit/e02bed44bff091fc37614b27bde65907beab7d02))
+* **internal:** update gitignore ([ff00ee9](https://github.com/oregister/openregister-typescript/commit/ff00ee9281d5f96c0fbebb2f744eb79d09c4a65f))
+
 ## 4.0.3 (2026-03-12)
 
 Full Changelog: [v4.0.2...v4.0.3](https://github.com/oregister/openregister-typescript/compare/v4.0.2...v4.0.3)
