@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.1.1 (2026-04-02)
+
+Full Changelog: [v4.1.0...v4.1.1](https://github.com/oregister/openregister-typescript/compare/v4.1.0...v4.1.1)
+
+### Bug Fixes
+
+* **internal:** gitignore generated `oidc` dir ([0abe28b](https://github.com/oregister/openregister-typescript/commit/0abe28b02ee7e8fb727c1338461d6b2d38918c94))
+
+
+### Chores
+
+* **internal:** improve local docs search for MCP servers ([728e590](https://github.com/oregister/openregister-typescript/commit/728e5905cbcbbc9ce06215302fb21d6e030a808e))
+* **internal:** improve local docs search for MCP servers ([aebf3f1](https://github.com/oregister/openregister-typescript/commit/aebf3f1f34372ca1211c57b1fff9320879e82ef3))
+* **internal:** support type annotations when running MCP in local execution mode ([30dbb03](https://github.com/oregister/openregister-typescript/commit/30dbb03b3f761f5f0fa8cf6fb43a99b59fb7f918))
+* **mcp-server:** add support for session id, forward client info ([9f17cd8](https://github.com/oregister/openregister-typescript/commit/9f17cd8311ba81b080b0393d3b73166947c166e5))
+
 ## 4.1.0 (2026-03-28)
 
 Full Changelog: [v4.0.3...v4.1.0](https://github.com/oregister/openregister-typescript/compare/v4.0.3...v4.1.0)
