@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.1.2 (2026-04-03)
+
+Full Changelog: [v4.1.1...v4.1.2](https://github.com/oregister/openregister-typescript/compare/v4.1.1...v4.1.2)
+
+### Chores
+
+* **internal:** fix MCP docker image builds in yarn projects ([5cc6932](https://github.com/oregister/openregister-typescript/commit/5cc6932ba9038ca58fc137a62d9bdd515b09d6c9))
+* **internal:** use link instead of file in MCP server package.json files ([3fcfdcb](https://github.com/oregister/openregister-typescript/commit/3fcfdcba2378af2186512469802a2ee9ba302341))
+* **mcp-server:** log client info ([894fadb](https://github.com/oregister/openregister-typescript/commit/894fadbf8cb72096d97d3734f9ce896118cc2c39))
+
 ## 4.1.1 (2026-04-02)
 
 Full Changelog: [v4.1.0...v4.1.1](https://github.com/oregister/openregister-typescript/compare/v4.1.0...v4.1.1)
