@@ -322,7 +322,9 @@ export namespace SearchFindCompaniesV1Params {
       | 'has_representative_owner'
       | 'is_family_owned'
       | 'youngest_owner_age'
-      | 'purpose';
+      | 'purpose'
+      | 'has_lei'
+      | 'lei';
   }
 
   /**
