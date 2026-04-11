@@ -443,6 +443,11 @@ export interface CompanyGetDetailsV1Response {
    * 8601 (YYYY-MM-DD) Example: "2022-01-01"
    */
   terminated_at: string | null;
+
+  /**
+   * Legal Entity Identifier (LEI), if available.
+   */
+  lei?: string;
 }
 
 export namespace CompanyGetDetailsV1Response {
