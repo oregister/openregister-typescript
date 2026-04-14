@@ -1,5 +1,28 @@
 # Changelog
 
+## 4.2.0 (2026-04-14)
+
+Full Changelog: [v4.1.1...v4.2.0](https://github.com/oregister/openregister-typescript/compare/v4.1.1...v4.2.0)
+
+### Features
+
+* **api:** add lei ([9302a25](https://github.com/oregister/openregister-typescript/commit/9302a259e0caad82f6014ed59763b8700ef25a9b))
+* **api:** notarized_at & best_available ([f5e78c7](https://github.com/oregister/openregister-typescript/commit/f5e78c76859db5186c110c08cbb5a5304e265abf))
+
+
+### Chores
+
+* **client:** increase timeouts ([b75ce13](https://github.com/oregister/openregister-typescript/commit/b75ce13921dd3efc30486e845a830739c4c79f49))
+* **internal:** codegen related update ([3697b7d](https://github.com/oregister/openregister-typescript/commit/3697b7d0f9c90ab66a8338a37a0cc4b40fa6f8ec))
+* **internal:** codegen related update ([2cd47ae](https://github.com/oregister/openregister-typescript/commit/2cd47ae373f88bcaa0aa608a95f1d366da512190))
+* **internal:** fix MCP docker image builds in yarn projects ([5cc6932](https://github.com/oregister/openregister-typescript/commit/5cc6932ba9038ca58fc137a62d9bdd515b09d6c9))
+* **internal:** fix MCP server import ordering ([1a4e481](https://github.com/oregister/openregister-typescript/commit/1a4e481b4975d8832e5a2c0dea0af19332c5ef8e))
+* **internal:** show error causes in MCP servers when running in local mode ([8578bed](https://github.com/oregister/openregister-typescript/commit/8578bed4386c409a9f6675896b771d1563c356e3))
+* **internal:** use link instead of file in MCP server package.json files ([3fcfdcb](https://github.com/oregister/openregister-typescript/commit/3fcfdcba2378af2186512469802a2ee9ba302341))
+* **mcp-server:** increase local docs search result count from 5 to 10 ([77d2cd1](https://github.com/oregister/openregister-typescript/commit/77d2cd1ff1affd6b2423ee2f7189940f85875430))
+* **mcp-server:** log client info ([894fadb](https://github.com/oregister/openregister-typescript/commit/894fadbf8cb72096d97d3734f9ce896118cc2c39))
+* update CLI documentation ([f75b60f](https://github.com/oregister/openregister-typescript/commit/f75b60f27b7f244d456ed24237424624c4473a23))
+
 ## 4.1.1 (2026-04-02)
 
 Full Changelog: [v4.1.0...v4.1.1](https://github.com/oregister/openregister-typescript/compare/v4.1.0...v4.1.1)

@@ -1,6 +1,6 @@
 {
   "name": "openregister-mcp",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "The official MCP Server for the Openregister API",
   "author": "Openregister <founders@openregister.de>",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
     "fix": "eslint --fix ."
   },
   "dependencies": {
-    "openregister": "file:../../dist/",
+    "openregister": "link:../../dist/",
     "ajv": "^8.18.0",
     "@cloudflare/cabidela": "^0.2.4",
     "@hono/node-server": "^1.19.10",
