@@ -98,7 +98,11 @@ describe('resource company', () => {
     await expect(
       client.company.getOwnersV1(
         'company_id',
-        { export: true, realtime: true },
+        {
+          best_available: true,
+          export: true,
+          realtime: true,
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Openregister.NotFoundError);

@@ -398,6 +398,12 @@ export interface CompanyGetDetailsV1Response {
   names: Array<CompanyName>;
 
   /**
+   * Date of the notarized company agreement (Gesellschaftsvertrag or Satzung).
+   * Format: ISO 8601 (YYYY-MM-DD) Example: "2021-12-21"
+   */
+  notarized_at: string | null;
+
+  /**
    * Current official business purpose of the company.
    */
   purpose: CompanyPurpose | null;
@@ -440,7 +446,7 @@ export interface CompanyGetDetailsV1Response {
 
   /**
    * Date when the company was officially terminated (if applicable). Format: ISO
-   * 8601 (YYYY-MM-DD) Example: "2022-01-01"
+   * 8601 (YYYY-MM-DD) Example: "2024-01-01"
    */
   terminated_at: string | null;
 
@@ -853,6 +859,14 @@ export namespace CompanyGetHoldingsV1Response {
 
 export interface CompanyGetOwnersV1Response {
   /**
+   * When true, the returned owner data is the best available but may not reflect the
+   * most current ownership state. This applies to AG and SE companies where
+   * ownership data is sourced from Handelsregister decision and articles of
+   * association documents, which are not filed on every ownership change.
+   */
+  best_available: boolean;
+
+  /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
    */
   company_id: string;
@@ -979,6 +993,15 @@ export interface CompanyGetDetailsV1Params {
 }
 
 export interface CompanyGetOwnersV1Params {
+  /**
+   * When set to true, returns the best available owner data for AG and SE companies.
+   * This data is extracted from Handelsregister documents and may not reflect the
+   * most current ownership state, as these document types are not filed on every
+   * ownership change. Requests for AG/SE companies without this flag return 404.
+   * Note: realtime and best_available cannot be used together at the moment.
+   */
+  best_available?: boolean;
+
   /**
    * Setting this to true will return the owners of the company if they exist but
    * will skip processing the documents in case they weren't processed yet.
