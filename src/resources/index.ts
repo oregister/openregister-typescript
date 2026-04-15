@@ -58,3 +58,7 @@ export {
   type SearchFindPersonV1Params,
   type SearchLookupCompanyByURLParams,
 } from './search';
+export {
+  Transparenzregister,
+  type TransparenzregisterSetCredentialsV1Params,
+} from './transparenzregister/transparenzregister';
