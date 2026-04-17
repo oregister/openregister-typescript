@@ -2,8 +2,16 @@
 
 export {
   Extract,
-  type ExtractCreateV1Response,
-  type ExtractGetV1Response,
+  type TransparenzregisterDocument,
+  type TransparenzregisterExtract,
+  type TransparenzregisterGroup,
+  type TransparenzregisterReport,
+  type TransparenzregisterStatusFlags,
+  type TransparenzregisterUbo,
+  type TransparenzregisterUboInterest,
+  type TransparenzregisterUboNaturalPerson,
+  type TransparenzregisterValidity,
+  type TransparenzregisterValidityPoint,
   type ExtractCreateV1Params,
 } from './extract';
 export { Transparenzregister, type TransparenzregisterSetCredentialsV1Params } from './transparenzregister';

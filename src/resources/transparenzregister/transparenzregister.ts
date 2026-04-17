@@ -2,7 +2,20 @@
 
 import { APIResource } from '../../core/resource';
 import * as ExtractAPI from './extract';
-import { Extract, ExtractCreateV1Params, ExtractCreateV1Response, ExtractGetV1Response } from './extract';
+import {
+  Extract,
+  ExtractCreateV1Params,
+  TransparenzregisterDocument,
+  TransparenzregisterExtract,
+  TransparenzregisterGroup,
+  TransparenzregisterReport,
+  TransparenzregisterStatusFlags,
+  TransparenzregisterUbo,
+  TransparenzregisterUboInterest,
+  TransparenzregisterUboNaturalPerson,
+  TransparenzregisterValidity,
+  TransparenzregisterValidityPoint,
+} from './extract';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -56,8 +69,16 @@ export declare namespace Transparenzregister {
 
   export {
     Extract as Extract,
-    type ExtractCreateV1Response as ExtractCreateV1Response,
-    type ExtractGetV1Response as ExtractGetV1Response,
+    type TransparenzregisterDocument as TransparenzregisterDocument,
+    type TransparenzregisterExtract as TransparenzregisterExtract,
+    type TransparenzregisterGroup as TransparenzregisterGroup,
+    type TransparenzregisterReport as TransparenzregisterReport,
+    type TransparenzregisterStatusFlags as TransparenzregisterStatusFlags,
+    type TransparenzregisterUbo as TransparenzregisterUbo,
+    type TransparenzregisterUboInterest as TransparenzregisterUboInterest,
+    type TransparenzregisterUboNaturalPerson as TransparenzregisterUboNaturalPerson,
+    type TransparenzregisterValidity as TransparenzregisterValidity,
+    type TransparenzregisterValidityPoint as TransparenzregisterValidityPoint,
     type ExtractCreateV1Params as ExtractCreateV1Params,
   };
 }
