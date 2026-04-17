@@ -127,6 +127,8 @@ const fuse = new Fuse(
     'client.monitor.delete',
     'client.monitor.list',
     'client.transparenzregister.setCredentialsV1',
+    'client.transparenzregister.extract.createV1',
+    'client.transparenzregister.extract.getV1',
   ],
   { threshold: 1, shouldSort: true },
 );

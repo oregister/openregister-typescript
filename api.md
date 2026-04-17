@@ -101,4 +101,14 @@ Methods:
 
 - <code title="post /v1/transparenzregister/credentials">client.transparenzregister.<a href="./src/resources/transparenzregister/transparenzregister.ts">setCredentialsV1</a>({ ...params }) -> void</code>
 
-## Request
+## Extract
+
+Types:
+
+- <code><a href="./src/resources/transparenzregister/extract.ts">ExtractCreateV1Response</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">ExtractGetV1Response</a></code>
+
+Methods:
+
+- <code title="post /v1/transparenzregister/extracts">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">createV1</a>({ ...params }) -> ExtractCreateV1Response</code>
+- <code title="get /v1/transparenzregister/extracts/{extract_id}">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">getV1</a>(extractID) -> ExtractGetV1Response</code>
