@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as RequestAPI from './request';
-import { Request, RequestCreateV1Params, RequestCreateV1Response, RequestGetV1Response } from './request';
+import { Request } from './request';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
@@ -13,7 +13,9 @@ export class Transparenzregister extends APIResource {
   /**
    * Store username and password credentials for accessing the Transparenzregister
    * API. These credentials will be used for subsequent requests to retrieve company
-   * documents.
+   * documents. Credential names are user-scoped; the reserved name `sandbox` cannot
+   * be used. Credentials are validated against Transparenzregister before they are
+   * persisted.
    */
   setCredentialsV1(
     body: TransparenzregisterSetCredentialsV1Params,
@@ -34,17 +36,17 @@ export interface TransparenzregisterSetCredentialsV1Params {
   password: string;
 
   /**
-   * Username for Transparenzregister API access. Example:
-   * "testnutzer-eis@transparenzregister.de"
+   * Username for Transparenzregister API access. Example: "compliance@example.com"
    */
   username: string;
 
   /**
-   * Label to identify this set of credentials. Allows storing multiple
+   * Name to identify this set of credentials. Allows storing multiple
    * Transparenzregister credentials per user (e.g., for different accounts or
-   * clients). Defaults to 'default' if not provided. Example: "client_a"
+   * clients). Defaults to 'default' if not provided. Cannot be `sandbox` because
+   * that name is reserved for test-mode extracts. Example: "client_a"
    */
-  credential_label?: string;
+  name?: string;
 }
 
 Transparenzregister.Request = Request;
@@ -52,10 +54,5 @@ Transparenzregister.Request = Request;
 export declare namespace Transparenzregister {
   export { type TransparenzregisterSetCredentialsV1Params as TransparenzregisterSetCredentialsV1Params };
 
-  export {
-    Request as Request,
-    type RequestCreateV1Response as RequestCreateV1Response,
-    type RequestGetV1Response as RequestGetV1Response,
-    type RequestCreateV1Params as RequestCreateV1Params,
-  };
+  export { Request as Request };
 }

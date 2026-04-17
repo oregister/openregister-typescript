@@ -102,13 +102,3 @@ Methods:
 - <code title="post /v1/transparenzregister/credentials">client.transparenzregister.<a href="./src/resources/transparenzregister/transparenzregister.ts">setCredentialsV1</a>({ ...params }) -> void</code>
 
 ## Request
-
-Types:
-
-- <code><a href="./src/resources/transparenzregister/request.ts">RequestCreateV1Response</a></code>
-- <code><a href="./src/resources/transparenzregister/request.ts">RequestGetV1Response</a></code>
-
-Methods:
-
-- <code title="post /v1/transparenzregister/request">client.transparenzregister.request.<a href="./src/resources/transparenzregister/request.ts">createV1</a>({ ...params }) -> RequestCreateV1Response</code>
-- <code title="get /v1/transparenzregister/request/{request_id}">client.transparenzregister.request.<a href="./src/resources/transparenzregister/request.ts">getV1</a>(requestID) -> RequestGetV1Response</code>
