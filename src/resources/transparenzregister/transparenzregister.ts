@@ -1,14 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as RequestAPI from './request';
-import { Request } from './request';
+import * as ExtractAPI from './extract';
+import { Extract, ExtractCreateV1Params, ExtractCreateV1Response, ExtractGetV1Response } from './extract';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 
 export class Transparenzregister extends APIResource {
-  request: RequestAPI.Request = new RequestAPI.Request(this._client);
+  extract: ExtractAPI.Extract = new ExtractAPI.Extract(this._client);
 
   /**
    * Store username and password credentials for accessing the Transparenzregister
@@ -49,10 +49,15 @@ export interface TransparenzregisterSetCredentialsV1Params {
   name?: string;
 }
 
-Transparenzregister.Request = Request;
+Transparenzregister.Extract = Extract;
 
 export declare namespace Transparenzregister {
   export { type TransparenzregisterSetCredentialsV1Params as TransparenzregisterSetCredentialsV1Params };
 
-  export { Request as Request };
+  export {
+    Extract as Extract,
+    type ExtractCreateV1Response as ExtractCreateV1Response,
+    type ExtractGetV1Response as ExtractGetV1Response,
+    type ExtractCreateV1Params as ExtractCreateV1Params,
+  };
 }

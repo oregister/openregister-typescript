@@ -903,6 +903,97 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
     },
   },
+  {
+    name: 'create_v1',
+    endpoint: '/v1/transparenzregister/extracts',
+    httpMethod: 'post',
+    summary: 'Submit Transparenzregister extract request',
+    description:
+      'Submit a Transparenzregister extract request and return an extract resource with processing status.\n\nSandbox integration testing (recommended for all non-production testing):\n- Send `X-Credential-Name: sandbox`.\n- Do not send `company_id` (an empty body `{}` is valid).\n- OpenRegister uses the Transparenzregister test environment and built-in test authentication.\n- The request is submitted with the fixed test EKRN `DE727032388716`.\n- The response has `company_id: null`.\n\nProduction usage:\n- Omit `X-Credential-Name` or use `default` / another stored credential name.\n- `company_id` is required and must resolve to exactly one Transparenzregister legal entity.\n',
+    stainlessPath: '(resource) transparenzregister.extract > (method) create_v1',
+    qualified: 'client.transparenzregister.extract.createV1',
+    params: ['company_id?: string;', 'X-Credential-Name?: string;'],
+    response:
+      "{ id: string; status: 'completed' | 'processing' | 'failed'; company_id?: string; completed_at?: string; documents?: { document_id: string; filename: string; format: string; url: string; }[]; ekrn?: string; reference_number?: string; report?: { created_at?: string; fictional_ubo_reason?: string; groups?: { description?: string; interest_type?: string; position?: number; }[]; notice_type?: string; status_flags?: { corrected_by_reference?: string; corrected_references?: string[]; deleted?: boolean; deletion_date?: string; discrepancy_note?: string; }; ubos?: { interest?: object; natural_person?: object; position?: number; }[]; validity?: { from?: object; until?: object; }; }; submitted_at?: string; }",
+    markdown:
+      "## create_v1\n\n`client.transparenzregister.extract.createV1(company_id?: string, X-Credential-Name?: string): { id: string; status: 'completed' | 'processing' | 'failed'; company_id?: string; completed_at?: string; documents?: object[]; ekrn?: string; reference_number?: string; report?: object; submitted_at?: string; }`\n\n**post** `/v1/transparenzregister/extracts`\n\nSubmit a Transparenzregister extract request and return an extract resource with processing status.\n\nSandbox integration testing (recommended for all non-production testing):\n- Send `X-Credential-Name: sandbox`.\n- Do not send `company_id` (an empty body `{}` is valid).\n- OpenRegister uses the Transparenzregister test environment and built-in test authentication.\n- The request is submitted with the fixed test EKRN `DE727032388716`.\n- The response has `company_id: null`.\n\nProduction usage:\n- Omit `X-Credential-Name` or use `default` / another stored credential name.\n- `company_id` is required and must resolve to exactly one Transparenzregister legal entity.\n\n\n### Parameters\n\n- `company_id?: string`\n  Unique company identifier.\nRequired unless `X-Credential-Name` is set to `sandbox`.\nIn sandbox mode this field should be omitted.\nExample: DE-HRB-F1103-267645\n\n\n- `X-Credential-Name?: string`\n\n### Returns\n\n- `{ id: string; status: 'completed' | 'processing' | 'failed'; company_id?: string; completed_at?: string; documents?: { document_id: string; filename: string; format: string; url: string; }[]; ekrn?: string; reference_number?: string; report?: { created_at?: string; fictional_ubo_reason?: string; groups?: { description?: string; interest_type?: string; position?: number; }[]; notice_type?: string; status_flags?: { corrected_by_reference?: string; corrected_references?: string[]; deleted?: boolean; deletion_date?: string; discrepancy_note?: string; }; ubos?: { interest?: object; natural_person?: object; position?: number; }[]; validity?: { from?: object; until?: object; }; }; submitted_at?: string; }`\n  Transparenzregister extract resource including processing state, parsed report, and downloadable documents.\n\n\n  - `id: string`\n  - `status: 'completed' | 'processing' | 'failed'`\n  - `company_id?: string`\n  - `completed_at?: string`\n  - `documents?: { document_id: string; filename: string; format: string; url: string; }[]`\n  - `ekrn?: string`\n  - `reference_number?: string`\n  - `report?: { created_at?: string; fictional_ubo_reason?: string; groups?: { description?: string; interest_type?: string; position?: number; }[]; notice_type?: string; status_flags?: { corrected_by_reference?: string; corrected_references?: string[]; deleted?: boolean; deletion_date?: string; discrepancy_note?: string; }; ubos?: { interest?: { percentage?: number; scope?: string; type?: string; }; natural_person?: { city?: string; country?: string; date_of_birth?: string; first_name?: string; full_name?: string; last_name?: string; nationalities?: string[]; title?: string; }; position?: number; }[]; validity?: { from?: { date?: string; note?: string; }; until?: { date?: string; note?: string; }; }; }`\n  - `submitted_at?: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.transparenzregister.extract.createV1();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      cli: {
+        method: 'extract create_v1',
+        example: "openregister transparenzregister:extract create-v1 \\\n  --api-key 'My API Key'",
+      },
+      go: {
+        method: 'client.Transparenzregister.Extract.NewV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Transparenzregister.Extract.NewV1(context.TODO(), openregister.TransparenzregisterExtractNewV1Params{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      http: {
+        example:
+          "curl https://api.openregister.de/v1/transparenzregister/extracts \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $OPENREGISTER_API_KEY\" \\\n    -d '{}'",
+      },
+      java: {
+        method: 'transparenzregister().extract().createV1',
+        example:
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.extract.ExtractCreateV1Params;\nimport com.openregister.api.models.transparenzregister.extract.ExtractCreateV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        ExtractCreateV1Response response = client.transparenzregister().extract().createV1();\n    }\n}',
+      },
+      python: {
+        method: 'transparenzregister.extract.create_v1',
+        example:
+          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.transparenzregister.extract.create_v1()\nprint(response.id)',
+      },
+      typescript: {
+        method: 'client.transparenzregister.extract.createV1',
+        example:
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.transparenzregister.extract.createV1();\n\nconsole.log(response.id);",
+      },
+    },
+  },
+  {
+    name: 'get_v1',
+    endpoint: '/v1/transparenzregister/extracts/{extract_id}',
+    httpMethod: 'get',
+    summary: 'Get Transparenzregister extract',
+    description:
+      'Get the results of a Transparenzregister extract request. This endpoint handles all internal complexity including\npolling request status, selecting all available documents, creating Transparenzregister baskets, and\nreturning download URLs when ready. If the request is still processing, it will return a pending status.\nPolling reuses the credential mode stored on the extract at create time. Sandbox extracts keep using the\nTransparenzregister test client automatically; no credential header is accepted on this endpoint.\n',
+    stainlessPath: '(resource) transparenzregister.extract > (method) get_v1',
+    qualified: 'client.transparenzregister.extract.getV1',
+    params: ['extract_id: string;'],
+    response:
+      "{ id: string; status: 'completed' | 'processing' | 'failed'; company_id?: string; completed_at?: string; documents?: { document_id: string; filename: string; format: string; url: string; }[]; ekrn?: string; reference_number?: string; report?: { created_at?: string; fictional_ubo_reason?: string; groups?: { description?: string; interest_type?: string; position?: number; }[]; notice_type?: string; status_flags?: { corrected_by_reference?: string; corrected_references?: string[]; deleted?: boolean; deletion_date?: string; discrepancy_note?: string; }; ubos?: { interest?: object; natural_person?: object; position?: number; }[]; validity?: { from?: object; until?: object; }; }; submitted_at?: string; }",
+    markdown:
+      "## get_v1\n\n`client.transparenzregister.extract.getV1(extract_id: string): { id: string; status: 'completed' | 'processing' | 'failed'; company_id?: string; completed_at?: string; documents?: object[]; ekrn?: string; reference_number?: string; report?: object; submitted_at?: string; }`\n\n**get** `/v1/transparenzregister/extracts/{extract_id}`\n\nGet the results of a Transparenzregister extract request. This endpoint handles all internal complexity including\npolling request status, selecting all available documents, creating Transparenzregister baskets, and\nreturning download URLs when ready. If the request is still processing, it will return a pending status.\nPolling reuses the credential mode stored on the extract at create time. Sandbox extracts keep using the\nTransparenzregister test client automatically; no credential header is accepted on this endpoint.\n\n\n### Parameters\n\n- `extract_id: string`\n\n### Returns\n\n- `{ id: string; status: 'completed' | 'processing' | 'failed'; company_id?: string; completed_at?: string; documents?: { document_id: string; filename: string; format: string; url: string; }[]; ekrn?: string; reference_number?: string; report?: { created_at?: string; fictional_ubo_reason?: string; groups?: { description?: string; interest_type?: string; position?: number; }[]; notice_type?: string; status_flags?: { corrected_by_reference?: string; corrected_references?: string[]; deleted?: boolean; deletion_date?: string; discrepancy_note?: string; }; ubos?: { interest?: object; natural_person?: object; position?: number; }[]; validity?: { from?: object; until?: object; }; }; submitted_at?: string; }`\n  Transparenzregister extract resource including processing state, parsed report, and downloadable documents.\n\n\n  - `id: string`\n  - `status: 'completed' | 'processing' | 'failed'`\n  - `company_id?: string`\n  - `completed_at?: string`\n  - `documents?: { document_id: string; filename: string; format: string; url: string; }[]`\n  - `ekrn?: string`\n  - `reference_number?: string`\n  - `report?: { created_at?: string; fictional_ubo_reason?: string; groups?: { description?: string; interest_type?: string; position?: number; }[]; notice_type?: string; status_flags?: { corrected_by_reference?: string; corrected_references?: string[]; deleted?: boolean; deletion_date?: string; discrepancy_note?: string; }; ubos?: { interest?: { percentage?: number; scope?: string; type?: string; }; natural_person?: { city?: string; country?: string; date_of_birth?: string; first_name?: string; full_name?: string; last_name?: string; nationalities?: string[]; title?: string; }; position?: number; }[]; validity?: { from?: { date?: string; note?: string; }; until?: { date?: string; note?: string; }; }; }`\n  - `submitted_at?: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.transparenzregister.extract.getV1('extract_id');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      cli: {
+        method: 'extract get_v1',
+        example:
+          "openregister transparenzregister:extract get-v1 \\\n  --api-key 'My API Key' \\\n  --extract-id extract_id",
+      },
+      go: {
+        method: 'client.Transparenzregister.Extract.GetV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Transparenzregister.Extract.GetV1(context.TODO(), "extract_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/transparenzregister/extracts/$EXTRACT_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
+      },
+      java: {
+        method: 'transparenzregister().extract().getV1',
+        example:
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.extract.ExtractGetV1Params;\nimport com.openregister.api.models.transparenzregister.extract.ExtractGetV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        ExtractGetV1Response response = client.transparenzregister().extract().getV1("extract_id");\n    }\n}',
+      },
+      python: {
+        method: 'transparenzregister.extract.get_v1',
+        example:
+          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.transparenzregister.extract.get_v1(\n    "extract_id",\n)\nprint(response.id)',
+      },
+      typescript: {
+        method: 'client.transparenzregister.extract.getV1',
+        example:
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.transparenzregister.extract.getV1('extract_id');\n\nconsole.log(response.id);",
+      },
+    },
+  },
 ];
 
 const EMBEDDED_READMES: { language: string; content: string }[] = [
