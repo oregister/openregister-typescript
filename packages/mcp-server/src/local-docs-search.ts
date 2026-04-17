@@ -865,12 +865,12 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'post',
     summary: 'Store Transparenzregister credentials',
     description:
-      'Store username and password credentials for accessing the Transparenzregister API.\nThese credentials will be used for subsequent requests to retrieve company documents.\n',
+      'Store username and password credentials for accessing the Transparenzregister API.\nThese credentials will be used for subsequent requests to retrieve company documents.\nCredential names are user-scoped; the reserved name `sandbox` cannot be used.\nCredentials are validated against Transparenzregister before they are persisted.\n',
     stainlessPath: '(resource) transparenzregister > (method) set_credentials_v1',
     qualified: 'client.transparenzregister.setCredentialsV1',
-    params: ['password: string;', 'username: string;', 'credential_label?: string;'],
+    params: ['password: string;', 'username: string;', 'name?: string;'],
     markdown:
-      "## set_credentials_v1\n\n`client.transparenzregister.setCredentialsV1(password: string, username: string, credential_label?: string): void`\n\n**post** `/v1/transparenzregister/credentials`\n\nStore username and password credentials for accessing the Transparenzregister API.\nThese credentials will be used for subsequent requests to retrieve company documents.\n\n\n### Parameters\n\n- `password: string`\n  Password for Transparenzregister API access.\n\n\n- `username: string`\n  Username for Transparenzregister API access.\nExample: \"testnutzer-eis@transparenzregister.de\"\n\n\n- `credential_label?: string`\n  Label to identify this set of credentials. Allows storing multiple\nTransparenzregister credentials per user (e.g., for different accounts\nor clients). Defaults to 'default' if not provided.\nExample: \"client_a\"\n\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nawait client.transparenzregister.setCredentialsV1({ password: 'password', username: 'username' })\n```",
+      "## set_credentials_v1\n\n`client.transparenzregister.setCredentialsV1(password: string, username: string, name?: string): void`\n\n**post** `/v1/transparenzregister/credentials`\n\nStore username and password credentials for accessing the Transparenzregister API.\nThese credentials will be used for subsequent requests to retrieve company documents.\nCredential names are user-scoped; the reserved name `sandbox` cannot be used.\nCredentials are validated against Transparenzregister before they are persisted.\n\n\n### Parameters\n\n- `password: string`\n  Password for Transparenzregister API access.\n\n\n- `username: string`\n  Username for Transparenzregister API access.\nExample: \"compliance@example.com\"\n\n\n- `name?: string`\n  Name to identify this set of credentials. Allows storing multiple\nTransparenzregister credentials per user (e.g., for different accounts\nor clients). Defaults to 'default' if not provided.\nCannot be `sandbox` because that name is reserved for test-mode extracts.\nExample: \"client_a\"\n\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nawait client.transparenzregister.setCredentialsV1({ password: 'password', username: 'username' })\n```",
     perLanguage: {
       cli: {
         method: 'transparenzregister set_credentials_v1',
@@ -900,96 +900,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'client.transparenzregister.setCredentialsV1',
         example:
           "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.transparenzregister.setCredentialsV1({ password: 'password', username: 'username' });",
-      },
-    },
-  },
-  {
-    name: 'create_v1',
-    endpoint: '/v1/transparenzregister/request',
-    httpMethod: 'post',
-    summary: 'Submit Transparenzregister request',
-    description:
-      'Submit a Transparenzregister request for a company using its company ID.\nThis endpoint will initiate the Transparenzregister request process and return a request ID for tracking.\n',
-    stainlessPath: '(resource) transparenzregister.request > (method) create_v1',
-    qualified: 'client.transparenzregister.request.createV1',
-    params: ['company_id?: string;', 'X-Credential-Label?: string;'],
-    response: '{ request_id: string; }',
-    markdown:
-      "## create_v1\n\n`client.transparenzregister.request.createV1(company_id?: string, X-Credential-Label?: string): { request_id: string; }`\n\n**post** `/v1/transparenzregister/request`\n\nSubmit a Transparenzregister request for a company using its company ID.\nThis endpoint will initiate the Transparenzregister request process and return a request ID for tracking.\n\n\n### Parameters\n\n- `company_id?: string`\n  Unique company identifier. Required unless using X-Credential-Label=test.\nExample: DE-HRB-F1103-267645\n\n\n- `X-Credential-Label?: string`\n\n### Returns\n\n- `{ request_id: string; }`\n  Response from submitting a document request.\n\n\n  - `request_id: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.transparenzregister.request.createV1();\n\nconsole.log(response);\n```",
-    perLanguage: {
-      cli: {
-        method: 'request create_v1',
-        example: "openregister transparenzregister:request create-v1 \\\n  --api-key 'My API Key'",
-      },
-      go: {
-        method: 'client.Transparenzregister.Request.NewV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Transparenzregister.Request.NewV1(context.TODO(), openregister.TransparenzregisterRequestNewV1Params{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RequestID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/transparenzregister/request \\\n    -X POST \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'transparenzregister().request().createV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.request.RequestCreateV1Params;\nimport com.openregister.api.models.transparenzregister.request.RequestCreateV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        RequestCreateV1Response response = client.transparenzregister().request().createV1();\n    }\n}',
-      },
-      python: {
-        method: 'transparenzregister.request.create_v1',
-        example:
-          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.transparenzregister.request.create_v1()\nprint(response.request_id)',
-      },
-      typescript: {
-        method: 'client.transparenzregister.request.createV1',
-        example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.transparenzregister.request.createV1();\n\nconsole.log(response.request_id);",
-      },
-    },
-  },
-  {
-    name: 'get_v1',
-    endpoint: '/v1/transparenzregister/request/{request_id}',
-    httpMethod: 'get',
-    summary: 'Get Transparenzregister request results',
-    description:
-      'Get the results of a Transparenzregister request. This endpoint handles all internal complexity including\npolling request status, selecting all available documents, creating Transparenzregister baskets, and\nreturning download URLs when ready. If the request is still processing, it will return a pending status.\n',
-    stainlessPath: '(resource) transparenzregister.request > (method) get_v1',
-    qualified: 'client.transparenzregister.request.getV1',
-    params: ['request_id: string;'],
-    response:
-      "{ request_id: string; status: 'completed' | 'processing' | 'failed'; download_urls?: { document_id: string; filename: string; format: string; url: string; }[]; }",
-    markdown:
-      "## get_v1\n\n`client.transparenzregister.request.getV1(request_id: string): { request_id: string; status: 'completed' | 'processing' | 'failed'; download_urls?: object[]; }`\n\n**get** `/v1/transparenzregister/request/{request_id}`\n\nGet the results of a Transparenzregister request. This endpoint handles all internal complexity including\npolling request status, selecting all available documents, creating Transparenzregister baskets, and\nreturning download URLs when ready. If the request is still processing, it will return a pending status.\n\n\n### Parameters\n\n- `request_id: string`\n\n### Returns\n\n- `{ request_id: string; status: 'completed' | 'processing' | 'failed'; download_urls?: { document_id: string; filename: string; format: string; url: string; }[]; }`\n  Response containing document request results and download URLs.\nAll internal complexity (document IDs, baskets, polling) is handled automatically.\n\n\n  - `request_id: string`\n  - `status: 'completed' | 'processing' | 'failed'`\n  - `download_urls?: { document_id: string; filename: string; format: string; url: string; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.transparenzregister.request.getV1('request_id');\n\nconsole.log(response);\n```",
-    perLanguage: {
-      cli: {
-        method: 'request get_v1',
-        example:
-          "openregister transparenzregister:request get-v1 \\\n  --api-key 'My API Key' \\\n  --request-id request_id",
-      },
-      go: {
-        method: 'client.Transparenzregister.Request.GetV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Transparenzregister.Request.GetV1(context.TODO(), "request_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.RequestID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/transparenzregister/request/$REQUEST_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'transparenzregister().request().getV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.request.RequestGetV1Params;\nimport com.openregister.api.models.transparenzregister.request.RequestGetV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        RequestGetV1Response response = client.transparenzregister().request().getV1("request_id");\n    }\n}',
-      },
-      python: {
-        method: 'transparenzregister.request.get_v1',
-        example:
-          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.transparenzregister.request.get_v1(\n    "request_id",\n)\nprint(response.request_id)',
-      },
-      typescript: {
-        method: 'client.transparenzregister.request.getV1',
-        example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.transparenzregister.request.getV1('request_id');\n\nconsole.log(response.request_id);",
       },
     },
   },

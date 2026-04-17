@@ -28,7 +28,7 @@ describe('resource transparenzregister', () => {
     const response = await client.transparenzregister.setCredentialsV1({
       password: 'password',
       username: 'username',
-      credential_label: 'credential_label',
+      name: 'name',
     });
   });
 });
