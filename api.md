@@ -105,10 +105,18 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/transparenzregister/extract.ts">ExtractCreateV1Response</a></code>
-- <code><a href="./src/resources/transparenzregister/extract.ts">ExtractGetV1Response</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterDocument</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterExtract</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterGroup</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterReport</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterStatusFlags</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterUbo</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterUboInterest</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterUboNaturalPerson</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterValidity</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterValidityPoint</a></code>
 
 Methods:
 
-- <code title="post /v1/transparenzregister/extracts">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">createV1</a>({ ...params }) -> ExtractCreateV1Response</code>
-- <code title="get /v1/transparenzregister/extracts/{extract_id}">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">getV1</a>(extractID) -> ExtractGetV1Response</code>
+- <code title="post /v1/transparenzregister/extracts">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">createV1</a>({ ...params }) -> TransparenzregisterExtract</code>
+- <code title="get /v1/transparenzregister/extracts/{extract_id}">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">getV1</a>(extractID) -> TransparenzregisterExtract</code>

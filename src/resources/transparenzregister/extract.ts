@@ -26,7 +26,7 @@ export class Extract extends APIResource {
    * - `company_id` is required and must resolve to exactly one Transparenzregister
    *   legal entity.
    */
-  createV1(params: ExtractCreateV1Params, options?: RequestOptions): APIPromise<ExtractCreateV1Response> {
+  createV1(params: ExtractCreateV1Params, options?: RequestOptions): APIPromise<TransparenzregisterExtract> {
     const { 'X-Credential-Name': xCredentialName, ...body } = params;
     return this._client.post('/v1/transparenzregister/extracts', {
       body,
@@ -47,205 +47,42 @@ export class Extract extends APIResource {
    * create time. Sandbox extracts keep using the Transparenzregister test client
    * automatically; no credential header is accepted on this endpoint.
    */
-  getV1(extractID: string, options?: RequestOptions): APIPromise<ExtractGetV1Response> {
+  getV1(extractID: string, options?: RequestOptions): APIPromise<TransparenzregisterExtract> {
     return this._client.get(path`/v1/transparenzregister/extracts/${extractID}`, options);
   }
 }
 
 /**
- * Transparenzregister extract resource including processing state, parsed report,
- * and downloadable documents.
+ * Download URL for a document with format information.
  */
-export interface ExtractCreateV1Response {
+export interface TransparenzregisterDocument {
   /**
-   * Stable extract identifier. Example: "tre_12345678"
+   * Stable UUID for this document.
    */
-  id: string;
-
-  /**
-   * Status of the Transparenzregister extract.
-   */
-  status: 'completed' | 'processing' | 'failed';
+  document_id: string;
 
   /**
-   * Company identifier associated with this extract request. May be null when using
-   * sandbox credentials.
+   * Suggested filename for the download. Example: "registerauszug_company_12345.pdf"
    */
-  company_id?: string | null;
+  filename: string;
 
   /**
-   * Timestamp when extract processing completed.
+   * Format of the downloadable document. Example: "xml", "pdf", "json"
    */
-  completed_at?: string | null;
+  format: string;
 
   /**
-   * URLs for downloading available extract documents.
+   * Download URL for the document. Example:
+   * "https://api.example.com/download/abc123"
    */
-  documents?: Array<ExtractCreateV1Response.Document>;
-
-  /**
-   * EKRN used to request this extract.
-   */
-  ekrn?: string | null;
-
-  /**
-   * Transparenzregister reference number from the extract.
-   */
-  reference_number?: string | null;
-
-  /**
-   * Parsed Transparenzregister extract report limited to UBO-relevant fields.
-   */
-  report?: ExtractCreateV1Response.Report | null;
-
-  /**
-   * Timestamp when extract submission started.
-   */
-  submitted_at?: string;
-}
-
-export namespace ExtractCreateV1Response {
-  /**
-   * Download URL for a document with format information.
-   */
-  export interface Document {
-    /**
-     * Stable UUID for this document.
-     */
-    document_id: string;
-
-    /**
-     * Suggested filename for the download. Example: "registerauszug_company_12345.pdf"
-     */
-    filename: string;
-
-    /**
-     * Format of the downloadable document. Example: "xml", "pdf", "json"
-     */
-    format: string;
-
-    /**
-     * Download URL for the document. Example:
-     * "https://api.example.com/download/abc123"
-     */
-    url: string;
-  }
-
-  /**
-   * Parsed Transparenzregister extract report limited to UBO-relevant fields.
-   */
-  export interface Report {
-    /**
-     * Extract creation date.
-     */
-    created_at?: string | null;
-
-    /**
-     * Reason indicating no natural person UBO could be determined.
-     */
-    fictional_ubo_reason?: string | null;
-
-    groups?: Array<Report.Group>;
-
-    /**
-     * Type of Transparenzregister notice.
-     */
-    notice_type?: string | null;
-
-    status_flags?: Report.StatusFlags | null;
-
-    ubos?: Array<Report.Ubo>;
-
-    validity?: Report.Validity | null;
-  }
-
-  export namespace Report {
-    export interface Group {
-      description?: string | null;
-
-      interest_type?: string | null;
-
-      position?: number;
-    }
-
-    export interface StatusFlags {
-      corrected_by_reference?: string | null;
-
-      corrected_references?: Array<string>;
-
-      deleted?: boolean;
-
-      deletion_date?: string | null;
-
-      discrepancy_note?: string | null;
-    }
-
-    export interface Ubo {
-      interest?: Ubo.Interest | null;
-
-      natural_person?: Ubo.NaturalPerson | null;
-
-      position?: number;
-    }
-
-    export namespace Ubo {
-      export interface Interest {
-        percentage?: number | null;
-
-        scope?: string | null;
-
-        type?: string | null;
-      }
-
-      export interface NaturalPerson {
-        city?: string | null;
-
-        country?: string | null;
-
-        date_of_birth?: string | null;
-
-        first_name?: string | null;
-
-        full_name?: string | null;
-
-        last_name?: string | null;
-
-        /**
-         * ISO 3166-1 alpha-2 nationality codes where available.
-         */
-        nationalities?: Array<string>;
-
-        title?: string | null;
-      }
-    }
-
-    export interface Validity {
-      from?: Validity.From | null;
-
-      until?: Validity.Until | null;
-    }
-
-    export namespace Validity {
-      export interface From {
-        date?: string | null;
-
-        note?: string | null;
-      }
-
-      export interface Until {
-        date?: string | null;
-
-        note?: string | null;
-      }
-    }
-  }
+  url: string;
 }
 
 /**
  * Transparenzregister extract resource including processing state, parsed report,
  * and downloadable documents.
  */
-export interface ExtractGetV1Response {
+export interface TransparenzregisterExtract {
   /**
    * Stable extract identifier. Example: "tre_12345678"
    */
@@ -270,7 +107,7 @@ export interface ExtractGetV1Response {
   /**
    * URLs for downloading available extract documents.
    */
-  documents?: Array<ExtractGetV1Response.Document>;
+  documents?: Array<TransparenzregisterDocument>;
 
   /**
    * EKRN used to request this extract.
@@ -285,7 +122,7 @@ export interface ExtractGetV1Response {
   /**
    * Parsed Transparenzregister extract report limited to UBO-relevant fields.
    */
-  report?: ExtractGetV1Response.Report | null;
+  report?: TransparenzregisterReport | null;
 
   /**
    * Timestamp when extract submission started.
@@ -293,141 +130,101 @@ export interface ExtractGetV1Response {
   submitted_at?: string;
 }
 
-export namespace ExtractGetV1Response {
+export interface TransparenzregisterGroup {
+  description?: string | null;
+
+  interest_type?: string | null;
+
+  position?: number;
+}
+
+/**
+ * Parsed Transparenzregister extract report limited to UBO-relevant fields.
+ */
+export interface TransparenzregisterReport {
   /**
-   * Download URL for a document with format information.
+   * Extract creation date.
    */
-  export interface Document {
-    /**
-     * Stable UUID for this document.
-     */
-    document_id: string;
-
-    /**
-     * Suggested filename for the download. Example: "registerauszug_company_12345.pdf"
-     */
-    filename: string;
-
-    /**
-     * Format of the downloadable document. Example: "xml", "pdf", "json"
-     */
-    format: string;
-
-    /**
-     * Download URL for the document. Example:
-     * "https://api.example.com/download/abc123"
-     */
-    url: string;
-  }
+  created_at?: string | null;
 
   /**
-   * Parsed Transparenzregister extract report limited to UBO-relevant fields.
+   * Reason indicating no natural person UBO could be determined.
    */
-  export interface Report {
-    /**
-     * Extract creation date.
-     */
-    created_at?: string | null;
+  fictional_ubo_reason?: string | null;
 
-    /**
-     * Reason indicating no natural person UBO could be determined.
-     */
-    fictional_ubo_reason?: string | null;
+  groups?: Array<TransparenzregisterGroup>;
 
-    groups?: Array<Report.Group>;
+  /**
+   * Type of Transparenzregister notice.
+   */
+  notice_type?: string | null;
 
-    /**
-     * Type of Transparenzregister notice.
-     */
-    notice_type?: string | null;
+  status_flags?: TransparenzregisterStatusFlags | null;
 
-    status_flags?: Report.StatusFlags | null;
+  ubos?: Array<TransparenzregisterUbo>;
 
-    ubos?: Array<Report.Ubo>;
+  validity?: TransparenzregisterValidity | null;
+}
 
-    validity?: Report.Validity | null;
-  }
+export interface TransparenzregisterStatusFlags {
+  corrected_by_reference?: string | null;
 
-  export namespace Report {
-    export interface Group {
-      description?: string | null;
+  corrected_references?: Array<string>;
 
-      interest_type?: string | null;
+  deleted?: boolean;
 
-      position?: number;
-    }
+  deletion_date?: string | null;
 
-    export interface StatusFlags {
-      corrected_by_reference?: string | null;
+  discrepancy_note?: string | null;
+}
 
-      corrected_references?: Array<string>;
+export interface TransparenzregisterUbo {
+  interest?: TransparenzregisterUboInterest | null;
 
-      deleted?: boolean;
+  natural_person?: TransparenzregisterUboNaturalPerson | null;
 
-      deletion_date?: string | null;
+  position?: number;
+}
 
-      discrepancy_note?: string | null;
-    }
+export interface TransparenzregisterUboInterest {
+  percentage?: number | null;
 
-    export interface Ubo {
-      interest?: Ubo.Interest | null;
+  scope?: string | null;
 
-      natural_person?: Ubo.NaturalPerson | null;
+  type?: string | null;
+}
 
-      position?: number;
-    }
+export interface TransparenzregisterUboNaturalPerson {
+  city?: string | null;
 
-    export namespace Ubo {
-      export interface Interest {
-        percentage?: number | null;
+  country?: string | null;
 
-        scope?: string | null;
+  date_of_birth?: string | null;
 
-        type?: string | null;
-      }
+  first_name?: string | null;
 
-      export interface NaturalPerson {
-        city?: string | null;
+  full_name?: string | null;
 
-        country?: string | null;
+  last_name?: string | null;
 
-        date_of_birth?: string | null;
+  /**
+   * ISO 3166-1 alpha-2 nationality codes where available.
+   */
+  nationalities?: Array<string>;
 
-        first_name?: string | null;
+  title?: string | null;
+}
 
-        full_name?: string | null;
+export interface TransparenzregisterValidity {
+  from?: TransparenzregisterValidityPoint | null;
 
-        last_name?: string | null;
+  until?: TransparenzregisterValidityPoint | null;
+}
 
-        /**
-         * ISO 3166-1 alpha-2 nationality codes where available.
-         */
-        nationalities?: Array<string>;
+export interface TransparenzregisterValidityPoint {
+  date?: string | null;
 
-        title?: string | null;
-      }
-    }
-
-    export interface Validity {
-      from?: Validity.From | null;
-
-      until?: Validity.Until | null;
-    }
-
-    export namespace Validity {
-      export interface From {
-        date?: string | null;
-
-        note?: string | null;
-      }
-
-      export interface Until {
-        date?: string | null;
-
-        note?: string | null;
-      }
-    }
-  }
+  note?: string | null;
 }
 
 export interface ExtractCreateV1Params {
@@ -452,8 +249,16 @@ export interface ExtractCreateV1Params {
 
 export declare namespace Extract {
   export {
-    type ExtractCreateV1Response as ExtractCreateV1Response,
-    type ExtractGetV1Response as ExtractGetV1Response,
+    type TransparenzregisterDocument as TransparenzregisterDocument,
+    type TransparenzregisterExtract as TransparenzregisterExtract,
+    type TransparenzregisterGroup as TransparenzregisterGroup,
+    type TransparenzregisterReport as TransparenzregisterReport,
+    type TransparenzregisterStatusFlags as TransparenzregisterStatusFlags,
+    type TransparenzregisterUbo as TransparenzregisterUbo,
+    type TransparenzregisterUboInterest as TransparenzregisterUboInterest,
+    type TransparenzregisterUboNaturalPerson as TransparenzregisterUboNaturalPerson,
+    type TransparenzregisterValidity as TransparenzregisterValidity,
+    type TransparenzregisterValidityPoint as TransparenzregisterValidityPoint,
     type ExtractCreateV1Params as ExtractCreateV1Params,
   };
 }
