@@ -94,3 +94,30 @@ Methods:
 - <code title="post /v1/monitor">client.monitor.<a href="./src/resources/monitor.ts">create</a>({ ...params }) -> MonitorCreateResponse</code>
 - <code title="get /v1/monitor">client.monitor.<a href="./src/resources/monitor.ts">list</a>() -> MonitorListResponse</code>
 - <code title="delete /v1/monitor/{entity_id}">client.monitor.<a href="./src/resources/monitor.ts">delete</a>(entityID) -> void</code>
+
+# Transparenzregister
+
+Methods:
+
+- <code title="post /v1/transparenzregister/credentials">client.transparenzregister.<a href="./src/resources/transparenzregister/transparenzregister.ts">setCredentialsV1</a>({ ...params }) -> void</code>
+
+## Extract
+
+Types:
+
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterDocument</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterExtract</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterGroup</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterReport</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterStatusFlags</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterUbo</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterUboInterest</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterUboNaturalPerson</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterValidity</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">TransparenzregisterValidityPoint</a></code>
+- <code><a href="./src/resources/transparenzregister/extract.ts">ExtractCreateV1Response</a></code>
+
+Methods:
+
+- <code title="post /v1/transparenzregister/extracts">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">createV1</a>({ ...params }) -> ExtractCreateV1Response</code>
+- <code title="get /v1/transparenzregister/extracts/{extract_id}">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">getV1</a>(extractID) -> TransparenzregisterExtract</code>

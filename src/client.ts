@@ -75,6 +75,10 @@ import {
   SearchLookupCompanyByURLResponse,
   SearchRequestPagination,
 } from './resources/search';
+import {
+  Transparenzregister,
+  TransparenzregisterSetCredentialsV1Params,
+} from './resources/transparenzregister/transparenzregister';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -782,6 +786,7 @@ export class Openregister {
   document: API.DocumentResource = new API.DocumentResource(this);
   person: API.Person = new API.Person(this);
   monitor: API.Monitor = new API.Monitor(this);
+  transparenzregister: API.Transparenzregister = new API.Transparenzregister(this);
 }
 
 Openregister.Search = Search;
@@ -789,6 +794,7 @@ Openregister.Company = Company;
 Openregister.DocumentResource = DocumentResource;
 Openregister.Person = Person;
 Openregister.Monitor = Monitor;
+Openregister.Transparenzregister = Transparenzregister;
 
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
@@ -858,5 +864,10 @@ export declare namespace Openregister {
     type MonitorCreateResponse as MonitorCreateResponse,
     type MonitorListResponse as MonitorListResponse,
     type MonitorCreateParams as MonitorCreateParams,
+  };
+
+  export {
+    Transparenzregister as Transparenzregister,
+    type TransparenzregisterSetCredentialsV1Params as TransparenzregisterSetCredentialsV1Params,
   };
 }

@@ -118,6 +118,24 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'delete',
     httpPath: '/v1/monitor/{entity_id}',
   },
+  {
+    clientCallName: 'client.transparenzregister.setCredentialsV1',
+    fullyQualifiedName: 'transparenzregister.setCredentialsV1',
+    httpMethod: 'post',
+    httpPath: '/v1/transparenzregister/credentials',
+  },
+  {
+    clientCallName: 'client.transparenzregister.extract.createV1',
+    fullyQualifiedName: 'transparenzregister.extract.createV1',
+    httpMethod: 'post',
+    httpPath: '/v1/transparenzregister/extracts',
+  },
+  {
+    clientCallName: 'client.transparenzregister.extract.getV1',
+    fullyQualifiedName: 'transparenzregister.extract.getV1',
+    httpMethod: 'get',
+    httpPath: '/v1/transparenzregister/extracts/{extract_id}',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
