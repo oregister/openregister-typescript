@@ -12,6 +12,7 @@ export {
   type TransparenzregisterUboNaturalPerson,
   type TransparenzregisterValidity,
   type TransparenzregisterValidityPoint,
+  type ExtractCreateV1Response,
   type ExtractCreateV1Params,
 } from './extract';
 export { Transparenzregister, type TransparenzregisterSetCredentialsV1Params } from './transparenzregister';

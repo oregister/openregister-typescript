@@ -5,6 +5,7 @@ import * as ExtractAPI from './extract';
 import {
   Extract,
   ExtractCreateV1Params,
+  ExtractCreateV1Response,
   TransparenzregisterDocument,
   TransparenzregisterExtract,
   TransparenzregisterGroup,
@@ -79,6 +80,7 @@ export declare namespace Transparenzregister {
     type TransparenzregisterUboNaturalPerson as TransparenzregisterUboNaturalPerson,
     type TransparenzregisterValidity as TransparenzregisterValidity,
     type TransparenzregisterValidityPoint as TransparenzregisterValidityPoint,
+    type ExtractCreateV1Response as ExtractCreateV1Response,
     type ExtractCreateV1Params as ExtractCreateV1Params,
   };
 }

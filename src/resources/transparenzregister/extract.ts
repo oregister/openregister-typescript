@@ -22,11 +22,11 @@ export class Extract extends APIResource {
    *
    * Production usage:
    *
-   * - Omit `X-Credential-Name` or use `default` / another stored credential name.
+   * - Always set `X-Credential-Name` to `default` or another stored credential name.
    * - `company_id` is required and must resolve to exactly one Transparenzregister
    *   legal entity.
    */
-  createV1(params: ExtractCreateV1Params, options?: RequestOptions): APIPromise<TransparenzregisterExtract> {
+  createV1(params: ExtractCreateV1Params, options?: RequestOptions): APIPromise<ExtractCreateV1Response> {
     const { 'X-Credential-Name': xCredentialName, ...body } = params;
     return this._client.post('/v1/transparenzregister/extracts', {
       body,
@@ -227,6 +227,41 @@ export interface TransparenzregisterValidityPoint {
   note?: string | null;
 }
 
+/**
+ * Response from creating a Transparenzregister extract. Only fields known at
+ * creation time are present. Poll
+ * `GET /v1/transparenzregister/extracts/{extract_id}` to retrieve report and
+ * documents.
+ */
+export interface ExtractCreateV1Response {
+  /**
+   * Stable extract identifier. Use this to poll the get-extract endpoint. Example:
+   * "tre_12345678"
+   */
+  id: string;
+
+  /**
+   * Company identifier associated with this extract request. May be null when using
+   * sandbox credentials.
+   */
+  company_id: string | null;
+
+  /**
+   * EKRN used to request this extract.
+   */
+  ekrn: string | null;
+
+  /**
+   * Always `processing` on create. Poll the get-extract endpoint for terminal state.
+   */
+  status: 'processing';
+
+  /**
+   * Timestamp when extract submission started.
+   */
+  submitted_at: string;
+}
+
 export interface ExtractCreateV1Params {
   /**
    * Body param: Unique company identifier. Required unless `X-Credential-Name` is
@@ -236,8 +271,8 @@ export interface ExtractCreateV1Params {
   company_id?: string;
 
   /**
-   * Header param: Name identifying which credentials to use. Uses 'default' if not
-   * provided. Reserved values:
+   * Header param: Name identifying which credentials to use. Always send this header
+   * in production (typically `default` or another stored name). Reserved values:
    *
    * - default: use persisted default credentials for the current user.
    * - sandbox: use OpenRegister's built-in Transparenzregister test client, test
@@ -259,6 +294,7 @@ export declare namespace Extract {
     type TransparenzregisterUboNaturalPerson as TransparenzregisterUboNaturalPerson,
     type TransparenzregisterValidity as TransparenzregisterValidity,
     type TransparenzregisterValidityPoint as TransparenzregisterValidityPoint,
+    type ExtractCreateV1Response as ExtractCreateV1Response,
     type ExtractCreateV1Params as ExtractCreateV1Params,
   };
 }
