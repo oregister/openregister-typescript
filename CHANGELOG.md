@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.3.0 (2026-04-21)
+
+Full Changelog: [v4.2.0...v4.3.0](https://github.com/oregister/openregister-typescript/compare/v4.2.0...v4.3.0)
+
+### Features
+
+* **api:** manual updates ([262eb6b](https://github.com/oregister/openregister-typescript/commit/262eb6bdde084aef490fb78c8550a785261af2f4))
+* **api:** transparenzregister ([9ffa740](https://github.com/oregister/openregister-typescript/commit/9ffa7408a9d8696f236145cf91f64ced16426b95))
+* **api:** transparenzregister ([b0264e9](https://github.com/oregister/openregister-typescript/commit/b0264e9717dd7f18099df0ca2257bcb3759aca44))
+* **api:** transparenzregister ([92ad90e](https://github.com/oregister/openregister-typescript/commit/92ad90e22c4e5d2fb07b66401ec0e5e4ab063efe))
+* **api:** transparenzregister endpoints ([2ca81e4](https://github.com/oregister/openregister-typescript/commit/2ca81e4cd6d89f277af070be72d80ba72617091c))
+
 ## 4.2.0 (2026-04-14)
 
 Full Changelog: [v4.1.1...v4.2.0](https://github.com/oregister/openregister-typescript/compare/v4.1.1...v4.2.0)
