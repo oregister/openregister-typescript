@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.3.1 (2026-04-23)
+
+Full Changelog: [v4.3.0...v4.3.1](https://github.com/oregister/openregister-typescript/compare/v4.3.0...v4.3.1)
+
+### Chores
+
+* **internal:** more robust bootstrap script ([e87180f](https://github.com/oregister/openregister-typescript/commit/e87180f14e46e47e969d48b02291692b583eeeac))
+* **internal:** update docs ordering ([83ebd22](https://github.com/oregister/openregister-typescript/commit/83ebd22ff61ecc8a3c0ddc87f960a84e966e5a17))
+
 ## 4.3.0 (2026-04-21)
 
 Full Changelog: [v4.2.0...v4.3.0](https://github.com/oregister/openregister-typescript/compare/v4.2.0...v4.3.0)
