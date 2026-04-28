@@ -69,33 +69,33 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## find_companies_v1\n\n`client.search.findCompaniesV1(filters?: { keywords?: string[]; max?: string; min?: string; value?: string; values?: string[]; }[], location?: { latitude: number; longitude: number; radius?: number; }, pagination?: { page?: number; per_page?: number; }, query?: { value: string; }): { pagination: pagination; results: company_search_response_item[]; }`\n\n**post** `/v1/search/company`\n\nSearch for companies\n\n### Parameters\n\n- `filters?: { keywords?: string[]; max?: string; min?: string; value?: string; values?: string[]; }[]`\n  Filters to filter companies.\n\n\n- `location?: { latitude: number; longitude: number; radius?: number; }`\n  Location to filter companies.\n\n  - `latitude: number`\n    Latitude to filter on.\n\n  - `longitude: number`\n    Longitude to filter on.\n\n  - `radius?: number`\n    Radius in kilometers to filter on.\nExample: 10\n\n\n- `pagination?: { page?: number; per_page?: number; }`\n  Pagination parameters.\n\n  - `page?: number`\n    Page number to return.\n\n  - `per_page?: number`\n    Number of results per page.\n\n\n- `query?: { value: string; }`\n  Search query to filter companies.\n\n  - `value: string`\n    Search query to filter companies.\n\n\n### Returns\n\n- `{ pagination: { page: number; per_page: number; total_pages: number; total_results: number; }; results: { active: boolean; company_id: string; country: string; legal_form: company_legal_form; name: string; register_court: string; register_number: string; register_type: company_register_type; }[]; }`\n\n  - `pagination: { page: number; per_page: number; total_pages: number; total_results: number; }`\n  - `results: { active: boolean; company_id: string; country: string; legal_form: string; name: string; register_court: string; register_number: string; register_type: 'HRB' | 'HRA' | 'PR' | 'GnR' | 'VR'; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst companySearch = await client.search.findCompaniesV1();\n\nconsole.log(companySearch);\n```",
     perLanguage: {
-      cli: {
-        method: 'search find_companies_v1',
-        example: "openregister search find-companies-v1 \\\n  --api-key 'My API Key'",
-      },
-      go: {
-        method: 'client.Search.FindCompaniesV1',
+      typescript: {
+        method: 'client.search.findCompaniesV1',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcompanySearch, err := client.Search.FindCompaniesV1(context.TODO(), openregister.SearchFindCompaniesV1Params{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", companySearch.Pagination)\n}\n',
-      },
-      http: {
-        example:
-          "curl https://api.openregister.de/v1/search/company \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $OPENREGISTER_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'search().findCompaniesV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.search.CompanySearch;\nimport com.openregister.api.models.search.SearchFindCompaniesV1Params;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanySearch companySearch = client.search().findCompaniesV1();\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst companySearch = await client.search.findCompaniesV1();\n\nconsole.log(companySearch.pagination);",
       },
       python: {
         method: 'search.find_companies_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\ncompany_search = client.search.find_companies_v1()\nprint(company_search.pagination)',
       },
-      typescript: {
-        method: 'client.search.findCompaniesV1',
+      java: {
+        method: 'search().findCompaniesV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst companySearch = await client.search.findCompaniesV1();\n\nconsole.log(companySearch.pagination);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.search.CompanySearch;\nimport com.openregister.api.models.search.SearchFindCompaniesV1Params;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanySearch companySearch = client.search().findCompaniesV1();\n    }\n}',
+      },
+      go: {
+        method: 'client.Search.FindCompaniesV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcompanySearch, err := client.Search.FindCompaniesV1(context.TODO(), openregister.SearchFindCompaniesV1Params{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", companySearch.Pagination)\n}\n',
+      },
+      cli: {
+        method: 'search find_companies_v1',
+        example: "openregister search find-companies-v1 \\\n  --api-key 'My API Key'",
+      },
+      http: {
+        example:
+          "curl https://api.openregister.de/v1/search/company \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $OPENREGISTER_API_KEY\" \\\n    -d '{}'",
       },
     },
   },
@@ -112,34 +112,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## lookup_company_by_url\n\n`client.search.lookupCompanyByURL(url: string): { company_id: string; email?: string; phone?: string; vat_id?: string; }`\n\n**get** `/v0/search/lookup`\n\nFind company by website URL\n\n### Parameters\n\n- `url: string`\n  Website URL to search for.\nExample: \"https://openregister.de\"\n\n\n### Returns\n\n- `{ company_id: string; email?: string; phone?: string; vat_id?: string; }`\n\n  - `company_id: string`\n  - `email?: string`\n  - `phone?: string`\n  - `vat_id?: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.search.lookupCompanyByURL({ url: 'https://example.com' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'search lookup_company_by_url',
+      typescript: {
+        method: 'client.search.lookupCompanyByURL',
         example:
-          "openregister search lookup-company-by-url \\\n  --api-key 'My API Key' \\\n  --url https://example.com",
-      },
-      go: {
-        method: 'client.Search.LookupCompanyByURL',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Search.LookupCompanyByURL(context.TODO(), openregister.SearchLookupCompanyByURLParams{\n\t\tURL: "https://example.com",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.CompanyID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v0/search/lookup \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'search().lookupCompanyByUrl',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.search.SearchLookupCompanyByUrlParams;\nimport com.openregister.api.models.search.SearchLookupCompanyByUrlResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        SearchLookupCompanyByUrlParams params = SearchLookupCompanyByUrlParams.builder()\n            .url("https://example.com")\n            .build();\n        SearchLookupCompanyByUrlResponse response = client.search().lookupCompanyByUrl(params);\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.search.lookupCompanyByURL({ url: 'https://example.com' });\n\nconsole.log(response.company_id);",
       },
       python: {
         method: 'search.lookup_company_by_url',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.search.lookup_company_by_url(\n    url="https://example.com",\n)\nprint(response.company_id)',
       },
-      typescript: {
-        method: 'client.search.lookupCompanyByURL',
+      java: {
+        method: 'search().lookupCompanyByUrl',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.search.lookupCompanyByURL({ url: 'https://example.com' });\n\nconsole.log(response.company_id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.search.SearchLookupCompanyByUrlParams;\nimport com.openregister.api.models.search.SearchLookupCompanyByUrlResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        SearchLookupCompanyByUrlParams params = SearchLookupCompanyByUrlParams.builder()\n            .url("https://example.com")\n            .build();\n        SearchLookupCompanyByUrlResponse response = client.search().lookupCompanyByUrl(params);\n    }\n}',
+      },
+      go: {
+        method: 'client.Search.LookupCompanyByURL',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Search.LookupCompanyByURL(context.TODO(), openregister.SearchLookupCompanyByURLParams{\n\t\tURL: "https://example.com",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.CompanyID)\n}\n',
+      },
+      cli: {
+        method: 'search lookup_company_by_url',
+        example:
+          "openregister search lookup-company-by-url \\\n  --api-key 'My API Key' \\\n  --url https://example.com",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v0/search/lookup \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -157,34 +157,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## autocomplete_companies_v1\n\n`client.search.autocompleteCompaniesV1(query: string): { results: company_search_response_item[]; }`\n\n**get** `/v1/autocomplete/company`\n\nAutocomplete company search\n\n### Parameters\n\n- `query: string`\n  Text search query to find companies by name.\nExample: \"Descartes Technologies UG\"\n\n\n### Returns\n\n- `{ results: { active: boolean; company_id: string; country: string; legal_form: company_legal_form; name: string; register_court: string; register_number: string; register_type: company_register_type; }[]; }`\n\n  - `results: { active: boolean; company_id: string; country: string; legal_form: string; name: string; register_court: string; register_number: string; register_type: 'HRB' | 'HRA' | 'PR' | 'GnR' | 'VR'; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.search.autocompleteCompaniesV1({ query: 'query' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'search autocomplete_companies_v1',
+      typescript: {
+        method: 'client.search.autocompleteCompaniesV1',
         example:
-          "openregister search autocomplete-companies-v1 \\\n  --api-key 'My API Key' \\\n  --query query",
-      },
-      go: {
-        method: 'client.Search.AutocompleteCompaniesV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Search.AutocompleteCompaniesV1(context.TODO(), openregister.SearchAutocompleteCompaniesV1Params{\n\t\tQuery: "query",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Results)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/autocomplete/company \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'search().autocompleteCompaniesV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.search.SearchAutocompleteCompaniesV1Params;\nimport com.openregister.api.models.search.SearchAutocompleteCompaniesV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        SearchAutocompleteCompaniesV1Params params = SearchAutocompleteCompaniesV1Params.builder()\n            .query("query")\n            .build();\n        SearchAutocompleteCompaniesV1Response response = client.search().autocompleteCompaniesV1(params);\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.search.autocompleteCompaniesV1({ query: 'query' });\n\nconsole.log(response.results);",
       },
       python: {
         method: 'search.autocomplete_companies_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.search.autocomplete_companies_v1(\n    query="query",\n)\nprint(response.results)',
       },
-      typescript: {
-        method: 'client.search.autocompleteCompaniesV1',
+      java: {
+        method: 'search().autocompleteCompaniesV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.search.autocompleteCompaniesV1({ query: 'query' });\n\nconsole.log(response.results);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.search.SearchAutocompleteCompaniesV1Params;\nimport com.openregister.api.models.search.SearchAutocompleteCompaniesV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        SearchAutocompleteCompaniesV1Params params = SearchAutocompleteCompaniesV1Params.builder()\n            .query("query")\n            .build();\n        SearchAutocompleteCompaniesV1Response response = client.search().autocompleteCompaniesV1(params);\n    }\n}',
+      },
+      go: {
+        method: 'client.Search.AutocompleteCompaniesV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Search.AutocompleteCompaniesV1(context.TODO(), openregister.SearchAutocompleteCompaniesV1Params{\n\t\tQuery: "query",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Results)\n}\n',
+      },
+      cli: {
+        method: 'search autocomplete_companies_v1',
+        example:
+          "openregister search autocomplete-companies-v1 \\\n  --api-key 'My API Key' \\\n  --query query",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/autocomplete/company \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -206,33 +206,33 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## find_person_v1\n\n`client.search.findPersonV1(filters?: { keywords?: string[]; max?: string; min?: string; value?: string; values?: string[]; }[], pagination?: { page?: number; per_page?: number; }, query?: { value: string; }): { pagination: pagination; results: object[]; }`\n\n**post** `/v1/search/person`\n\nSearch for people\n\n### Parameters\n\n- `filters?: { keywords?: string[]; max?: string; min?: string; value?: string; values?: string[]; }[]`\n  Filters to filter people.\n\n\n- `pagination?: { page?: number; per_page?: number; }`\n  Pagination parameters.\n\n  - `page?: number`\n    Page number to return.\n\n  - `per_page?: number`\n    Number of results per page.\n\n\n- `query?: { value: string; }`\n  Search query to filter people.\n\n  - `value: string`\n    Search query to filter people.\n\n\n### Returns\n\n- `{ pagination: { page: number; per_page: number; total_pages: number; total_results: number; }; results: { id: string; active: boolean; city: string; date_of_birth: string; name: string; }[]; }`\n\n  - `pagination: { page: number; per_page: number; total_pages: number; total_results: number; }`\n  - `results: { id: string; active: boolean; city: string; date_of_birth: string; name: string; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.search.findPersonV1();\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'search find_person_v1',
-        example: "openregister search find-person-v1 \\\n  --api-key 'My API Key'",
-      },
-      go: {
-        method: 'client.Search.FindPersonV1',
+      typescript: {
+        method: 'client.search.findPersonV1',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Search.FindPersonV1(context.TODO(), openregister.SearchFindPersonV1Params{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Pagination)\n}\n',
-      },
-      http: {
-        example:
-          "curl https://api.openregister.de/v1/search/person \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $OPENREGISTER_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'search().findPersonV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.search.SearchFindPersonV1Params;\nimport com.openregister.api.models.search.SearchFindPersonV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        SearchFindPersonV1Response response = client.search().findPersonV1();\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.search.findPersonV1();\n\nconsole.log(response.pagination);",
       },
       python: {
         method: 'search.find_person_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.search.find_person_v1()\nprint(response.pagination)',
       },
-      typescript: {
-        method: 'client.search.findPersonV1',
+      java: {
+        method: 'search().findPersonV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.search.findPersonV1();\n\nconsole.log(response.pagination);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.search.SearchFindPersonV1Params;\nimport com.openregister.api.models.search.SearchFindPersonV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        SearchFindPersonV1Response response = client.search().findPersonV1();\n    }\n}',
+      },
+      go: {
+        method: 'client.Search.FindPersonV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Search.FindPersonV1(context.TODO(), openregister.SearchFindPersonV1Params{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Pagination)\n}\n',
+      },
+      cli: {
+        method: 'search find_person_v1',
+        example: "openregister search find-person-v1 \\\n  --api-key 'My API Key'",
+      },
+      http: {
+        example:
+          "curl https://api.openregister.de/v1/search/person \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $OPENREGISTER_API_KEY\" \\\n    -d '{}'",
       },
     },
   },
@@ -250,34 +250,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_details_v1\n\n`client.company.getDetailsV1(company_id: string, export?: boolean, realtime?: boolean): { id: string; address: company_address; addresses: company_address[]; capital: company_capital; capitals: company_capital[]; contact: object; documents: company_document[]; incorporated_at: string; indicators: object[]; industry_codes: object; legal_form: company_legal_form; name: company_name; names: company_name[]; notarized_at: string; purpose: company_purpose; purposes: company_purpose[]; register: company_register; registers: company_register[]; representation: object[]; sources: source[]; status: 'active' | 'inactive' | 'liquidation'; terminated_at: string; lei?: string; }`\n\n**get** `/v1/company/{company_id}`\n\nGet detailed company information\n\n### Parameters\n\n- `company_id: string`\n\n- `export?: boolean`\n  Setting this to true will return the company without sources.\n\n\n- `realtime?: boolean`\n  Get the most up-to-date company information directly from the Handelsregister.\nWhen set to true, we fetch the latest data in real-time from the official German commercial register, ensuring you receive the most current company details.\nNote: Real-time requests take longer but guarantee the freshest data available.\n\n\n### Returns\n\n- `{ id: string; address: { city: string; country: string; formatted_value: string; start_date: string; extra?: string; postal_code?: string; street?: string; }; addresses: { city: string; country: string; formatted_value: string; start_date: string; extra?: string; postal_code?: string; street?: string; }[]; capital: { amount: number; currency: 'EUR' | 'DEM' | 'USD'; start_date: string; }; capitals: { amount: number; currency: 'EUR' | 'DEM' | 'USD'; start_date: string; }[]; contact: { social_media: { facebook?: string; github?: string; instagram?: string; linkedin?: string; tiktok?: string; twitter?: string; xing?: string; youtube?: string; }; website_url: string; email?: string; phone?: string; vat_id?: string; }; documents: { id: string; date: string; latest: boolean; type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list'; }[]; incorporated_at: string; indicators: { balance_sheet_total: number; capital_reserves: number; cash: number; date: string; employees: number; equity: number; liabilities: number; materials: number; net_income: number; pension_provisions: number; real_estate: number; report_id: string; revenue: number; salaries: number; taxes: number; }[]; industry_codes: { WZ2025: { code: string; }[]; }; legal_form: string; name: { legal_form: company_legal_form; name: string; start_date: string; }; names: { legal_form: company_legal_form; name: string; start_date: string; }[]; notarized_at: string; purpose: { purpose: string; start_date: string; }; purposes: { purpose: string; start_date: string; }[]; register: { register_court: string; register_number: string; register_type: company_register_type; company_id?: string; start_date?: string; }; registers: { register_court: string; register_number: string; register_type: company_register_type; company_id?: string; start_date?: string; }[]; representation: { id: string; end_date: string; name: string; role: string; start_date: string; type: 'natural_person' | 'legal_person'; legal_person?: { city: string; country: string; name: string; }; natural_person?: { city: string; date_of_birth: string; first_name: string; last_name: string; }; }[]; sources: { document_url: string; }[]; status: 'active' | 'inactive' | 'liquidation'; terminated_at: string; lei?: string; }`\n\n  - `id: string`\n  - `address: { city: string; country: string; formatted_value: string; start_date: string; extra?: string; postal_code?: string; street?: string; }`\n  - `addresses: { city: string; country: string; formatted_value: string; start_date: string; extra?: string; postal_code?: string; street?: string; }[]`\n  - `capital: { amount: number; currency: 'EUR' | 'DEM' | 'USD'; start_date: string; }`\n  - `capitals: { amount: number; currency: 'EUR' | 'DEM' | 'USD'; start_date: string; }[]`\n  - `contact: { social_media: { facebook?: string; github?: string; instagram?: string; linkedin?: string; tiktok?: string; twitter?: string; xing?: string; youtube?: string; }; website_url: string; email?: string; phone?: string; vat_id?: string; }`\n  - `documents: { id: string; date: string; latest: boolean; type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list'; }[]`\n  - `incorporated_at: string`\n  - `indicators: { balance_sheet_total: number; capital_reserves: number; cash: number; date: string; employees: number; equity: number; liabilities: number; materials: number; net_income: number; pension_provisions: number; real_estate: number; report_id: string; revenue: number; salaries: number; taxes: number; }[]`\n  - `industry_codes: { WZ2025: { code: string; }[]; }`\n  - `legal_form: string`\n  - `name: { legal_form: string; name: string; start_date: string; }`\n  - `names: { legal_form: string; name: string; start_date: string; }[]`\n  - `notarized_at: string`\n  - `purpose: { purpose: string; start_date: string; }`\n  - `purposes: { purpose: string; start_date: string; }[]`\n  - `register: { register_court: string; register_number: string; register_type: 'HRB' | 'HRA' | 'PR' | 'GnR' | 'VR'; company_id?: string; start_date?: string; }`\n  - `registers: { register_court: string; register_number: string; register_type: 'HRB' | 'HRA' | 'PR' | 'GnR' | 'VR'; company_id?: string; start_date?: string; }[]`\n  - `representation: { id: string; end_date: string; name: string; role: string; start_date: string; type: 'natural_person' | 'legal_person'; legal_person?: { city: string; country: string; name: string; }; natural_person?: { city: string; date_of_birth: string; first_name: string; last_name: string; }; }[]`\n  - `sources: { document_url: string; }[]`\n  - `status: 'active' | 'inactive' | 'liquidation'`\n  - `terminated_at: string`\n  - `lei?: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.company.getDetailsV1('company_id');\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'company get_details_v1',
+      typescript: {
+        method: 'client.company.getDetailsV1',
         example:
-          "openregister company get-details-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
-      },
-      go: {
-        method: 'client.Company.GetDetailsV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetDetailsV1(\n\t\tcontext.TODO(),\n\t\t"company_id",\n\t\topenregister.CompanyGetDetailsV1Params{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/company/$COMPANY_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'company().getDetailsV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetDetailsV1Params;\nimport com.openregister.api.models.company.CompanyGetDetailsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetDetailsV1Response response = client.company().getDetailsV1("company_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getDetailsV1('company_id');\n\nconsole.log(response.id);",
       },
       python: {
         method: 'company.get_details_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.company.get_details_v1(\n    company_id="company_id",\n)\nprint(response.id)',
       },
-      typescript: {
-        method: 'client.company.getDetailsV1',
+      java: {
+        method: 'company().getDetailsV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getDetailsV1('company_id');\n\nconsole.log(response.id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetDetailsV1Params;\nimport com.openregister.api.models.company.CompanyGetDetailsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetDetailsV1Response response = client.company().getDetailsV1("company_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Company.GetDetailsV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetDetailsV1(\n\t\tcontext.TODO(),\n\t\t"company_id",\n\t\topenregister.CompanyGetDetailsV1Params{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      cli: {
+        method: 'company get_details_v1',
+        example:
+          "openregister company get-details-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/company/$COMPANY_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -294,34 +294,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_contact_v0\n\n`client.company.getContactV0(company_id: string): { source_url: string; email?: string; phone?: string; vat_id?: string; }`\n\n**get** `/v0/company/{company_id}/contact`\n\nGet company contact information\n\n### Parameters\n\n- `company_id: string`\n\n### Returns\n\n- `{ source_url: string; email?: string; phone?: string; vat_id?: string; }`\n\n  - `source_url: string`\n  - `email?: string`\n  - `phone?: string`\n  - `vat_id?: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.company.getContactV0('company_id');\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'company get_contact_v0',
+      typescript: {
+        method: 'client.company.getContactV0',
         example:
-          "openregister company get-contact-v0 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
-      },
-      go: {
-        method: 'client.Company.GetContactV0',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetContactV0(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.VatID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v0/company/$COMPANY_ID/contact \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'company().getContactV0',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetContactV0Params;\nimport com.openregister.api.models.company.CompanyGetContactV0Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetContactV0Response response = client.company().getContactV0("company_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getContactV0('company_id');\n\nconsole.log(response.vat_id);",
       },
       python: {
         method: 'company.get_contact_v0',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.company.get_contact_v0(\n    "company_id",\n)\nprint(response.vat_id)',
       },
-      typescript: {
-        method: 'client.company.getContactV0',
+      java: {
+        method: 'company().getContactV0',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getContactV0('company_id');\n\nconsole.log(response.vat_id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetContactV0Params;\nimport com.openregister.api.models.company.CompanyGetContactV0Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetContactV0Response response = client.company().getContactV0("company_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Company.GetContactV0',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetContactV0(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.VatID)\n}\n',
+      },
+      cli: {
+        method: 'company get_contact_v0',
+        example:
+          "openregister company get-contact-v0 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v0/company/$COMPANY_ID/contact \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -339,34 +339,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_owners_v1\n\n`client.company.getOwnersV1(company_id: string, best_available?: boolean, export?: boolean, realtime?: boolean): { best_available: boolean; company_id: string; owners: object[]; sources: source[]; }`\n\n**get** `/v1/company/{company_id}/owners`\n\nGet company owners\n\n### Parameters\n\n- `company_id: string`\n\n- `best_available?: boolean`\n  When set to true, returns the best available owner data for AG and SE companies.\nThis data is extracted from Handelsregister documents and may not reflect the most current ownership state, as these\ndocument types are not filed on every ownership change.\nRequests for AG/SE companies without this flag return 404.\nNote: realtime and best_available cannot be used together at the moment.\n\n\n- `export?: boolean`\n  Setting this to true will return the owners of the company if they exist\nbut will skip processing the documents in case they weren't processed yet.\n\n\n- `realtime?: boolean`\n  Get the most up-to-date company information directly from the Handelsregister.\nWhen set to true, we fetch the latest data in real-time from the official German commercial register, ensuring you receive the most current company details.\nNote: Real-time requests take longer but guarantee the freshest data available.\n\n\n### Returns\n\n- `{ best_available: boolean; company_id: string; owners: { id: string; legal_person: object; name: string; natural_person: object; nominal_share: number; percentage_share: number; relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner'; start: string; type: 'natural_person' | 'legal_person'; }[]; sources: { document_url: string; }[]; }`\n\n  - `best_available: boolean`\n  - `company_id: string`\n  - `owners: { id: string; legal_person: { city: string; country: string; name: string; }; name: string; natural_person: { city: string; country: string; date_of_birth: string; first_name: string; full_name: string; last_name: string; }; nominal_share: number; percentage_share: number; relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner'; start: string; type: 'natural_person' | 'legal_person'; }[]`\n  - `sources: { document_url: string; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.company.getOwnersV1('company_id');\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'company get_owners_v1',
+      typescript: {
+        method: 'client.company.getOwnersV1',
         example:
-          "openregister company get-owners-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
-      },
-      go: {
-        method: 'client.Company.GetOwnersV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetOwnersV1(\n\t\tcontext.TODO(),\n\t\t"company_id",\n\t\topenregister.CompanyGetOwnersV1Params{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.CompanyID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/company/$COMPANY_ID/owners \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'company().getOwnersV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetOwnersV1Params;\nimport com.openregister.api.models.company.CompanyGetOwnersV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetOwnersV1Response response = client.company().getOwnersV1("company_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getOwnersV1('company_id');\n\nconsole.log(response.company_id);",
       },
       python: {
         method: 'company.get_owners_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.company.get_owners_v1(\n    company_id="company_id",\n)\nprint(response.company_id)',
       },
-      typescript: {
-        method: 'client.company.getOwnersV1',
+      java: {
+        method: 'company().getOwnersV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getOwnersV1('company_id');\n\nconsole.log(response.company_id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetOwnersV1Params;\nimport com.openregister.api.models.company.CompanyGetOwnersV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetOwnersV1Response response = client.company().getOwnersV1("company_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Company.GetOwnersV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetOwnersV1(\n\t\tcontext.TODO(),\n\t\t"company_id",\n\t\topenregister.CompanyGetOwnersV1Params{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.CompanyID)\n}\n',
+      },
+      cli: {
+        method: 'company get_owners_v1',
+        example:
+          "openregister company get-owners-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/company/$COMPANY_ID/owners \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -384,34 +384,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_historical_owners_v1\n\n`client.company.getHistoricalOwnersV1(company_id: string): { owners: object[]; }`\n\n**get** `/v1/company/{company_id}/owners/historical`\n\nGet historical owner changes\n\n### Parameters\n\n- `company_id: string`\n\n### Returns\n\n- `{ owners: { id: string; entity_type: string; first_appearance: string; name: string; ownership_history: { document_date: string; document_id: string; nominal_shares: number; percentage_shares: number; }[]; status: 'active' | 'removed'; country?: string; last_appearance?: string; }[]; }`\n\n  - `owners: { id: string; entity_type: string; first_appearance: string; name: string; ownership_history: { document_date: string; document_id: string; nominal_shares: number; percentage_shares: number; }[]; status: 'active' | 'removed'; country?: string; last_appearance?: string; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.company.getHistoricalOwnersV1('company_id');\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'company get_historical_owners_v1',
+      typescript: {
+        method: 'client.company.getHistoricalOwnersV1',
         example:
-          "openregister company get-historical-owners-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
-      },
-      go: {
-        method: 'client.Company.GetHistoricalOwnersV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetHistoricalOwnersV1(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Owners)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/company/$COMPANY_ID/owners/historical \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'company().getHistoricalOwnersV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetHistoricalOwnersV1Params;\nimport com.openregister.api.models.company.CompanyGetHistoricalOwnersV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetHistoricalOwnersV1Response response = client.company().getHistoricalOwnersV1("company_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getHistoricalOwnersV1('company_id');\n\nconsole.log(response.owners);",
       },
       python: {
         method: 'company.get_historical_owners_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.company.get_historical_owners_v1(\n    "company_id",\n)\nprint(response.owners)',
       },
-      typescript: {
-        method: 'client.company.getHistoricalOwnersV1',
+      java: {
+        method: 'company().getHistoricalOwnersV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getHistoricalOwnersV1('company_id');\n\nconsole.log(response.owners);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetHistoricalOwnersV1Params;\nimport com.openregister.api.models.company.CompanyGetHistoricalOwnersV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetHistoricalOwnersV1Response response = client.company().getHistoricalOwnersV1("company_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Company.GetHistoricalOwnersV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetHistoricalOwnersV1(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Owners)\n}\n',
+      },
+      cli: {
+        method: 'company get_historical_owners_v1',
+        example:
+          "openregister company get-historical-owners-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/company/$COMPANY_ID/owners/historical \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -429,34 +429,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_holdings_v1\n\n`client.company.getHoldingsV1(company_id: string): { company_id: string; holdings: object[]; }`\n\n**get** `/v1/company/{company_id}/holdings`\n\nGet company holdings\n\n### Parameters\n\n- `company_id: string`\n\n### Returns\n\n- `{ company_id: string; holdings: { company_id: string; end: string; name: string; nominal_share: number; percentage_share: number; relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner'; start: string; }[]; }`\n  Companies this entity owns or has invested in.\n\n\n  - `company_id: string`\n  - `holdings: { company_id: string; end: string; name: string; nominal_share: number; percentage_share: number; relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner'; start: string; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.company.getHoldingsV1('company_id');\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'company get_holdings_v1',
+      typescript: {
+        method: 'client.company.getHoldingsV1',
         example:
-          "openregister company get-holdings-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
-      },
-      go: {
-        method: 'client.Company.GetHoldingsV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetHoldingsV1(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.CompanyID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/company/$COMPANY_ID/holdings \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'company().getHoldingsV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetHoldingsV1Params;\nimport com.openregister.api.models.company.CompanyGetHoldingsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetHoldingsV1Response response = client.company().getHoldingsV1("company_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getHoldingsV1('company_id');\n\nconsole.log(response.company_id);",
       },
       python: {
         method: 'company.get_holdings_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.company.get_holdings_v1(\n    "company_id",\n)\nprint(response.company_id)',
       },
-      typescript: {
-        method: 'client.company.getHoldingsV1',
+      java: {
+        method: 'company().getHoldingsV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getHoldingsV1('company_id');\n\nconsole.log(response.company_id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetHoldingsV1Params;\nimport com.openregister.api.models.company.CompanyGetHoldingsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetHoldingsV1Response response = client.company().getHoldingsV1("company_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Company.GetHoldingsV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetHoldingsV1(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.CompanyID)\n}\n',
+      },
+      cli: {
+        method: 'company get_holdings_v1',
+        example:
+          "openregister company get-holdings-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/company/$COMPANY_ID/holdings \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -474,34 +474,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_financials_v1\n\n`client.company.getFinancialsV1(company_id: string): { merged: object; reports: object[]; }`\n\n**get** `/v1/company/{company_id}/financials`\n\nGet financial reports\n\n### Parameters\n\n- `company_id: string`\n\n### Returns\n\n- `{ merged: { aktiva: object; passiva: object; guv?: object; }; reports: { aktiva: object; consolidated: boolean; passiva: object; report_end_date: string; report_id: string; report_start_date: string; guv?: object; }[]; }`\n\n  - `merged: { aktiva: { rows: object[]; }; passiva: { rows: object[]; }; guv?: { rows: object[]; }; }`\n  - `reports: { aktiva: { rows: object[]; }; consolidated: boolean; passiva: { rows: object[]; }; report_end_date: string; report_id: string; report_start_date: string; guv?: { rows: object[]; }; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.company.getFinancialsV1('company_id');\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'company get_financials_v1',
+      typescript: {
+        method: 'client.company.getFinancialsV1',
         example:
-          "openregister company get-financials-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
-      },
-      go: {
-        method: 'client.Company.GetFinancialsV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetFinancialsV1(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Merged)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/company/$COMPANY_ID/financials \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'company().getFinancialsV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetFinancialsV1Params;\nimport com.openregister.api.models.company.CompanyGetFinancialsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetFinancialsV1Response response = client.company().getFinancialsV1("company_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getFinancialsV1('company_id');\n\nconsole.log(response.merged);",
       },
       python: {
         method: 'company.get_financials_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.company.get_financials_v1(\n    "company_id",\n)\nprint(response.merged)',
       },
-      typescript: {
-        method: 'client.company.getFinancialsV1',
+      java: {
+        method: 'company().getFinancialsV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getFinancialsV1('company_id');\n\nconsole.log(response.merged);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetFinancialsV1Params;\nimport com.openregister.api.models.company.CompanyGetFinancialsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetFinancialsV1Response response = client.company().getFinancialsV1("company_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Company.GetFinancialsV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetFinancialsV1(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Merged)\n}\n',
+      },
+      cli: {
+        method: 'company get_financials_v1',
+        example:
+          "openregister company get-financials-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/company/$COMPANY_ID/financials \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -519,34 +519,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_ubos_v1\n\n`client.company.getUbosV1(company_id: string): { company_id: string; ubos: object[]; }`\n\n**get** `/v1/company/{company_id}/ubo`\n\nGet company end owners\n\n### Parameters\n\n- `company_id: string`\n\n### Returns\n\n- `{ company_id: string; ubos: { id: string; legal_person: object; max_percentage_share: number; name: string; natural_person: object; percentage_share: number; }[]; }`\n\n  - `company_id: string`\n  - `ubos: { id: string; legal_person: { city: string; country: string; name: string; }; max_percentage_share: number; name: string; natural_person: { city: string; country: string; date_of_birth: string; first_name: string; full_name: string; last_name: string; }; percentage_share: number; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.company.getUbosV1('company_id');\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'company get_ubos_v1',
+      typescript: {
+        method: 'client.company.getUbosV1',
         example:
-          "openregister company get-ubos-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
-      },
-      go: {
-        method: 'client.Company.GetUbosV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetUbosV1(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.CompanyID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/company/$COMPANY_ID/ubo \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'company().getUbosV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetUbosV1Params;\nimport com.openregister.api.models.company.CompanyGetUbosV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetUbosV1Response response = client.company().getUbosV1("company_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getUbosV1('company_id');\n\nconsole.log(response.company_id);",
       },
       python: {
         method: 'company.get_ubos_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.company.get_ubos_v1(\n    "company_id",\n)\nprint(response.company_id)',
       },
-      typescript: {
-        method: 'client.company.getUbosV1',
+      java: {
+        method: 'company().getUbosV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.company.getUbosV1('company_id');\n\nconsole.log(response.company_id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.company.CompanyGetUbosV1Params;\nimport com.openregister.api.models.company.CompanyGetUbosV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CompanyGetUbosV1Response response = client.company().getUbosV1("company_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Company.GetUbosV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Company.GetUbosV1(context.TODO(), "company_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.CompanyID)\n}\n',
+      },
+      cli: {
+        method: 'company get_ubos_v1',
+        example:
+          "openregister company get-ubos-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/company/$COMPANY_ID/ubo \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -564,34 +564,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_cached_v1\n\n`client.document.getCachedV1(document_id: string): { id: string; date: string; name: string; type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list'; url: string; }`\n\n**get** `/v1/document/{document_id}`\n\nGet document information\n\n### Parameters\n\n- `document_id: string`\n\n### Returns\n\n- `{ id: string; date: string; name: string; type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list'; url: string; }`\n\n  - `id: string`\n  - `date: string`\n  - `name: string`\n  - `type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list'`\n  - `url: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst document = await client.document.getCachedV1('document_id');\n\nconsole.log(document);\n```",
     perLanguage: {
-      cli: {
-        method: 'document get_cached_v1',
+      typescript: {
+        method: 'client.document.getCachedV1',
         example:
-          "openregister document get-cached-v1 \\\n  --api-key 'My API Key' \\\n  --document-id document_id",
-      },
-      go: {
-        method: 'client.Document.GetCachedV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdocument, err := client.Document.GetCachedV1(context.TODO(), "document_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", document.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/document/$DOCUMENT_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'document().getCachedV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.document.Document;\nimport com.openregister.api.models.document.DocumentGetCachedV1Params;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        Document document = client.document().getCachedV1("document_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst document = await client.document.getCachedV1('document_id');\n\nconsole.log(document.id);",
       },
       python: {
         method: 'document.get_cached_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\ndocument = client.document.get_cached_v1(\n    "document_id",\n)\nprint(document.id)',
       },
-      typescript: {
-        method: 'client.document.getCachedV1',
+      java: {
+        method: 'document().getCachedV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst document = await client.document.getCachedV1('document_id');\n\nconsole.log(document.id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.document.Document;\nimport com.openregister.api.models.document.DocumentGetCachedV1Params;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        Document document = client.document().getCachedV1("document_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Document.GetCachedV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tdocument, err := client.Document.GetCachedV1(context.TODO(), "document_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", document.ID)\n}\n',
+      },
+      cli: {
+        method: 'document get_cached_v1',
+        example:
+          "openregister document get-cached-v1 \\\n  --api-key 'My API Key' \\\n  --document-id document_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/document/$DOCUMENT_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -608,34 +608,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_realtime_v1\n\n`client.document.getRealtimeV1(company_id: string, document_category: string): { category: string; file_date: string; file_name: string; url: string; }`\n\n**get** `/v1/document`\n\nFetch a document in realtime.\n\n### Parameters\n\n- `company_id: string`\n\n- `document_category: string`\n\n### Returns\n\n- `{ category: string; file_date: string; file_name: string; url: string; }`\n\n  - `category: string`\n  - `file_date: string`\n  - `file_name: string`\n  - `url: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.document.getRealtimeV1({ company_id: 'company_id', document_category: 'current_printout' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'document get_realtime_v1',
+      typescript: {
+        method: 'client.document.getRealtimeV1',
         example:
-          "openregister document get-realtime-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id \\\n  --document-category current_printout",
-      },
-      go: {
-        method: 'client.Document.GetRealtimeV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Document.GetRealtimeV1(context.TODO(), openregister.DocumentGetRealtimeV1Params{\n\t\tCompanyID:        "company_id",\n\t\tDocumentCategory: openregister.DocumentGetRealtimeV1ParamsDocumentCategoryCurrentPrintout,\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Category)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/document \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'document().getRealtimeV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.document.DocumentGetRealtimeV1Params;\nimport com.openregister.api.models.document.DocumentGetRealtimeV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        DocumentGetRealtimeV1Params params = DocumentGetRealtimeV1Params.builder()\n            .companyId("company_id")\n            .documentCategory(DocumentGetRealtimeV1Params.DocumentCategory.CURRENT_PRINTOUT)\n            .build();\n        DocumentGetRealtimeV1Response response = client.document().getRealtimeV1(params);\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.document.getRealtimeV1({\n  company_id: 'company_id',\n  document_category: 'current_printout',\n});\n\nconsole.log(response.category);",
       },
       python: {
         method: 'document.get_realtime_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.document.get_realtime_v1(\n    company_id="company_id",\n    document_category="current_printout",\n)\nprint(response.category)',
       },
-      typescript: {
-        method: 'client.document.getRealtimeV1',
+      java: {
+        method: 'document().getRealtimeV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.document.getRealtimeV1({\n  company_id: 'company_id',\n  document_category: 'current_printout',\n});\n\nconsole.log(response.category);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.document.DocumentGetRealtimeV1Params;\nimport com.openregister.api.models.document.DocumentGetRealtimeV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        DocumentGetRealtimeV1Params params = DocumentGetRealtimeV1Params.builder()\n            .companyId("company_id")\n            .documentCategory(DocumentGetRealtimeV1Params.DocumentCategory.CURRENT_PRINTOUT)\n            .build();\n        DocumentGetRealtimeV1Response response = client.document().getRealtimeV1(params);\n    }\n}',
+      },
+      go: {
+        method: 'client.Document.GetRealtimeV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Document.GetRealtimeV1(context.TODO(), openregister.DocumentGetRealtimeV1Params{\n\t\tCompanyID:        "company_id",\n\t\tDocumentCategory: openregister.DocumentGetRealtimeV1ParamsDocumentCategoryCurrentPrintout,\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Category)\n}\n',
+      },
+      cli: {
+        method: 'document get_realtime_v1',
+        example:
+          "openregister document get-realtime-v1 \\\n  --api-key 'My API Key' \\\n  --company-id company_id \\\n  --document-category current_printout",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/document \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -653,34 +653,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_details_v1\n\n`client.person.getDetailsV1(person_id: string): { id: string; age: number; city: string; date_of_birth: string; first_name: string; last_name: string; management_positions: object[]; }`\n\n**get** `/v1/person/{person_id}`\n\nGet detailed person information\n\n### Parameters\n\n- `person_id: string`\n\n### Returns\n\n- `{ id: string; age: number; city: string; date_of_birth: string; first_name: string; last_name: string; management_positions: { company_name: string; register_id: string; role: string; start_date: string; end_date?: string; }[]; }`\n\n  - `id: string`\n  - `age: number`\n  - `city: string`\n  - `date_of_birth: string`\n  - `first_name: string`\n  - `last_name: string`\n  - `management_positions: { company_name: string; register_id: string; role: string; start_date: string; end_date?: string; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.person.getDetailsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'person get_details_v1',
+      typescript: {
+        method: 'client.person.getDetailsV1',
         example:
-          "openregister person get-details-v1 \\\n  --api-key 'My API Key' \\\n  --person-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-      },
-      go: {
-        method: 'client.Person.GetDetailsV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Person.GetDetailsV1(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/person/$PERSON_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'person().getDetailsV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.person.PersonGetDetailsV1Params;\nimport com.openregister.api.models.person.PersonGetDetailsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        PersonGetDetailsV1Response response = client.person().getDetailsV1("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.person.getDetailsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(response.id);",
       },
       python: {
         method: 'person.get_details_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.person.get_details_v1(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response.id)',
       },
-      typescript: {
-        method: 'client.person.getDetailsV1',
+      java: {
+        method: 'person().getDetailsV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.person.getDetailsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(response.id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.person.PersonGetDetailsV1Params;\nimport com.openregister.api.models.person.PersonGetDetailsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        PersonGetDetailsV1Response response = client.person().getDetailsV1("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      go: {
+        method: 'client.Person.GetDetailsV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Person.GetDetailsV1(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      cli: {
+        method: 'person get_details_v1',
+        example:
+          "openregister person get-details-v1 \\\n  --api-key 'My API Key' \\\n  --person-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/person/$PERSON_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -698,34 +698,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_holdings_v1\n\n`client.person.getHoldingsV1(person_id: string): { holdings: object[]; person_id: string; }`\n\n**get** `/v1/person/{person_id}/holdings`\n\nGet person holdings\n\n### Parameters\n\n- `person_id: string`\n\n### Returns\n\n- `{ holdings: { company_id: string; end: string; name: string; nominal_share: number; percentage_share: number; relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner'; start: string; }[]; person_id: string; }`\n  Companies this entity owns or has invested in.\n\n\n  - `holdings: { company_id: string; end: string; name: string; nominal_share: number; percentage_share: number; relation_type: 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner'; start: string; }[]`\n  - `person_id: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.person.getHoldingsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'person get_holdings_v1',
+      typescript: {
+        method: 'client.person.getHoldingsV1',
         example:
-          "openregister person get-holdings-v1 \\\n  --api-key 'My API Key' \\\n  --person-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-      },
-      go: {
-        method: 'client.Person.GetHoldingsV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Person.GetHoldingsV1(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.PersonID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/person/$PERSON_ID/holdings \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'person().getHoldingsV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.person.PersonGetHoldingsV1Params;\nimport com.openregister.api.models.person.PersonGetHoldingsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        PersonGetHoldingsV1Response response = client.person().getHoldingsV1("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.person.getHoldingsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(response.person_id);",
       },
       python: {
         method: 'person.get_holdings_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.person.get_holdings_v1(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response.person_id)',
       },
-      typescript: {
-        method: 'client.person.getHoldingsV1',
+      java: {
+        method: 'person().getHoldingsV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.person.getHoldingsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(response.person_id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.person.PersonGetHoldingsV1Params;\nimport com.openregister.api.models.person.PersonGetHoldingsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        PersonGetHoldingsV1Response response = client.person().getHoldingsV1("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+      },
+      go: {
+        method: 'client.Person.GetHoldingsV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Person.GetHoldingsV1(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.PersonID)\n}\n',
+      },
+      cli: {
+        method: 'person get_holdings_v1',
+        example:
+          "openregister person get-holdings-v1 \\\n  --api-key 'My API Key' \\\n  --person-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/person/$PERSON_ID/holdings \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -743,34 +743,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.monitor.create(entity_id: string, entity_type: 'company' | 'person', preferences: string[]): { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }`\n\n**post** `/v1/monitor`\n\nCreate webhook monitor item\n\n### Parameters\n\n- `entity_id: string`\n  For `company` this is the register ID (e.g. `DE-HRB-F1103-267645`).\nFor `person` this is the person UUID.\n\n\n- `entity_type: 'company' | 'person'`\n  Type of the entity to monitor.\n\n- `preferences: string[]`\n  Preferences for the entity to monitor.\nUse `WebhookMonitorCompanyPreference` values when `entity_type` is `company`,\nand `WebhookMonitorPersonPreference` values when `entity_type` is `person`.\n\n\n### Returns\n\n- `{ disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }`\n\n  - `disabled: boolean`\n  - `entity_id: string`\n  - `entity_type: 'company' | 'person'`\n  - `preferences: string[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst monitor = await client.monitor.create({\n  entity_id: 'entity_id',\n  entity_type: 'company',\n  preferences: ['basic'],\n});\n\nconsole.log(monitor);\n```",
     perLanguage: {
-      cli: {
-        method: 'monitor create',
+      typescript: {
+        method: 'client.monitor.create',
         example:
-          "openregister monitor create \\\n  --api-key 'My API Key' \\\n  --entity-id entity_id \\\n  --entity-type company \\\n  --preference basic",
-      },
-      go: {
-        method: 'client.Monitor.New',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmonitor, err := client.Monitor.New(context.TODO(), openregister.MonitorNewParams{\n\t\tEntityID:    "entity_id",\n\t\tEntityType:  openregister.MonitorNewParamsEntityTypeCompany,\n\t\tPreferences: []string{"basic"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", monitor.EntityID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/monitor \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY" \\\n    -d \'{\n          "entity_id": "entity_id",\n          "entity_type": "company",\n          "preferences": [\n            "basic"\n          ]\n        }\'',
-      },
-      java: {
-        method: 'monitor().create',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.monitor.MonitorCreateParams;\nimport com.openregister.api.models.monitor.MonitorCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        MonitorCreateParams params = MonitorCreateParams.builder()\n            .entityId("entity_id")\n            .entityType(MonitorCreateParams.EntityType.COMPANY)\n            .addPreference(MonitorCreateParams.Preference.BASIC)\n            .build();\n        MonitorCreateResponse monitor = client.monitor().create(params);\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst monitor = await client.monitor.create({\n  entity_id: 'entity_id',\n  entity_type: 'company',\n  preferences: ['basic'],\n});\n\nconsole.log(monitor.entity_id);",
       },
       python: {
         method: 'monitor.create',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nmonitor = client.monitor.create(\n    entity_id="entity_id",\n    entity_type="company",\n    preferences=["basic"],\n)\nprint(monitor.entity_id)',
       },
-      typescript: {
-        method: 'client.monitor.create',
+      java: {
+        method: 'monitor().create',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst monitor = await client.monitor.create({\n  entity_id: 'entity_id',\n  entity_type: 'company',\n  preferences: ['basic'],\n});\n\nconsole.log(monitor.entity_id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.monitor.MonitorCreateParams;\nimport com.openregister.api.models.monitor.MonitorCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        MonitorCreateParams params = MonitorCreateParams.builder()\n            .entityId("entity_id")\n            .entityType(MonitorCreateParams.EntityType.COMPANY)\n            .addPreference(MonitorCreateParams.Preference.BASIC)\n            .build();\n        MonitorCreateResponse monitor = client.monitor().create(params);\n    }\n}',
+      },
+      go: {
+        method: 'client.Monitor.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmonitor, err := client.Monitor.New(context.TODO(), openregister.MonitorNewParams{\n\t\tEntityID:    "entity_id",\n\t\tEntityType:  openregister.MonitorNewParamsEntityTypeCompany,\n\t\tPreferences: []string{"basic"},\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", monitor.EntityID)\n}\n',
+      },
+      cli: {
+        method: 'monitor create',
+        example:
+          "openregister monitor create \\\n  --api-key 'My API Key' \\\n  --entity-id entity_id \\\n  --entity-type company \\\n  --preference basic",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/monitor \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY" \\\n    -d \'{\n          "entity_id": "entity_id",\n          "entity_type": "company",\n          "preferences": [\n            "basic"\n          ]\n        }\'',
       },
     },
   },
@@ -787,33 +787,33 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.monitor.list(): { items: object[]; }`\n\n**get** `/v1/monitor`\n\nList webhook monitor items\n\n### Returns\n\n- `{ items: { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }[]; }`\n\n  - `items: { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst monitors = await client.monitor.list();\n\nconsole.log(monitors);\n```",
     perLanguage: {
-      cli: {
-        method: 'monitor list',
-        example: "openregister monitor list \\\n  --api-key 'My API Key'",
-      },
-      go: {
-        method: 'client.Monitor.List',
+      typescript: {
+        method: 'client.monitor.list',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmonitors, err := client.Monitor.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", monitors.Items)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/monitor \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'monitor().list',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.monitor.MonitorListParams;\nimport com.openregister.api.models.monitor.MonitorListResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        MonitorListResponse monitors = client.monitor().list();\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst monitors = await client.monitor.list();\n\nconsole.log(monitors.items);",
       },
       python: {
         method: 'monitor.list',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nmonitors = client.monitor.list()\nprint(monitors.items)',
       },
-      typescript: {
-        method: 'client.monitor.list',
+      java: {
+        method: 'monitor().list',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst monitors = await client.monitor.list();\n\nconsole.log(monitors.items);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.monitor.MonitorListParams;\nimport com.openregister.api.models.monitor.MonitorListResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        MonitorListResponse monitors = client.monitor().list();\n    }\n}',
+      },
+      go: {
+        method: 'client.Monitor.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tmonitors, err := client.Monitor.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", monitors.Items)\n}\n',
+      },
+      cli: {
+        method: 'monitor list',
+        example: "openregister monitor list \\\n  --api-key 'My API Key'",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/monitor \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -829,33 +829,33 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.monitor.delete(entity_id: string): void`\n\n**delete** `/v1/monitor/{entity_id}`\n\nDelete webhook monitor item\n\n### Parameters\n\n- `entity_id: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nawait client.monitor.delete('entity_id')\n```",
     perLanguage: {
-      cli: {
-        method: 'monitor delete',
-        example: "openregister monitor delete \\\n  --api-key 'My API Key' \\\n  --entity-id entity_id",
-      },
-      go: {
-        method: 'client.Monitor.Delete',
+      typescript: {
+        method: 'client.monitor.delete',
         example:
-          'package main\n\nimport (\n\t"context"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Monitor.Delete(context.TODO(), "entity_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/monitor/$ENTITY_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'monitor().delete',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.monitor.MonitorDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        client.monitor().delete("entity_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.monitor.delete('entity_id');",
       },
       python: {
         method: 'monitor.delete',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nclient.monitor.delete(\n    "entity_id",\n)',
       },
-      typescript: {
-        method: 'client.monitor.delete',
+      java: {
+        method: 'monitor().delete',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.monitor.delete('entity_id');",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.monitor.MonitorDeleteParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        client.monitor().delete("entity_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Monitor.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Monitor.Delete(context.TODO(), "entity_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'monitor delete',
+        example: "openregister monitor delete \\\n  --api-key 'My API Key' \\\n  --entity-id entity_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/monitor/$ENTITY_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
@@ -872,34 +872,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## set_credentials_v1\n\n`client.transparenzregister.setCredentialsV1(password: string, username: string, name?: string): void`\n\n**post** `/v1/transparenzregister/credentials`\n\nStore username and password credentials for accessing the Transparenzregister API.\nThese credentials will be used for subsequent requests to retrieve company documents.\nCredential names are user-scoped; the reserved name `sandbox` cannot be used.\nCredentials are validated against Transparenzregister before they are persisted.\n\n\n### Parameters\n\n- `password: string`\n  Password for Transparenzregister API access.\n\n\n- `username: string`\n  Username for Transparenzregister API access.\nExample: \"compliance@example.com\"\n\n\n- `name?: string`\n  Name to identify this set of credentials. Allows storing multiple\nTransparenzregister credentials per user (e.g., for different accounts\nor clients). Defaults to 'default' if not provided.\nCannot be `sandbox` because that name is reserved for test-mode extracts.\nExample: \"client_a\"\n\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nawait client.transparenzregister.setCredentialsV1({ password: 'password', username: 'username' })\n```",
     perLanguage: {
-      cli: {
-        method: 'transparenzregister set_credentials_v1',
+      typescript: {
+        method: 'client.transparenzregister.setCredentialsV1',
         example:
-          "openregister transparenzregister set-credentials-v1 \\\n  --api-key 'My API Key' \\\n  --password password \\\n  --username username",
-      },
-      go: {
-        method: 'client.Transparenzregister.SetCredentialsV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Transparenzregister.SetCredentialsV1(context.TODO(), openregister.TransparenzregisterSetCredentialsV1Params{\n\t\tPassword: "password",\n\t\tUsername: "username",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/transparenzregister/credentials \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY" \\\n    -d \'{\n          "password": "password",\n          "username": "username"\n        }\'',
-      },
-      java: {
-        method: 'transparenzregister().setCredentialsV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.TransparenzregisterSetCredentialsV1Params;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        TransparenzregisterSetCredentialsV1Params params = TransparenzregisterSetCredentialsV1Params.builder()\n            .password("password")\n            .username("username")\n            .build();\n        client.transparenzregister().setCredentialsV1(params);\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.transparenzregister.setCredentialsV1({ password: 'password', username: 'username' });",
       },
       python: {
         method: 'transparenzregister.set_credentials_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nclient.transparenzregister.set_credentials_v1(\n    password="password",\n    username="username",\n)',
       },
-      typescript: {
-        method: 'client.transparenzregister.setCredentialsV1',
+      java: {
+        method: 'transparenzregister().setCredentialsV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nawait client.transparenzregister.setCredentialsV1({ password: 'password', username: 'username' });",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.TransparenzregisterSetCredentialsV1Params;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        TransparenzregisterSetCredentialsV1Params params = TransparenzregisterSetCredentialsV1Params.builder()\n            .password("password")\n            .username("username")\n            .build();\n        client.transparenzregister().setCredentialsV1(params);\n    }\n}',
+      },
+      go: {
+        method: 'client.Transparenzregister.SetCredentialsV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\terr := client.Transparenzregister.SetCredentialsV1(context.TODO(), openregister.TransparenzregisterSetCredentialsV1Params{\n\t\tPassword: "password",\n\t\tUsername: "username",\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n}\n',
+      },
+      cli: {
+        method: 'transparenzregister set_credentials_v1',
+        example:
+          "openregister transparenzregister set-credentials-v1 \\\n  --api-key 'My API Key' \\\n  --password password \\\n  --username username",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/transparenzregister/credentials \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY" \\\n    -d \'{\n          "password": "password",\n          "username": "username"\n        }\'',
       },
     },
   },
@@ -917,33 +917,33 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create_v1\n\n`client.transparenzregister.extract.createV1(company_id?: string, X-Credential-Name?: string): { id: string; company_id: string; ekrn: string; status: 'processing'; submitted_at: string; }`\n\n**post** `/v1/transparenzregister/extracts`\n\nSubmit a Transparenzregister extract request and return an extract resource with processing status.\n\nSandbox integration testing (recommended for all non-production testing):\n- Send `X-Credential-Name: sandbox`.\n- Do not send `company_id` (an empty body `{}` is valid).\n- OpenRegister uses the Transparenzregister test environment and built-in test authentication.\n- The request is submitted with the fixed test EKRN `DE727032388716`.\n- The response has `company_id: null`.\n\nProduction usage:\n- Always set `X-Credential-Name` to `default` or another stored credential name.\n- `company_id` is required and must resolve to exactly one Transparenzregister legal entity.\n\n\n### Parameters\n\n- `company_id?: string`\n  Unique company identifier.\nRequired unless `X-Credential-Name` is set to `sandbox`.\nIn sandbox mode this field should be omitted.\nExample: DE-HRB-F1103-267645\n\n\n- `X-Credential-Name?: string`\n\n### Returns\n\n- `{ id: string; company_id: string; ekrn: string; status: 'processing'; submitted_at: string; }`\n  Response from creating a Transparenzregister extract.\nOnly fields known at creation time are present.\nPoll `GET /v1/transparenzregister/extracts/{extract_id}` to retrieve report and documents.\n\n\n  - `id: string`\n  - `company_id: string`\n  - `ekrn: string`\n  - `status: 'processing'`\n  - `submitted_at: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.transparenzregister.extract.createV1();\n\nconsole.log(response);\n```",
     perLanguage: {
-      cli: {
-        method: 'extract create_v1',
-        example: "openregister transparenzregister:extract create-v1 \\\n  --api-key 'My API Key'",
-      },
-      go: {
-        method: 'client.Transparenzregister.Extract.NewV1',
+      typescript: {
+        method: 'client.transparenzregister.extract.createV1',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Transparenzregister.Extract.NewV1(context.TODO(), openregister.TransparenzregisterExtractNewV1Params{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
-      },
-      http: {
-        example:
-          "curl https://api.openregister.de/v1/transparenzregister/extracts \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $OPENREGISTER_API_KEY\" \\\n    -d '{}'",
-      },
-      java: {
-        method: 'transparenzregister().extract().createV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.extract.ExtractCreateV1Params;\nimport com.openregister.api.models.transparenzregister.extract.ExtractCreateV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        ExtractCreateV1Response response = client.transparenzregister().extract().createV1();\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.transparenzregister.extract.createV1();\n\nconsole.log(response.id);",
       },
       python: {
         method: 'transparenzregister.extract.create_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.transparenzregister.extract.create_v1()\nprint(response.id)',
       },
-      typescript: {
-        method: 'client.transparenzregister.extract.createV1',
+      java: {
+        method: 'transparenzregister().extract().createV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.transparenzregister.extract.createV1();\n\nconsole.log(response.id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.extract.ExtractCreateV1Params;\nimport com.openregister.api.models.transparenzregister.extract.ExtractCreateV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        ExtractCreateV1Response response = client.transparenzregister().extract().createV1();\n    }\n}',
+      },
+      go: {
+        method: 'client.Transparenzregister.Extract.NewV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Transparenzregister.Extract.NewV1(context.TODO(), openregister.TransparenzregisterExtractNewV1Params{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
+      },
+      cli: {
+        method: 'extract create_v1',
+        example: "openregister transparenzregister:extract create-v1 \\\n  --api-key 'My API Key'",
+      },
+      http: {
+        example:
+          "curl https://api.openregister.de/v1/transparenzregister/extracts \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $OPENREGISTER_API_KEY\" \\\n    -d '{}'",
       },
     },
   },
@@ -962,34 +962,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_v1\n\n`client.transparenzregister.extract.getV1(extract_id: string): { id: string; status: 'completed' | 'processing' | 'failed'; company_id?: string; completed_at?: string; documents?: transparenzregister_document[]; ekrn?: string; reference_number?: string; report?: transparenzregister_report; submitted_at?: string; }`\n\n**get** `/v1/transparenzregister/extracts/{extract_id}`\n\nGet the results of a Transparenzregister extract request. This endpoint handles all internal complexity including\npolling request status, selecting all available documents, creating Transparenzregister baskets, and\nreturning download URLs when ready. If the request is still processing, it will return a pending status.\nPolling reuses the credential mode stored on the extract at create time. Sandbox extracts keep using the\nTransparenzregister test client automatically; no credential header is accepted on this endpoint.\n\n\n### Parameters\n\n- `extract_id: string`\n\n### Returns\n\n- `{ id: string; status: 'completed' | 'processing' | 'failed'; company_id?: string; completed_at?: string; documents?: { document_id: string; filename: string; format: string; url: string; }[]; ekrn?: string; reference_number?: string; report?: { created_at?: string; fictional_ubo_reason?: string; groups?: transparenzregister_group[]; notice_type?: string; status_flags?: transparenzregister_status_flags; ubos?: transparenzregister_ubo[]; validity?: transparenzregister_validity; }; submitted_at?: string; }`\n  Transparenzregister extract resource including processing state, parsed report, and downloadable documents.\n\n\n  - `id: string`\n  - `status: 'completed' | 'processing' | 'failed'`\n  - `company_id?: string`\n  - `completed_at?: string`\n  - `documents?: { document_id: string; filename: string; format: string; url: string; }[]`\n  - `ekrn?: string`\n  - `reference_number?: string`\n  - `report?: { created_at?: string; fictional_ubo_reason?: string; groups?: { description?: string; interest_type?: string; position?: number; }[]; notice_type?: string; status_flags?: { corrected_by_reference?: string; corrected_references?: string[]; deleted?: boolean; deletion_date?: string; discrepancy_note?: string; }; ubos?: { interest?: transparenzregister_ubo_interest; natural_person?: transparenzregister_ubo_natural_person; position?: number; }[]; validity?: { from?: transparenzregister_validity_point; until?: transparenzregister_validity_point; }; }`\n  - `submitted_at?: string`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst transparenzregisterExtract = await client.transparenzregister.extract.getV1('extract_id');\n\nconsole.log(transparenzregisterExtract);\n```",
     perLanguage: {
-      cli: {
-        method: 'extract get_v1',
+      typescript: {
+        method: 'client.transparenzregister.extract.getV1',
         example:
-          "openregister transparenzregister:extract get-v1 \\\n  --api-key 'My API Key' \\\n  --extract-id extract_id",
-      },
-      go: {
-        method: 'client.Transparenzregister.Extract.GetV1',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\ttransparenzregisterExtract, err := client.Transparenzregister.Extract.GetV1(context.TODO(), "extract_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", transparenzregisterExtract.ID)\n}\n',
-      },
-      http: {
-        example:
-          'curl https://api.openregister.de/v1/transparenzregister/extracts/$EXTRACT_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
-      },
-      java: {
-        method: 'transparenzregister().extract().getV1',
-        example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.extract.ExtractGetV1Params;\nimport com.openregister.api.models.transparenzregister.extract.TransparenzregisterExtract;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        TransparenzregisterExtract transparenzregisterExtract = client.transparenzregister().extract().getV1("extract_id");\n    }\n}',
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst transparenzregisterExtract = await client.transparenzregister.extract.getV1('extract_id');\n\nconsole.log(transparenzregisterExtract.id);",
       },
       python: {
         method: 'transparenzregister.extract.get_v1',
         example:
           'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\ntransparenzregister_extract = client.transparenzregister.extract.get_v1(\n    "extract_id",\n)\nprint(transparenzregister_extract.id)',
       },
-      typescript: {
-        method: 'client.transparenzregister.extract.getV1',
+      java: {
+        method: 'transparenzregister().extract().getV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst transparenzregisterExtract = await client.transparenzregister.extract.getV1('extract_id');\n\nconsole.log(transparenzregisterExtract.id);",
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.transparenzregister.extract.ExtractGetV1Params;\nimport com.openregister.api.models.transparenzregister.extract.TransparenzregisterExtract;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        TransparenzregisterExtract transparenzregisterExtract = client.transparenzregister().extract().getV1("extract_id");\n    }\n}',
+      },
+      go: {
+        method: 'client.Transparenzregister.Extract.GetV1',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\ttransparenzregisterExtract, err := client.Transparenzregister.Extract.GetV1(context.TODO(), "extract_id")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", transparenzregisterExtract.ID)\n}\n',
+      },
+      cli: {
+        method: 'extract get_v1',
+        example:
+          "openregister transparenzregister:extract get-v1 \\\n  --api-key 'My API Key' \\\n  --extract-id extract_id",
+      },
+      http: {
+        example:
+          'curl https://api.openregister.de/v1/transparenzregister/extracts/$EXTRACT_ID \\\n    -H "Authorization: Bearer $OPENREGISTER_API_KEY"',
       },
     },
   },
