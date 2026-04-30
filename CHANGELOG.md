@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.4.0 (2026-04-30)
+
+Full Changelog: [v4.3.0...v4.4.0](https://github.com/oregister/openregister-typescript/compare/v4.3.0...v4.4.0)
+
+### Features
+
+* support setting headers via env ([f770c4f](https://github.com/oregister/openregister-typescript/commit/f770c4fda2ae864f6f02f4e31388c62518b9bc3e))
+
+
+### Chores
+
+* avoid formatting file that gets changed during releases ([846a51a](https://github.com/oregister/openregister-typescript/commit/846a51a64d5179fb846f960691e0047cd016e7de))
+* **format:** run eslint and prettier separately ([2f713e3](https://github.com/oregister/openregister-typescript/commit/2f713e350c6b27da0b41fa9850f59f96729dfcc4))
+* **internal:** codegen related update ([61750a7](https://github.com/oregister/openregister-typescript/commit/61750a77464f7c335efe6c06ea8b514bfcaa1236))
+* **internal:** fix MCP cloudflare worker builds ([9098ffc](https://github.com/oregister/openregister-typescript/commit/9098ffce1b9674bccc9bb2fc83c2312089ea170f))
+* **internal:** more robust bootstrap script ([e87180f](https://github.com/oregister/openregister-typescript/commit/e87180f14e46e47e969d48b02291692b583eeeac))
+* **internal:** update docs ordering ([83ebd22](https://github.com/oregister/openregister-typescript/commit/83ebd22ff61ecc8a3c0ddc87f960a84e966e5a17))
+* restructure docs search code ([f42d3a5](https://github.com/oregister/openregister-typescript/commit/f42d3a5a14a044e4d0dfd1ef43a6f3c96a2b778b))
+
 ## 4.3.0 (2026-04-21)
 
 Full Changelog: [v4.2.0...v4.3.0](https://github.com/oregister/openregister-typescript/compare/v4.2.0...v4.3.0)
