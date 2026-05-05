@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.4.1 (2026-05-05)
+
+Full Changelog: [v4.4.0...v4.4.1](https://github.com/oregister/openregister-typescript/compare/v4.4.0...v4.4.1)
+
+### Documentation
+
+* clarify forwards compat behavior ([111161a](https://github.com/oregister/openregister-typescript/commit/111161ae53671b16aa78ed602d9698d769949153))
+
 ## 4.4.0 (2026-04-30)
 
 Full Changelog: [v4.3.0...v4.4.0](https://github.com/oregister/openregister-typescript/compare/v4.3.0...v4.4.0)
