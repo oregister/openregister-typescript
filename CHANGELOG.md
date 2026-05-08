@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.4.1 (2026-05-08)
+
+Full Changelog: [v4.4.0...v4.4.1](https://github.com/oregister/openregister-typescript/compare/v4.4.0...v4.4.1)
+
+### Chores
+
+* **internal:** fix MCP cloudflare worker initialization ([c332b4b](https://github.com/oregister/openregister-typescript/commit/c332b4ba633df8822e8548357502fb1300c1d9b0))
+* redact api-key headers in debug logs ([a68e90b](https://github.com/oregister/openregister-typescript/commit/a68e90b79dc99e6efca83ac673de253f2777814f))
+
+
+### Documentation
+
+* clarify forwards compat behavior ([111161a](https://github.com/oregister/openregister-typescript/commit/111161ae53671b16aa78ed602d9698d769949153))
+* update logging docs ([ee319ab](https://github.com/oregister/openregister-typescript/commit/ee319abca4c55590095794595575b8817e73446e))
+* update with proxy auth info ([4a553a9](https://github.com/oregister/openregister-typescript/commit/4a553a91583065b4e7fa611853ae84f59da776f2))
+
 ## 4.4.0 (2026-04-30)
 
 Full Changelog: [v4.3.0...v4.4.0](https://github.com/oregister/openregister-typescript/compare/v4.3.0...v4.4.0)
