@@ -79,5 +79,6 @@ async function fetchLatestInstructionsFromApi(stainlessApiKey: string | undefine
 
   instructions ??= ((await response.json()) as { instructions: string }).instructions;
 
+  instructions += '\nMonetary values are in cents.';
   return instructions;
 }
