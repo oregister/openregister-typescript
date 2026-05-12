@@ -9,9 +9,6 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { ClientOptions } from 'openregister';
 import Openregister from 'openregister';
-import docsSearchTool from './docs-search-tool';
-import { setLocalSearch } from './docs-search-tool';
-import { LocalDocsSearch } from './local-docs-search';
 import { getInstructions } from './instructions';
 import { McpOptions } from './options';
 import { HandlerFunction, McpRequestContext, ToolCallResult, McpTool } from './types';
@@ -63,12 +60,6 @@ export async function initMcpServer(params: {
     warn: logAtLevel('warning'),
     error: logAtLevel('error'),
   };
-
-  if (params.mcpOptions?.docsSearchMode === 'local') {
-    const docsDir = params.mcpOptions?.docsDir;
-    const localSearch = await LocalDocsSearch.create(docsDir ? { docsDir } : undefined);
-    setLocalSearch(localSearch);
-  }
 
   let _client: Openregister | undefined;
   let _clientError: Error | undefined;
@@ -176,9 +167,6 @@ export async function initMcpServer(params: {
 export function selectTools(options?: McpOptions): McpTool[] {
   const includedTools = [];
 
-  if (options?.includeDocsTools ?? true) {
-    includedTools.push(docsSearchTool);
-  }
   return includedTools;
 }
 
