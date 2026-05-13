@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.4.2 (2026-05-13)
+
+Full Changelog: [v4.4.1...v4.4.2](https://github.com/oregister/openregister-typescript/compare/v4.4.1...v4.4.2)
+
+### Bug Fixes
+
+* **mcp:** manual updates ([069f34c](https://github.com/oregister/openregister-typescript/commit/069f34cdc77a50a1d290e2235995479b0b02ef9a))
+* **mcp:** manual updates ([d7d106a](https://github.com/oregister/openregister-typescript/commit/d7d106a300e3020b560a75e64fce750d3d56f349))
+* **mcp:** manual updates ([1ad1896](https://github.com/oregister/openregister-typescript/commit/1ad18969dd6c32b34041ef72feec2a4f24396e6d))
+
 ## 4.4.1 (2026-05-08)
 
 Full Changelog: [v4.4.0...v4.4.1](https://github.com/oregister/openregister-typescript/compare/v4.4.0...v4.4.1)
