@@ -28,7 +28,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'openregister_api',
-      version: '4.4.2',
+      version: '4.4.3',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
