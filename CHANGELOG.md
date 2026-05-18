@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.4.3 (2026-05-18)
+
+Full Changelog: [v4.4.2...v4.4.3](https://github.com/oregister/openregister-typescript/compare/v4.4.2...v4.4.3)
+
+### Features
+
+* update branding and enhance documentation for OpenRegister MCP Server ([6ef71f7](https://github.com/oregister/openregister-typescript/commit/6ef71f7eea5cd339a6551cbf728ac8c39cfb705b))
+
 ## 4.4.2 (2026-05-13)
 
 Full Changelog: [v4.4.1...v4.4.2](https://github.com/oregister/openregister-typescript/compare/v4.4.1...v4.4.2)
