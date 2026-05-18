@@ -6,6 +6,28 @@ import type { AuthRequest } from '@cloudflare/workers-oauth-provider';
 import { env } from 'cloudflare:workers';
 import { ServerConfig, ClientProperty } from '.';
 
+// Brand design system matching openregister.de / apps/web
+const BRAND = {
+  gradientBtn: 'linear-gradient(90deg, #4A5596 0%, #5F83B4 100%)',
+  primary: '#4A5596',
+  primaryHover: '#3d478a',
+  accent: '#557DFF',
+  bg: '#F8FAFC',
+  card: '#FFFFFF',
+  border: '#E2E8F0',
+  textHeading: '#0F172A',
+  textBody: '#475569',
+  textMuted: '#64748B',
+  radius: '8px',
+  successGreen: '#16a34a',
+  successBg: '#f0fdf4',
+  errorRed: '#dc2626',
+  errorBg: '#fef2f2',
+  codeBg: '#F1F5F9',
+  preText: '#e2e8f0',
+  preBg: '#1E293B',
+};
+
 export const layout = (content: HtmlEscapedString | string, title: string, config: ServerConfig) => html`
   <!doctype html>
   <html lang="en">
@@ -19,131 +41,252 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
           theme: {
             extend: {
               colors: {
-                primary: '#3498db',
-                secondary: '#2ecc71',
-                accent: '#f39c12',
+                primary: '#4A5596',
+                primaryHover: '#3d478a',
+                accent: '#557DFF',
+                brand: {
+                  50: '#f0f2ff',
+                  100: '#e0e5ff',
+                  500: '#4A5596',
+                  600: '#3d478a',
+                  700: '#2d3466',
+                },
               },
               fontFamily: {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
-                heading: ['Roboto', 'system-ui', 'sans-serif'],
+              },
+              borderRadius: {
+                brand: '8px',
               },
             },
           },
         };
       </script>
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-        /* Custom styling for markdown content */
+        * { box-sizing: border-box; }
+
+        body {
+          font-family: 'Inter', system-ui, sans-serif;
+          background-color: #F8FAFC;
+          color: #0F172A;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* Gradient text utility */
+        .text-gradient {
+          background: linear-gradient(90deg, #4A5596 0%, #5F83B4 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        /* Gradient button */
+        .btn-primary {
+          display: inline-block;
+          background: linear-gradient(90deg, #4A5596 0%, #5F83B4 100%);
+          color: #ffffff;
+          font-weight: 500;
+          padding: 0.625rem 1.25rem;
+          border-radius: 8px;
+          border: none;
+          cursor: pointer;
+          transition: opacity 0.15s ease;
+          text-decoration: none;
+          font-size: 0.9375rem;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-primary:active { opacity: 0.85; }
+
+        .btn-secondary {
+          display: inline-block;
+          background: #ffffff;
+          color: #475569;
+          font-weight: 500;
+          padding: 0.625rem 1.25rem;
+          border-radius: 8px;
+          border: 1px solid #E2E8F0;
+          cursor: pointer;
+          transition: background-color 0.15s ease;
+          text-decoration: none;
+          font-size: 0.9375rem;
+        }
+        .btn-secondary:hover { background-color: #F8FAFC; }
+
+        /* Markdown content styles */
+        .markdown { color: #475569; line-height: 1.7; }
+
         .markdown h1 {
-          font-size: 2.25rem;
+          font-size: 2rem;
           font-weight: 700;
-          font-family: 'Roboto', system-ui, sans-serif;
-          color: #1a202c;
-          margin-bottom: 1rem;
-          line-height: 1.2;
+          color: #0F172A;
+          margin: 2.5rem 0 1rem;
+          line-height: 1.25;
+          letter-spacing: -0.02em;
         }
 
         .markdown h2 {
-          font-size: 1.5rem;
+          font-size: 1.375rem;
           font-weight: 600;
-          font-family: 'Roboto', system-ui, sans-serif;
-          color: #2d3748;
-          margin-top: 1.5rem;
-          margin-bottom: 0.75rem;
+          color: #0F172A;
+          margin: 2rem 0 0.75rem;
           line-height: 1.3;
+          padding-bottom: 0.5rem;
+          border-bottom: 1px solid #E2E8F0;
         }
 
         .markdown h3 {
-          font-size: 1.25rem;
+          font-size: 1.125rem;
           font-weight: 600;
-          font-family: 'Roboto', system-ui, sans-serif;
-          color: #2d3748;
-          margin-top: 1.25rem;
-          margin-bottom: 0.5rem;
+          color: #0F172A;
+          margin: 1.5rem 0 0.5rem;
         }
 
         .markdown p {
-          font-size: 1.125rem;
-          color: #4a5568;
+          font-size: 1rem;
+          color: #475569;
           margin-bottom: 1rem;
-          line-height: 1.6;
+          line-height: 1.7;
         }
 
         .markdown a {
-          color: #3498db;
+          color: #4A5596;
           font-weight: 500;
           text-decoration: none;
         }
+        .markdown a:hover { text-decoration: underline; }
 
-        .markdown a:hover {
-          text-decoration: underline;
+        .markdown ul, .markdown ol {
+          margin: 0.75rem 0 1rem 1.5rem;
+          color: #475569;
         }
+        .markdown li { margin-bottom: 0.375rem; line-height: 1.65; }
+        .markdown ul li { list-style-type: disc; }
+        .markdown ol li { list-style-type: decimal; }
 
         .markdown blockquote {
-          border-left: 4px solid #f39c12;
-          padding-left: 1rem;
-          padding-top: 0.75rem;
-          padding-bottom: 0.75rem;
-          margin-top: 1.5rem;
-          margin-bottom: 1.5rem;
-          background-color: #fffbeb;
-          font-style: italic;
+          border-left: 3px solid #4A5596;
+          padding: 0.75rem 1rem;
+          margin: 1.5rem 0;
+          background-color: #f0f2ff;
+          border-radius: 0 8px 8px 0;
+          font-style: normal;
         }
+        .markdown blockquote p { color: #3d478a; margin-bottom: 0; }
 
-        .markdown blockquote p {
-          margin-bottom: 0.25rem;
-        }
-
-        .markdown ul,
-        .markdown ol {
-          margin-top: 1rem;
-          margin-bottom: 1rem;
-          margin-left: 1.5rem;
-          font-size: 1.125rem;
-          color: #4a5568;
-        }
-
-        .markdown li {
-          margin-bottom: 0.5rem;
-        }
-
-        .markdown ul li {
-          list-style-type: disc;
-        }
-
-        .markdown ol li {
-          list-style-type: decimal;
+        .markdown code {
+          font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+          font-size: 0.8125rem;
+          background-color: #F1F5F9;
+          color: #0F172A;
+          padding: 0.1875rem 0.375rem;
+          border-radius: 4px;
+          border: 1px solid #E2E8F0;
         }
 
         .markdown pre {
-          background-color: #f7fafc;
-          padding: 1rem;
-          border-radius: 0.375rem;
-          margin-top: 1rem;
-          margin-bottom: 1rem;
+          background-color: #1E293B;
+          border-radius: 8px;
+          padding: 1.25rem;
+          margin: 1rem 0 1.5rem;
           overflow-x: auto;
+          border: 1px solid #334155;
         }
-
-        .markdown code {
-          font-family: monospace;
-          font-size: 0.875rem;
-          background-color: #f7fafc;
-          padding: 0.125rem 0.25rem;
-          border-radius: 0.25rem;
-        }
-
         .markdown pre code {
           background-color: transparent;
+          color: #e2e8f0;
           padding: 0;
+          border: none;
+          font-size: 0.8125rem;
+          line-height: 1.65;
+        }
+
+        /* Input styling */
+        .form-input {
+          width: 100%;
+          padding: 0.625rem 0.875rem;
+          border: 1px solid #E2E8F0;
+          border-radius: 8px;
+          font-size: 0.9375rem;
+          font-family: 'Inter', system-ui, sans-serif;
+          color: #0F172A;
+          background: #ffffff;
+          transition: border-color 0.15s ease, box-shadow 0.15s ease;
+          outline: none;
+        }
+        .form-input:focus {
+          border-color: #4A5596;
+          box-shadow: 0 0 0 3px rgba(74, 85, 150, 0.12);
+        }
+        .form-input::placeholder { color: #94a3b8; }
+
+        /* Card */
+        .card {
+          background: #ffffff;
+          border: 1px solid #E2E8F0;
+          border-radius: 12px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Nav */
+        .nav-link {
+          font-size: 0.875rem;
+          font-weight: 500;
+          color: #475569;
+          text-decoration: none;
+          transition: color 0.15s ease;
+        }
+        .nav-link:hover { color: #4A5596; }
+
+        /* Divider label */
+        .section-badge {
+          display: inline-block;
+          font-size: 0.6875rem;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #4A5596;
+          background: #f0f2ff;
+          padding: 0.25rem 0.625rem;
+          border-radius: 99px;
+          margin-bottom: 0.5rem;
         }
       </style>
     </head>
-    <body class="bg-gray-50 text-gray-800 font-sans leading-relaxed flex flex-col min-h-screen">
-      <main class="container mx-auto px-4 pb-12 flex-grow">${content}</main>
-      <footer class="bg-gray-100 py-6 mt-12">
-        <div class="container mx-auto px-4 text-center text-gray-600">
-          <p>&copy; ${new Date().getFullYear()} ${config.orgName}. All rights reserved.</p>
+    <body class="flex flex-col min-h-screen">
+      <!-- Header -->
+      <header style="background:#ffffff; border-bottom:1px solid #E2E8F0;">
+        <div style="max-width:1100px; margin:0 auto; padding:0 1.5rem; height:56px; display:flex; align-items:center; justify-content:space-between;">
+          <a href="/" style="text-decoration:none; display:flex; align-items:center; gap:0.5rem;">
+            ${config.logoUrl ?
+              html`<img src="${config.logoUrl}" alt="${config.orgName}" style="height:28px;" />`
+            : html`<span style="font-size:1.125rem; font-weight:700; background:linear-gradient(90deg,#4A5596 0%,#5F83B4 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">${config.orgName}</span>`
+            }
+            <span style="font-size:0.6875rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#64748B; background:#F1F5F9; padding:0.1875rem 0.5rem; border-radius:99px; margin-left:0.25rem;">MCP</span>
+          </a>
+          <nav style="display:flex; align-items:center; gap:1.25rem;">
+            <a href="https://docs.openregister.de/integration/mcp" class="nav-link">Docs</a>
+            ${config.instructionsUrl ?
+              html`<a href="${config.instructionsUrl}" class="btn-primary" style="padding:0.375rem 0.875rem; font-size:0.875rem;">Get API key →</a>`
+            : ''}
+          </nav>
+        </div>
+      </header>
+
+      <!-- Main -->
+      <main style="flex:1; max-width:1100px; margin:0 auto; width:100%; padding:3rem 1.5rem 4rem;">
+        ${content}
+      </main>
+
+      <!-- Footer -->
+      <footer style="background:#ffffff; border-top:1px solid #E2E8F0;">
+        <div style="max-width:1100px; margin:0 auto; padding:1.25rem 1.5rem; display:flex; align-items:center; justify-content:space-between;">
+          <span style="font-size:0.8125rem; color:#94a3b8;">© ${new Date().getFullYear()} ${config.orgName}. All rights reserved.</span>
+          <div style="display:flex; gap:1.25rem;">
+            <a href="https://openregister.de" style="font-size:0.8125rem; color:#94a3b8; text-decoration:none;">openregister.de</a>
+            <a href="https://docs.openregister.de" style="font-size:0.8125rem; color:#94a3b8; text-decoration:none;">Docs</a>
+          </div>
         </div>
       </footer>
     </body>
@@ -151,32 +294,28 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
 `;
 
 export const homeContent = async (req: Request): Promise<HtmlEscapedString> => {
-  // We have the README symlinked into the static directory, so we can fetch it
-  // and render it into HTML
   const origin = new URL(req.url).origin;
   const res = await env.ASSETS.fetch(`${origin}/home.md`);
   let markdown = await res.text();
   markdown = markdown.replaceAll('{{cloudflareWorkerUrl}}', origin + '/sse');
+  markdown = markdown.replaceAll('{{cloudflareWorkerHttpUrl}}', origin + '/mcp');
   const content = await marked(markdown);
-  return html` <div class="max-w-4xl mx-auto markdown">${raw(content)}</div> `;
+  return html`<div style="max-width:760px; margin:0 auto;" class="markdown">${raw(content)}</div>`;
 };
 
 export const renderLoggedOutAuthorizeScreen = async (config: ServerConfig, oauthReqInfo: AuthRequest) => {
-  const checked = (condition: boolean) => (condition ? 'checked' : '');
-  const selected = (condition: boolean) => (condition ? 'selected' : '');
-
   const renderField = (field: ClientProperty) => {
     if (field.type === 'select' && field.options) {
       return html`
         <div>
-          <label for="${`clientopt_${field.key}`}" class="block text-sm font-medium text-gray-700 mb-1"
-            >${field.label}</label
-          >
+          <label for="${`clientopt_${field.key}`}" style="display:block; font-size:0.875rem; font-weight:500; color:#374151; margin-bottom:0.375rem;">
+            ${field.label}${field.required ? html`<span style="color:#dc2626; margin-left:2px;">*</span>` : ''}
+          </label>
           <select
             id="${`clientopt_${field.key}`}"
             name="${`clientopt_${field.key}`}"
             ${field.required ? 'required' : ''}
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+            class="form-input"
           >
             ${field.options.map(
               (opt: { label: string; value: string }) => html`
@@ -191,95 +330,128 @@ export const renderLoggedOutAuthorizeScreen = async (config: ServerConfig, oauth
     }
     return html`
       <div>
-        <label for="${`clientopt_${field.key}`}" class="block text-sm font-medium text-gray-700 mb-1"
-          >${field.label}</label
-        >
+        <label for="${`clientopt_${field.key}`}" style="display:block; font-size:0.875rem; font-weight:500; color:#374151; margin-bottom:0.375rem;">
+          ${field.label}${field.required ? html`<span style="color:#dc2626; margin-left:2px;">*</span>` : ''}
+        </label>
         <input
           type="${field.type}"
           id="${`clientopt_${field.key}`}"
           name="${`clientopt_${field.key}`}"
           ${field.required ? 'required' : ''}
           ${field.placeholder ? html`placeholder="${field.placeholder}"` : ''}
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+          class="form-input"
         />
+        ${field.description ? html`<p style="font-size:0.8125rem; color:#94a3b8; margin-top:0.375rem;">${field.description.split('\n')[0]}</p>` : ''}
       </div>
     `;
   };
 
   return html`
-    <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-      ${config.logoUrl ? html`<img src="${config.logoUrl}" class="w-24 mb-6 mx-auto" />` : ''}
+    <div style="max-width:420px; margin:2rem auto 0;">
+      <div class="card" style="padding:2.5rem;">
+        <!-- Logo / wordmark -->
+        <div style="text-align:center; margin-bottom:2rem;">
+          ${config.logoUrl ?
+            html`<img src="${config.logoUrl}" alt="${config.orgName}" style="height:36px; margin:0 auto 1rem;" />`
+          : html`<div style="font-size:1.5rem; font-weight:700; background:linear-gradient(90deg,#4A5596 0%,#5F83B4 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:0.25rem;">${config.orgName}</div>`
+          }
+          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#64748B;">MCP Server</div>
+        </div>
 
-      <h1 class="text-2xl font-heading font-bold mb-6 text-gray-900">
-        Authorizing ${config.orgName} MCP server
-      </h1>
+        <h1 style="font-size:1.25rem; font-weight:700; color:#0F172A; text-align:center; margin-bottom:0.5rem;">
+          Connect to ${config.orgName}
+        </h1>
+        <p style="font-size:0.9375rem; color:#64748B; text-align:center; margin-bottom:2rem; line-height:1.6;">
+          Enter your credentials to authorize your MCP client.
+          ${config.instructionsUrl ?
+            html`<br /><a href="${config.instructionsUrl}" style="color:#4A5596; font-weight:500; font-size:0.875rem;">Get an API key →</a>`
+          : ''}
+        </p>
 
-      <div class="mb-8">
-        <h2 class="text-lg font-semibold mb-3 text-gray-800">
-          Enter your credentials to initialize the connection with your MCP client.
-        </h2>
-        If you're not sure how to configure your client, see the
-        ${config.instructionsUrl ?
-          html`<a
-            href="${config.instructionsUrl}"
-            class="text-primary hover:text-primary/80 transition-colors"
-            >instructions</a
-          >`
-        : 'instructions'}
-        to get started.
+        <form action="/approve" method="POST" style="display:flex; flex-direction:column; gap:1.25rem;">
+          <input type="hidden" name="oauthReqInfo" value="${JSON.stringify(oauthReqInfo)}" />
+
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            ${config.clientProperties.map(renderField)}
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:0.75rem; margin-top:0.25rem;">
+            <button
+              type="submit"
+              name="action"
+              value="login_approve"
+              class="btn-primary"
+              style="width:100%; text-align:center; padding:0.75rem;"
+            >
+              Log in and Authorize
+            </button>
+            <button
+              type="submit"
+              name="action"
+              value="reject"
+              class="btn-secondary"
+              style="width:100%; text-align:center; padding:0.75rem;"
+            >
+              Reject
+            </button>
+          </div>
+        </form>
       </div>
-      <form action="/approve" method="POST" class="space-y-4">
-        <input type="hidden" name="oauthReqInfo" value="${JSON.stringify(oauthReqInfo)}" />
-        <div class="space-y-4">${config.clientProperties.map(renderField)}</div>
 
-        <button
-          type="submit"
-          name="action"
-          value="login_approve"
-          class="w-full py-3 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary/90 transition-colors"
-        >
-          Log in and Approve
-        </button>
-        <button
-          type="submit"
-          name="action"
-          value="reject"
-          class="w-full py-3 px-4 border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-50 transition-colors"
-        >
-          Reject
-        </button>
-      </form>
+      <p style="text-align:center; font-size:0.8125rem; color:#94a3b8; margin-top:1.25rem;">
+        By connecting, you agree to the
+        <a href="https://openregister.de/terms" style="color:#4A5596; font-weight:500;">Terms of Service</a>
+      </p>
     </div>
   `;
 };
 
 export const renderApproveContent = async (message: string, status: string, redirectUrl: string) => {
+  const isSuccess = status === 'success';
   return html`
-    <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md text-center">
-      <div class="mb-4">
-        <span
-          class="inline-block p-3 ${status === 'success' ?
-            'bg-green-100 text-green-800'
-          : 'bg-red-100 text-red-800'} rounded-full"
+    <div style="max-width:420px; margin:2rem auto 0; text-align:center;">
+      <div class="card" style="padding:3rem 2.5rem;">
+        <!-- Status icon -->
+        <div style="
+          width:64px;
+          height:64px;
+          border-radius:50%;
+          background:${isSuccess ? '#f0fdf4' : '#fef2f2'};
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          margin:0 auto 1.5rem;
+          font-size:1.75rem;
+          border: 1px solid ${isSuccess ? '#bbf7d0' : '#fecaca'};
+        ">
+          ${isSuccess ? '✓' : '✗'}
+        </div>
+
+        <h1 style="font-size:1.375rem; font-weight:700; color:#0F172A; margin-bottom:0.75rem;">
+          ${isSuccess ? "You're all set!" : 'Authorization declined'}
+        </h1>
+        <p style="font-size:0.9375rem; color:#64748B; line-height:1.6; margin-bottom:2rem;">
+          ${isSuccess
+            ? 'Your MCP client is now connected to OpenRegister. You can close this window and return to your application.'
+            : 'The authorization request was rejected. You can close this window.'}
+        </p>
+
+        <a
+          href="/"
+          class="btn-primary"
+          style="display:inline-block; padding:0.625rem 1.5rem;"
         >
-          ${status === 'success' ? '✓' : '✗'}
-        </span>
+          Return to Home
+        </a>
       </div>
-      <h1 class="text-2xl font-heading font-bold mb-4 text-gray-900">${message}</h1>
-      <p class="mb-8 text-gray-600">You will be redirected back to the application shortly.</p>
-      <a
-        href="/"
-        class="inline-block py-2 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary/90 transition-colors"
-      >
-        Return to Home
-      </a>
-      ${raw(`
-                <script>
-                    setTimeout(() => {
-                        window.location.href = "${redirectUrl}";
-                    }, 2000);
-                </script>
-            `)}
+
+      ${redirectUrl ? raw(`
+        <script>
+          setTimeout(function() {
+            window.location.href = "${redirectUrl}";
+          }, 3000);
+        </script>
+      `) : ''}
     </div>
   `;
 };

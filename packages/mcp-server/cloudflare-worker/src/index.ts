@@ -23,9 +23,9 @@ type MCPProps = {
  * The information displayed on the OAuth consent screen
  */
 const serverConfig: ServerConfig = {
-  orgName: 'Openregister',
-  instructionsUrl: undefined, // Set a url for where you show users how to get an API key
-  logoUrl: undefined, // Set a custom logo url to appear during the OAuth flow
+  orgName: 'OpenRegister',
+  instructionsUrl: 'https://openregister.de/keys',
+  logoUrl: 'https://docs.openregister.de/logo-original.png',
   clientProperties: [
     {
       key: 'apiKey',
