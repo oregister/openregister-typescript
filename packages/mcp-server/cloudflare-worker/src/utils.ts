@@ -65,18 +65,20 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-        * { box-sizing: border-box; }
+        * {
+          box-sizing: border-box;
+        }
 
         body {
           font-family: 'Inter', system-ui, sans-serif;
-          background-color: #F8FAFC;
-          color: #0F172A;
+          background-color: #f8fafc;
+          color: #0f172a;
           -webkit-font-smoothing: antialiased;
         }
 
         /* Gradient text utility */
         .text-gradient {
-          background: linear-gradient(90deg, #4A5596 0%, #5F83B4 100%);
+          background: linear-gradient(90deg, #4a5596 0%, #5f83b4 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -85,7 +87,7 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
         /* Gradient button */
         .btn-primary {
           display: inline-block;
-          background: linear-gradient(90deg, #4A5596 0%, #5F83B4 100%);
+          background: linear-gradient(90deg, #4a5596 0%, #5f83b4 100%);
           color: #ffffff;
           font-weight: 500;
           padding: 0.625rem 1.25rem;
@@ -96,8 +98,12 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
           text-decoration: none;
           font-size: 0.9375rem;
         }
-        .btn-primary:hover { opacity: 0.9; }
-        .btn-primary:active { opacity: 0.85; }
+        .btn-primary:hover {
+          opacity: 0.9;
+        }
+        .btn-primary:active {
+          opacity: 0.85;
+        }
 
         .btn-secondary {
           display: inline-block;
@@ -106,21 +112,26 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
           font-weight: 500;
           padding: 0.625rem 1.25rem;
           border-radius: 8px;
-          border: 1px solid #E2E8F0;
+          border: 1px solid #e2e8f0;
           cursor: pointer;
           transition: background-color 0.15s ease;
           text-decoration: none;
           font-size: 0.9375rem;
         }
-        .btn-secondary:hover { background-color: #F8FAFC; }
+        .btn-secondary:hover {
+          background-color: #f8fafc;
+        }
 
         /* Markdown content styles */
-        .markdown { color: #475569; line-height: 1.7; }
+        .markdown {
+          color: #475569;
+          line-height: 1.7;
+        }
 
         .markdown h1 {
           font-size: 2rem;
           font-weight: 700;
-          color: #0F172A;
+          color: #0f172a;
           margin: 2.5rem 0 1rem;
           line-height: 1.25;
           letter-spacing: -0.02em;
@@ -129,17 +140,17 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
         .markdown h2 {
           font-size: 1.375rem;
           font-weight: 600;
-          color: #0F172A;
+          color: #0f172a;
           margin: 2rem 0 0.75rem;
           line-height: 1.3;
           padding-bottom: 0.5rem;
-          border-bottom: 1px solid #E2E8F0;
+          border-bottom: 1px solid #e2e8f0;
         }
 
         .markdown h3 {
           font-size: 1.125rem;
           font-weight: 600;
-          color: #0F172A;
+          color: #0f172a;
           margin: 1.5rem 0 0.5rem;
         }
 
@@ -151,42 +162,55 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
         }
 
         .markdown a {
-          color: #4A5596;
+          color: #4a5596;
           font-weight: 500;
           text-decoration: none;
         }
-        .markdown a:hover { text-decoration: underline; }
+        .markdown a:hover {
+          text-decoration: underline;
+        }
 
-        .markdown ul, .markdown ol {
+        .markdown ul,
+        .markdown ol {
           margin: 0.75rem 0 1rem 1.5rem;
           color: #475569;
         }
-        .markdown li { margin-bottom: 0.375rem; line-height: 1.65; }
-        .markdown ul li { list-style-type: disc; }
-        .markdown ol li { list-style-type: decimal; }
+        .markdown li {
+          margin-bottom: 0.375rem;
+          line-height: 1.65;
+        }
+        .markdown ul li {
+          list-style-type: disc;
+        }
+        .markdown ol li {
+          list-style-type: decimal;
+        }
 
         .markdown blockquote {
-          border-left: 3px solid #4A5596;
+          border-left: 3px solid #4a5596;
           padding: 0.75rem 1rem;
           margin: 1.5rem 0;
           background-color: #f0f2ff;
           border-radius: 0 8px 8px 0;
           font-style: normal;
         }
-        .markdown blockquote p { color: #3d478a; margin-bottom: 0; }
+        .markdown blockquote p {
+          color: #3d478a;
+          margin-bottom: 0;
+        }
 
         .markdown code {
           font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
           font-size: 0.8125rem;
-          background-color: #F1F5F9;
-          color: #0F172A;
+          background-color: #f1f5f9;
+          color: #0f172a;
           padding: 0.1875rem 0.375rem;
           border-radius: 4px;
-          border: 1px solid #E2E8F0;
+          border: 1px solid #e2e8f0;
         }
 
         .markdown pre {
-          background-color: #1E293B;
+          background-color: #1e293b;
           border-radius: 8px;
           padding: 1.25rem;
           margin: 1rem 0 1.5rem;
@@ -206,27 +230,33 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
         .form-input {
           width: 100%;
           padding: 0.625rem 0.875rem;
-          border: 1px solid #E2E8F0;
+          border: 1px solid #e2e8f0;
           border-radius: 8px;
           font-size: 0.9375rem;
           font-family: 'Inter', system-ui, sans-serif;
-          color: #0F172A;
+          color: #0f172a;
           background: #ffffff;
-          transition: border-color 0.15s ease, box-shadow 0.15s ease;
+          transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease;
           outline: none;
         }
         .form-input:focus {
-          border-color: #4A5596;
+          border-color: #4a5596;
           box-shadow: 0 0 0 3px rgba(74, 85, 150, 0.12);
         }
-        .form-input::placeholder { color: #94a3b8; }
+        .form-input::placeholder {
+          color: #94a3b8;
+        }
 
         /* Card */
         .card {
           background: #ffffff;
-          border: 1px solid #E2E8F0;
+          border: 1px solid #e2e8f0;
           border-radius: 12px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+          box-shadow:
+            0 1px 3px rgba(0, 0, 0, 0.06),
+            0 1px 2px rgba(0, 0, 0, 0.04);
         }
 
         /* Nav */
@@ -237,7 +267,9 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
           text-decoration: none;
           transition: color 0.15s ease;
         }
-        .nav-link:hover { color: #4A5596; }
+        .nav-link:hover {
+          color: #4a5596;
+        }
 
         /* Divider label */
         .section-badge {
@@ -246,7 +278,7 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
           font-weight: 600;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: #4A5596;
+          color: #4a5596;
           background: #f0f2ff;
           padding: 0.25rem 0.625rem;
           border-radius: 99px;
@@ -257,18 +289,30 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
     <body class="flex flex-col min-h-screen">
       <!-- Header -->
       <header style="background:#ffffff; border-bottom:1px solid #E2E8F0;">
-        <div style="max-width:1100px; margin:0 auto; padding:0 1.5rem; height:56px; display:flex; align-items:center; justify-content:space-between;">
+        <div
+          style="max-width:1100px; margin:0 auto; padding:0 1.5rem; height:56px; display:flex; align-items:center; justify-content:space-between;"
+        >
           <a href="/" style="text-decoration:none; display:flex; align-items:center; gap:0.5rem;">
             ${config.logoUrl ?
               html`<img src="${config.logoUrl}" alt="${config.orgName}" style="height:28px;" />`
-            : html`<span style="font-size:1.125rem; font-weight:700; background:linear-gradient(90deg,#4A5596 0%,#5F83B4 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">${config.orgName}</span>`
-            }
-            <span style="font-size:0.6875rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#64748B; background:#F1F5F9; padding:0.1875rem 0.5rem; border-radius:99px; margin-left:0.25rem;">MCP</span>
+            : html`<span
+                style="font-size:1.125rem; font-weight:700; background:linear-gradient(90deg,#4A5596 0%,#5F83B4 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;"
+                >${config.orgName}</span
+              >`}
+            <span
+              style="font-size:0.6875rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#64748B; background:#F1F5F9; padding:0.1875rem 0.5rem; border-radius:99px; margin-left:0.25rem;"
+              >MCP</span
+            >
           </a>
           <nav style="display:flex; align-items:center; gap:1.25rem;">
             <a href="https://docs.openregister.de/integration/mcp" class="nav-link">Docs</a>
             ${config.instructionsUrl ?
-              html`<a href="${config.instructionsUrl}" class="btn-primary" style="padding:0.375rem 0.875rem; font-size:0.875rem;">Get API key →</a>`
+              html`<a
+                href="${config.instructionsUrl}"
+                class="btn-primary"
+                style="padding:0.375rem 0.875rem; font-size:0.875rem;"
+                >Get API key →</a
+              >`
             : ''}
           </nav>
         </div>
@@ -281,11 +325,23 @@ export const layout = (content: HtmlEscapedString | string, title: string, confi
 
       <!-- Footer -->
       <footer style="background:#ffffff; border-top:1px solid #E2E8F0;">
-        <div style="max-width:1100px; margin:0 auto; padding:1.25rem 1.5rem; display:flex; align-items:center; justify-content:space-between;">
-          <span style="font-size:0.8125rem; color:#94a3b8;">© ${new Date().getFullYear()} ${config.orgName}. All rights reserved.</span>
+        <div
+          style="max-width:1100px; margin:0 auto; padding:1.25rem 1.5rem; display:flex; align-items:center; justify-content:space-between;"
+        >
+          <span style="font-size:0.8125rem; color:#94a3b8;"
+            >© ${new Date().getFullYear()} ${config.orgName}. All rights reserved.</span
+          >
           <div style="display:flex; gap:1.25rem;">
-            <a href="https://openregister.de" style="font-size:0.8125rem; color:#94a3b8; text-decoration:none;">openregister.de</a>
-            <a href="https://docs.openregister.de" style="font-size:0.8125rem; color:#94a3b8; text-decoration:none;">Docs</a>
+            <a
+              href="https://openregister.de"
+              style="font-size:0.8125rem; color:#94a3b8; text-decoration:none;"
+              >openregister.de</a
+            >
+            <a
+              href="https://docs.openregister.de"
+              style="font-size:0.8125rem; color:#94a3b8; text-decoration:none;"
+              >Docs</a
+            >
           </div>
         </div>
       </footer>
@@ -308,8 +364,13 @@ export const renderLoggedOutAuthorizeScreen = async (config: ServerConfig, oauth
     if (field.type === 'select' && field.options) {
       return html`
         <div>
-          <label for="${`clientopt_${field.key}`}" style="display:block; font-size:0.875rem; font-weight:500; color:#374151; margin-bottom:0.375rem;">
-            ${field.label}${field.required ? html`<span style="color:#dc2626; margin-left:2px;">*</span>` : ''}
+          <label
+            for="${`clientopt_${field.key}`}"
+            style="display:block; font-size:0.875rem; font-weight:500; color:#374151; margin-bottom:0.375rem;"
+          >
+            ${field.label}${field.required ?
+              html`<span style="color:#dc2626; margin-left:2px;">*</span>`
+            : ''}
           </label>
           <select
             id="${`clientopt_${field.key}`}"
@@ -330,7 +391,10 @@ export const renderLoggedOutAuthorizeScreen = async (config: ServerConfig, oauth
     }
     return html`
       <div>
-        <label for="${`clientopt_${field.key}`}" style="display:block; font-size:0.875rem; font-weight:500; color:#374151; margin-bottom:0.375rem;">
+        <label
+          for="${`clientopt_${field.key}`}"
+          style="display:block; font-size:0.875rem; font-weight:500; color:#374151; margin-bottom:0.375rem;"
+        >
           ${field.label}${field.required ? html`<span style="color:#dc2626; margin-left:2px;">*</span>` : ''}
         </label>
         <input
@@ -341,7 +405,11 @@ export const renderLoggedOutAuthorizeScreen = async (config: ServerConfig, oauth
           ${field.placeholder ? html`placeholder="${field.placeholder}"` : ''}
           class="form-input"
         />
-        ${field.description ? html`<p style="font-size:0.8125rem; color:#94a3b8; margin-top:0.375rem;">${field.description.split('\n')[0]}</p>` : ''}
+        ${field.description ?
+          html`<p style="font-size:0.8125rem; color:#94a3b8; margin-top:0.375rem;">
+            ${field.description.split('\n')[0]}
+          </p>`
+        : ''}
       </div>
     `;
   };
@@ -352,19 +420,38 @@ export const renderLoggedOutAuthorizeScreen = async (config: ServerConfig, oauth
         <!-- Logo / wordmark -->
         <div style="text-align:center; margin-bottom:2rem;">
           ${config.logoUrl ?
-            html`<img src="${config.logoUrl}" alt="${config.orgName}" style="height:36px; margin:0 auto 1rem;" />`
-          : html`<div style="font-size:1.5rem; font-weight:700; background:linear-gradient(90deg,#4A5596 0%,#5F83B4 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:0.25rem;">${config.orgName}</div>`
-          }
-          <div style="font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#64748B;">MCP Server</div>
+            html`<img
+              src="${config.logoUrl}"
+              alt="${config.orgName}"
+              style="height:36px; margin:0 auto 1rem;"
+            />`
+          : html`<div
+              style="font-size:1.5rem; font-weight:700; background:linear-gradient(90deg,#4A5596 0%,#5F83B4 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:0.25rem;"
+            >
+              ${config.orgName}
+            </div>`}
+          <div
+            style="font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#64748B;"
+          >
+            MCP Server
+          </div>
         </div>
 
-        <h1 style="font-size:1.25rem; font-weight:700; color:#0F172A; text-align:center; margin-bottom:0.5rem;">
+        <h1
+          style="font-size:1.25rem; font-weight:700; color:#0F172A; text-align:center; margin-bottom:0.5rem;"
+        >
           Connect to ${config.orgName}
         </h1>
-        <p style="font-size:0.9375rem; color:#64748B; text-align:center; margin-bottom:2rem; line-height:1.6;">
+        <p
+          style="font-size:0.9375rem; color:#64748B; text-align:center; margin-bottom:2rem; line-height:1.6;"
+        >
           Enter your credentials to authorize your MCP client.
           ${config.instructionsUrl ?
-            html`<br /><a href="${config.instructionsUrl}" style="color:#4A5596; font-weight:500; font-size:0.875rem;">Get an API key →</a>`
+            html`<br /><a
+                href="${config.instructionsUrl}"
+                style="color:#4A5596; font-weight:500; font-size:0.875rem;"
+                >Get an API key →</a
+              >`
           : ''}
         </p>
 
@@ -412,7 +499,8 @@ export const renderApproveContent = async (message: string, status: string, redi
     <div style="max-width:420px; margin:2rem auto 0; text-align:center;">
       <div class="card" style="padding:3rem 2.5rem;">
         <!-- Status icon -->
-        <div style="
+        <div
+          style="
           width:64px;
           height:64px;
           border-radius:50%;
@@ -423,7 +511,8 @@ export const renderApproveContent = async (message: string, status: string, redi
           margin:0 auto 1.5rem;
           font-size:1.75rem;
           border: 1px solid ${isSuccess ? '#bbf7d0' : '#fecaca'};
-        ">
+        "
+        >
           ${isSuccess ? '✓' : '✗'}
         </div>
 
@@ -431,27 +520,25 @@ export const renderApproveContent = async (message: string, status: string, redi
           ${isSuccess ? "You're all set!" : 'Authorization declined'}
         </h1>
         <p style="font-size:0.9375rem; color:#64748B; line-height:1.6; margin-bottom:2rem;">
-          ${isSuccess
-            ? 'Your MCP client is now connected to OpenRegister. You can close this window and return to your application.'
-            : 'The authorization request was rejected. You can close this window.'}
+          ${isSuccess ?
+            'Your MCP client is now connected to OpenRegister. You can close this window and return to your application.'
+          : 'The authorization request was rejected. You can close this window.'}
         </p>
 
-        <a
-          href="/"
-          class="btn-primary"
-          style="display:inline-block; padding:0.625rem 1.5rem;"
-        >
+        <a href="/" class="btn-primary" style="display:inline-block; padding:0.625rem 1.5rem;">
           Return to Home
         </a>
       </div>
 
-      ${redirectUrl ? raw(`
+      ${redirectUrl ?
+        raw(`
         <script>
           setTimeout(function() {
             window.location.href = "${redirectUrl}";
           }, 3000);
         </script>
-      `) : ''}
+      `)
+      : ''}
     </div>
   `;
 };
