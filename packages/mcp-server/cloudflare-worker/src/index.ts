@@ -50,7 +50,7 @@ const INSTRUCTIONS_FETCH_TIMEOUT_MS = 5000;
 
 function fallbackMcpServer(): McpServer {
   return new McpServer(
-    { name: 'openregister_api', version: '4.4.3' },
+    { name: 'openregister_api', version: '4.4.4' },
     { capabilities: { tools: {}, logging: {} } },
   );
 }
