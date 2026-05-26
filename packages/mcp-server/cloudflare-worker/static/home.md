@@ -101,23 +101,23 @@ async def main():
 ### Vercel AI SDK (TypeScript)
 
 ```typescript
-import { createOpenAI } from "@ai-sdk/openai";
-import { experimental_createMCPClient, generateText } from "ai";
+import { createOpenAI } from '@ai-sdk/openai';
+import { experimental_createMCPClient, generateText } from 'ai';
 
 const mcpClient = await experimental_createMCPClient({
   transport: {
-    type: "sse",
-    url: "{{cloudflareWorkerUrl}}",
-    headers: { Authorization: "Bearer YOUR_API_KEY" },
+    type: 'sse',
+    url: '{{cloudflareWorkerUrl}}',
+    headers: { Authorization: 'Bearer YOUR_API_KEY' },
   },
 });
 
 const tools = await mcpClient.tools();
 
 const { text } = await generateText({
-  model: createOpenAI({ apiKey: process.env.OPENAI_API_KEY })("gpt-4o"),
+  model: createOpenAI({ apiKey: process.env.OPENAI_API_KEY })('gpt-4o'),
   tools,
-  prompt: "Find information about Volkswagen AG",
+  prompt: 'Find information about Volkswagen AG',
 });
 
 await mcpClient.close();
@@ -127,9 +127,9 @@ await mcpClient.close();
 
 Both transport formats are supported:
 
-| Transport | Endpoint | Best for |
-|-----------|----------|----------|
-| SSE (legacy) | `{{cloudflareWorkerUrl}}` | Claude Desktop, Cursor, mcp-remote |
+| Transport       | Endpoint                      | Best for                                  |
+| --------------- | ----------------------------- | ----------------------------------------- |
+| SSE (legacy)    | `{{cloudflareWorkerUrl}}`     | Claude Desktop, Cursor, mcp-remote        |
 | Streamable HTTP | `{{cloudflareWorkerHttpUrl}}` | ChatGPT, OpenAI Agents SDK, newer clients |
 
 ---

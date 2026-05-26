@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.4.4 (2026-05-19)
+
+Full Changelog: [v4.4.3...v4.4.4](https://github.com/oregister/openregister-typescript/compare/v4.4.3...v4.4.4)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([fecd47b](https://github.com/oregister/openregister-typescript/commit/fecd47b14036ecb6276ee1fac2c70ccbd4a4cbca))
+
+
+### Chores
+
+* **tests:** remove redundant File import ([654edba](https://github.com/oregister/openregister-typescript/commit/654edba14de41f73d6aac7b6dd8aa28bf3bd392a))
+
 ## 4.4.3 (2026-05-18)
 
 Full Changelog: [v4.4.2...v4.4.3](https://github.com/oregister/openregister-typescript/compare/v4.4.2...v4.4.3)
