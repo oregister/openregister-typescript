@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.4.5 (2026-05-29)
+
+Full Changelog: [v4.4.4...v4.4.5](https://github.com/oregister/openregister-typescript/compare/v4.4.4...v4.4.5)
+
+### Bug Fixes
+
+* **mcp:** use `pure-lockfile` when building mcp server ([d5178af](https://github.com/oregister/openregister-typescript/commit/d5178afed910a537db6d14b784f32c23e4781f79))
+
 ## 4.4.4 (2026-05-19)
 
 Full Changelog: [v4.4.3...v4.4.4](https://github.com/oregister/openregister-typescript/compare/v4.4.3...v4.4.4)
