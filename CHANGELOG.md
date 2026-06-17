@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.4.6 (2026-06-17)
+
+Full Changelog: [v4.4.5...v4.4.6](https://github.com/oregister/openregister-typescript/compare/v4.4.5...v4.4.6)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([434851b](https://github.com/oregister/openregister-typescript/commit/434851b169cfb060ac3fe904e6010a7aee46cc67))
+
 ## 4.4.5 (2026-05-29)
 
 Full Changelog: [v4.4.4...v4.4.5](https://github.com/oregister/openregister-typescript/compare/v4.4.4...v4.4.5)
