@@ -353,7 +353,7 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Historical capital changes. Shows how the company capital changed over time.
    */
-  capitals: Array<CompanyCapital | null>;
+  capitals: Array<CompanyCapital>;
 
   /**
    * Contact information of the company.
@@ -411,7 +411,7 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Historical business purposes. Shows how the company purpose changed over time.
    */
-  purposes: Array<CompanyPurpose | null>;
+  purposes: Array<CompanyPurpose>;
 
   /**
    * Current registration information of the company.
@@ -493,9 +493,10 @@ export namespace CompanyGetDetailsV1Response {
   }
 
   /**
-   * The indicators of the company for a given year. Values of the indicator are
-   * given in the smallest currency unit (cents). Example: 2099 represents €20.99 for
-   * monetary values For non-monetary values (e.g., employees), the actual number.
+   * A focused subset of the key company indicators for a given year. Values of the
+   * indicator are given in the smallest currency unit (cents). Example: 2099
+   * represents €20.99 for monetary values. For non-monetary values (e.g.,
+   * employees), the actual number.
    */
   export interface Indicator {
     /**
@@ -671,7 +672,12 @@ export namespace CompanyGetDetailsV1Response {
 
 export interface CompanyGetFinancialsV1Response {
   /**
-   * All report periods merged into a single view
+   * Key financial indicators per fiscal year, sorted by date (latest first).
+   */
+  indicators: Array<CompanyGetFinancialsV1Response.Indicator>;
+
+  /**
+   * Financial data merged across all available report periods
    */
   merged: CompanyGetFinancialsV1Response.Merged | null;
 
@@ -680,7 +686,267 @@ export interface CompanyGetFinancialsV1Response {
 
 export namespace CompanyGetFinancialsV1Response {
   /**
-   * All report periods merged into a single view
+   * The indicators of the company for a given year. Values of the indicator are
+   * given in the smallest currency unit (cents). Example: 2099 represents €20.99 for
+   * monetary values For non-monetary values (e.g., employees), the actual number.
+   */
+  export interface Indicator {
+    /**
+     * The active accruals of that year (in cents).
+     */
+    active_accruals: number | null;
+
+    /**
+     * The affiliated liabilities of that year (in cents).
+     */
+    affiliated_liabilities: number | null;
+
+    /**
+     * The balance sheet total of that year (in cents).
+     */
+    balance_sheet_total: number | null;
+
+    /**
+     * The bank debt of that year (in cents).
+     */
+    bank_debt: number | null;
+
+    /**
+     * The capital reserves of that year (in cents).
+     */
+    capital_reserves: number | null;
+
+    /**
+     * The cash of that year (in cents).
+     */
+    cash: number | null;
+
+    /**
+     * Commission expense (Provisionsaufwendungen) of that year (in cents).
+     */
+    commission_expense: number | null;
+
+    /**
+     * Commission income (Provisionserträge) of that year (in cents).
+     */
+    commission_income: number | null;
+
+    /**
+     * The current assets of that year (in cents).
+     */
+    current_assets: number | null;
+
+    /**
+     * Date to which this financial indicators apply. Format: ISO 8601 (YYYY-MM-DD)
+     * Example: "2022-01-01"
+     */
+    date: string;
+
+    /**
+     * The earnings before interest and taxes of that year (in cents).
+     */
+    ebit: number | null;
+
+    /**
+     * The earnings before interest, taxes, depreciation, and amortization of that year
+     * (in cents).
+     */
+    ebitda: number | null;
+
+    /**
+     * The number of employees of that year.
+     */
+    employees: number | null;
+
+    /**
+     * The equity of that year (in cents).
+     */
+    equity: number | null;
+
+    /**
+     * The financial assets of that year (in cents).
+     */
+    financial_assets: number | null;
+
+    /**
+     * The financial debt of that year (in cents).
+     */
+    financial_debt: number | null;
+
+    /**
+     * The signed financial asset depreciation, write-down, or reversal of that year
+     * (in cents).
+     */
+    financial_depreciation: number | null;
+
+    /**
+     * The fixed assets of that year (in cents).
+     */
+    fixed_assets: number | null;
+
+    /**
+     * The gross profit (Rohergebnis) of that year (in cents).
+     */
+    gross_profit: number | null;
+
+    /**
+     * The income after income taxes of that year (in cents).
+     */
+    income_after_tax: number | null;
+
+    /**
+     * The income before income taxes of that year (in cents).
+     */
+    income_before_tax: number | null;
+
+    /**
+     * The intangible assets of that year (in cents).
+     */
+    intangible_assets: number | null;
+
+    /**
+     * The interest expense of that year (in cents).
+     */
+    interest_expense: number | null;
+
+    /**
+     * The interest income of that year (in cents).
+     */
+    interest_income: number | null;
+
+    /**
+     * The inventory of that year (in cents).
+     */
+    inventory: number | null;
+
+    /**
+     * The liabilities of that year (in cents).
+     */
+    liabilities: number | null;
+
+    /**
+     * The materials of that year (in cents).
+     */
+    materials: number | null;
+
+    /**
+     * The net income of that year (in cents).
+     */
+    net_income: number | null;
+
+    /**
+     * The operating depreciation and amortization of that year (in cents).
+     */
+    operating_depreciation: number | null;
+
+    /**
+     * The other liabilities of that year (in cents).
+     */
+    other_liabilities: number | null;
+
+    /**
+     * The other operating expenses of that year (in cents).
+     */
+    other_operating_expenses: number | null;
+
+    /**
+     * The other operating income of that year (in cents).
+     */
+    other_operating_income: number | null;
+
+    /**
+     * The other provisions of that year (in cents).
+     */
+    other_provisions: number | null;
+
+    /**
+     * Other taxes (Sonstige Steuern) of that year (in cents).
+     */
+    other_taxes: number | null;
+
+    /**
+     * The parent-attributed net income of that year (in cents).
+     */
+    parent_net_income: number | null;
+
+    /**
+     * The passive accruals of that year (in cents).
+     */
+    passive_accruals: number | null;
+
+    /**
+     * The pension provisions of that year (in cents).
+     */
+    pension_provisions: number | null;
+
+    /**
+     * The profit carryforward of that year (in cents).
+     */
+    profit_carryforward: number | null;
+
+    /**
+     * The provisions of that year (in cents).
+     */
+    provisions: number | null;
+
+    /**
+     * The real estate of that year (in cents).
+     */
+    real_estate: number | null;
+
+    /**
+     * The receivables of that year (in cents).
+     */
+    receivables: number | null;
+
+    /**
+     * The report id (source) of the indicators.
+     */
+    report_id: string;
+
+    /**
+     * The retained earnings of that year (in cents).
+     */
+    retained_earnings: number | null;
+
+    /**
+     * The revenue of that year (in cents).
+     */
+    revenue: number | null;
+
+    /**
+     * The salaries of that year (in cents).
+     */
+    salaries: number | null;
+
+    /**
+     * The shareholder liabilities of that year (in cents).
+     */
+    shareholder_liabilities: number | null;
+
+    /**
+     * The tangible assets of that year (in cents).
+     */
+    tangible_assets: number | null;
+
+    /**
+     * The taxes of that year (in cents).
+     */
+    taxes: number | null;
+
+    /**
+     * The trade payables of that year (in cents).
+     */
+    trade_payables: number | null;
+
+    /**
+     * The trade receivables of that year (in cents).
+     */
+    trade_receivables: number | null;
+  }
+
+  /**
+   * Financial data merged across all available report periods
    */
   export interface Merged {
     /**
@@ -719,7 +985,22 @@ export namespace CompanyGetFinancialsV1Response {
 
     report_start_date: string | null;
 
+    /**
+     * Sources of the report data. Presigned URLs accessible for 30 minutes.
+     */
+    sources: Array<Report.Source>;
+
     guv?: CompanyAPI.ReportTable | null;
+  }
+
+  export namespace Report {
+    export interface Source {
+      /**
+       * Url of the rendered HTML report. In the form of a presigned url accessible for
+       * 30 minutes.
+       */
+      html_url: string;
+    }
   }
 }
 
