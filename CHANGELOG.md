@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.5.0 (2026-06-24)
+
+Full Changelog: [v4.4.6...v4.5.0](https://github.com/oregister/openregister-typescript/compare/v4.4.6...v4.5.0)
+
+### Features
+
+* **api:** update schema ([f280155](https://github.com/oregister/openregister-typescript/commit/f2801550c40c70183a4f69d788c3db841fb7c8fb))
+
 ## 4.4.6 (2026-06-17)
 
 Full Changelog: [v4.4.5...v4.4.6](https://github.com/oregister/openregister-typescript/compare/v4.4.5...v4.4.6)
