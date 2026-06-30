@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.6.0 (2026-06-30)
+
+Full Changelog: [v4.5.0...v4.6.0](https://github.com/oregister/openregister-typescript/compare/v4.5.0...v4.6.0)
+
+### Features
+
+* **api:** add represenation_rule & individual authority ([edc571a](https://github.com/oregister/openregister-typescript/commit/edc571aea7a5c5be01956e9d2741008ea30b55cb))
+
 ## 4.5.0 (2026-06-24)
 
 Full Changelog: [v4.4.6...v4.5.0](https://github.com/oregister/openregister-typescript/compare/v4.4.6...v4.5.0)
