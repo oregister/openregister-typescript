@@ -431,6 +431,15 @@ export interface CompanyGetDetailsV1Response {
   representation: Array<CompanyGetDetailsV1Response.Representation>;
 
   /**
+   * The company's current general representation rule (allgemeine
+   * Vertretungsregelung), as published in the register. Example: "Ist nur ein
+   * Geschäftsführer bestellt, so vertritt er die Gesellschaft allein. Sind mehrere
+   * Geschäftsführer bestellt, so wird die Gesellschaft durch zwei Geschäftsführer
+   * oder durch einen Geschäftsführer gemeinsam mit einem Prokuristen vertreten."
+   */
+  representation_rule: string | null;
+
+  /**
    * Sources of the company data.
    */
   sources: Array<Source>;
@@ -599,6 +608,14 @@ export namespace CompanyGetDetailsV1Response {
      * May be null for certain representatives.
      */
     id: string | null;
+
+    /**
+     * The representative's current individual representation authority (individuelle
+     * Vertretungsbefugnis), as published in the register. Null if no special authority
+     * is recorded. Example: "einzelvertretungsberechtigt mit der Befugnis, im Namen
+     * der Gesellschaft mit sich im eigenen Namen Rechtsgeschäfte abzuschließen"
+     */
+    authority: string | null;
 
     /**
      * Date when this representative role ended (if applicable). Format: ISO 8601
