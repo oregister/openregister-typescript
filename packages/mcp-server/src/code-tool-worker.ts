@@ -130,7 +130,7 @@ const fuse = new Fuse(
     'client.transparenzregister.setCredentialsV1',
     'client.transparenzregister.extract.createV1',
     'client.transparenzregister.extract.getV1',
-    'client.usage.getUsageV1',
+    'client.usage.getCreditsV1',
     'client.insolvency.getDetailsV1',
   ],
   { threshold: 1, shouldSort: true },

@@ -9,8 +9,8 @@ const client = new Openregister({
 
 describe('resource usage', () => {
   // Mock server tests are disabled
-  test.skip('getUsageV1', async () => {
-    const responsePromise = client.usage.getUsageV1();
+  test.skip('getCreditsV1', async () => {
+    const responsePromise = client.usage.getCreditsV1();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

@@ -85,7 +85,7 @@ import {
   SearchLookupCompanyByURLResponse,
   SearchRequestPagination,
 } from './resources/search';
-import { Usage, UsageGetUsageV1Response } from './resources/usage';
+import { Usage, UsageGetCreditsV1Response } from './resources/usage';
 import {
   Transparenzregister,
   TransparenzregisterSetCredentialsV1Params,
@@ -908,7 +908,7 @@ export declare namespace Openregister {
     type TransparenzregisterSetCredentialsV1Params as TransparenzregisterSetCredentialsV1Params,
   };
 
-  export { Usage as Usage, type UsageGetUsageV1Response as UsageGetUsageV1Response };
+  export { Usage as Usage, type UsageGetCreditsV1Response as UsageGetCreditsV1Response };
 
   export {
     Insolvency as Insolvency,

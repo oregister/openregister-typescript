@@ -72,4 +72,4 @@ export {
   Transparenzregister,
   type TransparenzregisterSetCredentialsV1Params,
 } from './transparenzregister/transparenzregister';
-export { Usage, type UsageGetUsageV1Response } from './usage';
+export { Usage, type UsageGetCreditsV1Response } from './usage';
