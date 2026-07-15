@@ -8,12 +8,12 @@ export class Usage extends APIResource {
   /**
    * Retrieve public API credit usage
    */
-  getUsageV1(options?: RequestOptions): APIPromise<UsageGetUsageV1Response> {
+  getCreditsV1(options?: RequestOptions): APIPromise<UsageGetCreditsV1Response> {
     return this._client.get('/v1/credits', options);
   }
 }
 
-export interface UsageGetUsageV1Response {
+export interface UsageGetCreditsV1Response {
   included_credits: number;
 
   /**
@@ -23,7 +23,7 @@ export interface UsageGetUsageV1Response {
 
   paid: boolean;
 
-  period: UsageGetUsageV1Response.Period;
+  period: UsageGetCreditsV1Response.Period;
 
   /**
    * Never negative; zero once usage exceeds included credits.
@@ -33,7 +33,7 @@ export interface UsageGetUsageV1Response {
   used_credits: number;
 }
 
-export namespace UsageGetUsageV1Response {
+export namespace UsageGetCreditsV1Response {
   export interface Period {
     reset_at: string;
 
@@ -46,5 +46,5 @@ export namespace UsageGetUsageV1Response {
 }
 
 export declare namespace Usage {
-  export { type UsageGetUsageV1Response as UsageGetUsageV1Response };
+  export { type UsageGetCreditsV1Response as UsageGetCreditsV1Response };
 }

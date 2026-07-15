@@ -143,8 +143,8 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/transparenzregister/extracts/{extract_id}',
   },
   {
-    clientCallName: 'client.usage.getUsageV1',
-    fullyQualifiedName: 'usage.getUsageV1',
+    clientCallName: 'client.usage.getCreditsV1',
+    fullyQualifiedName: 'usage.getCreditsV1',
     httpMethod: 'get',
     httpPath: '/v1/credits',
   },

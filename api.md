@@ -128,11 +128,11 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/usage.ts">UsageGetUsageV1Response</a></code>
+- <code><a href="./src/resources/usage.ts">UsageGetCreditsV1Response</a></code>
 
 Methods:
 
-- <code title="get /v1/credits">client.usage.<a href="./src/resources/usage.ts">getUsageV1</a>() -> UsageGetUsageV1Response</code>
+- <code title="get /v1/credits">client.usage.<a href="./src/resources/usage.ts">getCreditsV1</a>() -> UsageGetCreditsV1Response</code>
 
 # Insolvency
 

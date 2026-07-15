@@ -1041,41 +1041,41 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
-    name: 'get_usage_v1',
+    name: 'get_credits_v1',
     endpoint: '/v1/credits',
     httpMethod: 'get',
     summary: 'Retrieve public API credit usage',
     description: 'Retrieve public API credit usage',
-    stainlessPath: '(resource) usage > (method) get_usage_v1',
-    qualified: 'client.usage.getUsageV1',
+    stainlessPath: '(resource) usage > (method) get_credits_v1',
+    qualified: 'client.usage.getCreditsV1',
     response:
       "{ included_credits: number; overage_credits: number; paid: boolean; period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }; remaining_credits: number; used_credits: number; }",
     markdown:
-      "## get_usage_v1\n\n`client.usage.getUsageV1(): { included_credits: number; overage_credits: number; paid: boolean; period: object; remaining_credits: number; used_credits: number; }`\n\n**get** `/v1/credits`\n\nRetrieve public API credit usage\n\n### Returns\n\n- `{ included_credits: number; overage_credits: number; paid: boolean; period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }; remaining_credits: number; used_credits: number; }`\n\n  - `included_credits: number`\n  - `overage_credits: number`\n  - `paid: boolean`\n  - `period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }`\n  - `remaining_credits: number`\n  - `used_credits: number`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.usage.getUsageV1();\n\nconsole.log(response);\n```",
+      "## get_credits_v1\n\n`client.usage.getCreditsV1(): { included_credits: number; overage_credits: number; paid: boolean; period: object; remaining_credits: number; used_credits: number; }`\n\n**get** `/v1/credits`\n\nRetrieve public API credit usage\n\n### Returns\n\n- `{ included_credits: number; overage_credits: number; paid: boolean; period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }; remaining_credits: number; used_credits: number; }`\n\n  - `included_credits: number`\n  - `overage_credits: number`\n  - `paid: boolean`\n  - `period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }`\n  - `remaining_credits: number`\n  - `used_credits: number`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.usage.getCreditsV1();\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
-        method: 'client.usage.getUsageV1',
+        method: 'client.usage.getCreditsV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.usage.getUsageV1();\n\nconsole.log(response.paid);",
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.usage.getCreditsV1();\n\nconsole.log(response.paid);",
       },
       python: {
-        method: 'usage.get_usage_v1',
+        method: 'usage.get_credits_v1',
         example:
-          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.usage.get_usage_v1()\nprint(response.paid)',
+          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.usage.get_credits_v1()\nprint(response.paid)',
       },
       java: {
-        method: 'usage().getUsageV1',
+        method: 'usage().getCreditsV1',
         example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.usage.UsageGetUsageV1Params;\nimport com.openregister.api.models.usage.UsageGetUsageV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        UsageGetUsageV1Response response = client.usage().getUsageV1();\n    }\n}',
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.usage.UsageGetCreditsV1Params;\nimport com.openregister.api.models.usage.UsageGetCreditsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        UsageGetCreditsV1Response response = client.usage().getCreditsV1();\n    }\n}',
       },
       go: {
-        method: 'client.Usage.GetUsageV1',
+        method: 'client.Usage.GetCreditsV1',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Usage.GetUsageV1(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Paid)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Usage.GetCreditsV1(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Paid)\n}\n',
       },
       cli: {
-        method: 'usage get_usage_v1',
-        example: "openregister usage get-usage-v1 \\\n  --api-key 'My API Key'",
+        method: 'usage get_credits_v1',
+        example: "openregister usage get-credits-v1 \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
