@@ -4,16 +4,16 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
-export class Credits extends APIResource {
+export class Usage extends APIResource {
   /**
    * Retrieve public API credit usage
    */
-  get(options?: RequestOptions): APIPromise<CreditGetResponse> {
+  getUsageV1(options?: RequestOptions): APIPromise<UsageGetUsageV1Response> {
     return this._client.get('/v1/credits', options);
   }
 }
 
-export interface CreditGetResponse {
+export interface UsageGetUsageV1Response {
   included_credits: number;
 
   /**
@@ -23,7 +23,7 @@ export interface CreditGetResponse {
 
   paid: boolean;
 
-  period: CreditGetResponse.Period;
+  period: UsageGetUsageV1Response.Period;
 
   /**
    * Never negative; zero once usage exceeds included credits.
@@ -33,7 +33,7 @@ export interface CreditGetResponse {
   used_credits: number;
 }
 
-export namespace CreditGetResponse {
+export namespace UsageGetUsageV1Response {
   export interface Period {
     reset_at: string;
 
@@ -45,6 +45,6 @@ export namespace CreditGetResponse {
   }
 }
 
-export declare namespace Credits {
-  export { type CreditGetResponse as CreditGetResponse };
+export declare namespace Usage {
+  export { type UsageGetUsageV1Response as UsageGetUsageV1Response };
 }

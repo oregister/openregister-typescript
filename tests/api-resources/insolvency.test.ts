@@ -9,8 +9,8 @@ const client = new Openregister({
 
 describe('resource insolvency', () => {
   // Mock server tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.insolvency.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+  test.skip('getDetailsV1', async () => {
+    const responsePromise = client.insolvency.getDetailsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

@@ -1041,41 +1041,41 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
-    name: 'get',
+    name: 'get_usage_v1',
     endpoint: '/v1/credits',
     httpMethod: 'get',
     summary: 'Retrieve public API credit usage',
     description: 'Retrieve public API credit usage',
-    stainlessPath: '(resource) credits > (method) get',
-    qualified: 'client.credits.get',
+    stainlessPath: '(resource) usage > (method) get_usage_v1',
+    qualified: 'client.usage.getUsageV1',
     response:
       "{ included_credits: number; overage_credits: number; paid: boolean; period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }; remaining_credits: number; used_credits: number; }",
     markdown:
-      "## get\n\n`client.credits.get(): { included_credits: number; overage_credits: number; paid: boolean; period: object; remaining_credits: number; used_credits: number; }`\n\n**get** `/v1/credits`\n\nRetrieve public API credit usage\n\n### Returns\n\n- `{ included_credits: number; overage_credits: number; paid: boolean; period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }; remaining_credits: number; used_credits: number; }`\n\n  - `included_credits: number`\n  - `overage_credits: number`\n  - `paid: boolean`\n  - `period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }`\n  - `remaining_credits: number`\n  - `used_credits: number`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst credit = await client.credits.get();\n\nconsole.log(credit);\n```",
+      "## get_usage_v1\n\n`client.usage.getUsageV1(): { included_credits: number; overage_credits: number; paid: boolean; period: object; remaining_credits: number; used_credits: number; }`\n\n**get** `/v1/credits`\n\nRetrieve public API credit usage\n\n### Returns\n\n- `{ included_credits: number; overage_credits: number; paid: boolean; period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }; remaining_credits: number; used_credits: number; }`\n\n  - `included_credits: number`\n  - `overage_credits: number`\n  - `paid: boolean`\n  - `period: { reset_at: string; type: 'billing_cycle' | 'rolling_30_days'; }`\n  - `remaining_credits: number`\n  - `used_credits: number`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.usage.getUsageV1();\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
-        method: 'client.credits.get',
+        method: 'client.usage.getUsageV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst credit = await client.credits.get();\n\nconsole.log(credit.paid);",
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.usage.getUsageV1();\n\nconsole.log(response.paid);",
       },
       python: {
-        method: 'credits.get',
+        method: 'usage.get_usage_v1',
         example:
-          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\ncredit = client.credits.get()\nprint(credit.paid)',
+          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.usage.get_usage_v1()\nprint(response.paid)',
       },
       java: {
-        method: 'credits().get',
+        method: 'usage().getUsageV1',
         example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.credits.CreditGetParams;\nimport com.openregister.api.models.credits.CreditGetResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        CreditGetResponse credit = client.credits().get();\n    }\n}',
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.usage.UsageGetUsageV1Params;\nimport com.openregister.api.models.usage.UsageGetUsageV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        UsageGetUsageV1Response response = client.usage().getUsageV1();\n    }\n}',
       },
       go: {
-        method: 'client.Credits.Get',
+        method: 'client.Usage.GetUsageV1',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tcredit, err := client.Credits.Get(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", credit.Paid)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Usage.GetUsageV1(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.Paid)\n}\n',
       },
       cli: {
-        method: 'credits get',
-        example: "openregister credits get \\\n  --api-key 'My API Key'",
+        method: 'usage get_usage_v1',
+        example: "openregister usage get-usage-v1 \\\n  --api-key 'My API Key'",
       },
       http: {
         example:
@@ -1084,43 +1084,43 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
-    name: 'retrieve',
+    name: 'get_details_v1',
     endpoint: '/v1/insolvency/{insolvency_id}',
     httpMethod: 'get',
     summary: 'Get detailed insolvency proceeding information',
     description: 'Get detailed insolvency proceeding information',
-    stainlessPath: '(resource) insolvency > (method) retrieve',
-    qualified: 'client.insolvency.retrieve',
+    stainlessPath: '(resource) insolvency > (method) get_details_v1',
+    qualified: 'client.insolvency.getDetailsV1',
     params: ['insolvency_id: string;'],
     response:
       "{ id: string; case_number: string; company_id: string; court: string; current_status: string; debtor_name: string; events: { id: string; details: { insolvency_grounds: string[]; meetings: object[]; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; discharge_granted?: boolean; distribution_available?: string; distribution_claims_total?: string; }; event_type: string; published_at: string; report_type: string; summary: string; decision_date?: string; effective_at?: string; }[]; insolvency_grounds: string[]; administration_kind?: 'external_administration' | 'self_administration' | 'protective_shield'; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; debtor_kind?: 'legal_person' | 'natural_person'; debtor_legal_form?: string; distribution_available?: number; distribution_claims_total?: number; first_event_at?: string; last_event_at?: string; opened_at?: string; proceeding_kind?: 'regular_insolvency' | 'consumer_insolvency'; }",
     markdown:
-      "## retrieve\n\n`client.insolvency.retrieve(insolvency_id: string): { id: string; case_number: string; company_id: string; court: string; current_status: insolvency_status; debtor_name: string; events: object[]; insolvency_grounds: string[]; administration_kind?: insolvency_administration_kind; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; debtor_kind?: insolvency_debtor_kind; debtor_legal_form?: string; distribution_available?: number; distribution_claims_total?: number; first_event_at?: string; last_event_at?: string; opened_at?: string; proceeding_kind?: insolvency_proceeding_kind; }`\n\n**get** `/v1/insolvency/{insolvency_id}`\n\nGet detailed insolvency proceeding information\n\n### Parameters\n\n- `insolvency_id: string`\n\n### Returns\n\n- `{ id: string; case_number: string; company_id: string; court: string; current_status: string; debtor_name: string; events: { id: string; details: { insolvency_grounds: string[]; meetings: object[]; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; discharge_granted?: boolean; distribution_available?: string; distribution_claims_total?: string; }; event_type: string; published_at: string; report_type: string; summary: string; decision_date?: string; effective_at?: string; }[]; insolvency_grounds: string[]; administration_kind?: 'external_administration' | 'self_administration' | 'protective_shield'; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; debtor_kind?: 'legal_person' | 'natural_person'; debtor_legal_form?: string; distribution_available?: number; distribution_claims_total?: number; first_event_at?: string; last_event_at?: string; opened_at?: string; proceeding_kind?: 'regular_insolvency' | 'consumer_insolvency'; }`\n  An insolvency proceeding with all of its published events.\n\n\n  - `id: string`\n  - `case_number: string`\n  - `company_id: string`\n  - `court: string`\n  - `current_status: string`\n  - `debtor_name: string`\n  - `events: { id: string; details: { insolvency_grounds: string[]; meetings: { kind: string; at?: string; location?: string; }[]; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; discharge_granted?: boolean; distribution_available?: string; distribution_claims_total?: string; }; event_type: string; published_at: string; report_type: string; summary: string; decision_date?: string; effective_at?: string; }[]`\n  - `insolvency_grounds: string[]`\n  - `administration_kind?: 'external_administration' | 'self_administration' | 'protective_shield'`\n  - `administrator_address?: string`\n  - `administrator_name?: string`\n  - `claims_filing_deadline?: string`\n  - `closed_at?: string`\n  - `debtor_kind?: 'legal_person' | 'natural_person'`\n  - `debtor_legal_form?: string`\n  - `distribution_available?: number`\n  - `distribution_claims_total?: number`\n  - `first_event_at?: string`\n  - `last_event_at?: string`\n  - `opened_at?: string`\n  - `proceeding_kind?: 'regular_insolvency' | 'consumer_insolvency'`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst insolvency = await client.insolvency.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(insolvency);\n```",
+      "## get_details_v1\n\n`client.insolvency.getDetailsV1(insolvency_id: string): { id: string; case_number: string; company_id: string; court: string; current_status: insolvency_status; debtor_name: string; events: object[]; insolvency_grounds: string[]; administration_kind?: insolvency_administration_kind; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; debtor_kind?: insolvency_debtor_kind; debtor_legal_form?: string; distribution_available?: number; distribution_claims_total?: number; first_event_at?: string; last_event_at?: string; opened_at?: string; proceeding_kind?: insolvency_proceeding_kind; }`\n\n**get** `/v1/insolvency/{insolvency_id}`\n\nGet detailed insolvency proceeding information\n\n### Parameters\n\n- `insolvency_id: string`\n\n### Returns\n\n- `{ id: string; case_number: string; company_id: string; court: string; current_status: string; debtor_name: string; events: { id: string; details: { insolvency_grounds: string[]; meetings: object[]; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; discharge_granted?: boolean; distribution_available?: string; distribution_claims_total?: string; }; event_type: string; published_at: string; report_type: string; summary: string; decision_date?: string; effective_at?: string; }[]; insolvency_grounds: string[]; administration_kind?: 'external_administration' | 'self_administration' | 'protective_shield'; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; debtor_kind?: 'legal_person' | 'natural_person'; debtor_legal_form?: string; distribution_available?: number; distribution_claims_total?: number; first_event_at?: string; last_event_at?: string; opened_at?: string; proceeding_kind?: 'regular_insolvency' | 'consumer_insolvency'; }`\n  An insolvency proceeding with all of its published events.\n\n\n  - `id: string`\n  - `case_number: string`\n  - `company_id: string`\n  - `court: string`\n  - `current_status: string`\n  - `debtor_name: string`\n  - `events: { id: string; details: { insolvency_grounds: string[]; meetings: { kind: string; at?: string; location?: string; }[]; administrator_address?: string; administrator_name?: string; claims_filing_deadline?: string; closed_at?: string; discharge_granted?: boolean; distribution_available?: string; distribution_claims_total?: string; }; event_type: string; published_at: string; report_type: string; summary: string; decision_date?: string; effective_at?: string; }[]`\n  - `insolvency_grounds: string[]`\n  - `administration_kind?: 'external_administration' | 'self_administration' | 'protective_shield'`\n  - `administrator_address?: string`\n  - `administrator_name?: string`\n  - `claims_filing_deadline?: string`\n  - `closed_at?: string`\n  - `debtor_kind?: 'legal_person' | 'natural_person'`\n  - `debtor_legal_form?: string`\n  - `distribution_available?: number`\n  - `distribution_claims_total?: number`\n  - `first_event_at?: string`\n  - `last_event_at?: string`\n  - `opened_at?: string`\n  - `proceeding_kind?: 'regular_insolvency' | 'consumer_insolvency'`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst response = await client.insolvency.getDetailsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
-        method: 'client.insolvency.retrieve',
+        method: 'client.insolvency.getDetailsV1',
         example:
-          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst insolvency = await client.insolvency.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(insolvency.id);",
+          "import Openregister from 'openregister';\n\nconst client = new Openregister({\n  apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.insolvency.getDetailsV1('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');\n\nconsole.log(response.id);",
       },
       python: {
-        method: 'insolvency.retrieve',
+        method: 'insolvency.get_details_v1',
         example:
-          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\ninsolvency = client.insolvency.retrieve(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(insolvency.id)',
+          'import os\nfrom openregister import Openregister\n\nclient = Openregister(\n    api_key=os.environ.get("OPENREGISTER_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.insolvency.get_details_v1(\n    "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",\n)\nprint(response.id)',
       },
       java: {
-        method: 'insolvency().retrieve',
+        method: 'insolvency().getDetailsV1',
         example:
-          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.insolvency.InsolvencyRetrieveParams;\nimport com.openregister.api.models.insolvency.InsolvencyRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        InsolvencyRetrieveResponse insolvency = client.insolvency().retrieve("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
+          'package com.openregister.api.example;\n\nimport com.openregister.api.client.OpenregisterClient;\nimport com.openregister.api.client.okhttp.OpenregisterOkHttpClient;\nimport com.openregister.api.models.insolvency.InsolvencyGetDetailsV1Params;\nimport com.openregister.api.models.insolvency.InsolvencyGetDetailsV1Response;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        OpenregisterClient client = OpenregisterOkHttpClient.fromEnv();\n\n        InsolvencyGetDetailsV1Response response = client.insolvency().getDetailsV1("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e");\n    }\n}',
       },
       go: {
-        method: 'client.Insolvency.Get',
+        method: 'client.Insolvency.GetDetailsV1',
         example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tinsolvency, err := client.Insolvency.Get(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", insolvency.ID)\n}\n',
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/oregister/openregister-go"\n\t"github.com/oregister/openregister-go/option"\n)\n\nfunc main() {\n\tclient := openregister.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tresponse, err := client.Insolvency.GetDetailsV1(context.TODO(), "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", response.ID)\n}\n',
       },
       cli: {
-        method: 'insolvency retrieve',
+        method: 'insolvency get_details_v1',
         example:
-          "openregister insolvency retrieve \\\n  --api-key 'My API Key' \\\n  --insolvency-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          "openregister insolvency get-details-v1 \\\n  --api-key 'My API Key' \\\n  --insolvency-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
       },
       http: {
         example:

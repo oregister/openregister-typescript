@@ -124,15 +124,15 @@ Methods:
 - <code title="post /v1/transparenzregister/extracts">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">createV1</a>({ ...params }) -> ExtractCreateV1Response</code>
 - <code title="get /v1/transparenzregister/extracts/{extract_id}">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">getV1</a>(extractID) -> TransparenzregisterExtract</code>
 
-# Credits
+# Usage
 
 Types:
 
-- <code><a href="./src/resources/credits.ts">CreditGetResponse</a></code>
+- <code><a href="./src/resources/usage.ts">UsageGetUsageV1Response</a></code>
 
 Methods:
 
-- <code title="get /v1/credits">client.credits.<a href="./src/resources/credits.ts">get</a>() -> CreditGetResponse</code>
+- <code title="get /v1/credits">client.usage.<a href="./src/resources/usage.ts">getUsageV1</a>() -> UsageGetUsageV1Response</code>
 
 # Insolvency
 
@@ -142,8 +142,8 @@ Types:
 - <code><a href="./src/resources/insolvency.ts">InsolvencyDebtorKind</a></code>
 - <code><a href="./src/resources/insolvency.ts">InsolvencyProceedingKind</a></code>
 - <code><a href="./src/resources/insolvency.ts">InsolvencyStatus</a></code>
-- <code><a href="./src/resources/insolvency.ts">InsolvencyRetrieveResponse</a></code>
+- <code><a href="./src/resources/insolvency.ts">InsolvencyGetDetailsV1Response</a></code>
 
 Methods:
 
-- <code title="get /v1/insolvency/{insolvency_id}">client.insolvency.<a href="./src/resources/insolvency.ts">retrieve</a>(insolvencyID) -> InsolvencyRetrieveResponse</code>
+- <code title="get /v1/insolvency/{insolvency_id}">client.insolvency.<a href="./src/resources/insolvency.ts">getDetailsV1</a>(insolvencyID) -> InsolvencyGetDetailsV1Response</code>

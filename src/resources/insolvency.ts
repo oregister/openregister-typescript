@@ -9,7 +9,7 @@ export class Insolvency extends APIResource {
   /**
    * Get detailed insolvency proceeding information
    */
-  retrieve(insolvencyID: string, options?: RequestOptions): APIPromise<InsolvencyRetrieveResponse> {
+  getDetailsV1(insolvencyID: string, options?: RequestOptions): APIPromise<InsolvencyGetDetailsV1Response> {
     return this._client.get(path`/v1/insolvency/${insolvencyID}`, options);
   }
 }
@@ -55,7 +55,7 @@ export type InsolvencyStatus =
 /**
  * An insolvency proceeding with all of its published events.
  */
-export interface InsolvencyRetrieveResponse {
+export interface InsolvencyGetDetailsV1Response {
   /**
    * Unique identifier of the insolvency proceeding.
    */
@@ -90,7 +90,7 @@ export interface InsolvencyRetrieveResponse {
   /**
    * All published events of the proceeding, ordered by date.
    */
-  events: Array<InsolvencyRetrieveResponse.Event>;
+  events: Array<InsolvencyGetDetailsV1Response.Event>;
 
   /**
    * Grounds for the insolvency (e.g. Zahlungsunfähigkeit, Überschuldung).
@@ -166,7 +166,7 @@ export interface InsolvencyRetrieveResponse {
   proceeding_kind?: InsolvencyProceedingKind | null;
 }
 
-export namespace InsolvencyRetrieveResponse {
+export namespace InsolvencyGetDetailsV1Response {
   /**
    * A single published event of an insolvency proceeding, derived from an official
    * court publication.
@@ -289,6 +289,6 @@ export declare namespace Insolvency {
     type InsolvencyDebtorKind as InsolvencyDebtorKind,
     type InsolvencyProceedingKind as InsolvencyProceedingKind,
     type InsolvencyStatus as InsolvencyStatus,
-    type InsolvencyRetrieveResponse as InsolvencyRetrieveResponse,
+    type InsolvencyGetDetailsV1Response as InsolvencyGetDetailsV1Response,
   };
 }

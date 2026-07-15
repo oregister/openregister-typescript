@@ -28,7 +28,6 @@ export {
   type CompanyGetDetailsV1Params,
   type CompanyGetOwnersV1Params,
 } from './company';
-export { Credits, type CreditGetResponse } from './credits';
 export {
   DocumentResource,
   type Document,
@@ -41,7 +40,7 @@ export {
   type InsolvencyDebtorKind,
   type InsolvencyProceedingKind,
   type InsolvencyStatus,
-  type InsolvencyRetrieveResponse,
+  type InsolvencyGetDetailsV1Response,
 } from './insolvency';
 export {
   Monitor,
@@ -73,3 +72,4 @@ export {
   Transparenzregister,
   type TransparenzregisterSetCredentialsV1Params,
 } from './transparenzregister/transparenzregister';
+export { Usage, type UsageGetUsageV1Response } from './usage';
