@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.6.1 (2026-07-15)
+
+Full Changelog: [v4.6.0...v4.6.1](https://github.com/oregister/openregister-typescript/compare/v4.6.0...v4.6.1)
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([d8fdfbc](https://github.com/oregister/openregister-typescript/commit/d8fdfbc0047542f40f12a1b39b1897a7e1e430c5))
+
+
+### Chores
+
+* **internal:** codegen related update ([2e60c3e](https://github.com/oregister/openregister-typescript/commit/2e60c3e09210c55281ef78c3383281eb899e716e))
+
 ## 4.6.0 (2026-06-30)
 
 Full Changelog: [v4.5.0...v4.6.0](https://github.com/oregister/openregister-typescript/compare/v4.5.0...v4.6.0)
