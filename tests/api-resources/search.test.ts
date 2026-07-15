@@ -38,6 +38,18 @@ describe('resource search', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('findInsolvenciesV1', async () => {
+    const responsePromise = client.search.findInsolvenciesV1({});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('findPersonV1', async () => {
     const responsePromise = client.search.findPersonV1({});
     const rawResponse = await responsePromise.asResponse();

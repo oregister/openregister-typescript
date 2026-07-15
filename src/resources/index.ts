@@ -28,12 +28,21 @@ export {
   type CompanyGetDetailsV1Params,
   type CompanyGetOwnersV1Params,
 } from './company';
+export { Credits, type CreditGetResponse } from './credits';
 export {
   DocumentResource,
   type Document,
   type DocumentGetRealtimeV1Response,
   type DocumentGetRealtimeV1Params,
 } from './document';
+export {
+  Insolvency,
+  type InsolvencyAdministrationKind,
+  type InsolvencyDebtorKind,
+  type InsolvencyProceedingKind,
+  type InsolvencyStatus,
+  type InsolvencyRetrieveResponse,
+} from './insolvency';
 export {
   Monitor,
   type MonitorCreateResponse,
@@ -51,10 +60,12 @@ export {
   type SearchFilterBase,
   type SearchRequestPagination,
   type SearchAutocompleteCompaniesV1Response,
+  type SearchFindInsolvenciesV1Response,
   type SearchFindPersonV1Response,
   type SearchLookupCompanyByURLResponse,
   type SearchAutocompleteCompaniesV1Params,
   type SearchFindCompaniesV1Params,
+  type SearchFindInsolvenciesV1Params,
   type SearchFindPersonV1Params,
   type SearchLookupCompanyByURLParams,
 } from './search';
