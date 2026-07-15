@@ -45,7 +45,6 @@ import {
   RepresentationRole,
   Source,
 } from './resources/company';
-import { CreditGetResponse, Credits } from './resources/credits';
 import {
   Document,
   DocumentGetRealtimeV1Params,
@@ -56,8 +55,8 @@ import {
   Insolvency,
   InsolvencyAdministrationKind,
   InsolvencyDebtorKind,
+  InsolvencyGetDetailsV1Response,
   InsolvencyProceedingKind,
-  InsolvencyRetrieveResponse,
   InsolvencyStatus,
 } from './resources/insolvency';
 import {
@@ -86,6 +85,7 @@ import {
   SearchLookupCompanyByURLResponse,
   SearchRequestPagination,
 } from './resources/search';
+import { Usage, UsageGetUsageV1Response } from './resources/usage';
 import {
   Transparenzregister,
   TransparenzregisterSetCredentialsV1Params,
@@ -818,7 +818,7 @@ export class Openregister {
   person: API.Person = new API.Person(this);
   monitor: API.Monitor = new API.Monitor(this);
   transparenzregister: API.Transparenzregister = new API.Transparenzregister(this);
-  credits: API.Credits = new API.Credits(this);
+  usage: API.Usage = new API.Usage(this);
   insolvency: API.Insolvency = new API.Insolvency(this);
 }
 
@@ -828,7 +828,7 @@ Openregister.DocumentResource = DocumentResource;
 Openregister.Person = Person;
 Openregister.Monitor = Monitor;
 Openregister.Transparenzregister = Transparenzregister;
-Openregister.Credits = Credits;
+Openregister.Usage = Usage;
 Openregister.Insolvency = Insolvency;
 
 export declare namespace Openregister {
@@ -908,7 +908,7 @@ export declare namespace Openregister {
     type TransparenzregisterSetCredentialsV1Params as TransparenzregisterSetCredentialsV1Params,
   };
 
-  export { Credits as Credits, type CreditGetResponse as CreditGetResponse };
+  export { Usage as Usage, type UsageGetUsageV1Response as UsageGetUsageV1Response };
 
   export {
     Insolvency as Insolvency,
@@ -916,6 +916,6 @@ export declare namespace Openregister {
     type InsolvencyDebtorKind as InsolvencyDebtorKind,
     type InsolvencyProceedingKind as InsolvencyProceedingKind,
     type InsolvencyStatus as InsolvencyStatus,
-    type InsolvencyRetrieveResponse as InsolvencyRetrieveResponse,
+    type InsolvencyGetDetailsV1Response as InsolvencyGetDetailsV1Response,
   };
 }
