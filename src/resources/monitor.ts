@@ -62,6 +62,7 @@ export interface MonitorCreateResponse {
     | 'ownership'
     | 'holdings'
     | 'management_positions'
+    | 'insolvencies'
   >;
 }
 
@@ -103,6 +104,7 @@ export namespace MonitorListResponse {
       | 'ownership'
       | 'holdings'
       | 'management_positions'
+      | 'insolvencies'
     >;
   }
 }
@@ -132,6 +134,7 @@ export interface MonitorCreateParams {
     | 'ownership'
     | 'holdings'
     | 'management_positions'
+    | 'insolvencies'
   >;
 }
 

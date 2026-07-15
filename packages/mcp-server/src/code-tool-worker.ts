@@ -110,6 +110,7 @@ const fuse = new Fuse(
   [
     'client.search.autocompleteCompaniesV1',
     'client.search.findCompaniesV1',
+    'client.search.findInsolvenciesV1',
     'client.search.findPersonV1',
     'client.search.lookupCompanyByURL',
     'client.company.getContactV0',
@@ -129,6 +130,8 @@ const fuse = new Fuse(
     'client.transparenzregister.setCredentialsV1',
     'client.transparenzregister.extract.createV1',
     'client.transparenzregister.extract.getV1',
+    'client.credits.get',
+    'client.insolvency.retrieve',
   ],
   { threshold: 1, shouldSort: true },
 );
