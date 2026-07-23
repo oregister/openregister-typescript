@@ -526,7 +526,11 @@ export namespace SearchFindCompaniesV1Params {
       | 'youngest_owner_age'
       | 'purpose'
       | 'has_lei'
-      | 'lei';
+      | 'lei'
+      | 'had_insolvency'
+      | 'has_open_insolvency'
+      | 'insolvency_stage'
+      | 'insolvency_opened_at';
   }
 
   /**
