@@ -353,6 +353,12 @@ export interface CompanyGetDetailsV1Response {
   addresses: Array<CompanyAddress>;
 
   /**
+   * Spin-offs (Ausgliederung, § 123 Abs. 3 UmwG) in which this company transferred
+   * assets to another company as the transferring entity.
+   */
+  asset_spin_offs: Array<CompanyGetDetailsV1Response.AssetSpinOff>;
+
+  /**
    * Current registered capital of the company.
    */
   capital: CompanyCapital | null;
@@ -495,20 +501,54 @@ export interface CompanyGetDetailsV1Response {
 export namespace CompanyGetDetailsV1Response {
   export interface Acquisition {
     /**
+     * Date the underlying contract (Verschmelzungsvertrag) was concluded, as cited in
+     * the register entry. Null when the register text does not cite a contract date.
+     * Entries sharing an agreement_date belong to the same transaction. Format: ISO
+     * 8601 (YYYY-MM-DD)
+     */
+    agreement_date: string | null;
+
+    /**
      * Unique company identifier of the company that was merged into this company.
      * Example: DE-HRB-F1103-267645
      */
     company_id: string;
 
     /**
-     * Date the merger was registered. Format: ISO 8601 (YYYY-MM-DD)
-     */
-    date: string;
-
-    /**
      * Current name of the company that was merged into this company.
      */
     name: string;
+
+    /**
+     * Date the merger was registered. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    registration_date: string;
+  }
+
+  export interface AssetSpinOff {
+    /**
+     * Date the underlying contract (Ausgliederungsvertrag) was concluded, as cited in
+     * the register entry. Null when the register text does not cite a contract date.
+     * Entries sharing an agreement_date belong to the same transaction. Format: ISO
+     * 8601 (YYYY-MM-DD)
+     */
+    agreement_date: string | null;
+
+    /**
+     * Unique company identifier of the company that received the assets. Example:
+     * DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Current name of the company that received the assets.
+     */
+    name: string;
+
+    /**
+     * Date the spin-off was registered. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    registration_date: string;
   }
 
   /**
@@ -652,20 +692,28 @@ export namespace CompanyGetDetailsV1Response {
    */
   export interface MergedInto {
     /**
+     * Date the underlying contract (Verschmelzungsvertrag) was concluded, as cited in
+     * the register entry. Null when the register text does not cite a contract date.
+     * Entries sharing an agreement_date belong to the same transaction. Format: ISO
+     * 8601 (YYYY-MM-DD)
+     */
+    agreement_date: string | null;
+
+    /**
      * Unique company identifier of the company this company was merged into. Example:
      * DE-HRB-F1103-267645
      */
     company_id: string;
 
     /**
-     * Date the merger was registered. Format: ISO 8601 (YYYY-MM-DD)
-     */
-    date: string;
-
-    /**
      * Current name of the company this company was merged into.
      */
     name: string;
+
+    /**
+     * Date the merger was registered. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    registration_date: string;
   }
 
   /**
@@ -676,20 +724,28 @@ export namespace CompanyGetDetailsV1Response {
    */
   export interface ProfitTransferAgreement {
     /**
+     * Date the underlying contract (Gewinnabführungsvertrag) was concluded, as cited
+     * in the register entry. Null when the register text does not cite a contract
+     * date. Entries sharing an agreement_date belong to the same transaction. Format:
+     * ISO 8601 (YYYY-MM-DD)
+     */
+    agreement_date: string | null;
+
+    /**
      * Unique company identifier of the parent company receiving this company's profit
      * (Organträger). Example: DE-HRB-F1103-267645
      */
     company_id: string;
 
     /**
-     * Date the agreement was registered. Format: ISO 8601 (YYYY-MM-DD)
-     */
-    date: string;
-
-    /**
      * Current name of the parent company.
      */
     name: string;
+
+    /**
+     * Date the agreement was registered. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    registration_date: string;
   }
 
   export interface Representation {
