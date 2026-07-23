@@ -143,7 +143,7 @@ export interface TransparenzregisterGroup {
  */
 export interface TransparenzregisterReport {
   /**
-   * Extract creation date.
+   * Extract creation date. Format: ISO 8601 (YYYY-MM-DD)
    */
   created_at?: string | null;
 
@@ -173,6 +173,9 @@ export interface TransparenzregisterStatusFlags {
 
   deleted?: boolean;
 
+  /**
+   * Format: ISO 8601 (YYYY-MM-DD)
+   */
   deletion_date?: string | null;
 
   discrepancy_note?: string | null;
@@ -199,6 +202,9 @@ export interface TransparenzregisterUboNaturalPerson {
 
   country?: string | null;
 
+  /**
+   * Format: ISO 8601 (YYYY-MM-DD)
+   */
   date_of_birth?: string | null;
 
   first_name?: string | null;
@@ -222,6 +228,9 @@ export interface TransparenzregisterValidity {
 }
 
 export interface TransparenzregisterValidityPoint {
+  /**
+   * Format: ISO 8601 (YYYY-MM-DD)
+   */
   date?: string | null;
 
   note?: string | null;
