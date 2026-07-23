@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.7.0 (2026-07-23)
+
+Full Changelog: [v4.6.1...v4.7.0](https://github.com/oregister/openregister-typescript/compare/v4.6.1...v4.7.0)
+
+### Features
+
+* **api:** insolvencies & m&a ([5608556](https://github.com/oregister/openregister-typescript/commit/5608556634402c5dddefaef84dca7c8639e4601b))
+* **api:** manual updates ([c5cd05d](https://github.com/oregister/openregister-typescript/commit/c5cd05d80fafd03ed7c407bd54e72327f84d1d11))
+* **api:** manual updates ([3e5c91f](https://github.com/oregister/openregister-typescript/commit/3e5c91fa3faac34ce902ceb75bc2ee75da3a4bc5))
+* **api:** manual updates ([a55f9be](https://github.com/oregister/openregister-typescript/commit/a55f9be6d1d83ce9052c77f13f354b208b68cd30))
+* **api:** typed dates ([431be31](https://github.com/oregister/openregister-typescript/commit/431be31346e5e4b1c3274df9fbcc588e045b9aaa))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([7c781da](https://github.com/oregister/openregister-typescript/commit/7c781da35f4d27ee9eac00626dab1d966331d326))
+
 ## 4.6.1 (2026-07-15)
 
 Full Changelog: [v4.6.0...v4.6.1](https://github.com/oregister/openregister-typescript/compare/v4.6.0...v4.6.1)
