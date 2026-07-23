@@ -23,6 +23,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/v1/search/company',
   },
   {
+    clientCallName: 'client.search.findInsolvenciesV1',
+    fullyQualifiedName: 'search.findInsolvenciesV1',
+    httpMethod: 'post',
+    httpPath: '/v1/search/insolvency',
+  },
+  {
     clientCallName: 'client.search.findPersonV1',
     fullyQualifiedName: 'search.findPersonV1',
     httpMethod: 'post',
@@ -135,6 +141,18 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'transparenzregister.extract.getV1',
     httpMethod: 'get',
     httpPath: '/v1/transparenzregister/extracts/{extract_id}',
+  },
+  {
+    clientCallName: 'client.usage.getCreditsV1',
+    fullyQualifiedName: 'usage.getCreditsV1',
+    httpMethod: 'get',
+    httpPath: '/v1/credits',
+  },
+  {
+    clientCallName: 'client.insolvency.getDetailsV1',
+    fullyQualifiedName: 'insolvency.getDetailsV1',
+    httpMethod: 'get',
+    httpPath: '/v1/insolvency/{insolvency_id}',
   },
 ];
 

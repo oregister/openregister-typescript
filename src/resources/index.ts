@@ -35,6 +35,14 @@ export {
   type DocumentGetRealtimeV1Params,
 } from './document';
 export {
+  Insolvency,
+  type InsolvencyAdministrationKind,
+  type InsolvencyDebtorKind,
+  type InsolvencyProceedingKind,
+  type InsolvencyStatus,
+  type InsolvencyGetDetailsV1Response,
+} from './insolvency';
+export {
   Monitor,
   type MonitorCreateResponse,
   type MonitorListResponse,
@@ -51,10 +59,12 @@ export {
   type SearchFilterBase,
   type SearchRequestPagination,
   type SearchAutocompleteCompaniesV1Response,
+  type SearchFindInsolvenciesV1Response,
   type SearchFindPersonV1Response,
   type SearchLookupCompanyByURLResponse,
   type SearchAutocompleteCompaniesV1Params,
   type SearchFindCompaniesV1Params,
+  type SearchFindInsolvenciesV1Params,
   type SearchFindPersonV1Params,
   type SearchLookupCompanyByURLParams,
 } from './search';
@@ -62,3 +72,4 @@ export {
   Transparenzregister,
   type TransparenzregisterSetCredentialsV1Params,
 } from './transparenzregister/transparenzregister';
+export { Usage, type UsageGetCreditsV1Response } from './usage';

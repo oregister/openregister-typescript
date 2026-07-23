@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import * as CompanyAPI from './company';
+import * as InsolvencyAPI from './insolvency';
 import * as SearchAPI from './search';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
@@ -336,6 +337,12 @@ export interface CompanyGetDetailsV1Response {
   id: string;
 
   /**
+   * Companies that were merged into this company (Verschmelzung durch Aufnahme, as
+   * the acquiring entity).
+   */
+  acquisitions: Array<CompanyGetDetailsV1Response.Acquisition>;
+
+  /**
    * Current registered address of the company.
    */
   address: CompanyAddress;
@@ -344,6 +351,12 @@ export interface CompanyGetDetailsV1Response {
    * Historical addresses. Shows how the company address changed over time.
    */
   addresses: Array<CompanyAddress>;
+
+  /**
+   * Spin-offs (Ausgliederung, § 123 Abs. 3 UmwG) in which this company transferred
+   * assets to another company as the transferring entity.
+   */
+  asset_spin_offs: Array<CompanyGetDetailsV1Response.AssetSpinOff>;
 
   /**
    * Current registered capital of the company.
@@ -388,6 +401,12 @@ export interface CompanyGetDetailsV1Response {
   legal_form: SearchAPI.CompanyLegalForm;
 
   /**
+   * If the company ceased to exist through a merger (Verschmelzung), the company it
+   * was merged into.
+   */
+  merged_into: CompanyGetDetailsV1Response.MergedInto | null;
+
+  /**
    * Current official name of the company.
    */
   name: CompanyName;
@@ -402,6 +421,14 @@ export interface CompanyGetDetailsV1Response {
    * Format: ISO 8601 (YYYY-MM-DD) Example: "2021-12-21"
    */
   notarized_at: string | null;
+
+  /**
+   * The company's current profit and loss transfer agreement
+   * (Gewinnabführungsvertrag), if one exists. The referenced company is the parent
+   * receiving this company's profit (Organträger). Null if the company has no active
+   * agreement.
+   */
+  profit_transfer_agreement: CompanyGetDetailsV1Response.ProfitTransferAgreement | null;
 
   /**
    * Current official business purpose of the company.
@@ -460,12 +487,70 @@ export interface CompanyGetDetailsV1Response {
   terminated_at: string | null;
 
   /**
+   * Insolvency proceedings of the company, if any. Contains basic information per
+   * proceeding; use the insolvency endpoint to retrieve all events of a proceeding.
+   */
+  insolvencies?: Array<CompanyGetDetailsV1Response.Insolvency>;
+
+  /**
    * Legal Entity Identifier (LEI), if available.
    */
   lei?: string;
 }
 
 export namespace CompanyGetDetailsV1Response {
+  export interface Acquisition {
+    /**
+     * Date the underlying contract (Verschmelzungsvertrag) was concluded, as cited in
+     * the register entry. Null when the register text does not cite a contract date.
+     * Entries sharing an agreement_date belong to the same transaction. Format: ISO
+     * 8601 (YYYY-MM-DD)
+     */
+    agreement_date: string | null;
+
+    /**
+     * Unique company identifier of the company that was merged into this company.
+     * Example: DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Current name of the company that was merged into this company.
+     */
+    name: string;
+
+    /**
+     * Date the merger was registered. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    registration_date: string;
+  }
+
+  export interface AssetSpinOff {
+    /**
+     * Date the underlying contract (Ausgliederungsvertrag) was concluded, as cited in
+     * the register entry. Null when the register text does not cite a contract date.
+     * Entries sharing an agreement_date belong to the same transaction. Format: ISO
+     * 8601 (YYYY-MM-DD)
+     */
+    agreement_date: string | null;
+
+    /**
+     * Unique company identifier of the company that received the assets. Example:
+     * DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Current name of the company that received the assets.
+     */
+    name: string;
+
+    /**
+     * Date the spin-off was registered. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    registration_date: string;
+  }
+
   /**
    * Contact information of the company.
    */
@@ -601,6 +686,68 @@ export namespace CompanyGetDetailsV1Response {
     }
   }
 
+  /**
+   * If the company ceased to exist through a merger (Verschmelzung), the company it
+   * was merged into.
+   */
+  export interface MergedInto {
+    /**
+     * Date the underlying contract (Verschmelzungsvertrag) was concluded, as cited in
+     * the register entry. Null when the register text does not cite a contract date.
+     * Entries sharing an agreement_date belong to the same transaction. Format: ISO
+     * 8601 (YYYY-MM-DD)
+     */
+    agreement_date: string | null;
+
+    /**
+     * Unique company identifier of the company this company was merged into. Example:
+     * DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Current name of the company this company was merged into.
+     */
+    name: string;
+
+    /**
+     * Date the merger was registered. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    registration_date: string;
+  }
+
+  /**
+   * The company's current profit and loss transfer agreement
+   * (Gewinnabführungsvertrag), if one exists. The referenced company is the parent
+   * receiving this company's profit (Organträger). Null if the company has no active
+   * agreement.
+   */
+  export interface ProfitTransferAgreement {
+    /**
+     * Date the underlying contract (Gewinnabführungsvertrag) was concluded, as cited
+     * in the register entry. Null when the register text does not cite a contract
+     * date. Entries sharing an agreement_date belong to the same transaction. Format:
+     * ISO 8601 (YYYY-MM-DD)
+     */
+    agreement_date: string | null;
+
+    /**
+     * Unique company identifier of the parent company receiving this company's profit
+     * (Organträger). Example: DE-HRB-F1103-267645
+     */
+    company_id: string;
+
+    /**
+     * Current name of the parent company.
+     */
+    name: string;
+
+    /**
+     * Date the agreement was registered. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    registration_date: string;
+  }
+
   export interface Representation {
     /**
      * Unique identifier for the representative. For companies: Format matches
@@ -684,6 +831,52 @@ export namespace CompanyGetDetailsV1Response {
        */
       last_name: string | null;
     }
+  }
+
+  /**
+   * Basic information about an insolvency proceeding of the company. Use the
+   * insolvency endpoint to retrieve all events of the proceeding.
+   */
+  export interface Insolvency {
+    /**
+     * Unique identifier of the insolvency proceeding.
+     */
+    id: string;
+
+    /**
+     * Case number of the proceeding at the court. Example: "36d IN 3382/25"
+     */
+    case_number: string;
+
+    /**
+     * Insolvency court handling the proceeding.
+     */
+    court: string;
+
+    /**
+     * Current status of the insolvency proceeding.
+     */
+    current_status: InsolvencyAPI.InsolvencyStatus;
+
+    /**
+     * Kind of administration ordered for the proceeding.
+     */
+    administration_kind?: InsolvencyAPI.InsolvencyAdministrationKind | null;
+
+    /**
+     * Date the proceeding was closed. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    closed_at?: string | null;
+
+    /**
+     * Date the proceeding was opened. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    opened_at?: string | null;
+
+    /**
+     * Kind of insolvency proceeding.
+     */
+    proceeding_kind?: InsolvencyAPI.InsolvencyProceedingKind | null;
   }
 }
 
@@ -992,6 +1185,9 @@ export namespace CompanyGetFinancialsV1Response {
 
     passiva: CompanyAPI.ReportTable;
 
+    /**
+     * Format: ISO 8601 (YYYY-MM-DD)
+     */
     report_end_date: string;
 
     /**
@@ -1000,6 +1196,9 @@ export namespace CompanyGetFinancialsV1Response {
      */
     report_id: string;
 
+    /**
+     * Format: ISO 8601 (YYYY-MM-DD)
+     */
     report_start_date: string | null;
 
     /**

@@ -52,6 +52,14 @@ import {
   DocumentResource,
 } from './resources/document';
 import {
+  Insolvency,
+  InsolvencyAdministrationKind,
+  InsolvencyDebtorKind,
+  InsolvencyGetDetailsV1Response,
+  InsolvencyProceedingKind,
+  InsolvencyStatus,
+} from './resources/insolvency';
+import {
   Monitor,
   MonitorCreateParams,
   MonitorCreateResponse,
@@ -69,12 +77,15 @@ import {
   SearchAutocompleteCompaniesV1Response,
   SearchFilterBase,
   SearchFindCompaniesV1Params,
+  SearchFindInsolvenciesV1Params,
+  SearchFindInsolvenciesV1Response,
   SearchFindPersonV1Params,
   SearchFindPersonV1Response,
   SearchLookupCompanyByURLParams,
   SearchLookupCompanyByURLResponse,
   SearchRequestPagination,
 } from './resources/search';
+import { Usage, UsageGetCreditsV1Response } from './resources/usage';
 import {
   Transparenzregister,
   TransparenzregisterSetCredentialsV1Params,
@@ -807,6 +818,8 @@ export class Openregister {
   person: API.Person = new API.Person(this);
   monitor: API.Monitor = new API.Monitor(this);
   transparenzregister: API.Transparenzregister = new API.Transparenzregister(this);
+  usage: API.Usage = new API.Usage(this);
+  insolvency: API.Insolvency = new API.Insolvency(this);
 }
 
 Openregister.Search = Search;
@@ -815,6 +828,8 @@ Openregister.DocumentResource = DocumentResource;
 Openregister.Person = Person;
 Openregister.Monitor = Monitor;
 Openregister.Transparenzregister = Transparenzregister;
+Openregister.Usage = Usage;
+Openregister.Insolvency = Insolvency;
 
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
@@ -829,10 +844,12 @@ export declare namespace Openregister {
     type SearchFilterBase as SearchFilterBase,
     type SearchRequestPagination as SearchRequestPagination,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
+    type SearchFindInsolvenciesV1Response as SearchFindInsolvenciesV1Response,
     type SearchFindPersonV1Response as SearchFindPersonV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
+    type SearchFindInsolvenciesV1Params as SearchFindInsolvenciesV1Params,
     type SearchFindPersonV1Params as SearchFindPersonV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
@@ -889,5 +906,16 @@ export declare namespace Openregister {
   export {
     Transparenzregister as Transparenzregister,
     type TransparenzregisterSetCredentialsV1Params as TransparenzregisterSetCredentialsV1Params,
+  };
+
+  export { Usage as Usage, type UsageGetCreditsV1Response as UsageGetCreditsV1Response };
+
+  export {
+    Insolvency as Insolvency,
+    type InsolvencyAdministrationKind as InsolvencyAdministrationKind,
+    type InsolvencyDebtorKind as InsolvencyDebtorKind,
+    type InsolvencyProceedingKind as InsolvencyProceedingKind,
+    type InsolvencyStatus as InsolvencyStatus,
+    type InsolvencyGetDetailsV1Response as InsolvencyGetDetailsV1Response,
   };
 }

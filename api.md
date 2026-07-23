@@ -10,6 +10,7 @@ Types:
 - <code><a href="./src/resources/search.ts">SearchFilterBase</a></code>
 - <code><a href="./src/resources/search.ts">SearchRequestPagination</a></code>
 - <code><a href="./src/resources/search.ts">SearchAutocompleteCompaniesV1Response</a></code>
+- <code><a href="./src/resources/search.ts">SearchFindInsolvenciesV1Response</a></code>
 - <code><a href="./src/resources/search.ts">SearchFindPersonV1Response</a></code>
 - <code><a href="./src/resources/search.ts">SearchLookupCompanyByURLResponse</a></code>
 
@@ -17,6 +18,7 @@ Methods:
 
 - <code title="get /v1/autocomplete/company">client.search.<a href="./src/resources/search.ts">autocompleteCompaniesV1</a>({ ...params }) -> SearchAutocompleteCompaniesV1Response</code>
 - <code title="post /v1/search/company">client.search.<a href="./src/resources/search.ts">findCompaniesV1</a>({ ...params }) -> CompanySearch</code>
+- <code title="post /v1/search/insolvency">client.search.<a href="./src/resources/search.ts">findInsolvenciesV1</a>({ ...params }) -> SearchFindInsolvenciesV1Response</code>
 - <code title="post /v1/search/person">client.search.<a href="./src/resources/search.ts">findPersonV1</a>({ ...params }) -> SearchFindPersonV1Response</code>
 - <code title="get /v0/search/lookup">client.search.<a href="./src/resources/search.ts">lookupCompanyByURL</a>({ ...params }) -> SearchLookupCompanyByURLResponse</code>
 
@@ -121,3 +123,27 @@ Methods:
 
 - <code title="post /v1/transparenzregister/extracts">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">createV1</a>({ ...params }) -> ExtractCreateV1Response</code>
 - <code title="get /v1/transparenzregister/extracts/{extract_id}">client.transparenzregister.extract.<a href="./src/resources/transparenzregister/extract.ts">getV1</a>(extractID) -> TransparenzregisterExtract</code>
+
+# Usage
+
+Types:
+
+- <code><a href="./src/resources/usage.ts">UsageGetCreditsV1Response</a></code>
+
+Methods:
+
+- <code title="get /v1/credits">client.usage.<a href="./src/resources/usage.ts">getCreditsV1</a>() -> UsageGetCreditsV1Response</code>
+
+# Insolvency
+
+Types:
+
+- <code><a href="./src/resources/insolvency.ts">InsolvencyAdministrationKind</a></code>
+- <code><a href="./src/resources/insolvency.ts">InsolvencyDebtorKind</a></code>
+- <code><a href="./src/resources/insolvency.ts">InsolvencyProceedingKind</a></code>
+- <code><a href="./src/resources/insolvency.ts">InsolvencyStatus</a></code>
+- <code><a href="./src/resources/insolvency.ts">InsolvencyGetDetailsV1Response</a></code>
+
+Methods:
+
+- <code title="get /v1/insolvency/{insolvency_id}">client.insolvency.<a href="./src/resources/insolvency.ts">getDetailsV1</a>(insolvencyID) -> InsolvencyGetDetailsV1Response</code>

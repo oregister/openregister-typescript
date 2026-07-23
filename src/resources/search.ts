@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import * as SearchAPI from './search';
+import * as InsolvencyAPI from './insolvency';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -21,6 +22,16 @@ export class Search extends APIResource {
    */
   findCompaniesV1(body: SearchFindCompaniesV1Params, options?: RequestOptions): APIPromise<CompanySearch> {
     return this._client.post('/v1/search/company', { body, ...options });
+  }
+
+  /**
+   * Search for insolvency proceedings
+   */
+  findInsolvenciesV1(
+    body: SearchFindInsolvenciesV1Params,
+    options?: RequestOptions,
+  ): APIPromise<SearchFindInsolvenciesV1Response> {
+    return this._client.post('/v1/search/insolvency', { body, ...options });
   }
 
   /**
@@ -100,6 +111,11 @@ export interface CompanySearchResponseItem {
   active: boolean;
 
   /**
+   * Current registered address of the company, taken from the search index.
+   */
+  address: CompanySearchResponseItem.Address | null;
+
+  /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
    */
   company_id: string;
@@ -122,6 +138,11 @@ export interface CompanySearchResponseItem {
   name: string;
 
   /**
+   * Current official business purpose of the company, taken from the search index.
+   */
+  purpose: string | null;
+
+  /**
    * Court where the company is registered. Example: "Berlin (Charlottenburg)"
    */
   register_court: string;
@@ -135,6 +156,45 @@ export interface CompanySearchResponseItem {
    * Type of company register. Example: "HRB" for Commercial Register B
    */
   register_type: CompanyRegisterType;
+}
+
+export namespace CompanySearchResponseItem {
+  /**
+   * Current registered address of the company, taken from the search index.
+   */
+  export interface Address {
+    /**
+     * City or locality name. Example: "Berlin"
+     */
+    city: string;
+
+    /**
+     * Country of the address using ISO 3166-1 alpha-2 code. Example: "DE" for Germany
+     */
+    country: string;
+
+    /**
+     * Complete address formatted as a single string. Example: "Musterstraße 1, 10117
+     * Berlin"
+     */
+    formatted_value: string;
+
+    /**
+     * Additional address information such as c/o or attention line. Example: "c/o Max
+     * Mustermann"
+     */
+    extra?: string;
+
+    /**
+     * Postal or ZIP code. Example: "10117"
+     */
+    postal_code?: string;
+
+    /**
+     * Street name and number. Example: "Musterstraße 1"
+     */
+    street?: string;
+  }
 }
 
 export interface Pagination {
@@ -192,6 +252,114 @@ export interface SearchAutocompleteCompaniesV1Response {
    * List of companies matching the search criteria.
    */
   results: Array<CompanySearchResponseItem>;
+}
+
+export interface SearchFindInsolvenciesV1Response {
+  pagination: Pagination;
+
+  /**
+   * List of insolvency proceedings matching the search criteria.
+   */
+  results: Array<SearchFindInsolvenciesV1Response.Result>;
+}
+
+export namespace SearchFindInsolvenciesV1Response {
+  export interface Result {
+    /**
+     * Unique insolvency proceeding identifier.
+     */
+    id: string;
+
+    /**
+     * Kind of administration ordered for the proceeding.
+     */
+    administration_kind: InsolvencyAPI.InsolvencyAdministrationKind | null;
+
+    /**
+     * Name of the insolvency administrator.
+     */
+    administrator_name: string | null;
+
+    /**
+     * Case number of the proceeding at the insolvency court. Example: "36a IN 2792/24"
+     */
+    case_number: string;
+
+    /**
+     * City of the debtor. Example: "Berlin"
+     */
+    city: string | null;
+
+    /**
+     * Date the proceeding was closed. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    closed_at: string | null;
+
+    /**
+     * Unique company identifier of the debtor, if the debtor could be matched to a
+     * registered company. Example: DE-HRB-F1103-267645
+     */
+    company_id: string | null;
+
+    /**
+     * Insolvency court handling the proceeding. Example: "Charlottenburg"
+     */
+    court: string;
+
+    /**
+     * Current status of the proceeding.
+     */
+    current_status: InsolvencyAPI.InsolvencyStatus;
+
+    /**
+     * Kind of debtor the proceeding concerns.
+     *
+     * - legal_person: legal entities (companies, associations, etc.)
+     * - natural_person: private individuals
+     */
+    debtor_kind: InsolvencyAPI.InsolvencyDebtorKind | null;
+
+    /**
+     * Legal form of the debtor, if the debtor is a company. Example: "gmbh"
+     */
+    debtor_legal_form: string | null;
+
+    /**
+     * Name of the debtor. Example: "Max Mustermann GmbH"
+     */
+    debtor_name: string;
+
+    /**
+     * Whether the proceeding is currently open.
+     */
+    has_open_insolvency: boolean;
+
+    /**
+     * Grounds for the insolvency, e.g. "illiquidity", "over_indebtedness".
+     */
+    insolvency_grounds: Array<string> | null;
+
+    /**
+     * Date of the most recent event in the proceeding. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    last_event_at: string | null;
+
+    /**
+     * Date the proceeding was opened. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    opened_at: string | null;
+
+    /**
+     * Unique person identifier of the debtor, if the debtor could be matched to a
+     * person.
+     */
+    person_id: string | null;
+
+    /**
+     * Kind of insolvency proceeding.
+     */
+    proceeding_kind: InsolvencyAPI.InsolvencyProceedingKind | null;
+  }
 }
 
 export interface SearchFindPersonV1Response {
@@ -358,7 +526,11 @@ export namespace SearchFindCompaniesV1Params {
       | 'youngest_owner_age'
       | 'purpose'
       | 'has_lei'
-      | 'lei';
+      | 'lei'
+      | 'had_insolvency'
+      | 'has_open_insolvency'
+      | 'insolvency_stage'
+      | 'insolvency_opened_at';
   }
 
   /**
@@ -387,6 +559,64 @@ export namespace SearchFindCompaniesV1Params {
   export interface Query {
     /**
      * Search query to filter companies.
+     */
+    value: string;
+  }
+}
+
+export interface SearchFindInsolvenciesV1Params {
+  /**
+   * Filters to filter insolvency proceedings.
+   */
+  filters?: Array<SearchFindInsolvenciesV1Params.Filter>;
+
+  /**
+   * Pagination parameters.
+   */
+  pagination?: SearchRequestPagination;
+
+  /**
+   * Search query to filter insolvency proceedings.
+   */
+  query?: SearchFindInsolvenciesV1Params.Query;
+}
+
+export namespace SearchFindInsolvenciesV1Params {
+  /**
+   * Filter by field. The property sets `value`, `values`, `keywords` and `min`/`max`
+   * are mutually exclusive. Dates must be YYYY-MM-DD.
+   */
+  export interface Filter extends SearchAPI.SearchFilterBase {
+    /**
+     * Field of the insolvency proceeding to filter on. Date fields (opened_at,
+     * closed_at, last_event_at, claims_filing_deadline) support min/max ranges with
+     * values in the format YYYY-MM-DD.
+     */
+    field:
+      | 'debtor_kind'
+      | 'debtor_legal_form'
+      | 'court'
+      | 'city'
+      | 'current_status'
+      | 'has_open_insolvency'
+      | 'proceeding_kind'
+      | 'administration_kind'
+      | 'insolvency_grounds'
+      | 'opened_at'
+      | 'closed_at'
+      | 'last_event_at'
+      | 'claims_filing_deadline'
+      | 'company_id'
+      | 'person_id';
+  }
+
+  /**
+   * Search query to filter insolvency proceedings.
+   */
+  export interface Query {
+    /**
+     * Search query to filter insolvency proceedings. Matches against debtor name, case
+     * number, administrator name and court.
      */
     value: string;
   }
@@ -446,10 +676,12 @@ export declare namespace Search {
     type SearchFilterBase as SearchFilterBase,
     type SearchRequestPagination as SearchRequestPagination,
     type SearchAutocompleteCompaniesV1Response as SearchAutocompleteCompaniesV1Response,
+    type SearchFindInsolvenciesV1Response as SearchFindInsolvenciesV1Response,
     type SearchFindPersonV1Response as SearchFindPersonV1Response,
     type SearchLookupCompanyByURLResponse as SearchLookupCompanyByURLResponse,
     type SearchAutocompleteCompaniesV1Params as SearchAutocompleteCompaniesV1Params,
     type SearchFindCompaniesV1Params as SearchFindCompaniesV1Params,
+    type SearchFindInsolvenciesV1Params as SearchFindInsolvenciesV1Params,
     type SearchFindPersonV1Params as SearchFindPersonV1Params,
     type SearchLookupCompanyByURLParams as SearchLookupCompanyByURLParams,
   };
