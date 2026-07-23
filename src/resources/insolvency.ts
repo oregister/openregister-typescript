@@ -113,12 +113,12 @@ export interface InsolvencyGetDetailsV1Response {
   administrator_name?: string | null;
 
   /**
-   * Deadline for creditors to file their claims.
+   * Deadline for creditors to file their claims. Format: ISO 8601 (YYYY-MM-DD)
    */
   claims_filing_deadline?: string | null;
 
   /**
-   * Date the proceeding was closed.
+   * Date the proceeding was closed. Format: ISO 8601 (YYYY-MM-DD)
    */
   closed_at?: string | null;
 
@@ -146,17 +146,19 @@ export interface InsolvencyGetDetailsV1Response {
   distribution_claims_total?: number | null;
 
   /**
-   * Publication date of the first known event of the proceeding.
+   * Publication date of the first known event of the proceeding. Format: ISO 8601
+   * (YYYY-MM-DD)
    */
   first_event_at?: string | null;
 
   /**
-   * Publication date of the most recent known event of the proceeding.
+   * Publication date of the most recent known event of the proceeding. Format: ISO
+   * 8601 (YYYY-MM-DD)
    */
   last_event_at?: string | null;
 
   /**
-   * Date the proceeding was opened.
+   * Date the proceeding was opened. Format: ISO 8601 (YYYY-MM-DD)
    */
   opened_at?: string | null;
 
@@ -210,7 +212,7 @@ export namespace InsolvencyGetDetailsV1Response {
       | 'other';
 
     /**
-     * Date the event was published by the court.
+     * Date the event was published by the court. Format: ISO 8601 (YYYY-MM-DD)
      */
     published_at: string;
 
@@ -234,7 +236,7 @@ export namespace InsolvencyGetDetailsV1Response {
     summary: string;
 
     /**
-     * Date of the court decision, if published.
+     * Date of the court decision, if published. Format: ISO 8601 (YYYY-MM-DD)
      */
     decision_date?: string | null;
 

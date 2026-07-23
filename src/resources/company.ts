@@ -864,12 +864,12 @@ export namespace CompanyGetDetailsV1Response {
     administration_kind?: InsolvencyAPI.InsolvencyAdministrationKind | null;
 
     /**
-     * Date the proceeding was closed.
+     * Date the proceeding was closed. Format: ISO 8601 (YYYY-MM-DD)
      */
     closed_at?: string | null;
 
     /**
-     * Date the proceeding was opened.
+     * Date the proceeding was opened. Format: ISO 8601 (YYYY-MM-DD)
      */
     opened_at?: string | null;
 
@@ -1185,6 +1185,9 @@ export namespace CompanyGetFinancialsV1Response {
 
     passiva: CompanyAPI.ReportTable;
 
+    /**
+     * Format: ISO 8601 (YYYY-MM-DD)
+     */
     report_end_date: string;
 
     /**
@@ -1193,6 +1196,9 @@ export namespace CompanyGetFinancialsV1Response {
      */
     report_id: string;
 
+    /**
+     * Format: ISO 8601 (YYYY-MM-DD)
+     */
     report_start_date: string | null;
 
     /**
