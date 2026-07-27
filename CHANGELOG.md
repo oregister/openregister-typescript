@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.8.0 (2026-07-27)
+
+Full Changelog: [v4.7.0...v4.8.0](https://github.com/oregister/openregister-typescript/compare/v4.7.0...v4.8.0)
+
+### Features
+
+* **api:** daily monitor updates for companies ([d7fd125](https://github.com/oregister/openregister-typescript/commit/d7fd125e055afeb7496ccaadccfc9d3943d35ab3))
+
 ## 4.7.0 (2026-07-23)
 
 Full Changelog: [v4.6.1...v4.7.0](https://github.com/oregister/openregister-typescript/compare/v4.6.1...v4.7.0)
