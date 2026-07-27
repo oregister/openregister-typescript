@@ -784,11 +784,16 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     description: 'Create webhook monitor item',
     stainlessPath: '(resource) monitor > (method) create',
     qualified: 'client.monitor.create',
-    params: ['entity_id: string;', "entity_type: 'company' | 'person';", 'preferences: string[];'],
+    params: [
+      'entity_id: string;',
+      "entity_type: 'company' | 'person';",
+      'preferences: string[];',
+      "update_frequency?: 'daily' | 'weekly';",
+    ],
     response:
-      "{ disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }",
+      "{ disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; update_frequency: 'daily' | 'weekly'; }",
     markdown:
-      "## create\n\n`client.monitor.create(entity_id: string, entity_type: 'company' | 'person', preferences: string[]): { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }`\n\n**post** `/v1/monitor`\n\nCreate webhook monitor item\n\n### Parameters\n\n- `entity_id: string`\n  For `company` this is the register ID (e.g. `DE-HRB-F1103-267645`).\nFor `person` this is the person UUID.\n\n\n- `entity_type: 'company' | 'person'`\n  Type of the entity to monitor.\n\n- `preferences: string[]`\n  Preferences for the entity to monitor.\nUse `WebhookMonitorCompanyPreference` values when `entity_type` is `company`,\nand `WebhookMonitorPersonPreference` values when `entity_type` is `person`.\n\n\n### Returns\n\n- `{ disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }`\n\n  - `disabled: boolean`\n  - `entity_id: string`\n  - `entity_type: 'company' | 'person'`\n  - `preferences: string[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst monitor = await client.monitor.create({\n  entity_id: 'entity_id',\n  entity_type: 'company',\n  preferences: ['basic'],\n});\n\nconsole.log(monitor);\n```",
+      "## create\n\n`client.monitor.create(entity_id: string, entity_type: 'company' | 'person', preferences: string[], update_frequency?: 'daily' | 'weekly'): { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; update_frequency: 'daily' | 'weekly'; }`\n\n**post** `/v1/monitor`\n\nCreate webhook monitor item\n\n### Parameters\n\n- `entity_id: string`\n  For `company` this is the register ID (e.g. `DE-HRB-F1103-267645`).\nFor `person` this is the person UUID.\n\n\n- `entity_type: 'company' | 'person'`\n  Type of the entity to monitor.\n\n- `preferences: string[]`\n  Preferences for the entity to monitor.\nUse `WebhookMonitorCompanyPreference` values when `entity_type` is `company`,\nand `WebhookMonitorPersonPreference` values when `entity_type` is `person`.\n\n\n- `update_frequency?: 'daily' | 'weekly'`\n  How often the monitored company is checked for register updates.\nDefaults to `weekly` if not provided.\n\nOnly supported when `entity_type` is `company`. Requests for `person`\nmonitors that include this field are rejected with a validation error.\n\nDaily monitors are billed at a premium: 50 credits at creation and\n50 credits per month while active, instead of the standard 25.\n\n### Returns\n\n- `{ disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; update_frequency: 'daily' | 'weekly'; }`\n\n  - `disabled: boolean`\n  - `entity_id: string`\n  - `entity_type: 'company' | 'person'`\n  - `preferences: string[]`\n  - `update_frequency: 'daily' | 'weekly'`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst monitor = await client.monitor.create({\n  entity_id: 'entity_id',\n  entity_type: 'company',\n  preferences: ['basic'],\n});\n\nconsole.log(monitor);\n```",
     perLanguage: {
       typescript: {
         method: 'client.monitor.create',
@@ -830,9 +835,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     stainlessPath: '(resource) monitor > (method) list',
     qualified: 'client.monitor.list',
     response:
-      "{ items: { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }[]; }",
+      "{ items: { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; update_frequency: 'daily' | 'weekly'; }[]; }",
     markdown:
-      "## list\n\n`client.monitor.list(): { items: object[]; }`\n\n**get** `/v1/monitor`\n\nList webhook monitor items\n\n### Returns\n\n- `{ items: { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }[]; }`\n\n  - `items: { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst monitors = await client.monitor.list();\n\nconsole.log(monitors);\n```",
+      "## list\n\n`client.monitor.list(): { items: object[]; }`\n\n**get** `/v1/monitor`\n\nList webhook monitor items\n\n### Returns\n\n- `{ items: { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; update_frequency: 'daily' | 'weekly'; }[]; }`\n\n  - `items: { disabled: boolean; entity_id: string; entity_type: 'company' | 'person'; preferences: string[]; update_frequency: 'daily' | 'weekly'; }[]`\n\n### Example\n\n```typescript\nimport Openregister from 'openregister';\n\nconst client = new Openregister();\n\nconst monitors = await client.monitor.list();\n\nconsole.log(monitors);\n```",
     perLanguage: {
       typescript: {
         method: 'client.monitor.list',
