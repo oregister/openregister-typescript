@@ -64,6 +64,12 @@ export interface MonitorCreateResponse {
     | 'management_positions'
     | 'insolvencies'
   >;
+
+  /**
+   * How often the monitored company is checked for register updates. Always `weekly`
+   * for `person` monitors.
+   */
+  update_frequency: 'daily' | 'weekly';
 }
 
 export interface MonitorListResponse {
@@ -106,6 +112,12 @@ export namespace MonitorListResponse {
       | 'management_positions'
       | 'insolvencies'
     >;
+
+    /**
+     * How often the monitored company is checked for register updates. Always `weekly`
+     * for `person` monitors.
+     */
+    update_frequency: 'daily' | 'weekly';
   }
 }
 
@@ -136,6 +148,18 @@ export interface MonitorCreateParams {
     | 'management_positions'
     | 'insolvencies'
   >;
+
+  /**
+   * How often the monitored company is checked for register updates. Defaults to
+   * `weekly` if not provided.
+   *
+   * Only supported when `entity_type` is `company`. Requests for `person` monitors
+   * that include this field are rejected with a validation error.
+   *
+   * Daily monitors are billed at a premium: 50 credits at creation and 50 credits
+   * per month while active, instead of the standard 25.
+   */
+  update_frequency?: 'daily' | 'weekly';
 }
 
 export declare namespace Monitor {

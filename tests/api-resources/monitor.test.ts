@@ -30,6 +30,7 @@ describe('resource monitor', () => {
       entity_id: 'entity_id',
       entity_type: 'company',
       preferences: ['basic'],
+      update_frequency: 'daily',
     });
   });
 
