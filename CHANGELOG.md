@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.8.1 (2026-09-01)
+
+Full Changelog: [v4.8.0...v4.8.1](https://github.com/oregister/openregister-typescript/compare/v4.8.0...v4.8.1)
+
+### Bug Fixes
+
+* **stlc:** stop hand-edited CI workflows from blocking seals and builds ([7e0a640](https://github.com/oregister/openregister-typescript/commit/7e0a6401b8c31d8bb47acf2c59679d08ce87fb40))
+
+
+### Chores
+
+* **internal:** codegen related update ([1db963e](https://github.com/oregister/openregister-typescript/commit/1db963ee6046f7b9c5dd4f43ce58ed6fdc1e5bc2))
+* **internal:** codegen related update ([eaecc77](https://github.com/oregister/openregister-typescript/commit/eaecc77397f7fe056e5a89b7841d67480ca651f5))
+
+
+### Documentation
+
+* **mcp:** document code execution modes and the local code runner ([c3913db](https://github.com/oregister/openregister-typescript/commit/c3913db3066689e45eb59182d013be9ce3990b9b))
+
 ## 4.8.0 (2026-07-27)
 
 Full Changelog: [v4.7.0...v4.8.0](https://github.com/oregister/openregister-typescript/compare/v4.7.0...v4.8.0)
