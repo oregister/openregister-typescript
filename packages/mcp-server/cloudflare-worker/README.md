@@ -51,6 +51,22 @@ This will run a local proxy and let Claude talk to your MCP server over HTTP
 
 When you open Claude a browser window should open and allow you to login. You should see the tools available in the bottom right. Given the right prompt Claude should ask to call the tool.
 
+## Code execution
+
+The `execute` tool runs agent code in a Deno sandbox. The Worker runtime cannot spawn
+Deno and the Stainless-hosted sandbox has been turned off, so the sandbox runs in a
+[Cloudflare Container](https://developers.cloudflare.com/containers/) built from
+`./mcp-exec/Dockerfile` and deployed together with the Worker by `wrangler deploy`
+(Workers Paid plan required). `src/code-tool-proxy.ts` reroutes the package's
+`CODE_MODE_ENDPOINT_URL` fetch to the container binding; nothing is sent to Stainless.
+
+Latency: one call costs about 1.5s of single-core CPU (Deno spawn, TypeScript check,
+run), so the container runs on a full vCPU and the image pre-warms Deno's code cache.
+Reusing Deno processes per API key would remove the spawn cost if more is needed.
+
+`mcp-exec` pins `openregister-mcp`; bump it in `mcp-exec/package.json` when the
+package is released so the sandbox SDK matches the published one.
+
 ## Deploy to Cloudflare
 
 If you want to manually deploy this server (e.g. without the "deploy to cloudflare" button)
