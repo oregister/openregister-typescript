@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.8.2 (2026-09-07)
+
+Full Changelog: [v4.8.1...v4.8.2](https://github.com/oregister/openregister-typescript/compare/v4.8.1...v4.8.2)
+
+### Bug Fixes
+
+* **mcp:** run the execute tool in a Cloudflare Container ([#46](https://github.com/oregister/openregister-typescript/issues/46)) ([2e422da](https://github.com/oregister/openregister-typescript/commit/2e422da7774f27c64476745303d66a938080be49))
+
 ## 4.8.1 (2026-09-01)
 
 Full Changelog: [v4.8.0...v4.8.1](https://github.com/oregister/openregister-typescript/compare/v4.8.0...v4.8.1)
