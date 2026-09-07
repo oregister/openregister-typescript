@@ -7,11 +7,23 @@
   "name": "openregister-api-mcp-server",
   "main": "src/index.ts",
   "compatibility_date": "2025-03-10",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat",
+    // openregister-mcp reads CODE_MODE_ENDPOINT_URL via process.env
+    "nodejs_compat_populate_process_env"
+  ],
+  "vars": {
+    // Sentinel host; src/code-tool-proxy.ts reroutes it to the MCP_EXEC container
+    "CODE_MODE_ENDPOINT_URL": "http://mcp-exec.internal/code-tool"
+  },
   "migrations": [
     {
       "new_sqlite_classes": ["MyMCP"],
       "tag": "v1"
+    },
+    {
+      "new_sqlite_classes": ["McpExecContainer"],
+      "tag": "v2"
     }
   ],
   "durable_objects": {
@@ -19,9 +31,23 @@
       {
         "class_name": "MyMCP",
         "name": "MCP_OBJECT"
+      },
+      {
+        "class_name": "McpExecContainer",
+        "name": "MCP_EXEC"
       }
     ]
   },
+  "containers": [
+    {
+      "class_name": "McpExecContainer",
+      "image": "./mcp-exec/Dockerfile",
+      // Each execute call is ~1.5s of single-core CPU (Deno spawn + TypeScript
+      // check); a fractional vCPU multiplies that. 3 GiB is the minimum per vCPU.
+      "instance_type": { "vcpu": 1, "memory_mib": 3072, "disk_mb": 4000 },
+      "max_instances": 3
+    }
+  ],
   "kv_namespaces": [
     {
       "binding": "OAUTH_KV",

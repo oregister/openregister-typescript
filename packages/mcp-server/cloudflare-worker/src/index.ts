@@ -8,10 +8,12 @@ import { makeOAuthConsent } from './app';
 import { McpAgent } from 'agents/mcp';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import OAuthProvider from '@cloudflare/workers-oauth-provider';
+import { Container } from '@cloudflare/containers';
 import { ClientOptions } from 'openregister';
 import { McpOptions } from 'openregister-mcp/options';
 import { initMcpServer, newMcpServer } from 'openregister-mcp/server';
 import { configureLogger } from 'openregister-mcp/logger';
+import { installCodeToolProxy } from './code-tool-proxy';
 import type { ExportedHandler } from '@cloudflare/workers-types';
 
 type MCPProps = {
@@ -79,6 +81,12 @@ async function buildMcpServer(stainlessApiKey?: string): Promise<McpServer> {
   return fallbackMcpServer();
 }
 
+// Runs the Deno sandbox for the `execute` tool; see ./mcp-exec and code-tool-proxy.ts.
+export class McpExecContainer extends Container<Env> {
+  defaultPort = 3000;
+  sleepAfter = '15m';
+}
+
 export class MyMCP extends McpAgent<Env, unknown, MCPProps> {
   #resolveServer!: (server: McpServer) => void;
   #rejectServer!: (error: unknown) => void;
@@ -94,6 +102,7 @@ export class MyMCP extends McpAgent<Env, unknown, MCPProps> {
       }
 
       configureLogger({ level: 'info', pretty: false });
+      installCodeToolProxy(this.env.MCP_EXEC);
 
       const server = await buildMcpServer(this.props.clientConfig?.stainlessApiKey);
 
