@@ -7,14 +7,15 @@ import { makeOAuthConsent } from './app';
 // distinct constructors.
 import { McpAgent } from 'agents/mcp';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { ListToolsRequestSchema, type Tool } from '@modelcontextprotocol/sdk/types.js';
 import OAuthProvider from '@cloudflare/workers-oauth-provider';
 import { Container } from '@cloudflare/containers';
 import { ClientOptions } from 'openregister';
+import { VERSION as SDK_VERSION } from 'openregister/version';
 import { McpOptions } from 'openregister-mcp/options';
-import { initMcpServer, newMcpServer } from 'openregister-mcp/server';
+import { initMcpServer, newMcpServer, selectTools } from 'openregister-mcp/server';
 import { configureLogger } from 'openregister-mcp/logger';
 import { installCodeToolProxy } from './code-tool-proxy';
-import type { ExportedHandler } from '@cloudflare/workers-types';
 
 type MCPProps = {
   clientProps: ClientOptions;
@@ -42,6 +43,46 @@ const serverConfig: ServerConfig = {
   ],
 };
 
+// Only GETs and the search endpoints (POST bodies, but reads) are callable
+// from `execute`; anything else the SDK gains stays out until listed here, so
+// the tool stays read-only and can be annotated as such.
+const READ_ONLY_CODE_OPTIONS = {
+  codeAllowHttpGets: true,
+  codeAllowedMethods: ['^search\\.'],
+} satisfies Partial<McpOptions>;
+
+const TOOL_PRESENTATION: Record<string, { title: string; describe?: (original: string) => string }> = {
+  execute: {
+    title: 'Query the OpenRegister API',
+    describe: (original) =>
+      `${original}\n\nThe client is the OpenRegister TypeScript SDK; API reference: https://docs.openregister.de. Methods that create or delete data (monitors, Transparenzregister credentials and extracts) are blocked, so this tool only reads.`,
+  },
+  search_docs: { title: 'Search OpenRegister API documentation' },
+};
+
+// The generated package ships tools without a title or annotations; both
+// only read, and the connector directory requires every tool to say so.
+function presentTools(options: McpOptions): Tool[] {
+  return selectTools(options).map(({ tool }) => {
+    const presentation = TOOL_PRESENTATION[tool.name];
+    if (!presentation) {
+      return tool;
+    }
+    return {
+      ...tool,
+      title: presentation.title,
+      description: presentation.describe?.(tool.description ?? '') ?? tool.description,
+      annotations: {
+        ...tool.annotations,
+        title: presentation.title,
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+      },
+    };
+  });
+}
+
 // `newMcpServer` fetches MCP server instructions from the Stainless API. In a
 // Durable Object, that fetch happens inside `blockConcurrencyWhile`; if it
 // hangs the DO is reset, and if it rejects the same thing happens. Race
@@ -52,7 +93,7 @@ const INSTRUCTIONS_FETCH_TIMEOUT_MS = 5000;
 
 function fallbackMcpServer(): McpServer {
   return new McpServer(
-    { name: 'openregister_api', version: '4.4.0' },
+    { name: 'openregister_api', version: SDK_VERSION },
     { capabilities: { tools: {}, logging: {} } },
   );
 }
@@ -104,13 +145,24 @@ export class MyMCP extends McpAgent<Env, unknown, MCPProps> {
       configureLogger({ level: 'info', pretty: false });
       installCodeToolProxy(this.env.MCP_EXEC);
 
-      const server = await buildMcpServer(this.props.clientConfig?.stainlessApiKey);
+      const clientConfig = this.props.clientConfig;
+      // Spread first: a client may narrow the allowed set, never widen it.
+      const mcpOptions: McpOptions = {
+        ...clientConfig,
+        codeExecutionMode: clientConfig?.codeExecutionMode ?? 'stainless-sandbox',
+        ...READ_ONLY_CODE_OPTIONS,
+      };
+
+      const server = await buildMcpServer(mcpOptions.stainlessApiKey);
 
       await initMcpServer({
         server,
         clientOptions: this.props.clientProps,
-        mcpOptions: this.props.clientConfig,
+        mcpOptions,
       });
+
+      const tools = presentTools(mcpOptions);
+      server.server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }));
 
       this.#resolveServer(server);
     } catch (error) {
@@ -156,15 +208,14 @@ export type ClientProperty = {
 // Export the OAuth handler as the default
 export default new OAuthProvider({
   apiHandlers: {
-    // @ts-expect-error
     '/sse': MyMCP.serveSSE('/sse'), // legacy SSE
-    // @ts-expect-error
     '/mcp': MyMCP.serve('/mcp'), // Streaming HTTP
   },
-  // Type assertion needed due to Headers type mismatch between Hono and @cloudflare/workers-types
-  // At runtime, Hono's fetch handler is fully compatible with ExportedHandler
-  defaultHandler: makeOAuthConsent(serverConfig) as unknown as ExportedHandler,
+  defaultHandler: makeOAuthConsent(serverConfig),
   authorizeEndpoint: '/authorize',
   tokenEndpoint: '/token',
+  // Registration stays for clients without CIMD; clients that support CIMD
+  // (Claude among them) skip it, so the KV client store no longer grows per connection.
   clientRegistrationEndpoint: '/register',
+  clientIdMetadataDocumentEnabled: true,
 });

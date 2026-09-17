@@ -359,7 +359,11 @@ export const homeContent = async (req: Request): Promise<HtmlEscapedString> => {
   return html`<div style="max-width:760px; margin:0 auto;" class="markdown">${raw(content)}</div>`;
 };
 
-export const renderLoggedOutAuthorizeScreen = async (config: ServerConfig, oauthReqInfo: AuthRequest) => {
+export const renderLoggedOutAuthorizeScreen = async (
+  config: ServerConfig,
+  oauthReqInfo: AuthRequest,
+  requester?: string,
+) => {
   const renderField = (field: ClientProperty) => {
     if (field.type === 'select' && field.options) {
       return html`
@@ -446,6 +450,11 @@ export const renderLoggedOutAuthorizeScreen = async (config: ServerConfig, oauth
           style="font-size:0.9375rem; color:#64748B; text-align:center; margin-bottom:2rem; line-height:1.6;"
         >
           Enter your credentials to authorize your MCP client.
+          ${requester ?
+            html`<br /><span style="font-size:0.875rem;"
+                >Requested by <strong style="color:#0F172A;">${requester}</strong></span
+              >`
+          : ''}
           ${config.instructionsUrl ?
             html`<br /><a
                 href="${config.instructionsUrl}"
