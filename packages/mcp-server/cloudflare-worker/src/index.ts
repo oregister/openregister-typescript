@@ -78,6 +78,8 @@ function presentTools(options: McpOptions): Tool[] {
         readOnlyHint: true,
         destructiveHint: false,
         idempotentHint: true,
+        // Both tools only reach first-party OpenRegister services.
+        openWorldHint: false,
       },
     };
   });
