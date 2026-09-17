@@ -11,8 +11,8 @@ import { ListToolsRequestSchema, type Tool } from '@modelcontextprotocol/sdk/typ
 import OAuthProvider from '@cloudflare/workers-oauth-provider';
 import { Container } from '@cloudflare/containers';
 import { ClientOptions } from 'openregister';
+import { VERSION as SDK_VERSION } from 'openregister/version';
 import { McpOptions } from 'openregister-mcp/options';
-import { sdkMethods } from 'openregister-mcp/methods';
 import { initMcpServer, newMcpServer, selectTools } from 'openregister-mcp/server';
 import { configureLogger } from 'openregister-mcp/logger';
 import { installCodeToolProxy } from './code-tool-proxy';
@@ -43,21 +43,13 @@ const serverConfig: ServerConfig = {
   ],
 };
 
-// Must match the openregister-mcp pin in package.json and mcp-exec/package.json.
-const MCP_SERVER_VERSION = '4.8.0';
-
-// Search endpoints take their query as a POST body but only read data. Every
-// other non-GET method mutates account state and is kept out of `execute`, so
-// the tool is read-only end to end and can be annotated as such.
-const READ_ONLY_POST_PATH = /^\/v\d+\/(search|resolve)\//;
-const WRITE_METHOD_PATTERNS = sdkMethods
-  .filter((method) => {
-    if (!method.httpMethod || method.httpMethod === 'get' || method.httpMethod === 'query') {
-      return false;
-    }
-    return !(method.httpMethod === 'post' && READ_ONLY_POST_PATH.test(method.httpPath ?? ''));
-  })
-  .map((method) => `^${method.fullyQualifiedName.replace(/\./g, '\\.')}$`);
+// Only GETs and the search endpoints (POST bodies, but reads) are callable
+// from `execute`; anything else the SDK gains stays out until listed here, so
+// the tool stays read-only and can be annotated as such.
+const READ_ONLY_CODE_OPTIONS = {
+  codeAllowHttpGets: true,
+  codeAllowedMethods: ['^search\\.'],
+} satisfies Partial<McpOptions>;
 
 const TOOL_PRESENTATION: Record<string, { title: string; describe?: (original: string) => string }> = {
   execute: {
@@ -101,7 +93,7 @@ const INSTRUCTIONS_FETCH_TIMEOUT_MS = 5000;
 
 function fallbackMcpServer(): McpServer {
   return new McpServer(
-    { name: 'openregister_api', version: MCP_SERVER_VERSION },
+    { name: 'openregister_api', version: SDK_VERSION },
     { capabilities: { tools: {}, logging: {} } },
   );
 }
@@ -154,10 +146,11 @@ export class MyMCP extends McpAgent<Env, unknown, MCPProps> {
       installCodeToolProxy(this.env.MCP_EXEC);
 
       const clientConfig = this.props.clientConfig;
+      // Spread first: a client may narrow the allowed set, never widen it.
       const mcpOptions: McpOptions = {
         ...clientConfig,
         codeExecutionMode: clientConfig?.codeExecutionMode ?? 'stainless-sandbox',
-        codeBlockedMethods: [...(clientConfig?.codeBlockedMethods ?? []), ...WRITE_METHOD_PATTERNS],
+        ...READ_ONLY_CODE_OPTIONS,
       };
 
       const server = await buildMcpServer(mcpOptions.stainlessApiKey);
@@ -218,9 +211,7 @@ export default new OAuthProvider({
     '/sse': MyMCP.serveSSE('/sse'), // legacy SSE
     '/mcp': MyMCP.serve('/mcp'), // Streaming HTTP
   },
-  // Type assertion needed due to Headers type mismatch between Hono and @cloudflare/workers-types
-  // At runtime, Hono's fetch handler is fully compatible with ExportedHandler
-  defaultHandler: makeOAuthConsent(serverConfig) as unknown as ExportedHandler,
+  defaultHandler: makeOAuthConsent(serverConfig),
   authorizeEndpoint: '/authorize',
   tokenEndpoint: '/token',
   // Registration stays for clients without CIMD; clients that support CIMD

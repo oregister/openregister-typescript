@@ -40,16 +40,14 @@ export function installCodeToolProxy(binding: DurableObjectNamespace<McpExecCont
       return upstream(input, init);
     }
     const container = await getRandom(binding, CONTAINER_INSTANCES);
-    let timer: ReturnType<typeof setTimeout> | undefined;
+    let timer: ReturnType<typeof setTimeout>;
     const timeout = new Promise<Response>((resolve) => {
       timer = setTimeout(() => resolve(timeoutResponse()), EXEC_TIMEOUT_MS);
     });
     try {
       return await Promise.race([container.fetch(new Request(input, init)), timeout]);
     } finally {
-      if (timer !== undefined) {
-        clearTimeout(timer);
-      }
+      clearTimeout(timer!);
     }
   }) as typeof fetch;
 }
