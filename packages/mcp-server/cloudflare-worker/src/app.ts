@@ -14,10 +14,15 @@ export type Bindings = Env & {
   OAUTH_PROVIDER: OAuthHelpers;
 };
 
+// Domain-verification token for the OpenAI Apps directory; public by design.
+const OPENAI_APPS_CHALLENGE = '4LRev1DWgl_cHq4nbJ7eS4yk8B37JLy9hT-GYLRo6Pg';
+
 export function makeOAuthConsent(config: ServerConfig) {
   const app = new Hono<{
     Bindings: Bindings;
   }>();
+
+  app.get('/.well-known/openai-apps-challenge', (c) => c.text(OPENAI_APPS_CHALLENGE));
 
   // Render a reasonable home page just to show the app is up
   app.get('/', async (c) => {
