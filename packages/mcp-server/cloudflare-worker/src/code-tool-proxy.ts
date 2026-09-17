@@ -16,7 +16,9 @@ const EXEC_TIMEOUT_MS = 200_000;
 function timeoutResponse(): Response {
   return Response.json({
     is_error: true,
-    result: `code execution timed out after ${EXEC_TIMEOUT_MS / 1000}s; use API filters to narrow the query or split it into smaller steps`,
+    result: `code execution timed out after ${
+      EXEC_TIMEOUT_MS / 1000
+    }s; use API filters to narrow the query or split it into smaller steps`,
     log_lines: [],
     err_lines: [],
   });
