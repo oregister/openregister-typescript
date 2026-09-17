@@ -7,7 +7,8 @@ import {
   renderLoggedOutAuthorizeScreen,
   renderAuthorizationRejectedContent,
 } from './utils';
-import type { OAuthHelpers } from '@cloudflare/workers-oauth-provider';
+import { AuthorizationError } from '@cloudflare/workers-oauth-provider';
+import type { AuthRequest, OAuthHelpers } from '@cloudflare/workers-oauth-provider';
 import { ServerConfig } from '.';
 
 export type Bindings = Env & {
@@ -32,7 +33,25 @@ export function makeOAuthConsent(config: ServerConfig) {
 
   // The /authorize page has a form that will POST to /approve
   app.get('/authorize', async (c) => {
-    const oauthReqInfo = await c.env.OAUTH_PROVIDER.parseAuthRequest(c.req.raw);
+    let oauthReqInfo: AuthRequest;
+    try {
+      oauthReqInfo = await c.env.OAUTH_PROVIDER.parseAuthRequest(c.req.raw);
+    } catch (error) {
+      if (!(error instanceof AuthorizationError)) {
+        throw error;
+      }
+      // A vetted redirect_uri gets the error back the OAuth way; anything
+      // earlier in validation has no trusted place to send it.
+      if (error.redirectUri) {
+        const target = new URL(error.redirectUri);
+        target.searchParams.set('error', error.code);
+        target.searchParams.set('error_description', error.description);
+        if (error.state) target.searchParams.set('state', error.state);
+        if (error.issuer) target.searchParams.set('iss', error.issuer);
+        return c.redirect(target.toString());
+      }
+      return c.text(`${error.code}: ${error.description}`, 400);
+    }
     const requester = await clientLabel(c.env.OAUTH_PROVIDER, oauthReqInfo.clientId);
 
     const content = await renderLoggedOutAuthorizeScreen(config, oauthReqInfo, requester);
