@@ -18,12 +18,12 @@
   },
   "dependencies": {
     "@cloudflare/containers": "^0.3.7",
-    "@cloudflare/workers-oauth-provider": "^0.0.5",
+    "@cloudflare/workers-oauth-provider": "^0.10.3",
     "@modelcontextprotocol/sdk": "1.28.0",
     "agents": "~0.8.7",
     "hono": "^4.12.4",
-    "openregister-mcp": "latest",
-    "openregister": "latest"
+    "openregister": "4.8.1",
+    "openregister-mcp": "4.8.0"
   },
   "// overrides": "agents pins @modelcontextprotocol/sdk exactly; the three override blocks below force npm/yarn/pnpm to dedupe to that same version. Keep all four @modelcontextprotocol/sdk values in sync. See src/index.ts for the full rationale.",
   "overrides": {

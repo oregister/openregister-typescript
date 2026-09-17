@@ -28,8 +28,9 @@ export function makeOAuthConsent(config: ServerConfig) {
   // The /authorize page has a form that will POST to /approve
   app.get('/authorize', async (c) => {
     const oauthReqInfo = await c.env.OAUTH_PROVIDER.parseAuthRequest(c.req.raw);
+    const requester = await clientLabel(c.env.OAUTH_PROVIDER, oauthReqInfo.clientId);
 
-    const content = await renderLoggedOutAuthorizeScreen(config, oauthReqInfo);
+    const content = await renderLoggedOutAuthorizeScreen(config, oauthReqInfo, requester);
     return c.html(layout(content, 'Authorization', config));
   });
 
@@ -77,25 +78,15 @@ export function makeOAuthConsent(config: ServerConfig) {
     return c.html(layout(content, 'Authorization', config));
   });
 
-  // Add a resource server .well-known to point clients to the correct auth server
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Access-Control-Allow-Headers': '*',
-    'Access-Control-Max-Age': '86400',
-  };
-  app.options('/.well-known/oauth-protected-resource', async (c) => {
-    Object.entries(corsHeaders).forEach(([key, value]) => c.header(key, value));
-    return c.body(null, 204);
-  });
-  app.get('/.well-known/oauth-protected-resource', async (c) => {
-    Object.entries(corsHeaders).forEach(([key, value]) => c.header(key, value));
-    const baseURL = new URL('/', c.req.url).toString();
-    return c.json({
-      resource: baseURL,
-      authorization_servers: [baseURL],
-    });
-  });
-
   return app;
+}
+
+// A CIMD client_id is a URL the client asserts for itself, so the consent
+// screen names its host instead of the self-reported client_name.
+async function clientLabel(provider: OAuthHelpers, clientId: string): Promise<string> {
+  if (/^https:\/\//.test(clientId)) {
+    return new URL(clientId).host;
+  }
+  const client = await provider.lookupClient(clientId).catch(() => null);
+  return client?.clientName || clientId;
 }

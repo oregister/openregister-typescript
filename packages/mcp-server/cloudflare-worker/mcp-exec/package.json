@@ -12,7 +12,7 @@
     "node": ">=22"
   },
   "dependencies": {
-    "openregister": "4.8.0",
+    "openregister": "4.8.1",
     "openregister-mcp": "4.8.0"
   }
 }
