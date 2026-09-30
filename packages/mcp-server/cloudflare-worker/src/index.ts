@@ -152,6 +152,7 @@ export class MyMCP extends McpAgent<Env, unknown, MCPProps> {
       const mcpOptions: McpOptions = {
         ...clientConfig,
         codeExecutionMode: clientConfig?.codeExecutionMode ?? 'stainless-sandbox',
+        docsSearchMode: clientConfig?.docsSearchMode ?? 'local',
         ...READ_ONLY_CODE_OPTIONS,
       };
 
