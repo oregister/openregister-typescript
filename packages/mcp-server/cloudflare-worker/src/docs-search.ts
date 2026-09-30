@@ -109,9 +109,36 @@ function endpointPages(): Promise<Map<string, string>> {
 
 const endpointKey = (m: Method) => `${m.httpMethod.toUpperCase()} ${m.endpoint}`;
 
+// Path parameters are positional and everything else goes in one object,
+// matching the SDK; short types are spelled out so the call shape is clear.
 function signature(m: Method): string {
-  const names = (m.params ?? []).map((p) => p.split(':')[0]!.trim());
-  return `${m.qualified}(${names.join(', ')}) · ${endpointKey(m)}`;
+  const inPath = new Set([...m.endpoint.matchAll(/\{(\w+)\}/g)].map((x) => x[1]));
+  const params = (m.params ?? []).map((p) => {
+    const at = p.indexOf(':');
+    return {
+      name: p.slice(0, at).trim(),
+      type: p
+        .slice(at + 1)
+        .trim()
+        .replace(/;$/, '')
+        .replace(/; }/g, ' }'),
+    };
+  });
+  const fields = params
+    .filter((p) => !inPath.has(p.name.replace(/\?$/, '')))
+    .map(
+      (p) =>
+        `${p.name}: ${
+          p.type.length <= 45 ? p.type
+          : p.type.endsWith('[]') ? 'object[]'
+          : 'object'
+        }`,
+    );
+  const args = [
+    ...params.filter((p) => inPath.has(p.name.replace(/\?$/, ''))).map((p) => p.name),
+    ...(fields.length > 0 ? [`{ ${fields.join(', ')} }`] : []),
+  ];
+  return `${m.qualified}(${args.join(', ')}) · ${endpointKey(m)}`;
 }
 
 function firstSentence(text = ''): string {
