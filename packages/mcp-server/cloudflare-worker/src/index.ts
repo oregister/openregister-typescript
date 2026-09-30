@@ -16,6 +16,7 @@ import { McpOptions } from 'openregister-mcp/options';
 import { initMcpServer, newMcpServer, selectTools } from 'openregister-mcp/server';
 import { configureLogger } from 'openregister-mcp/logger';
 import { installCodeToolProxy } from './code-tool-proxy';
+import { DOCS_SEARCH_INPUT_SCHEMA, installDocsSearch } from './docs-search';
 
 type MCPProps = {
   clientProps: ClientOptions;
@@ -51,13 +52,26 @@ const READ_ONLY_CODE_OPTIONS = {
   codeAllowedMethods: ['^search\\.'],
 } satisfies Partial<McpOptions>;
 
-const TOOL_PRESENTATION: Record<string, { title: string; describe?: (original: string) => string }> = {
+// Server instructions carry the same note, but some clients drop them; tool
+// descriptions always arrive. It leads because some clients truncate them.
+const MONEY_UNITS =
+  'Financial figures (indicators and report rows from `client.company.getFinancialsV1`, plus `indicators` on `getDetailsV1`) are integers in euro cents: divide by 100. E.g. revenue 1234567890 = EUR 12,345,678.90. Share capital is not in cents; it is a decimal amount with its own currency field.';
+
+const TOOL_PRESENTATION: Record<
+  string,
+  { title: string; describe?: (original: string) => string; inputSchema?: Tool['inputSchema'] }
+> = {
   execute: {
     title: 'Query the OpenRegister API',
     describe: (original) =>
-      `${original}\n\nThe client is the OpenRegister TypeScript SDK; API reference: https://docs.openregister.de. Methods that create or delete data (monitors, Transparenzregister credentials and extracts) are blocked, so this tool only reads.`,
+      `${MONEY_UNITS}\n\n${original}\n\nThe client is the OpenRegister TypeScript SDK; API reference: https://docs.openregister.de. Methods that create or delete data (monitors, Transparenzregister credentials and extracts) are blocked, so this tool only reads.`,
   },
-  search_docs: { title: 'Search OpenRegister API documentation' },
+  search_docs: {
+    title: 'Search OpenRegister API documentation',
+    describe: () =>
+      `Search the OpenRegister documentation and SDK. Returns up to 3 SDK methods to call from execute and up to 3 docs sections, each with a short excerpt. For a method's parameters and response fields, or a section's full text, call again with \`read\` set to a method name or docs path from the results.`,
+    inputSchema: DOCS_SEARCH_INPUT_SCHEMA,
+  },
 };
 
 // The generated package ships tools without a title or annotations; both
@@ -72,6 +86,7 @@ function presentTools(options: McpOptions): Tool[] {
       ...tool,
       title: presentation.title,
       description: presentation.describe?.(tool.description ?? '') ?? tool.description,
+      inputSchema: presentation.inputSchema ?? tool.inputSchema,
       annotations: {
         ...tool.annotations,
         title: presentation.title,
@@ -146,6 +161,7 @@ export class MyMCP extends McpAgent<Env, unknown, MCPProps> {
 
       configureLogger({ level: 'info', pretty: false });
       installCodeToolProxy(this.env.MCP_EXEC);
+      installDocsSearch();
 
       const clientConfig = this.props.clientConfig;
       // Spread first: a client may narrow the allowed set, never widen it.
