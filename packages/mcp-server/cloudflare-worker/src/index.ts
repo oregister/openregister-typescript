@@ -237,4 +237,10 @@ export default new OAuthProvider({
   // (Claude among them) skip it, so the KV client store no longer grows per connection.
   clientRegistrationEndpoint: '/register',
   clientIdMetadataDocumentEnabled: true,
+  // Each refresh rotates the refresh token and only the previous one stays
+  // valid, so clients refreshing in parallel can end up holding a revoked
+  // token and must sign in again. Long-lived access tokens make refreshes,
+  // and with them that race, rare. The token only wraps the user's API key.
+  accessTokenTTL: 30 * 24 * 60 * 60,
+  refreshTokenTTL: 365 * 24 * 60 * 60,
 });
