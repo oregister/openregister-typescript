@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.8.3 (2026-09-17)
+
+Full Changelog: [v4.8.2...v4.8.3](https://github.com/oregister/openregister-typescript/compare/v4.8.2...v4.8.3)
+
+### Bug Fixes
+
+* **mcp:** annotate tools, block write methods, serve RFC 9728 metadata ([#48](https://github.com/oregister/openregister-typescript/issues/48)) ([03c5871](https://github.com/oregister/openregister-typescript/commit/03c58713f2560f276864316c59c4bbcad501e99f))
+* **mcp:** set openWorldHint on every tool ([#50](https://github.com/oregister/openregister-typescript/issues/50)) ([628baff](https://github.com/oregister/openregister-typescript/commit/628baff5b3f87e7add93057d7f9d420842051449))
+
 ## 4.8.2 (2026-09-07)
 
 Full Changelog: [v4.8.1...v4.8.2](https://github.com/oregister/openregister-typescript/compare/v4.8.1...v4.8.2)
