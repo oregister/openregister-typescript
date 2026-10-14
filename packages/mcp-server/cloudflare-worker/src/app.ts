@@ -3,7 +3,6 @@ import {
   layout,
   homeContent,
   parseApproveFormBody,
-  renderAuthorizationApprovedContent,
   renderLoggedOutAuthorizeScreen,
   renderAuthorizationRejectedContent,
 } from './utils';
@@ -58,6 +57,17 @@ export function makeOAuthConsent(config: ServerConfig) {
       return c.html('INVALID LOGIN', 401);
     }
 
+    if (!(await isValidApiKey(clientProps.apiKey))) {
+      const requester = await clientLabel(c.env.OAUTH_PROVIDER, oauthReqInfo.clientId);
+      const content = await renderLoggedOutAuthorizeScreen(
+        config,
+        oauthReqInfo,
+        requester,
+        'This API key is not valid. Check it and try again.',
+      );
+      return c.html(layout(content, 'Authorization', config), 401);
+    }
+
     // We don't have a real user ID, just tokens, so we generate a random one
     // Make this some stable ID if you want to look up the user's grants later.
     const generatedUserId = crypto.randomUUID();
@@ -72,9 +82,8 @@ export function makeOAuthConsent(config: ServerConfig) {
       },
     });
 
-    return c.html(
-      layout(await renderAuthorizationApprovedContent(redirectTo), 'Authorization Status', config),
-    );
+    // Redirect at once: a delayed redirect is lost if the user leaves the page first.
+    return c.redirect(redirectTo, 302);
   });
 
   // Render the authorize screen for demoing the OAuth flow (it won't actually log in)
@@ -94,4 +103,21 @@ async function clientLabel(provider: OAuthHelpers, clientId: string): Promise<st
   }
   const client = await provider.lookupClient(clientId).catch(() => null);
   return client?.clientName || clientId;
+}
+
+// Only a 401 rejects the key; any other failure lets the login through so an
+// API outage doesn't block authorization.
+async function isValidApiKey(apiKey: unknown): Promise<boolean> {
+  if (typeof apiKey !== 'string' || apiKey.trim() === '') {
+    return false;
+  }
+  try {
+    const res = await fetch('https://api.openregister.de/v1/credits', {
+      headers: { Authorization: `Bearer ${apiKey.trim()}` },
+      signal: AbortSignal.timeout(5000),
+    });
+    return res.status !== 401;
+  } catch {
+    return true;
+  }
 }
