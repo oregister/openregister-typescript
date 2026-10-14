@@ -363,6 +363,7 @@ export const renderLoggedOutAuthorizeScreen = async (
   config: ServerConfig,
   oauthReqInfo: AuthRequest,
   requester?: string,
+  error?: string,
 ) => {
   const renderField = (field: ClientProperty) => {
     if (field.type === 'select' && field.options) {
@@ -466,6 +467,14 @@ export const renderLoggedOutAuthorizeScreen = async (
 
         <form action="/approve" method="POST" style="display:flex; flex-direction:column; gap:1.25rem;">
           <input type="hidden" name="oauthReqInfo" value="${JSON.stringify(oauthReqInfo)}" />
+          ${error ?
+            html`<p
+              role="alert"
+              style="font-size:0.875rem; color:${BRAND.errorRed}; background:${BRAND.errorBg}; border-radius:0.5rem; padding:0.75rem;"
+            >
+              ${error}
+            </p>`
+          : ''}
 
           <div style="display:flex; flex-direction:column; gap:1rem;">
             ${config.clientProperties.map(renderField)}
@@ -550,10 +559,6 @@ export const renderApproveContent = async (message: string, status: string, redi
       : ''}
     </div>
   `;
-};
-
-export const renderAuthorizationApprovedContent = async (redirectUrl: string) => {
-  return renderApproveContent('Authorization approved!', 'success', redirectUrl);
 };
 
 export const renderAuthorizationRejectedContent = async (redirectUrl: string) => {
