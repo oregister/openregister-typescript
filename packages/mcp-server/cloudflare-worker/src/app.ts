@@ -107,7 +107,7 @@ async function clientLabel(provider: OAuthHelpers, clientId: string): Promise<st
 
 // Only a 401 rejects the key; any other failure lets the login through so an
 // API outage doesn't block authorization.
-async function isValidApiKey(apiKey: unknown): Promise<boolean> {
+export async function isValidApiKey(apiKey: unknown): Promise<boolean> {
   if (typeof apiKey !== 'string' || apiKey.trim() === '') {
     return false;
   }
