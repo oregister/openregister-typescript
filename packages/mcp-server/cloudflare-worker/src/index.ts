@@ -1,4 +1,4 @@
-import { makeOAuthConsent } from './app';
+import { isValidApiKey, makeOAuthConsent } from './app';
 // `agents` and `@modelcontextprotocol/sdk` versions must stay in sync with the
 // pins/overrides in package.json. `agents` declares an exact pin on
 // `@modelcontextprotocol/sdk`; if our resolved version drifts, npm installs a
@@ -224,6 +224,27 @@ export type ClientProperty = {
   options?: { label: string; value: string }[];
 };
 
+// Lets clients send an API key directly instead of going through OAuth.
+// Positive checks are cached per isolate so each request doesn't re-check.
+const KEY_CHECK_TTL_MS = 5 * 60 * 1000;
+const checkedKeys = new Map<string, number>();
+
+async function resolveApiKey({ token }: { token: string }): Promise<{ props: MCPProps } | null> {
+  // Expired or revoked OAuth tokens land here too; they must stay 401 so the client re-authorizes.
+  if (token.split(':').length === 3) {
+    return null;
+  }
+  const checkedAt = checkedKeys.get(token);
+  if (checkedAt == null || Date.now() - checkedAt > KEY_CHECK_TTL_MS) {
+    if (!(await isValidApiKey(token))) {
+      checkedKeys.delete(token);
+      return null;
+    }
+    checkedKeys.set(token, Date.now());
+  }
+  return { props: { clientProps: { apiKey: token } } as MCPProps };
+}
+
 // Export the OAuth handler as the default
 export default new OAuthProvider({
   apiHandlers: {
@@ -237,6 +258,7 @@ export default new OAuthProvider({
   // (Claude among them) skip it, so the KV client store no longer grows per connection.
   clientRegistrationEndpoint: '/register',
   clientIdMetadataDocumentEnabled: true,
+  resolveExternalToken: resolveApiKey,
   // Each refresh rotates the refresh token and only the previous one stays
   // valid, so clients refreshing in parallel can end up holding a revoked
   // token and must sign in again. Long-lived access tokens make refreshes,
