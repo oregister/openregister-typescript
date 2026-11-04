@@ -1,5 +1,24 @@
 # Changelog
 
+## [4.9.0](https://github.com/oregister/openregister-typescript/compare/v4.8.2...v4.9.0) (2026-11-04)
+
+
+### Features
+
+* **mcp:** improve search ([#54](https://github.com/oregister/openregister-typescript/issues/54)) ([fa61a52](https://github.com/oregister/openregister-typescript/commit/fa61a521bd5ad7763b88ea4f272832fd8f98f08d))
+* regenerate SDK ([#59](https://github.com/oregister/openregister-typescript/issues/59)) ([2a0e43d](https://github.com/oregister/openregister-typescript/commit/2a0e43d35f8223eea286e21b0c389fd0acc59bad))
+
+
+### Bug Fixes
+
+* **mcp:** annotate tools, block write methods, serve RFC 9728 metadata ([#48](https://github.com/oregister/openregister-typescript/issues/48)) ([03c5871](https://github.com/oregister/openregister-typescript/commit/03c58713f2560f276864316c59c4bbcad501e99f))
+* **mcp:** extend OAuth token lifetimes to avoid forced re-authorization ([#56](https://github.com/oregister/openregister-typescript/issues/56)) ([9943c45](https://github.com/oregister/openregister-typescript/commit/9943c455de710dc47642912cca205c94f9ae8c5d))
+* **mcp:** improve authentication ([#58](https://github.com/oregister/openregister-typescript/issues/58)) ([4f60273](https://github.com/oregister/openregister-typescript/commit/4f602730b79f1ed4c42817c12df646a2b654522c))
+* **mcp:** improve authorization flow ([#57](https://github.com/oregister/openregister-typescript/issues/57)) ([dcd4db7](https://github.com/oregister/openregister-typescript/commit/dcd4db7b413373cc08d09e602f03691fde240650))
+* **mcp:** search docs locally in the remote server ([#53](https://github.com/oregister/openregister-typescript/issues/53)) ([c6d2a36](https://github.com/oregister/openregister-typescript/commit/c6d2a36c28469e7308e84f2a23300e96feb80c6c))
+* **mcp:** set openWorldHint on every tool ([#50](https://github.com/oregister/openregister-typescript/issues/50)) ([628baff](https://github.com/oregister/openregister-typescript/commit/628baff5b3f87e7add93057d7f9d420842051449))
+* **mcp:** show SDK call shape in search ([#55](https://github.com/oregister/openregister-typescript/issues/55)) ([8b0f578](https://github.com/oregister/openregister-typescript/commit/8b0f5786de0128417389d1e3c6f3b6eb6cca5285))
+
 ## 4.8.2 (2026-09-07)
 
 Full Changelog: [v4.8.1...v4.8.2](https://github.com/oregister/openregister-typescript/compare/v4.8.1...v4.8.2)
