@@ -64,6 +64,7 @@ export class Search extends APIResource {
  * - ohg: Offene Handelsgesellschaft (General Partnership)
  * - kg: Kommanditgesellschaft (Limited Partnership)
  * - ev: Eingetragener Verein (Registered Association)
+ * - foundation: Stiftung (Foundation)
  */
 export type CompanyLegalForm =
   | 'ag'
@@ -72,6 +73,7 @@ export type CompanyLegalForm =
   | 'ev'
   | 'ewiv'
   | 'foreign'
+  | 'foundation'
   | 'gbr'
   | 'ggmbh'
   | 'gmbh'
@@ -473,6 +475,7 @@ export namespace SearchFindCompaniesV1Params {
       | 'revenue'
       | 'cash'
       | 'employees'
+      | 'apprentices'
       | 'equity'
       | 'real_estate'
       | 'materials'
@@ -496,6 +499,7 @@ export namespace SearchFindCompaniesV1Params {
       | 'trade_payables'
       | 'tangible_assets'
       | 'financial_assets'
+      | 'securities'
       | 'retained_earnings'
       | 'profit_carryforward'
       | 'other_provisions'
@@ -516,7 +520,14 @@ export namespace SearchFindCompaniesV1Params {
       | 'income_after_tax'
       | 'ebit'
       | 'ebitda'
+      | 'estimated_revenue'
+      | 'estimated_revenue_confidence'
+      | 'estimated_ebitda'
+      | 'estimated_ebitda_confidence'
+      | 'estimated_employees'
+      | 'estimated_employees_confidence'
       | 'industry_codes'
+      | 'primary_industry_codes'
       | 'capital_amount'
       | 'capital_currency'
       | 'number_of_owners'
@@ -524,13 +535,17 @@ export namespace SearchFindCompaniesV1Params {
       | 'has_representative_owner'
       | 'is_family_owned'
       | 'youngest_owner_age'
+      | 'youngest_director_age'
       | 'purpose'
+      | 'vat_id'
       | 'has_lei'
       | 'lei'
       | 'had_insolvency'
       | 'has_open_insolvency'
       | 'insolvency_stage'
-      | 'insolvency_opened_at';
+      | 'insolvency_opened_at'
+      | 'insolvency_risk'
+      | 'auditor';
   }
 
   /**

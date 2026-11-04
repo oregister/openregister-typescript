@@ -289,6 +289,10 @@ export interface ReportTable {
   rows: Array<ReportRow>;
 }
 
+/**
+ * Coarse role bucket. This set is stable: new register roles are folded into an
+ * existing bucket rather than added here, so it is safe to match on exhaustively.
+ */
 export type RepresentationRole =
   | 'DIRECTOR'
   | 'PROKURA'
@@ -379,6 +383,12 @@ export interface CompanyGetDetailsV1Response {
   documents: Array<CompanyDocument>;
 
   /**
+   * Modelled revenue, EBITDA and employees for companies that do not report them.
+   * One estimate per metric, for the latest fiscal year.
+   */
+  estimates: CompanyGetDetailsV1Response.Estimates;
+
+  /**
    * Date when the company was officially registered. Format: ISO 8601 (YYYY-MM-DD)
    * Example: "2022-01-01"
    */
@@ -390,7 +400,9 @@ export interface CompanyGetDetailsV1Response {
   indicators: Array<CompanyGetDetailsV1Response.Indicator>;
 
   /**
-   * Industry codes of the company.
+   * Industry codes of the company, classified from its current purpose
+   * (Unternehmensgegenstand). Empty when the purpose has not been classified or
+   * describes no codable activity.
    */
   industry_codes: CompanyGetDetailsV1Response.IndustryCodes;
 
@@ -587,6 +599,137 @@ export namespace CompanyGetDetailsV1Response {
   }
 
   /**
+   * Modelled revenue, EBITDA and employees for companies that do not report them.
+   * One estimate per metric, for the latest fiscal year.
+   */
+  export interface Estimates {
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    ebitda: Estimates.Ebitda | null;
+
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    employees: Estimates.Employees | null;
+
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    revenue: Estimates.Revenue | null;
+  }
+
+  export namespace Estimates {
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    export interface Ebitda {
+      /**
+       * How narrow the 80% range is, the same tiers the search filters
+       * estimated\_\*\_confidence use. Revenue and employees are judged by the ratio of
+       * max to min, EBITDA by the range relative to the latest reported balance sheet
+       * total (low when there is none).
+       */
+      confidence: 'high' | 'medium' | 'low';
+
+      /**
+       * End of the fiscal year the estimate applies to, matching the company's reporting
+       * year end. Format: ISO 8601 (YYYY-MM-DD) Example: "2024-12-31"
+       */
+      date: string;
+
+      /**
+       * Upper end of the 80% range.
+       */
+      max: number;
+
+      /**
+       * Lower end of the 80% range.
+       */
+      min: number;
+
+      /**
+       * The estimated figure, the middle of the modelled range.
+       */
+      value: number;
+    }
+
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    export interface Employees {
+      /**
+       * How narrow the 80% range is, the same tiers the search filters
+       * estimated\_\*\_confidence use. Revenue and employees are judged by the ratio of
+       * max to min, EBITDA by the range relative to the latest reported balance sheet
+       * total (low when there is none).
+       */
+      confidence: 'high' | 'medium' | 'low';
+
+      /**
+       * End of the fiscal year the estimate applies to, matching the company's reporting
+       * year end. Format: ISO 8601 (YYYY-MM-DD) Example: "2024-12-31"
+       */
+      date: string;
+
+      /**
+       * Upper end of the 80% range.
+       */
+      max: number;
+
+      /**
+       * Lower end of the 80% range.
+       */
+      min: number;
+
+      /**
+       * The estimated figure, the middle of the modelled range.
+       */
+      value: number;
+    }
+
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    export interface Revenue {
+      /**
+       * How narrow the 80% range is, the same tiers the search filters
+       * estimated\_\*\_confidence use. Revenue and employees are judged by the ratio of
+       * max to min, EBITDA by the range relative to the latest reported balance sheet
+       * total (low when there is none).
+       */
+      confidence: 'high' | 'medium' | 'low';
+
+      /**
+       * End of the fiscal year the estimate applies to, matching the company's reporting
+       * year end. Format: ISO 8601 (YYYY-MM-DD) Example: "2024-12-31"
+       */
+      date: string;
+
+      /**
+       * Upper end of the 80% range.
+       */
+      max: number;
+
+      /**
+       * Lower end of the 80% range.
+       */
+      min: number;
+
+      /**
+       * The estimated figure, the middle of the modelled range.
+       */
+      value: number;
+    }
+  }
+
+  /**
    * A focused subset of the key company indicators for a given year. Values of the
    * indicator are given in the smallest currency unit (cents). Example: 2099
    * represents €20.99 for monetary values. For non-monetary values (e.g.,
@@ -665,13 +808,20 @@ export namespace CompanyGetDetailsV1Response {
     salaries: number | null;
 
     /**
+     * A short fiscal year (Rumpfgeschäftsjahr), shorter than twelve months
+     */
+    short_year: boolean;
+
+    /**
      * The taxes of that year (in cents).
      */
     taxes: number | null;
   }
 
   /**
-   * Industry codes of the company.
+   * Industry codes of the company, classified from its current purpose
+   * (Unternehmensgegenstand). Empty when the purpose has not been classified or
+   * describes no codable activity.
    */
   export interface IndustryCodes {
     WZ2025: Array<IndustryCodes.Wz2025>;
@@ -679,10 +829,56 @@ export namespace CompanyGetDetailsV1Response {
 
   export namespace IndustryCodes {
     /**
-     * Industry codes from WZ 2025.
+     * A WZ 2025 class (Klasse) the company is active in, with the subclasses
+     * (Unterklassen) behind it. The class of the company's main activity comes first.
      */
     export interface Wz2025 {
+      /**
+       * WZ 2025 class. Example: "64.19"
+       */
       code: string;
+
+      /**
+       * Official German title of the class. Example: "Kreditinstitute, ohne
+       * Spezialkreditinstitute"
+       */
+      label_de: string;
+
+      /**
+       * Whether the company's main activity falls in this class. True for at most one
+       * class. The main activity is classified from the purpose, not recorded in the
+       * register.
+       */
+      primary: boolean;
+
+      /**
+       * The WZ 2025 subclasses within this class, the main activity first.
+       */
+      subclasses: Array<Wz2025.Subclass>;
+    }
+
+    export namespace Wz2025 {
+      /**
+       * A WZ 2025 subclass (Unterklasse).
+       */
+      export interface Subclass {
+        /**
+         * WZ 2025 subclass. Example: "64.19.1"
+         */
+        code: string;
+
+        /**
+         * Official German title of the subclass. Example: "Kreditbanken einschließlich
+         * Zweigstellen ausländischer Banken"
+         */
+        label_de: string;
+
+        /**
+         * Whether this is the company's main activity. True for at most one subclass. The
+         * main activity is classified from the purpose, not recorded in the register.
+         */
+        primary: boolean;
+      }
     }
   }
 
@@ -765,6 +961,11 @@ export namespace CompanyGetDetailsV1Response {
     authority: string | null;
 
     /**
+     * Structured facts read from `authority`. Null when none are stated.
+     */
+    authority_detail: Representation.AuthorityDetail | null;
+
+    /**
      * Date when this representative role ended (if applicable). Format: ISO 8601
      * (YYYY-MM-DD) Example: "2022-01-01"
      */
@@ -776,9 +977,16 @@ export namespace CompanyGetDetailsV1Response {
     name: string;
 
     /**
-     * The role of the representation. E.g. "DIRECTOR"
+     * Coarse role bucket. Stable set of values, safe to switch on exhaustively. Use
+     * `role_detail` for the precise register role. E.g. "DIRECTOR"
      */
     role: CompanyAPI.RepresentationRole;
+
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Vorstand and a Geschäftsführer both have role "DIRECTOR" but differ here.
+     */
+    role_detail: Representation.RoleDetail;
 
     /**
      * Date when this representative role became effective. Format: ISO 8601
@@ -797,6 +1005,87 @@ export namespace CompanyGetDetailsV1Response {
   }
 
   export namespace Representation {
+    /**
+     * Structured facts read from `authority`. Null when none are stated.
+     */
+    export interface AuthorityDetail {
+      /**
+       * Fully exempt from self-dealing restrictions (in Germany § 181 BGB). Null when
+       * not stated or only partly exempt.
+       */
+      self_dealing_allowed: boolean | null;
+
+      /**
+       * SOLE may represent alone, JOINT only together with others, NONE is excluded from
+       * representation, GENERAL follows the general representation rule.
+       */
+      type: 'SOLE' | 'JOINT' | 'NONE' | 'GENERAL' | null;
+    }
+
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Vorstand and a Geschäftsführer both have role "DIRECTOR" but differ here.
+     */
+    export interface RoleDetail {
+      /**
+       * The precise role as recorded in the register. Example: "EXECUTIVE" for a
+       * Vorstand, "DIRECTOR" for a Geschäftsführer — both have role "DIRECTOR".
+       */
+      code:
+        | 'DIRECTOR'
+        | 'EMERGENCY_DIRECTOR'
+        | 'EXECUTIVE'
+        | 'CHAIRMAN'
+        | 'DEPUTY_CHAIRMAN'
+        | 'BOARD'
+        | 'PRESIDENT_BOARD'
+        | 'VICE_PRESIDENT_BOARD'
+        | 'PRESIDENT'
+        | 'MEMBER'
+        | 'NON_EXECUTIVE_DIRECTOR'
+        | 'BOARD_SECRETARY'
+        | 'BOARD_TREASURER'
+        | 'BOARD_SPORTS'
+        | 'BOARD_OTHER'
+        | 'REPRESENTATIVE'
+        | 'SECONDARY_REPRESENTATIVE'
+        | 'COURT_ORDERED_REPRESENTATIVE'
+        | 'PROKURA'
+        | 'PROKURA_SINGLE'
+        | 'PROKURA_JOINT'
+        | 'LIQUIDATOR'
+        | 'INSOLVENCY_DIRECTOR'
+        | 'PRELIMINARY_INSOLVENCY_DIRECTOR'
+        | 'OWNER'
+        | 'SHAREHOLDER'
+        | 'PARTNER'
+        | 'PERSONAL_LIABLE_DIRECTOR'
+        | 'LIMITED_PARTNER'
+        | 'OTHER';
+
+      /**
+       * German title, gender-neutral, as shown on openregister.de. Example: "Vorstand"
+       */
+      label_de: string;
+
+      /**
+       * Abbreviated German title, for dense layouts such as tables. Example: "Vst."
+       */
+      label_de_short: string;
+
+      /**
+       * English title. A translation for display, not a legal term — the German title is
+       * the one the register uses. Example: "Executive Board Member"
+       */
+      label_en: string;
+
+      /**
+       * Abbreviated English title, for dense layouts such as tables. Example: "Exec.
+       * Board"
+       */
+      label_en_short: string;
+    }
+
     export interface LegalPerson {
       city: string | null;
 
@@ -830,6 +1119,11 @@ export namespace CompanyGetDetailsV1Response {
        * Last name of the representative. Example: "Mustermann"
        */
       last_name: string | null;
+
+      /**
+       * Academic or professional title of the representative. Example: "Dr."
+       */
+      title?: string | null;
     }
   }
 
@@ -882,6 +1176,12 @@ export namespace CompanyGetDetailsV1Response {
 
 export interface CompanyGetFinancialsV1Response {
   /**
+   * Modelled revenue, EBITDA and employees for companies that do not report them.
+   * One estimate per metric, for the latest fiscal year.
+   */
+  estimates: CompanyGetFinancialsV1Response.Estimates;
+
+  /**
    * Key financial indicators per fiscal year, sorted by date (latest first).
    */
   indicators: Array<CompanyGetFinancialsV1Response.Indicator>;
@@ -895,6 +1195,137 @@ export interface CompanyGetFinancialsV1Response {
 }
 
 export namespace CompanyGetFinancialsV1Response {
+  /**
+   * Modelled revenue, EBITDA and employees for companies that do not report them.
+   * One estimate per metric, for the latest fiscal year.
+   */
+  export interface Estimates {
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    ebitda: Estimates.Ebitda | null;
+
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    employees: Estimates.Employees | null;
+
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    revenue: Estimates.Revenue | null;
+  }
+
+  export namespace Estimates {
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    export interface Ebitda {
+      /**
+       * How narrow the 80% range is, the same tiers the search filters
+       * estimated\_\*\_confidence use. Revenue and employees are judged by the ratio of
+       * max to min, EBITDA by the range relative to the latest reported balance sheet
+       * total (low when there is none).
+       */
+      confidence: 'high' | 'medium' | 'low';
+
+      /**
+       * End of the fiscal year the estimate applies to, matching the company's reporting
+       * year end. Format: ISO 8601 (YYYY-MM-DD) Example: "2024-12-31"
+       */
+      date: string;
+
+      /**
+       * Upper end of the 80% range.
+       */
+      max: number;
+
+      /**
+       * Lower end of the 80% range.
+       */
+      min: number;
+
+      /**
+       * The estimated figure, the middle of the modelled range.
+       */
+      value: number;
+    }
+
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    export interface Employees {
+      /**
+       * How narrow the 80% range is, the same tiers the search filters
+       * estimated\_\*\_confidence use. Revenue and employees are judged by the ratio of
+       * max to min, EBITDA by the range relative to the latest reported balance sheet
+       * total (low when there is none).
+       */
+      confidence: 'high' | 'medium' | 'low';
+
+      /**
+       * End of the fiscal year the estimate applies to, matching the company's reporting
+       * year end. Format: ISO 8601 (YYYY-MM-DD) Example: "2024-12-31"
+       */
+      date: string;
+
+      /**
+       * Upper end of the 80% range.
+       */
+      max: number;
+
+      /**
+       * Lower end of the 80% range.
+       */
+      min: number;
+
+      /**
+       * The estimated figure, the middle of the modelled range.
+       */
+      value: number;
+    }
+
+    /**
+     * A modelled value for one fiscal year. min and max are not hard limits: the true
+     * value lies between them with 80% probability.
+     */
+    export interface Revenue {
+      /**
+       * How narrow the 80% range is, the same tiers the search filters
+       * estimated\_\*\_confidence use. Revenue and employees are judged by the ratio of
+       * max to min, EBITDA by the range relative to the latest reported balance sheet
+       * total (low when there is none).
+       */
+      confidence: 'high' | 'medium' | 'low';
+
+      /**
+       * End of the fiscal year the estimate applies to, matching the company's reporting
+       * year end. Format: ISO 8601 (YYYY-MM-DD) Example: "2024-12-31"
+       */
+      date: string;
+
+      /**
+       * Upper end of the 80% range.
+       */
+      max: number;
+
+      /**
+       * Lower end of the 80% range.
+       */
+      min: number;
+
+      /**
+       * The estimated figure, the middle of the modelled range.
+       */
+      value: number;
+    }
+  }
+
   /**
    * The indicators of the company for a given year. Values of the indicator are
    * given in the smallest currency unit (cents). Example: 2099 represents €20.99 for
@@ -910,6 +1341,12 @@ export namespace CompanyGetFinancialsV1Response {
      * The affiliated liabilities of that year (in cents).
      */
     affiliated_liabilities: number | null;
+
+    /**
+     * The number of apprentices (Auszubildende) of that year, where the report states
+     * it.
+     */
+    apprentices: number | null;
 
     /**
      * The balance sheet total of that year (in cents).
@@ -1130,9 +1567,19 @@ export namespace CompanyGetFinancialsV1Response {
     salaries: number | null;
 
     /**
+     * The securities of that year (in cents).
+     */
+    securities: number | null;
+
+    /**
      * The shareholder liabilities of that year (in cents).
      */
     shareholder_liabilities: number | null;
+
+    /**
+     * A short fiscal year (Rumpfgeschäftsjahr), shorter than twelve months
+     */
+    short_year: boolean;
 
     /**
      * The tangible assets of that year (in cents).
@@ -1179,11 +1626,23 @@ export namespace CompanyGetFinancialsV1Response {
     aktiva: CompanyAPI.ReportTable;
 
     /**
+     * The auditor who signed the audit opinion. Null for unaudited reports and reports
+     * whose auditor could not be read.
+     */
+    auditor: Report.Auditor | null;
+
+    /**
      * Whether the report is a consolidated report or not.
      */
     consolidated: boolean;
 
     passiva: CompanyAPI.ReportTable;
+
+    /**
+     * Date the report was published. A complement or correction is a separate report
+     * with the same period and a later date. Format: ISO 8601 (YYYY-MM-DD)
+     */
+    published_at: string;
 
     /**
      * Format: ISO 8601 (YYYY-MM-DD)
@@ -1206,16 +1665,80 @@ export namespace CompanyGetFinancialsV1Response {
      */
     sources: Array<Report.Source>;
 
+    /**
+     * Activity statements (Tätigkeitsabschlüsse) of an energy network operator: a
+     * separate balance sheet and income statement for each activity § 6b Abs. 3 EnWG
+     * unbundles, such as electricity distribution. Empty for reports that publish
+     * none.
+     */
+    activity_statements?: Array<Report.ActivityStatement>;
+
     guv?: CompanyAPI.ReportTable | null;
   }
 
   export namespace Report {
+    /**
+     * The auditor who signed the audit opinion. Null for unaudited reports and reports
+     * whose auditor could not be read.
+     */
+    export interface Auditor {
+      /**
+       * Name of the audit firm or sole auditor as the report prints it. Example: "KPMG
+       * AG Wirtschaftsprüfungsgesellschaft"
+       */
+      name: string;
+
+      /**
+       * Names of the auditors who signed the opinion.
+       */
+      signatories: Array<string>;
+
+      /**
+       * City the audit opinion was signed in. Example: "München"
+       */
+      city?: string | null;
+
+      /**
+       * Unique company identifier of the audit firm, if it matches exactly one
+       * registered company. Example: DE-HRB-F1103-267645
+       */
+      company_id?: string | null;
+    }
+
     export interface Source {
       /**
        * Url of the rendered HTML report. In the form of a presigned url accessible for
        * 30 minutes.
        */
       html_url: string;
+    }
+
+    export interface ActivityStatement {
+      /**
+       * The unbundled activity. `meter_operation` is the metering business § 3 Abs. 4
+       * MsbG separates; `other` is any further activity the company reports separately,
+       * named in `label`.
+       */
+      activity:
+        | 'electricity_transmission'
+        | 'electricity_distribution'
+        | 'gas_transmission'
+        | 'gas_distribution'
+        | 'gas_storage'
+        | 'lng_facility'
+        | 'meter_operation'
+        | 'other';
+
+      aktiva: CompanyAPI.ReportTable;
+
+      /**
+       * The activity's name as the report prints it. Example: "Stromnetz"
+       */
+      label: string;
+
+      passiva: CompanyAPI.ReportTable;
+
+      guv?: CompanyAPI.ReportTable | null;
     }
   }
 }
@@ -1411,9 +1934,17 @@ export namespace CompanyGetOwnersV1Response {
     percentage_share: number | null;
 
     /**
-     * Type of relationship between the entity and the company.
+     * Type of relationship between the entity and the company. Use `role_detail` for
+     * the precise register role.
      */
     relation_type: CompanyAPI.CompanyRelationType;
+
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Kommanditist and a Gesellschafter both appear here with their register-level
+     * role, while `relation_type` only carries the coarse bucket.
+     */
+    role_detail: Owner.RoleDetail;
 
     /**
      * Date when the relation started. Only available for some types of owners. Format:
@@ -1425,6 +1956,73 @@ export namespace CompanyGetOwnersV1Response {
      * The type of shareholder.
      */
     type: CompanyAPI.EntityType;
+  }
+
+  export namespace Owner {
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Kommanditist and a Gesellschafter both appear here with their register-level
+     * role, while `relation_type` only carries the coarse bucket.
+     */
+    export interface RoleDetail {
+      /**
+       * The precise role as recorded in the register. Example: "EXECUTIVE" for a
+       * Vorstand, "DIRECTOR" for a Geschäftsführer — both have role "DIRECTOR".
+       */
+      code:
+        | 'DIRECTOR'
+        | 'EMERGENCY_DIRECTOR'
+        | 'EXECUTIVE'
+        | 'CHAIRMAN'
+        | 'DEPUTY_CHAIRMAN'
+        | 'BOARD'
+        | 'PRESIDENT_BOARD'
+        | 'VICE_PRESIDENT_BOARD'
+        | 'PRESIDENT'
+        | 'MEMBER'
+        | 'NON_EXECUTIVE_DIRECTOR'
+        | 'BOARD_SECRETARY'
+        | 'BOARD_TREASURER'
+        | 'BOARD_SPORTS'
+        | 'BOARD_OTHER'
+        | 'REPRESENTATIVE'
+        | 'SECONDARY_REPRESENTATIVE'
+        | 'COURT_ORDERED_REPRESENTATIVE'
+        | 'PROKURA'
+        | 'PROKURA_SINGLE'
+        | 'PROKURA_JOINT'
+        | 'LIQUIDATOR'
+        | 'INSOLVENCY_DIRECTOR'
+        | 'PRELIMINARY_INSOLVENCY_DIRECTOR'
+        | 'OWNER'
+        | 'SHAREHOLDER'
+        | 'PARTNER'
+        | 'PERSONAL_LIABLE_DIRECTOR'
+        | 'LIMITED_PARTNER'
+        | 'OTHER';
+
+      /**
+       * German title, gender-neutral, as shown on openregister.de. Example: "Vorstand"
+       */
+      label_de: string;
+
+      /**
+       * Abbreviated German title, for dense layouts such as tables. Example: "Vst."
+       */
+      label_de_short: string;
+
+      /**
+       * English title. A translation for display, not a legal term — the German title is
+       * the one the register uses. Example: "Executive Board Member"
+       */
+      label_en: string;
+
+      /**
+       * Abbreviated English title, for dense layouts such as tables. Example: "Exec.
+       * Board"
+       */
+      label_en_short: string;
+    }
   }
 }
 

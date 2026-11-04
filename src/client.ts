@@ -105,9 +105,7 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * API Key Authentication
-   * Provide your API key as a Bearer token in the Authorization header.
-   *
+   * Defaults to process.env['OPENREGISTER_API_KEY'].
    */
   apiKey?: string | undefined;
 

@@ -75,9 +75,18 @@ export namespace PersonGetDetailsV1Response {
     register_id: string;
 
     /**
-     * Role of the person in the company. Example: "DIRECTOR"
+     * @deprecated Raw role string as stored, kept for backwards compatibility. It is
+     * register-level rather than bucketed, and for Prokura it carries a German string
+     * ("Einzelprokura", "Gesamtprokura", "Prokura"). Prefer `role_detail`. Example:
+     * "EXECUTIVE"
      */
     role: string;
+
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Vorstand and a Geschäftsführer differ here.
+     */
+    role_detail: ManagementPosition.RoleDetail;
 
     /**
      * Date when the person started the management position. Format: ISO 8601
@@ -90,6 +99,72 @@ export namespace PersonGetDetailsV1Response {
      * (YYYY-MM-DD) Example: "2023-01-01"
      */
     end_date?: string;
+  }
+
+  export namespace ManagementPosition {
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Vorstand and a Geschäftsführer differ here.
+     */
+    export interface RoleDetail {
+      /**
+       * The precise role as recorded in the register. Example: "EXECUTIVE" for a
+       * Vorstand, "DIRECTOR" for a Geschäftsführer — both have role "DIRECTOR".
+       */
+      code:
+        | 'DIRECTOR'
+        | 'EMERGENCY_DIRECTOR'
+        | 'EXECUTIVE'
+        | 'CHAIRMAN'
+        | 'DEPUTY_CHAIRMAN'
+        | 'BOARD'
+        | 'PRESIDENT_BOARD'
+        | 'VICE_PRESIDENT_BOARD'
+        | 'PRESIDENT'
+        | 'MEMBER'
+        | 'NON_EXECUTIVE_DIRECTOR'
+        | 'BOARD_SECRETARY'
+        | 'BOARD_TREASURER'
+        | 'BOARD_SPORTS'
+        | 'BOARD_OTHER'
+        | 'REPRESENTATIVE'
+        | 'SECONDARY_REPRESENTATIVE'
+        | 'COURT_ORDERED_REPRESENTATIVE'
+        | 'PROKURA'
+        | 'PROKURA_SINGLE'
+        | 'PROKURA_JOINT'
+        | 'LIQUIDATOR'
+        | 'INSOLVENCY_DIRECTOR'
+        | 'PRELIMINARY_INSOLVENCY_DIRECTOR'
+        | 'OWNER'
+        | 'SHAREHOLDER'
+        | 'PARTNER'
+        | 'PERSONAL_LIABLE_DIRECTOR'
+        | 'LIMITED_PARTNER'
+        | 'OTHER';
+
+      /**
+       * German title, gender-neutral, as shown on openregister.de. Example: "Vorstand"
+       */
+      label_de: string;
+
+      /**
+       * Abbreviated German title, for dense layouts such as tables. Example: "Vst."
+       */
+      label_de_short: string;
+
+      /**
+       * English title. A translation for display, not a legal term — the German title is
+       * the one the register uses. Example: "Executive Board Member"
+       */
+      label_en: string;
+
+      /**
+       * Abbreviated English title, for dense layouts such as tables. Example: "Exec.
+       * Board"
+       */
+      label_en_short: string;
+    }
   }
 }
 
