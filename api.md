@@ -147,3 +147,16 @@ Types:
 Methods:
 
 - <code title="get /v1/insolvency/{insolvency_id}">client.insolvency.<a href="./src/resources/insolvency.ts">getDetailsV1</a>(insolvencyID) -> InsolvencyGetDetailsV1Response</code>
+
+# Job
+
+Types:
+
+- <code><a href="./src/resources/job.ts">Job</a></code>
+- <code><a href="./src/resources/job.ts">JobDocumentCategory</a></code>
+- <code><a href="./src/resources/job.ts">JobType</a></code>
+
+Methods:
+
+- <code title="post /v1/jobs">client.job.<a href="./src/resources/job.ts">createV1</a>({ ...params }) -> Job</code>
+- <code title="get /v1/jobs/{job_id}">client.job.<a href="./src/resources/job.ts">getV1</a>(jobID) -> Job</code>

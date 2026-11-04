@@ -42,6 +42,7 @@ export {
   type InsolvencyStatus,
   type InsolvencyGetDetailsV1Response,
 } from './insolvency';
+export { JobResource, type Job, type JobDocumentCategory, type JobType, type JobCreateV1Params } from './job';
 export {
   Monitor,
   type MonitorCreateResponse,
