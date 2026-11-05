@@ -29,6 +29,8 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyAddress</a></code>
 - <code><a href="./src/resources/company.ts">CompanyCapital</a></code>
 - <code><a href="./src/resources/company.ts">CompanyDocument</a></code>
+- <code><a href="./src/resources/company.ts">CompanyGetDetailsV1Response</a></code>
+- <code><a href="./src/resources/company.ts">CompanyGetOwnersV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyName</a></code>
 - <code><a href="./src/resources/company.ts">CompanyOwnerLegalPerson</a></code>
 - <code><a href="./src/resources/company.ts">CompanyOwnerNaturalPerson</a></code>
@@ -43,11 +45,9 @@ Types:
 - <code><a href="./src/resources/company.ts">RepresentationRole</a></code>
 - <code><a href="./src/resources/company.ts">Source</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetContactV0Response</a></code>
-- <code><a href="./src/resources/company.ts">CompanyGetDetailsV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetFinancialsV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetHistoricalOwnersV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetHoldingsV1Response</a></code>
-- <code><a href="./src/resources/company.ts">CompanyGetOwnersV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyGetUbosV1Response</a></code>
 
 Methods:

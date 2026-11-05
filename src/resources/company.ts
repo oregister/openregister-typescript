@@ -157,183 +157,6 @@ export interface CompanyDocument {
   type: 'articles_of_association' | 'sample_protocol' | 'shareholder_list';
 }
 
-export interface CompanyName {
-  /**
-   * Legal form of the company at this point in time. Example: "gmbh" for
-   * Gesellschaft mit beschränkter Haftung
-   */
-  legal_form: SearchAPI.CompanyLegalForm;
-
-  /**
-   * Official company name including any legal form designations. Example: "Descartes
-   * Technologies UG (haftungsbeschränkt)"
-   */
-  name: string;
-
-  /**
-   * Date when this name became effective. Format: ISO 8601 (YYYY-MM-DD) Example:
-   * "2022-01-01"
-   */
-  start_date: string;
-}
-
-export interface CompanyOwnerLegalPerson {
-  city: string | null;
-
-  /**
-   * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
-   * for Germany
-   */
-  country: string;
-
-  name: string;
-}
-
-export interface CompanyOwnerNaturalPerson {
-  city: string;
-
-  country: string;
-
-  date_of_birth: string | null;
-
-  first_name: string;
-
-  full_name: string;
-
-  last_name: string;
-}
-
-export interface CompanyPurpose {
-  /**
-   * Official description of the company's business activities and objectives. This
-   * is the registered purpose as stated in official documents.
-   */
-  purpose: string;
-
-  /**
-   * Date when this purpose became effective. Format: ISO 8601 (YYYY-MM-DD) Example:
-   * "2022-01-01"
-   */
-  start_date: string;
-}
-
-export interface CompanyRegister {
-  /**
-   * Court where the company is registered. Example: "Berlin (Charlottenburg)"
-   */
-  register_court: string;
-
-  /**
-   * Registration number in the company register. Example: "230633"
-   */
-  register_number: string;
-
-  /**
-   * Type of register where the company is recorded. Example: "HRB" (Commercial
-   * Register B)
-   */
-  register_type: SearchAPI.CompanyRegisterType;
-
-  /**
-   * Unique company identifier. Example: DE-HRB-F1103-267645
-   */
-  company_id?: string;
-
-  /**
-   * Date when this registration information became effective. Format: ISO 8601
-   * (YYYY-MM-DD) Example: "2022-01-01"
-   */
-  start_date?: string;
-}
-
-export type CompanyRelationType = 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
-
-export type EntityType = 'natural_person' | 'legal_person';
-
-/**
- * Report row with values from multiple report periods
- */
-export interface MergedReportRow {
-  children: Array<MergedReportRow>;
-
-  formatted_name: string;
-
-  name: string;
-
-  /**
-   * Report end date to value mapping (ISO date string as key)
-   */
-  values: { [key: string]: number };
-}
-
-/**
- * Report table with data merged across multiple report periods
- */
-export interface MergedReportTable {
-  rows: Array<MergedReportRow>;
-}
-
-export interface ReportRow {
-  children: Array<ReportRow>;
-
-  current_value: number | null;
-
-  formatted_name: string;
-
-  name: string;
-
-  previous_value: number | null;
-}
-
-export interface ReportTable {
-  rows: Array<ReportRow>;
-}
-
-/**
- * Coarse role bucket. This set is stable: new register roles are folded into an
- * existing bucket rather than added here, so it is safe to match on exhaustively.
- */
-export type RepresentationRole =
-  | 'DIRECTOR'
-  | 'PROKURA'
-  | 'SHAREHOLDER'
-  | 'OWNER'
-  | 'PARTNER'
-  | 'PERSONAL_LIABLE_DIRECTOR'
-  | 'LIQUIDATOR'
-  | 'OTHER';
-
-export interface Source {
-  /**
-   * Url of the source document. In the form of a presigned url accessible for 30
-   * minutes.
-   */
-  document_url: string;
-}
-
-export interface CompanyGetContactV0Response {
-  /**
-   * Where the contact information was found. Example: "https://openregister.de"
-   */
-  source_url: string;
-
-  /**
-   * Company contact email address. Example: "founders@openregister.de"
-   */
-  email?: string;
-
-  /**
-   * Company phone number. Example: "+49 030 12345678"
-   */
-  phone?: string;
-
-  /**
-   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
-   * Example: "DE370146530"
-   */
-  vat_id?: string;
-}
-
 export interface CompanyGetDetailsV1Response {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
@@ -1174,6 +997,332 @@ export namespace CompanyGetDetailsV1Response {
   }
 }
 
+export interface CompanyGetOwnersV1Response {
+  /**
+   * When true, the returned owner data is the best available but may not reflect the
+   * most current ownership state. This applies to AG and SE companies where
+   * ownership data is sourced from Handelsregister decision and articles of
+   * association documents, which are not filed on every ownership change.
+   */
+  best_available: boolean;
+
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id: string;
+
+  owners: Array<CompanyGetOwnersV1Response.Owner>;
+
+  /**
+   * Sources of the company owners data.
+   */
+  sources: Array<Source>;
+}
+
+export namespace CompanyGetOwnersV1Response {
+  export interface Owner {
+    /**
+     * Unique identifier for the shareholder. For companies: Format matches company_id
+     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
+     * for certain shareholders.
+     */
+    id: string | null;
+
+    /**
+     * Details about the legal person.
+     */
+    legal_person: CompanyAPI.CompanyOwnerLegalPerson | null;
+
+    /**
+     * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
+     */
+    name: string;
+
+    /**
+     * Details about the natural person.
+     */
+    natural_person: CompanyAPI.CompanyOwnerNaturalPerson | null;
+
+    /**
+     * Nominal value of shares in Euro. Example: 100
+     */
+    nominal_share: number;
+
+    /**
+     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
+     */
+    percentage_share: number | null;
+
+    /**
+     * Type of relationship between the entity and the company. Use `role_detail` for
+     * the precise register role.
+     */
+    relation_type: CompanyAPI.CompanyRelationType;
+
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Kommanditist and a Gesellschafter both appear here with their register-level
+     * role, while `relation_type` only carries the coarse bucket.
+     */
+    role_detail: Owner.RoleDetail;
+
+    /**
+     * Date when the relation started. Only available for some types of owners. Format:
+     * ISO 8601 (YYYY-MM-DD) Example: "2022-01-01"
+     */
+    start: string | null;
+
+    /**
+     * The type of shareholder.
+     */
+    type: CompanyAPI.EntityType;
+  }
+
+  export namespace Owner {
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Kommanditist and a Gesellschafter both appear here with their register-level
+     * role, while `relation_type` only carries the coarse bucket.
+     */
+    export interface RoleDetail {
+      /**
+       * The precise role as recorded in the register. Example: "EXECUTIVE" for a
+       * Vorstand, "DIRECTOR" for a Geschäftsführer — both have role "DIRECTOR".
+       */
+      code:
+        | 'DIRECTOR'
+        | 'EMERGENCY_DIRECTOR'
+        | 'EXECUTIVE'
+        | 'CHAIRMAN'
+        | 'DEPUTY_CHAIRMAN'
+        | 'BOARD'
+        | 'PRESIDENT_BOARD'
+        | 'VICE_PRESIDENT_BOARD'
+        | 'PRESIDENT'
+        | 'MEMBER'
+        | 'NON_EXECUTIVE_DIRECTOR'
+        | 'BOARD_SECRETARY'
+        | 'BOARD_TREASURER'
+        | 'BOARD_SPORTS'
+        | 'BOARD_OTHER'
+        | 'REPRESENTATIVE'
+        | 'SECONDARY_REPRESENTATIVE'
+        | 'COURT_ORDERED_REPRESENTATIVE'
+        | 'PROKURA'
+        | 'PROKURA_SINGLE'
+        | 'PROKURA_JOINT'
+        | 'LIQUIDATOR'
+        | 'INSOLVENCY_DIRECTOR'
+        | 'PRELIMINARY_INSOLVENCY_DIRECTOR'
+        | 'OWNER'
+        | 'SHAREHOLDER'
+        | 'PARTNER'
+        | 'PERSONAL_LIABLE_DIRECTOR'
+        | 'LIMITED_PARTNER'
+        | 'OTHER';
+
+      /**
+       * German title, gender-neutral, as shown on openregister.de. Example: "Vorstand"
+       */
+      label_de: string;
+
+      /**
+       * Abbreviated German title, for dense layouts such as tables. Example: "Vst."
+       */
+      label_de_short: string;
+
+      /**
+       * English title. A translation for display, not a legal term — the German title is
+       * the one the register uses. Example: "Executive Board Member"
+       */
+      label_en: string;
+
+      /**
+       * Abbreviated English title, for dense layouts such as tables. Example: "Exec.
+       * Board"
+       */
+      label_en_short: string;
+    }
+  }
+}
+
+export interface CompanyName {
+  /**
+   * Legal form of the company at this point in time. Example: "gmbh" for
+   * Gesellschaft mit beschränkter Haftung
+   */
+  legal_form: SearchAPI.CompanyLegalForm;
+
+  /**
+   * Official company name including any legal form designations. Example: "Descartes
+   * Technologies UG (haftungsbeschränkt)"
+   */
+  name: string;
+
+  /**
+   * Date when this name became effective. Format: ISO 8601 (YYYY-MM-DD) Example:
+   * "2022-01-01"
+   */
+  start_date: string;
+}
+
+export interface CompanyOwnerLegalPerson {
+  city: string | null;
+
+  /**
+   * Country where the owner is located, in ISO 3166-1 alpha-2 format. Example: "DE"
+   * for Germany
+   */
+  country: string;
+
+  name: string;
+}
+
+export interface CompanyOwnerNaturalPerson {
+  city: string;
+
+  country: string;
+
+  date_of_birth: string | null;
+
+  first_name: string;
+
+  full_name: string;
+
+  last_name: string;
+}
+
+export interface CompanyPurpose {
+  /**
+   * Official description of the company's business activities and objectives. This
+   * is the registered purpose as stated in official documents.
+   */
+  purpose: string;
+
+  /**
+   * Date when this purpose became effective. Format: ISO 8601 (YYYY-MM-DD) Example:
+   * "2022-01-01"
+   */
+  start_date: string;
+}
+
+export interface CompanyRegister {
+  /**
+   * Court where the company is registered. Example: "Berlin (Charlottenburg)"
+   */
+  register_court: string;
+
+  /**
+   * Registration number in the company register. Example: "230633"
+   */
+  register_number: string;
+
+  /**
+   * Type of register where the company is recorded. Example: "HRB" (Commercial
+   * Register B)
+   */
+  register_type: SearchAPI.CompanyRegisterType;
+
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id?: string;
+
+  /**
+   * Date when this registration information became effective. Format: ISO 8601
+   * (YYYY-MM-DD) Example: "2022-01-01"
+   */
+  start_date?: string;
+}
+
+export type CompanyRelationType = 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
+
+export type EntityType = 'natural_person' | 'legal_person';
+
+/**
+ * Report row with values from multiple report periods
+ */
+export interface MergedReportRow {
+  children: Array<MergedReportRow>;
+
+  formatted_name: string;
+
+  name: string;
+
+  /**
+   * Report end date to value mapping (ISO date string as key)
+   */
+  values: { [key: string]: number };
+}
+
+/**
+ * Report table with data merged across multiple report periods
+ */
+export interface MergedReportTable {
+  rows: Array<MergedReportRow>;
+}
+
+export interface ReportRow {
+  children: Array<ReportRow>;
+
+  current_value: number | null;
+
+  formatted_name: string;
+
+  name: string;
+
+  previous_value: number | null;
+}
+
+export interface ReportTable {
+  rows: Array<ReportRow>;
+}
+
+/**
+ * Coarse role bucket. This set is stable: new register roles are folded into an
+ * existing bucket rather than added here, so it is safe to match on exhaustively.
+ */
+export type RepresentationRole =
+  | 'DIRECTOR'
+  | 'PROKURA'
+  | 'SHAREHOLDER'
+  | 'OWNER'
+  | 'PARTNER'
+  | 'PERSONAL_LIABLE_DIRECTOR'
+  | 'LIQUIDATOR'
+  | 'OTHER';
+
+export interface Source {
+  /**
+   * Url of the source document. In the form of a presigned url accessible for 30
+   * minutes.
+   */
+  document_url: string;
+}
+
+export interface CompanyGetContactV0Response {
+  /**
+   * Where the contact information was found. Example: "https://openregister.de"
+   */
+  source_url: string;
+
+  /**
+   * Company contact email address. Example: "founders@openregister.de"
+   */
+  email?: string;
+
+  /**
+   * Company phone number. Example: "+49 030 12345678"
+   */
+  phone?: string;
+
+  /**
+   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
+   * Example: "DE370146530"
+   */
+  vat_id?: string;
+}
+
 export interface CompanyGetFinancialsV1Response {
   /**
    * Modelled revenue, EBITDA and employees for companies that do not report them.
@@ -1877,155 +2026,6 @@ export namespace CompanyGetHoldingsV1Response {
   }
 }
 
-export interface CompanyGetOwnersV1Response {
-  /**
-   * When true, the returned owner data is the best available but may not reflect the
-   * most current ownership state. This applies to AG and SE companies where
-   * ownership data is sourced from Handelsregister decision and articles of
-   * association documents, which are not filed on every ownership change.
-   */
-  best_available: boolean;
-
-  /**
-   * Unique company identifier. Example: DE-HRB-F1103-267645
-   */
-  company_id: string;
-
-  owners: Array<CompanyGetOwnersV1Response.Owner>;
-
-  /**
-   * Sources of the company owners data.
-   */
-  sources: Array<Source>;
-}
-
-export namespace CompanyGetOwnersV1Response {
-  export interface Owner {
-    /**
-     * Unique identifier for the shareholder. For companies: Format matches company_id
-     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
-     * for certain shareholders.
-     */
-    id: string | null;
-
-    /**
-     * Details about the legal person.
-     */
-    legal_person: CompanyAPI.CompanyOwnerLegalPerson | null;
-
-    /**
-     * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
-     */
-    name: string;
-
-    /**
-     * Details about the natural person.
-     */
-    natural_person: CompanyAPI.CompanyOwnerNaturalPerson | null;
-
-    /**
-     * Nominal value of shares in Euro. Example: 100
-     */
-    nominal_share: number;
-
-    /**
-     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
-     */
-    percentage_share: number | null;
-
-    /**
-     * Type of relationship between the entity and the company. Use `role_detail` for
-     * the precise register role.
-     */
-    relation_type: CompanyAPI.CompanyRelationType;
-
-    /**
-     * The precise role as recorded in the register, plus ready-to-display titles. A
-     * Kommanditist and a Gesellschafter both appear here with their register-level
-     * role, while `relation_type` only carries the coarse bucket.
-     */
-    role_detail: Owner.RoleDetail;
-
-    /**
-     * Date when the relation started. Only available for some types of owners. Format:
-     * ISO 8601 (YYYY-MM-DD) Example: "2022-01-01"
-     */
-    start: string | null;
-
-    /**
-     * The type of shareholder.
-     */
-    type: CompanyAPI.EntityType;
-  }
-
-  export namespace Owner {
-    /**
-     * The precise role as recorded in the register, plus ready-to-display titles. A
-     * Kommanditist and a Gesellschafter both appear here with their register-level
-     * role, while `relation_type` only carries the coarse bucket.
-     */
-    export interface RoleDetail {
-      /**
-       * The precise role as recorded in the register. Example: "EXECUTIVE" for a
-       * Vorstand, "DIRECTOR" for a Geschäftsführer — both have role "DIRECTOR".
-       */
-      code:
-        | 'DIRECTOR'
-        | 'EMERGENCY_DIRECTOR'
-        | 'EXECUTIVE'
-        | 'CHAIRMAN'
-        | 'DEPUTY_CHAIRMAN'
-        | 'BOARD'
-        | 'PRESIDENT_BOARD'
-        | 'VICE_PRESIDENT_BOARD'
-        | 'PRESIDENT'
-        | 'MEMBER'
-        | 'NON_EXECUTIVE_DIRECTOR'
-        | 'BOARD_SECRETARY'
-        | 'BOARD_TREASURER'
-        | 'BOARD_SPORTS'
-        | 'BOARD_OTHER'
-        | 'REPRESENTATIVE'
-        | 'SECONDARY_REPRESENTATIVE'
-        | 'COURT_ORDERED_REPRESENTATIVE'
-        | 'PROKURA'
-        | 'PROKURA_SINGLE'
-        | 'PROKURA_JOINT'
-        | 'LIQUIDATOR'
-        | 'INSOLVENCY_DIRECTOR'
-        | 'PRELIMINARY_INSOLVENCY_DIRECTOR'
-        | 'OWNER'
-        | 'SHAREHOLDER'
-        | 'PARTNER'
-        | 'PERSONAL_LIABLE_DIRECTOR'
-        | 'LIMITED_PARTNER'
-        | 'OTHER';
-
-      /**
-       * German title, gender-neutral, as shown on openregister.de. Example: "Vorstand"
-       */
-      label_de: string;
-
-      /**
-       * Abbreviated German title, for dense layouts such as tables. Example: "Vst."
-       */
-      label_de_short: string;
-
-      /**
-       * English title. A translation for display, not a legal term — the German title is
-       * the one the register uses. Example: "Executive Board Member"
-       */
-      label_en: string;
-
-      /**
-       * Abbreviated English title, for dense layouts such as tables. Example: "Exec.
-       * Board"
-       */
-      label_en_short: string;
-    }
-  }
-}
-
 export interface CompanyGetUbosV1Response {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
@@ -2117,6 +2117,8 @@ export declare namespace Company {
     type CompanyAddress as CompanyAddress,
     type CompanyCapital as CompanyCapital,
     type CompanyDocument as CompanyDocument,
+    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
+    type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyName as CompanyName,
     type CompanyOwnerLegalPerson as CompanyOwnerLegalPerson,
     type CompanyOwnerNaturalPerson as CompanyOwnerNaturalPerson,
@@ -2131,11 +2133,9 @@ export declare namespace Company {
     type RepresentationRole as RepresentationRole,
     type Source as Source,
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
-    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHistoricalOwnersV1Response as CompanyGetHistoricalOwnersV1Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
-    type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyGetUbosV1Response as CompanyGetUbosV1Response,
     type CompanyGetDetailsV1Params as CompanyGetDetailsV1Params,
     type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
