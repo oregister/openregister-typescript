@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.10.0](https://github.com/oregister/openregister-typescript/compare/v4.9.0...v4.10.0) (2026-11-05)
+
+
+### Features
+
+* add jobs ([#61](https://github.com/oregister/openregister-typescript/issues/61)) ([ba92d55](https://github.com/oregister/openregister-typescript/commit/ba92d5588b60af6cc8f7746de6b9993ff9bcb0a6))
+* reuse the company response types in job results ([#63](https://github.com/oregister/openregister-typescript/issues/63)) ([32100bb](https://github.com/oregister/openregister-typescript/commit/32100bbb9157abacd0869c6ceb291f6b4fb9f901))
+
 ## [4.9.0](https://github.com/oregister/openregister-typescript/compare/v4.8.2...v4.9.0) (2026-11-04)
 
 
