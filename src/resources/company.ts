@@ -23,7 +23,7 @@ export class Company extends APIResource {
     companyID: string,
     query: CompanyGetDetailsV1Params | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CompanyGetDetailsV1Response> {
+  ): APIPromise<CompanyV1> {
     return this._client.get(path`/v1/company/${companyID}`, { query, ...options });
   }
 
@@ -58,7 +58,7 @@ export class Company extends APIResource {
     companyID: string,
     query: CompanyGetOwnersV1Params | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CompanyGetOwnersV1Response> {
+  ): APIPromise<CompanyOwners> {
     return this._client.get(path`/v1/company/${companyID}/owners`, { query, ...options });
   }
 
@@ -203,6 +203,155 @@ export interface CompanyOwnerNaturalPerson {
   last_name: string;
 }
 
+export interface CompanyOwners {
+  /**
+   * When true, the returned owner data is the best available but may not reflect the
+   * most current ownership state. This applies to AG and SE companies where
+   * ownership data is sourced from Handelsregister decision and articles of
+   * association documents, which are not filed on every ownership change.
+   */
+  best_available: boolean;
+
+  /**
+   * Unique company identifier. Example: DE-HRB-F1103-267645
+   */
+  company_id: string;
+
+  owners: Array<CompanyOwners.Owner>;
+
+  /**
+   * Sources of the company owners data.
+   */
+  sources: Array<Source>;
+}
+
+export namespace CompanyOwners {
+  export interface Owner {
+    /**
+     * Unique identifier for the shareholder. For companies: Format matches company_id
+     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
+     * for certain shareholders.
+     */
+    id: string | null;
+
+    /**
+     * Details about the legal person.
+     */
+    legal_person: CompanyAPI.CompanyOwnerLegalPerson | null;
+
+    /**
+     * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
+     */
+    name: string;
+
+    /**
+     * Details about the natural person.
+     */
+    natural_person: CompanyAPI.CompanyOwnerNaturalPerson | null;
+
+    /**
+     * Nominal value of shares in Euro. Example: 100
+     */
+    nominal_share: number;
+
+    /**
+     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
+     */
+    percentage_share: number | null;
+
+    /**
+     * Type of relationship between the entity and the company. Use `role_detail` for
+     * the precise register role.
+     */
+    relation_type: CompanyAPI.CompanyRelationType;
+
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Kommanditist and a Gesellschafter both appear here with their register-level
+     * role, while `relation_type` only carries the coarse bucket.
+     */
+    role_detail: Owner.RoleDetail;
+
+    /**
+     * Date when the relation started. Only available for some types of owners. Format:
+     * ISO 8601 (YYYY-MM-DD) Example: "2022-01-01"
+     */
+    start: string | null;
+
+    /**
+     * The type of shareholder.
+     */
+    type: CompanyAPI.EntityType;
+  }
+
+  export namespace Owner {
+    /**
+     * The precise role as recorded in the register, plus ready-to-display titles. A
+     * Kommanditist and a Gesellschafter both appear here with their register-level
+     * role, while `relation_type` only carries the coarse bucket.
+     */
+    export interface RoleDetail {
+      /**
+       * The precise role as recorded in the register. Example: "EXECUTIVE" for a
+       * Vorstand, "DIRECTOR" for a Geschäftsführer — both have role "DIRECTOR".
+       */
+      code:
+        | 'DIRECTOR'
+        | 'EMERGENCY_DIRECTOR'
+        | 'EXECUTIVE'
+        | 'CHAIRMAN'
+        | 'DEPUTY_CHAIRMAN'
+        | 'BOARD'
+        | 'PRESIDENT_BOARD'
+        | 'VICE_PRESIDENT_BOARD'
+        | 'PRESIDENT'
+        | 'MEMBER'
+        | 'NON_EXECUTIVE_DIRECTOR'
+        | 'BOARD_SECRETARY'
+        | 'BOARD_TREASURER'
+        | 'BOARD_SPORTS'
+        | 'BOARD_OTHER'
+        | 'REPRESENTATIVE'
+        | 'SECONDARY_REPRESENTATIVE'
+        | 'COURT_ORDERED_REPRESENTATIVE'
+        | 'PROKURA'
+        | 'PROKURA_SINGLE'
+        | 'PROKURA_JOINT'
+        | 'LIQUIDATOR'
+        | 'INSOLVENCY_DIRECTOR'
+        | 'PRELIMINARY_INSOLVENCY_DIRECTOR'
+        | 'OWNER'
+        | 'SHAREHOLDER'
+        | 'PARTNER'
+        | 'PERSONAL_LIABLE_DIRECTOR'
+        | 'LIMITED_PARTNER'
+        | 'OTHER';
+
+      /**
+       * German title, gender-neutral, as shown on openregister.de. Example: "Vorstand"
+       */
+      label_de: string;
+
+      /**
+       * Abbreviated German title, for dense layouts such as tables. Example: "Vst."
+       */
+      label_de_short: string;
+
+      /**
+       * English title. A translation for display, not a legal term — the German title is
+       * the one the register uses. Example: "Executive Board Member"
+       */
+      label_en: string;
+
+      /**
+       * Abbreviated English title, for dense layouts such as tables. Example: "Exec.
+       * Board"
+       */
+      label_en_short: string;
+    }
+  }
+}
+
 export interface CompanyPurpose {
   /**
    * Official description of the company's business activities and objectives. This
@@ -248,93 +397,7 @@ export interface CompanyRegister {
 
 export type CompanyRelationType = 'shareholder' | 'stockholder' | 'limited_partner' | 'general_partner';
 
-export type EntityType = 'natural_person' | 'legal_person';
-
-/**
- * Report row with values from multiple report periods
- */
-export interface MergedReportRow {
-  children: Array<MergedReportRow>;
-
-  formatted_name: string;
-
-  name: string;
-
-  /**
-   * Report end date to value mapping (ISO date string as key)
-   */
-  values: { [key: string]: number };
-}
-
-/**
- * Report table with data merged across multiple report periods
- */
-export interface MergedReportTable {
-  rows: Array<MergedReportRow>;
-}
-
-export interface ReportRow {
-  children: Array<ReportRow>;
-
-  current_value: number | null;
-
-  formatted_name: string;
-
-  name: string;
-
-  previous_value: number | null;
-}
-
-export interface ReportTable {
-  rows: Array<ReportRow>;
-}
-
-/**
- * Coarse role bucket. This set is stable: new register roles are folded into an
- * existing bucket rather than added here, so it is safe to match on exhaustively.
- */
-export type RepresentationRole =
-  | 'DIRECTOR'
-  | 'PROKURA'
-  | 'SHAREHOLDER'
-  | 'OWNER'
-  | 'PARTNER'
-  | 'PERSONAL_LIABLE_DIRECTOR'
-  | 'LIQUIDATOR'
-  | 'OTHER';
-
-export interface Source {
-  /**
-   * Url of the source document. In the form of a presigned url accessible for 30
-   * minutes.
-   */
-  document_url: string;
-}
-
-export interface CompanyGetContactV0Response {
-  /**
-   * Where the contact information was found. Example: "https://openregister.de"
-   */
-  source_url: string;
-
-  /**
-   * Company contact email address. Example: "founders@openregister.de"
-   */
-  email?: string;
-
-  /**
-   * Company phone number. Example: "+49 030 12345678"
-   */
-  phone?: string;
-
-  /**
-   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
-   * Example: "DE370146530"
-   */
-  vat_id?: string;
-}
-
-export interface CompanyGetDetailsV1Response {
+export interface CompanyV1 {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
    */
@@ -344,7 +407,7 @@ export interface CompanyGetDetailsV1Response {
    * Companies that were merged into this company (Verschmelzung durch Aufnahme, as
    * the acquiring entity).
    */
-  acquisitions: Array<CompanyGetDetailsV1Response.Acquisition>;
+  acquisitions: Array<CompanyV1.Acquisition>;
 
   /**
    * Current registered address of the company.
@@ -360,7 +423,7 @@ export interface CompanyGetDetailsV1Response {
    * Spin-offs (Ausgliederung, § 123 Abs. 3 UmwG) in which this company transferred
    * assets to another company as the transferring entity.
    */
-  asset_spin_offs: Array<CompanyGetDetailsV1Response.AssetSpinOff>;
+  asset_spin_offs: Array<CompanyV1.AssetSpinOff>;
 
   /**
    * Current registered capital of the company.
@@ -375,7 +438,7 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Contact information of the company.
    */
-  contact: CompanyGetDetailsV1Response.Contact | null;
+  contact: CompanyV1.Contact | null;
 
   /**
    * Available official documents related to the company.
@@ -386,7 +449,7 @@ export interface CompanyGetDetailsV1Response {
    * Modelled revenue, EBITDA and employees for companies that do not report them.
    * One estimate per metric, for the latest fiscal year.
    */
-  estimates: CompanyGetDetailsV1Response.Estimates;
+  estimates: CompanyV1.Estimates;
 
   /**
    * Date when the company was officially registered. Format: ISO 8601 (YYYY-MM-DD)
@@ -397,14 +460,14 @@ export interface CompanyGetDetailsV1Response {
   /**
    * Key company indicators like net income, employee count, revenue, etc..
    */
-  indicators: Array<CompanyGetDetailsV1Response.Indicator>;
+  indicators: Array<CompanyV1.Indicator>;
 
   /**
    * Industry codes of the company, classified from its current purpose
    * (Unternehmensgegenstand). Empty when the purpose has not been classified or
    * describes no codable activity.
    */
-  industry_codes: CompanyGetDetailsV1Response.IndustryCodes;
+  industry_codes: CompanyV1.IndustryCodes;
 
   /**
    * Legal form of the company. Example: "gmbh" for Gesellschaft mit beschränkter
@@ -416,7 +479,7 @@ export interface CompanyGetDetailsV1Response {
    * If the company ceased to exist through a merger (Verschmelzung), the company it
    * was merged into.
    */
-  merged_into: CompanyGetDetailsV1Response.MergedInto | null;
+  merged_into: CompanyV1.MergedInto | null;
 
   /**
    * Current official name of the company.
@@ -440,7 +503,7 @@ export interface CompanyGetDetailsV1Response {
    * receiving this company's profit (Organträger). Null if the company has no active
    * agreement.
    */
-  profit_transfer_agreement: CompanyGetDetailsV1Response.ProfitTransferAgreement | null;
+  profit_transfer_agreement: CompanyV1.ProfitTransferAgreement | null;
 
   /**
    * Current official business purpose of the company.
@@ -467,7 +530,7 @@ export interface CompanyGetDetailsV1Response {
    * List of individuals or entities authorized to represent the company. Includes
    * directors, officers, and authorized signatories.
    */
-  representation: Array<CompanyGetDetailsV1Response.Representation>;
+  representation: Array<CompanyV1.Representation>;
 
   /**
    * The company's current general representation rule (allgemeine
@@ -502,7 +565,7 @@ export interface CompanyGetDetailsV1Response {
    * Insolvency proceedings of the company, if any. Contains basic information per
    * proceeding; use the insolvency endpoint to retrieve all events of a proceeding.
    */
-  insolvencies?: Array<CompanyGetDetailsV1Response.Insolvency>;
+  insolvencies?: Array<CompanyV1.Insolvency>;
 
   /**
    * Legal Entity Identifier (LEI), if available.
@@ -510,7 +573,7 @@ export interface CompanyGetDetailsV1Response {
   lei?: string;
 }
 
-export namespace CompanyGetDetailsV1Response {
+export namespace CompanyV1 {
   export interface Acquisition {
     /**
      * Date the underlying contract (Verschmelzungsvertrag) was concluded, as cited in
@@ -1172,6 +1235,92 @@ export namespace CompanyGetDetailsV1Response {
      */
     proceeding_kind?: InsolvencyAPI.InsolvencyProceedingKind | null;
   }
+}
+
+export type EntityType = 'natural_person' | 'legal_person';
+
+/**
+ * Report row with values from multiple report periods
+ */
+export interface MergedReportRow {
+  children: Array<MergedReportRow>;
+
+  formatted_name: string;
+
+  name: string;
+
+  /**
+   * Report end date to value mapping (ISO date string as key)
+   */
+  values: { [key: string]: number };
+}
+
+/**
+ * Report table with data merged across multiple report periods
+ */
+export interface MergedReportTable {
+  rows: Array<MergedReportRow>;
+}
+
+export interface ReportRow {
+  children: Array<ReportRow>;
+
+  current_value: number | null;
+
+  formatted_name: string;
+
+  name: string;
+
+  previous_value: number | null;
+}
+
+export interface ReportTable {
+  rows: Array<ReportRow>;
+}
+
+/**
+ * Coarse role bucket. This set is stable: new register roles are folded into an
+ * existing bucket rather than added here, so it is safe to match on exhaustively.
+ */
+export type RepresentationRole =
+  | 'DIRECTOR'
+  | 'PROKURA'
+  | 'SHAREHOLDER'
+  | 'OWNER'
+  | 'PARTNER'
+  | 'PERSONAL_LIABLE_DIRECTOR'
+  | 'LIQUIDATOR'
+  | 'OTHER';
+
+export interface Source {
+  /**
+   * Url of the source document. In the form of a presigned url accessible for 30
+   * minutes.
+   */
+  document_url: string;
+}
+
+export interface CompanyGetContactV0Response {
+  /**
+   * Where the contact information was found. Example: "https://openregister.de"
+   */
+  source_url: string;
+
+  /**
+   * Company contact email address. Example: "founders@openregister.de"
+   */
+  email?: string;
+
+  /**
+   * Company phone number. Example: "+49 030 12345678"
+   */
+  phone?: string;
+
+  /**
+   * Value Added Tax identification number. (Umsatzsteuer-Identifikationsnummer)
+   * Example: "DE370146530"
+   */
+  vat_id?: string;
 }
 
 export interface CompanyGetFinancialsV1Response {
@@ -1877,155 +2026,6 @@ export namespace CompanyGetHoldingsV1Response {
   }
 }
 
-export interface CompanyGetOwnersV1Response {
-  /**
-   * When true, the returned owner data is the best available but may not reflect the
-   * most current ownership state. This applies to AG and SE companies where
-   * ownership data is sourced from Handelsregister decision and articles of
-   * association documents, which are not filed on every ownership change.
-   */
-  best_available: boolean;
-
-  /**
-   * Unique company identifier. Example: DE-HRB-F1103-267645
-   */
-  company_id: string;
-
-  owners: Array<CompanyGetOwnersV1Response.Owner>;
-
-  /**
-   * Sources of the company owners data.
-   */
-  sources: Array<Source>;
-}
-
-export namespace CompanyGetOwnersV1Response {
-  export interface Owner {
-    /**
-     * Unique identifier for the shareholder. For companies: Format matches company_id
-     * pattern For individuals: UUID Example: "DE-HRB-F1103-267645" or UUID May be null
-     * for certain shareholders.
-     */
-    id: string | null;
-
-    /**
-     * Details about the legal person.
-     */
-    legal_person: CompanyAPI.CompanyOwnerLegalPerson | null;
-
-    /**
-     * The name of the shareholder. E.g. "Max Mustermann" or "Max Mustermann GmbH"
-     */
-    name: string;
-
-    /**
-     * Details about the natural person.
-     */
-    natural_person: CompanyAPI.CompanyOwnerNaturalPerson | null;
-
-    /**
-     * Nominal value of shares in Euro. Example: 100
-     */
-    nominal_share: number;
-
-    /**
-     * Percentage of company ownership. Example: 5.36 represents 5.36% ownership
-     */
-    percentage_share: number | null;
-
-    /**
-     * Type of relationship between the entity and the company. Use `role_detail` for
-     * the precise register role.
-     */
-    relation_type: CompanyAPI.CompanyRelationType;
-
-    /**
-     * The precise role as recorded in the register, plus ready-to-display titles. A
-     * Kommanditist and a Gesellschafter both appear here with their register-level
-     * role, while `relation_type` only carries the coarse bucket.
-     */
-    role_detail: Owner.RoleDetail;
-
-    /**
-     * Date when the relation started. Only available for some types of owners. Format:
-     * ISO 8601 (YYYY-MM-DD) Example: "2022-01-01"
-     */
-    start: string | null;
-
-    /**
-     * The type of shareholder.
-     */
-    type: CompanyAPI.EntityType;
-  }
-
-  export namespace Owner {
-    /**
-     * The precise role as recorded in the register, plus ready-to-display titles. A
-     * Kommanditist and a Gesellschafter both appear here with their register-level
-     * role, while `relation_type` only carries the coarse bucket.
-     */
-    export interface RoleDetail {
-      /**
-       * The precise role as recorded in the register. Example: "EXECUTIVE" for a
-       * Vorstand, "DIRECTOR" for a Geschäftsführer — both have role "DIRECTOR".
-       */
-      code:
-        | 'DIRECTOR'
-        | 'EMERGENCY_DIRECTOR'
-        | 'EXECUTIVE'
-        | 'CHAIRMAN'
-        | 'DEPUTY_CHAIRMAN'
-        | 'BOARD'
-        | 'PRESIDENT_BOARD'
-        | 'VICE_PRESIDENT_BOARD'
-        | 'PRESIDENT'
-        | 'MEMBER'
-        | 'NON_EXECUTIVE_DIRECTOR'
-        | 'BOARD_SECRETARY'
-        | 'BOARD_TREASURER'
-        | 'BOARD_SPORTS'
-        | 'BOARD_OTHER'
-        | 'REPRESENTATIVE'
-        | 'SECONDARY_REPRESENTATIVE'
-        | 'COURT_ORDERED_REPRESENTATIVE'
-        | 'PROKURA'
-        | 'PROKURA_SINGLE'
-        | 'PROKURA_JOINT'
-        | 'LIQUIDATOR'
-        | 'INSOLVENCY_DIRECTOR'
-        | 'PRELIMINARY_INSOLVENCY_DIRECTOR'
-        | 'OWNER'
-        | 'SHAREHOLDER'
-        | 'PARTNER'
-        | 'PERSONAL_LIABLE_DIRECTOR'
-        | 'LIMITED_PARTNER'
-        | 'OTHER';
-
-      /**
-       * German title, gender-neutral, as shown on openregister.de. Example: "Vorstand"
-       */
-      label_de: string;
-
-      /**
-       * Abbreviated German title, for dense layouts such as tables. Example: "Vst."
-       */
-      label_de_short: string;
-
-      /**
-       * English title. A translation for display, not a legal term — the German title is
-       * the one the register uses. Example: "Executive Board Member"
-       */
-      label_en: string;
-
-      /**
-       * Abbreviated English title, for dense layouts such as tables. Example: "Exec.
-       * Board"
-       */
-      label_en_short: string;
-    }
-  }
-}
-
 export interface CompanyGetUbosV1Response {
   /**
    * Unique company identifier. Example: DE-HRB-F1103-267645
@@ -2112,6 +2112,52 @@ export interface CompanyGetOwnersV1Params {
   realtime?: boolean;
 }
 
+/** @deprecated Use `CompanyV1` instead. */
+export type CompanyGetDetailsV1Response = CompanyV1;
+/** @deprecated Use `CompanyV1` instead. */
+export namespace CompanyGetDetailsV1Response {
+  export type Acquisition = CompanyV1.Acquisition;
+  export type AssetSpinOff = CompanyV1.AssetSpinOff;
+  export type Contact = CompanyV1.Contact;
+  export namespace Contact {
+    export type SocialMedia = CompanyV1.Contact.SocialMedia;
+  }
+  export type Estimates = CompanyV1.Estimates;
+  export namespace Estimates {
+    export type Ebitda = CompanyV1.Estimates.Ebitda;
+    export type Employees = CompanyV1.Estimates.Employees;
+    export type Revenue = CompanyV1.Estimates.Revenue;
+  }
+  export type Indicator = CompanyV1.Indicator;
+  export type IndustryCodes = CompanyV1.IndustryCodes;
+  export namespace IndustryCodes {
+    export type Wz2025 = CompanyV1.IndustryCodes.Wz2025;
+    export namespace Wz2025 {
+      export type Subclass = CompanyV1.IndustryCodes.Wz2025.Subclass;
+    }
+  }
+  export type MergedInto = CompanyV1.MergedInto;
+  export type ProfitTransferAgreement = CompanyV1.ProfitTransferAgreement;
+  export type Representation = CompanyV1.Representation;
+  export namespace Representation {
+    export type AuthorityDetail = CompanyV1.Representation.AuthorityDetail;
+    export type RoleDetail = CompanyV1.Representation.RoleDetail;
+    export type LegalPerson = CompanyV1.Representation.LegalPerson;
+    export type NaturalPerson = CompanyV1.Representation.NaturalPerson;
+  }
+  export type Insolvency = CompanyV1.Insolvency;
+}
+
+/** @deprecated Use `CompanyOwners` instead. */
+export type CompanyGetOwnersV1Response = CompanyOwners;
+/** @deprecated Use `CompanyOwners` instead. */
+export namespace CompanyGetOwnersV1Response {
+  export type Owner = CompanyOwners.Owner;
+  export namespace Owner {
+    export type RoleDetail = CompanyOwners.Owner.RoleDetail;
+  }
+}
+
 export declare namespace Company {
   export {
     type CompanyAddress as CompanyAddress,
@@ -2120,9 +2166,13 @@ export declare namespace Company {
     type CompanyName as CompanyName,
     type CompanyOwnerLegalPerson as CompanyOwnerLegalPerson,
     type CompanyOwnerNaturalPerson as CompanyOwnerNaturalPerson,
+    type CompanyOwners as CompanyOwners,
+    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
+    type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyPurpose as CompanyPurpose,
     type CompanyRegister as CompanyRegister,
     type CompanyRelationType as CompanyRelationType,
+    type CompanyV1 as CompanyV1,
     type EntityType as EntityType,
     type MergedReportRow as MergedReportRow,
     type MergedReportTable as MergedReportTable,
@@ -2131,11 +2181,9 @@ export declare namespace Company {
     type RepresentationRole as RepresentationRole,
     type Source as Source,
     type CompanyGetContactV0Response as CompanyGetContactV0Response,
-    type CompanyGetDetailsV1Response as CompanyGetDetailsV1Response,
     type CompanyGetFinancialsV1Response as CompanyGetFinancialsV1Response,
     type CompanyGetHistoricalOwnersV1Response as CompanyGetHistoricalOwnersV1Response,
     type CompanyGetHoldingsV1Response as CompanyGetHoldingsV1Response,
-    type CompanyGetOwnersV1Response as CompanyGetOwnersV1Response,
     type CompanyGetUbosV1Response as CompanyGetUbosV1Response,
     type CompanyGetDetailsV1Params as CompanyGetDetailsV1Params,
     type CompanyGetOwnersV1Params as CompanyGetOwnersV1Params,
