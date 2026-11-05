@@ -59,6 +59,7 @@ import {
   InsolvencyProceedingKind,
   InsolvencyStatus,
 } from './resources/insolvency';
+import { Job, JobCreateV1Params, JobDocumentCategory, JobResource, JobType } from './resources/job';
 import {
   Monitor,
   MonitorCreateParams,
@@ -818,6 +819,7 @@ export class Openregister {
   transparenzregister: API.Transparenzregister = new API.Transparenzregister(this);
   usage: API.Usage = new API.Usage(this);
   insolvency: API.Insolvency = new API.Insolvency(this);
+  job: API.JobResource = new API.JobResource(this);
 }
 
 Openregister.Search = Search;
@@ -828,6 +830,7 @@ Openregister.Monitor = Monitor;
 Openregister.Transparenzregister = Transparenzregister;
 Openregister.Usage = Usage;
 Openregister.Insolvency = Insolvency;
+Openregister.JobResource = JobResource;
 
 export declare namespace Openregister {
   export type RequestOptions = Opts.RequestOptions;
@@ -915,5 +918,13 @@ export declare namespace Openregister {
     type InsolvencyProceedingKind as InsolvencyProceedingKind,
     type InsolvencyStatus as InsolvencyStatus,
     type InsolvencyGetDetailsV1Response as InsolvencyGetDetailsV1Response,
+  };
+
+  export {
+    JobResource as JobResource,
+    type Job as Job,
+    type JobDocumentCategory as JobDocumentCategory,
+    type JobType as JobType,
+    type JobCreateV1Params as JobCreateV1Params,
   };
 }
