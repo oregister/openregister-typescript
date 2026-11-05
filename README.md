@@ -26,9 +26,9 @@ const client = new Openregister({
   apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted
 });
 
-const companyGetDetailsV1Response = await client.company.getDetailsV1('DE-HRB-F1103-267645');
+const response = await client.company.getDetailsV1('DE-HRB-F1103-267645');
 
-console.log(companyGetDetailsV1Response.id);
+console.log(response.id);
 ```
 
 ### Request & Response types
@@ -43,8 +43,9 @@ const client = new Openregister({
   apiKey: process.env['OPENREGISTER_API_KEY'], // This is the default and can be omitted
 });
 
-const companyGetDetailsV1Response: Openregister.CompanyGetDetailsV1Response =
-  await client.company.getDetailsV1('DE-HRB-F1103-267645');
+const response: Openregister.CompanyGetDetailsV1Response = await client.company.getDetailsV1(
+  'DE-HRB-F1103-267645',
+);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -57,17 +58,15 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const companyGetDetailsV1Response = await client.company
-  .getDetailsV1('DE-HRB-F1103-267645')
-  .catch(async (err) => {
-    if (err instanceof Openregister.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
+const response = await client.company.getDetailsV1('DE-HRB-F1103-267645').catch(async (err) => {
+  if (err instanceof Openregister.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
 Error codes are as follows:
@@ -143,11 +142,11 @@ const response = await client.company.getDetailsV1('DE-HRB-F1103-267645').asResp
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: companyGetDetailsV1Response, response: raw } = await client.company
+const { data: response, response: raw } = await client.company
   .getDetailsV1('DE-HRB-F1103-267645')
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(companyGetDetailsV1Response.id);
+console.log(response.id);
 ```
 
 ### Logging
