@@ -108,7 +108,7 @@ export namespace Job {
     /**
      * The refreshed company of a `company` job.
      */
-    company: CompanyAPI.CompanyV1 | null;
+    company: CompanyAPI.CompanyGetDetailsV1Response | null;
 
     /**
      * The fetched document of a `document` job.
@@ -118,7 +118,7 @@ export namespace Job {
     /**
      * The refreshed owners of an `owners` job.
      */
-    owners: CompanyAPI.CompanyOwners | null;
+    owners: CompanyAPI.CompanyGetOwnersV1Response | null;
   }
 
   export namespace Results {

@@ -29,14 +29,14 @@ Types:
 - <code><a href="./src/resources/company.ts">CompanyAddress</a></code>
 - <code><a href="./src/resources/company.ts">CompanyCapital</a></code>
 - <code><a href="./src/resources/company.ts">CompanyDocument</a></code>
+- <code><a href="./src/resources/company.ts">CompanyGetDetailsV1Response</a></code>
+- <code><a href="./src/resources/company.ts">CompanyGetOwnersV1Response</a></code>
 - <code><a href="./src/resources/company.ts">CompanyName</a></code>
 - <code><a href="./src/resources/company.ts">CompanyOwnerLegalPerson</a></code>
 - <code><a href="./src/resources/company.ts">CompanyOwnerNaturalPerson</a></code>
-- <code><a href="./src/resources/company.ts">CompanyOwners</a></code>
 - <code><a href="./src/resources/company.ts">CompanyPurpose</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRegister</a></code>
 - <code><a href="./src/resources/company.ts">CompanyRelationType</a></code>
-- <code><a href="./src/resources/company.ts">CompanyV1</a></code>
 - <code><a href="./src/resources/company.ts">EntityType</a></code>
 - <code><a href="./src/resources/company.ts">MergedReportRow</a></code>
 - <code><a href="./src/resources/company.ts">MergedReportTable</a></code>
@@ -53,11 +53,11 @@ Types:
 Methods:
 
 - <code title="get /v0/company/{company_id}/contact">client.company.<a href="./src/resources/company.ts">getContactV0</a>(companyID) -> CompanyGetContactV0Response</code>
-- <code title="get /v1/company/{company_id}">client.company.<a href="./src/resources/company.ts">getDetailsV1</a>(companyID, { ...params }) -> CompanyV1</code>
+- <code title="get /v1/company/{company_id}">client.company.<a href="./src/resources/company.ts">getDetailsV1</a>(companyID, { ...params }) -> CompanyGetDetailsV1Response</code>
 - <code title="get /v1/company/{company_id}/financials">client.company.<a href="./src/resources/company.ts">getFinancialsV1</a>(companyID) -> CompanyGetFinancialsV1Response</code>
 - <code title="get /v1/company/{company_id}/owners/historical">client.company.<a href="./src/resources/company.ts">getHistoricalOwnersV1</a>(companyID) -> CompanyGetHistoricalOwnersV1Response</code>
 - <code title="get /v1/company/{company_id}/holdings">client.company.<a href="./src/resources/company.ts">getHoldingsV1</a>(companyID) -> CompanyGetHoldingsV1Response</code>
-- <code title="get /v1/company/{company_id}/owners">client.company.<a href="./src/resources/company.ts">getOwnersV1</a>(companyID, { ...params }) -> CompanyOwners</code>
+- <code title="get /v1/company/{company_id}/owners">client.company.<a href="./src/resources/company.ts">getOwnersV1</a>(companyID, { ...params }) -> CompanyGetOwnersV1Response</code>
 - <code title="get /v1/company/{company_id}/ubo">client.company.<a href="./src/resources/company.ts">getUbosV1</a>(companyID) -> CompanyGetUbosV1Response</code>
 
 # Document
